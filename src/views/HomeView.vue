@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+// import TheWelcome from "../components/TheWelcome.vue";
+import RegistrationPage from "../components/RegistrationPage.vue";
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <RegistrationPage />
+    <!-- <TheWelcome /> -->
   </main>
 </template>
