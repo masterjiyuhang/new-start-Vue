@@ -445,7 +445,7 @@ onDeactivated(() => {
 
   .left-label {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     .el-form-item__label {
@@ -454,7 +454,8 @@ onDeactivated(() => {
     }
 
     .el-form-item__content {
-      width: 236px;
+      max-width: 236px;
+      min-width: 236px;
 
       .el-select {
         width: 100%;
