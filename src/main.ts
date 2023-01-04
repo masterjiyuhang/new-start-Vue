@@ -1,14 +1,25 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-
+import { setupI18n } from "@/locales/setupI18n";
+import { setupStore } from "@/stores";
 import App from "./App.vue";
 import router from "./router";
 
 import "./assets/main.css";
 
-const app = createApp(App);
+async function bootstrap() {
+  const app = createApp(App);
 
-app.use(createPinia());
-app.use(router);
+  // Multilingual configuration
+  // 多语言配置
+  // Asynchronous case: language files may be obtained from the server side
+  // 异步案例：语言文件可能从服务器端获取
+  await setupI18n(app);
+  app.use(createPinia());
+  setupStore;
+  app.use(router);
 
-app.mount("#app");
+  app.mount("#app");
+}
+
+bootstrap();
