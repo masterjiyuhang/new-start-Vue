@@ -2,8 +2,10 @@
   <div>
     <h1>{{ t("registration.mainTitle") }}</h1>
     <!-- <h3>{{ countryList }}</h3> -->
-    <!-- <h2>{{ ruleForm }}</h2>
-    <h3>{{ t("registration.email") }} {{ getCurrentLang }}</h3> -->
+    <!-- <h2>{{ ruleForm }}</h2> -->
+    <h3>{{ t("registration.email") }} {{ getCurrentLang }}</h3>
+    <h3>{{ t("registration.nameRules") }}</h3>
+    <el-button @click="changeLang"> chang language</el-button>
 
     <el-form
       ref="ruleFormRef"
@@ -77,7 +79,7 @@
       >
         <el-select
           v-model="ruleForm.submitCountryId"
-          placeholder=""
+          placeholder=" "
           :disabled="isLogin"
         >
           <el-option
@@ -127,7 +129,7 @@ import {
   unref,
 } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
-import { getCountryListApi } from "@/api/index";
+// import { getCountryListApi } from "@/api/index";
 import { useI18n } from "vue-i18n";
 import { useLocaleStoreWithOut } from "@/stores/modules/locale";
 import { useLocale } from "@/locales/useLocale";
@@ -160,7 +162,7 @@ const getCurrentLang = computed(() => {
 
   switch (unref(getLocale)) {
     case "en":
-      lang = "en_US";
+      lang = "en";
       break;
     case "ja":
       lang = "ja_JP";
@@ -203,7 +205,7 @@ const rules = reactive<FormRules>({
   submitName: [
     {
       required: true,
-      message: t("registration.nameRules"),
+      message: () => t("registration.nameRules"),
       trigger: "blur",
     },
     // { min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur" },
@@ -211,7 +213,7 @@ const rules = reactive<FormRules>({
   submitCompany: [
     {
       required: true,
-      message: t("registration.companyRules"),
+      message: () => t("registration.companyRules"),
       trigger: "blur",
     },
     { min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur" },
@@ -219,19 +221,19 @@ const rules = reactive<FormRules>({
   submitCountryId: [
     {
       required: true,
-      message: t("registration.countryRules"),
+      message: () => t("registration.countryRules"),
       trigger: "change",
     },
   ],
   submitMail: [
     {
       required: true,
-      message: t("registration.emailRules1"),
+      message: () => t("registration.emailRules1"),
       trigger: "blur",
     },
     {
       type: "email",
-      message: t("registration.emailRules2"),
+      message: () => t("registration.emailRules2"),
       trigger: ["blur", "change"],
     },
   ],
@@ -240,7 +242,7 @@ const rules = reactive<FormRules>({
     {
       type: "array",
       required: true,
-      message: t("registration.meetingsRules"),
+      message: () => t("registration.meetingsRules"),
       // message: "请选择至少一项会议",
       trigger: "change",
     },
@@ -373,6 +375,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 };
 
 const resetForm = (formEl: FormInstance | undefined) => {
+  console.log(!formEl, formEl);
   if (!formEl) return;
   formEl.resetFields();
 };
@@ -389,12 +392,17 @@ const postMessage = (type: any, data: any) => {
 
 const getCountryList = async () => {
   // nextTick(async () => {
-  const res = await getCountryListApi();
-  console.log(res.data.records, "res");
-  countryList.data = res.data.records;
+  // const res = await getCountryListApi();
+  // console.log(res.data.records, "res");
+  // countryList.data = res.data.records;
   // });
 };
 
+const changeLang = () => {
+  // locale.value = locale.value === "zh_CN" ? "en" : "zh_CN";
+  changeLocale(getCurrentLang.value === "zh_CN" ? "en" : "zh_CN");
+  resetForm(ruleFormRef.value);
+};
 onMounted(() => {
   console.log(t, t("home.title"));
   window.addEventListener("message", function (event) {
@@ -446,6 +454,9 @@ onDeactivated(() => {
     }
 
     .el-form-item__content {
+      width: 236px;
+      max-width: 236px;
+
       .el-select {
         width: 100%;
       }

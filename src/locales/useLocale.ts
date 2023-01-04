@@ -12,7 +12,7 @@ function setI18nLanguage(locale: LocaleType) {
     (i18n.global.locale as any).value = locale;
   }
   localeStore.setLocaleInfo({ locale });
-  console.log(localeStore.getLocale, "阿松大");
+  // console.log(localeStore.getLocale, "阿松大");
 }
 
 export function useLocale() {
@@ -20,6 +20,7 @@ export function useLocale() {
   const getLocale = computed(() => localeStore.getLocale);
 
   async function changeLocale(locale: LocaleType) {
+    console.log("change locale", locale);
     const globalI18n = i18n.global;
     const currentLocale = unref(globalI18n.locale);
     if (currentLocale === locale) {
