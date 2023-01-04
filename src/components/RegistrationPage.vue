@@ -455,7 +455,6 @@ onDeactivated(() => {
 
     .el-form-item__content {
       width: 236px;
-      max-width: 236px;
 
       .el-select {
         width: 100%;
