@@ -13,8 +13,12 @@ import type {
 import { stringify } from "qs";
 import NProgress from "../progress";
 
+declare const window: any;
+
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: "https://api-dev2.jctrans.com",
+  // baseURL: "https://api-dev2.jctrans.com",
+  // baseURL: import.meta.env.VITE_BASE_API,
+  baseURL: window?.BASE_INFO.VUE_APP_BASE_API,
   // baseURL: "https://api-sit.jctrans.com",
   // 请求超时时间
   timeout: 10000,

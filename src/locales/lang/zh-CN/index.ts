@@ -42,5 +42,13 @@ export default {
     nameRules: "请输入姓名",
     emailRules1: "请输入邮箱",
     emailRules2: "请输入正确的邮箱地址",
+
+    selectPlaceholder: "请选择",
+
+    submitBtn: "提交",
+    submitSuccess: "提交成功！",
+    submitSuccessTips: "工作人员会尽快与您取得联系，谢谢",
+
+    ok: "好的",
   },
 };

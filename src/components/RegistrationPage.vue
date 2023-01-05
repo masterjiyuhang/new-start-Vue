@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1>{{ t("registration.mainTitle") }}</h1>
+    <h1 :style="{ textAlign: 'center' }">
+      {{ t("registration.mainTitle") }}
+    </h1>
     <!-- <h3>{{ countryList }}</h3> -->
     <!-- <h2>{{ ruleForm }}</h2> -->
-    <h3>{{ t("registration.email") }} {{ getCurrentLang }}</h3>
-    <h3>{{ t("registration.nameRules") }}</h3>
-    <el-button @click="changeLang"> chang language</el-button>
+    <!-- <h3>{{ t("registration.email") }} {{ getCurrentLang }}</h3> -->
 
     <el-form
       ref="ruleFormRef"
@@ -79,13 +79,17 @@
       >
         <el-select
           v-model="ruleForm.submitCountryId"
-          placeholder=" "
+          :placeholder="t('registration.selectPlaceholder')"
           :disabled="isLogin"
         >
           <el-option
             v-for="item in countryList.data"
             :key="item.id"
-            :label="item.countryNameCn"
+            :label="
+              getCurrentLang === 'zh_CN'
+                ? item.countryNameCn
+                : item.countryNameEn
+            "
             :value="item.id"
           ></el-option>
         </el-select>
@@ -102,17 +106,16 @@
       <el-form-item
         :label-width="120"
         :label="t('registration.email')"
-        prop="submitMail"
+        prop="submitEmail"
         class="left-label"
       >
-        <el-input v-model="ruleForm.submitMail" />
+        <el-input v-model="ruleForm.submitEmail" />
       </el-form-item>
 
       <el-form-item class="submit-label">
         <el-button type="primary" @click="submitForm(ruleFormRef)">
-          提交
+          {{ t("registration.submitBtn") }}
         </el-button>
-        <el-button @click="resetForm(ruleFormRef)">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -127,12 +130,14 @@ import {
   toRaw,
   computed,
   unref,
+  toRefs,
 } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
-// import { getCountryListApi } from "@/api/index";
+import { getCountryListApi, submitRegistrationAPi } from "@/api/index";
 import { useI18n } from "vue-i18n";
 import { useLocaleStoreWithOut } from "@/stores/modules/locale";
 import { useLocale } from "@/locales/useLocale";
+import { defaultFormInfoList } from "./constant";
 
 interface answerOptionItem {
   key: string;
@@ -147,22 +152,19 @@ interface FormInfoListItem {
 }
 
 interface RULE_FORM {
-  [key: string]: boolean | string | null | never[];
+  [key: string]: boolean | string | null | any[];
 }
 
 const localeStore = useLocaleStoreWithOut();
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 const { changeLocale, getLocale } = useLocale();
-// const lang = computed(() => {
-//   return localeStore.getLocale;
-// });
 
 const getCurrentLang = computed(() => {
   let lang;
 
   switch (unref(getLocale)) {
     case "en":
-      lang = "en";
+      lang = "en_US";
       break;
     case "ja":
       lang = "ja_JP";
@@ -175,7 +177,6 @@ const getCurrentLang = computed(() => {
   }
   return lang;
 });
-console.log(getCurrentLang.value);
 const { t } = useI18n();
 const isLogin = ref(false);
 const formItemStyle = ref({
@@ -197,61 +198,61 @@ let ruleForm = reactive<RULE_FORM>({
   submitMobile: "",
   submitCompany: "",
   submitCountryId: "",
-  submitMail: "",
-  submitCityId: "提交用户城市id",
+  submitEmail: "",
+  formInfoList: [],
 });
 
-const rules = reactive<FormRules>({
-  submitName: [
-    {
-      required: true,
-      message: () => t("registration.nameRules"),
-      trigger: "blur",
-    },
-    // { min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur" },
-  ],
-  submitCompany: [
-    {
-      required: true,
-      message: () => t("registration.companyRules"),
-      trigger: "blur",
-    },
-    { min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur" },
-  ],
-  submitCountryId: [
-    {
-      required: true,
-      message: () => t("registration.countryRules"),
-      trigger: "change",
-    },
-  ],
-  submitMail: [
-    {
-      required: true,
-      message: () => t("registration.emailRules1"),
-      trigger: "blur",
-    },
-    {
-      type: "email",
-      message: () => t("registration.emailRules2"),
-      trigger: ["blur", "change"],
-    },
-  ],
+const rules = computed(() => {
+  return reactive<FormRules>({
+    submitName: [
+      {
+        required: true,
+        message: () => t("registration.nameRules"),
+        trigger: "blur",
+      },
+    ],
+    submitCompany: [
+      {
+        required: true,
+        message: () => t("registration.companyRules"),
+        trigger: "blur",
+      },
+    ],
+    submitCountryId: [
+      {
+        required: true,
+        message: () => t("registration.countryRules"),
+        trigger: "change",
+      },
+    ],
+    submitEmail: [
+      {
+        required: true,
+        message: () => t("registration.emailRules1"),
+        trigger: "blur",
+      },
+      {
+        type: "email",
+        message: () => t("registration.emailRules2"),
+        trigger: ["blur", "change"],
+      },
+    ],
 
-  meetings: [
-    {
-      type: "array",
-      required: true,
-      message: () => t("registration.meetingsRules"),
-      // message: "请选择至少一项会议",
-      trigger: "change",
-    },
-  ],
+    meetings: [
+      {
+        type: "array",
+        required: true,
+        message: () => t("registration.meetingsRules"),
+        trigger: "change",
+      },
+    ],
+  });
 });
 
 let countryList = reactive<any>({
   data: [],
 });
+
 const formInfoList = computed(
   () =>
     [
@@ -277,7 +278,7 @@ const formInfoList = computed(
             value: t("registration.meetingsOption4"),
           },
         ],
-        answerText: "answerType为Text时输入",
+        answerText: "",
       },
       {
         code: "participantsNumber",
@@ -301,7 +302,7 @@ const formInfoList = computed(
             value: t("registration.participantsNumberOption4"),
           },
         ],
-        answerText: "answerType为Text时输入",
+        answerText: "",
       },
       {
         code: "isBuySponsorship",
@@ -317,7 +318,7 @@ const formInfoList = computed(
             value: t("registration.isBuySponsorshipOption2"),
           },
         ],
-        answerText: "answerType为Text时输入",
+        answerText: "",
       },
       {
         code: "isBookHotel",
@@ -333,31 +334,31 @@ const formInfoList = computed(
             value: t("registration.isBookHotelOption2"),
           },
         ],
-        answerText: "answerType为Text时输入",
+        answerText: "",
       },
       // {
       //   code: "Q5",
       //   title: "公司",
       //   answerType: "TEXT",
-      //   answerText: "answerType为Text时输入",
+      //   answerText: "",
       // },
       // {
       //   code: "Q6",
       //   title: "国家",
       //   answerType: "TEXT",
-      //   answerText: "answerType为Text时输入",
+      //   answerText: "",
       // },
       // {
       //   code: "Q7",
       //   title: "姓名",
       //   answerType: "TEXT",
-      //   answerText: "answerType为Text时输入",
+      //   answerText: "",
       // },
       // {
       //   code: "Q8",
       //   title: "邮箱",
       //   answerType: "TEXT",
-      //   answerText: "answerType为Text时输入",
+      //   answerText: "",
       // },
     ] as FormInfoListItem[]
 );
@@ -367,6 +368,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     postMessage("submit", toRaw(ruleForm));
     if (valid) {
+      postMessage("getCode");
       console.log("submit!");
     } else {
       console.log("error submit!", fields);
@@ -375,12 +377,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 };
 
 const resetForm = (formEl: FormInstance | undefined) => {
-  console.log(!formEl, formEl);
   if (!formEl) return;
   formEl.resetFields();
 };
 
-const postMessage = (type: any, data: any) => {
+const postMessage = (type: any, data?: any) => {
   window.parent.postMessage(
     {
       cmd: type,
@@ -392,19 +393,36 @@ const postMessage = (type: any, data: any) => {
 
 const getCountryList = async () => {
   // nextTick(async () => {
-  // const res = await getCountryListApi();
-  // console.log(res.data.records, "res");
-  // countryList.data = res.data.records;
+  const res = await getCountryListApi();
+  countryList.data = res.data.records;
   // });
 };
 
-const changeLang = () => {
-  // locale.value = locale.value === "zh_CN" ? "en" : "zh_CN";
-  changeLocale(getCurrentLang.value === "zh_CN" ? "en" : "zh_CN");
-  resetForm(ruleFormRef.value);
+const handleSubmitFormData = async (data: any) => {
+  const res = defaultFormInfoList.map((item) => {
+    const r = item.answerOption.filter((answer) =>
+      Array.isArray(data[item.code])
+        ? data[item.code].indexOf(answer.key) > -1
+        : answer.key === data[item.code]
+    );
+    item.answerOption = r;
+    return item;
+  });
+  ruleForm.formInfoList = res;
+
+  const submitRes = await submitRegistrationAPi(ruleForm);
+  console.log(submitRes, "submitRes");
+  postMessage("success", true);
 };
+
+const {
+  participantsNumber, // 预计参会人数
+  isBuySponsorship, // 是否购买赞助的计划
+  isBookHotel,
+  meetings,
+} = toRefs(ruleForm);
+
 onMounted(() => {
-  console.log(t, t("home.title"));
   window.addEventListener("message", function (event) {
     const obj = event.data;
     console.log(obj.parentData, "父组件传递进来的数据");
@@ -412,6 +430,20 @@ onMounted(() => {
       //初始化
       case "reset":
         console.log("重置 子页面里面 接收到的参数", obj.parentData);
+        break;
+      case "setCode":
+        ruleForm = Object.assign(ruleForm, {
+          uuid: obj.parentData.uuid,
+          code: obj.parentData.code,
+        });
+
+        handleSubmitFormData({
+          participantsNumber: participantsNumber.value,
+          isBuySponsorship: isBuySponsorship.value,
+          isBookHotel: isBookHotel.value,
+          meetings: meetings.value,
+        });
+        console.log(ruleForm, "最后要提交的表单数据");
         break;
       case "init":
         console.log(
@@ -422,7 +454,8 @@ onMounted(() => {
 
         isLogin.value = obj.parentData.isLogin;
         localeStore.setLocaleInfo({ locale: obj.parentData.formData.lang });
-        changeLocale(obj.parentData.formData.lang);
+        changeLocale(obj.parentData.formData.lang === "zh-CN" ? "zh_CN" : "en");
+        resetForm(ruleFormRef.value);
         ruleForm = Object.assign(ruleForm, obj.parentData.formData);
         break;
     }
@@ -445,7 +478,7 @@ onDeactivated(() => {
 
   .left-label {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
     .el-form-item__label {
@@ -454,9 +487,6 @@ onDeactivated(() => {
     }
 
     .el-form-item__content {
-      max-width: 236px;
-      min-width: 236px;
-
       .el-select {
         width: 100%;
       }

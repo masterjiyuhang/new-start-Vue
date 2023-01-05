@@ -14,13 +14,18 @@ type Result = {
 };
 
 export const getCountryListApi = (data?: object) => {
+  console.log(import.meta.env);
   return http.request<Result>("post", "/system/dms/anon/country/findAllList", {
     data: data ?? {},
   });
 };
 
 export const submitRegistrationAPi = (data?: object) => {
-  return http.request<Result>("post", "/collect/fr/questionnaire/submit", {
-    data,
-  });
+  return http.request<Result>(
+    "post",
+    "https://api-dev.jctrans.com/collect/fr/questionnaire/submit",
+    {
+      data,
+    }
+  );
 };

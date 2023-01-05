@@ -44,5 +44,15 @@ export default {
     nameRules: "Please complete this required field.",
     emailRules1: "Please complete this required field.",
     emailRules2: "Please input the correct email address.",
+
+    selectPlaceholder: "Please select.",
+
+    submitBtn: "Submit",
+
+    submitSuccess: "Submit Successfully!",
+    submitSuccessTips:
+      "Thanks for registration, one of the team will be in touch shortly.",
+
+    ok: "OK",
   },
 };

@@ -43,3 +43,10 @@ declare type ForDataType<T> = {
 };
 
 declare type AnyFunction<T> = (...args: any[]) => T;
+
+declare interface Window {
+  readonly fn: any;
+  readonly BASE_INFO: {
+    VUE_APP_BASE_API: string;
+  };
+}

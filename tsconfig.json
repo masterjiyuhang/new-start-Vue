@@ -20,7 +20,7 @@
     "lib": ["dom", "esnext"],
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "types": ["vite/client"],
+    "types": ["vite-svg-loader", "node", "jsdom", "vite/client"],
     "removeComments": true,
     "paths": {
       "@/*": ["./src/*"],
@@ -36,6 +36,7 @@
     "src/**/*.vue",
     "types/**/*.d.ts",
     "types/**/*.ts",
+    "types/*.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
     "mock/**/*.ts",

@@ -44,7 +44,7 @@ export const useLocaleStore = defineStore({
   },
   actions: {
     setLocaleInfo(info: Partial<LocaleSetting>) {
-      // console.log("设置本地信息", info);
+      console.log("设置本地信息", info);
       this.localInfo = { ...this.localInfo, ...info };
     },
   },

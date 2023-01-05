@@ -44,7 +44,9 @@
     "unplugin-auto-import": "^0.12.1",
     "unplugin-vue-components": "^0.22.12",
     "vite": "^3.1.8",
+    "vite-plugin-copy-files": "^1.1.1",
     "vite-plugin-singlefile": "^0.13.2",
+    "vite-plugin-static-copy": "^0.13.0",
     "vite-svg-loader": "^4.0.0",
     "vitest": "^0.24.3",
     "vue-tsc": "^1.0.8"
