@@ -1,16 +1,16 @@
 <template>
   <el-container>
-    <el-aside width="200px">Aside</el-aside>
-    <el-container>
-      <el-header>Header</el-header>
-      <el-main>
+    <el-aside width="200px" class="bg-neutral-800">Aside</el-aside>
+    <el-container class="min-w-full min-h-screen">
+      <el-header class="bg-red-500">Header</el-header>
+      <el-main class="bg-green-300">
         <RouterView>
           <template #default="{ Component, route }">
             <component :is="Component" :key="route.fullPath" />
           </template>
         </RouterView>
       </el-main>
-      <el-footer>Footer</el-footer>
+      <el-footer class="bg-yellow-300">Footer</el-footer>
     </el-container>
   </el-container>
 </template>
