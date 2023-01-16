@@ -1,8 +1,14 @@
 <template>
   <el-container>
-    <el-aside width="200px" class="bg-neutral-800">Aside</el-aside>
+    <el-aside class="aside bg-white-300" width="auto">
+      <Sider />
+    </el-aside>
     <el-container class="min-w-full min-h-screen">
-      <el-header class="bg-red-500">Header</el-header>
+      <el-header class="bg-red-500">
+        <el-button @click="changeCollapse"> chang collapse1 </el-button>
+
+        Header
+      </el-header>
       <el-main class="bg-green-300">
         <RouterView>
           <template #default="{ Component, route }">
@@ -15,6 +21,24 @@
   </el-container>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useSettingStore } from "@/stores/modules/setting";
+// import { computed, unref } from "vue";
+import Sider from "./sider/index.vue";
 
-<style scoped></style>
+const settingStore = useSettingStore();
+// const { getCollapse } = storeToRefs(settingStore);
+// const getCollapsed = computed(() => settingStore.getCollapse);
+// const getSiderWidth = computed(() => {
+//   return unref(getCollapsed) ? "80px" : "200px";
+// });
+
+const changeCollapse = () => settingStore.changeCollapse();
+</script>
+
+<style scoped>
+.aside {
+  /* width: 200px; */
+  min-height: 400px;
+}
+</style>

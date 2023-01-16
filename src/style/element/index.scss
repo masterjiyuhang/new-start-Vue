@@ -1,0 +1,17 @@
+$--colors: (
+  "primary": (
+    "base": #ffd6a5,
+  ),
+);
+
+@forward "element-plus/theme-chalk/src/common/var.scss" with (
+  $colors: $--colors,
+  $date-editor: (
+    "daterange-width": 260px,
+  )
+);
+
+:root {
+  --el-color-primary: #a0c4ff;
+  --el-menu-icon-width: 40px;
+}

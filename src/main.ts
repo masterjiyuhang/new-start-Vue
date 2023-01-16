@@ -5,6 +5,7 @@ import { setupStore } from "@/stores";
 import App from "./App.vue";
 import router from "./router";
 import "./style/tailwind.css";
+// import "./style/element/index.scss";
 
 import "./assets/main.css";
 

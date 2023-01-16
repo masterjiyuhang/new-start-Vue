@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from "node:url";
-
 import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
@@ -10,8 +9,10 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import type { UserConfig, ConfigEnv } from "vite";
 // import { wrapperEnv } from "@/utils";
-import copyFiles from "vite-plugin-copy-files";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import Inspect from "vite-plugin-inspect";
+// import ElementPlus from "unplugin-element-plus/vite";
+import path from "node:path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
@@ -52,16 +53,27 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         },
       },
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "~/style/element/index.scss" as *;`,
+        },
+      },
+    },
     plugins: [
       vue(),
       vueJsx(),
       viteSingleFile({ removeViteModuleLoader: true }),
       svgLoader(),
       AutoImport({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: "sass",
+          }),
+        ],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [ElementPlusResolver({ importStyle: "sass" })],
       }),
       viteStaticCopy({
         targets: [
@@ -71,18 +83,22 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           },
         ],
       }),
+      Inspect(),
     ],
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
+        "~/": `${path.resolve(__dirname, "src")}/`,
       },
     },
+
     build: {
       terserOptions: {
         compress: {
           drop_console: true,
         },
       },
+      minify: "terser",
     },
   };
 });

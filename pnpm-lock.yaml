@@ -30,9 +30,10 @@ specifiers:
   tailwindcss: ^3.2.4
   typescript: ~4.7.4
   unplugin-auto-import: ^0.12.1
+  unplugin-element-plus: ^0.4.1
   unplugin-vue-components: ^0.22.12
   vite: ^3.1.8
-  vite-plugin-copy-files: ^1.1.1
+  vite-plugin-inspect: ^0.7.14
   vite-plugin-singlefile: ^0.13.2
   vite-plugin-static-copy: ^0.13.0
   vite-svg-loader: ^4.0.0
@@ -77,9 +78,10 @@ devDependencies:
   tailwindcss: 3.2.4_postcss@8.4.21
   typescript: registry.npmmirror.com/typescript/4.7.4
   unplugin-auto-import: registry.npmmirror.com/unplugin-auto-import/0.12.1
+  unplugin-element-plus: 0.4.1_vite@3.2.5
   unplugin-vue-components: registry.npmmirror.com/unplugin-vue-components/0.22.12_vue@3.2.45
   vite: registry.npmmirror.com/vite/3.2.5_iwdbj4p7tcybw7crwxzyorlhpu
-  vite-plugin-copy-files: 1.1.1_vite@3.2.5
+  vite-plugin-inspect: 0.7.14_vite@3.2.5
   vite-plugin-singlefile: registry.npmmirror.com/vite-plugin-singlefile/0.13.2_vite@3.2.5
   vite-plugin-static-copy: 0.13.0_vite@3.2.5
   vite-svg-loader: registry.npmmirror.com/vite-svg-loader/4.0.0
@@ -87,6 +89,10 @@ devDependencies:
   vue-tsc: registry.npmmirror.com/vue-tsc/1.0.20_typescript@4.7.4
 
 packages:
+
+  /@antfu/utils/0.7.2:
+    resolution: {integrity: sha512-vy9fM3pIxZmX07dL+VX1aZe7ynZ+YyB0jY+jE6r3hOK6GNY2t6W8rzpFC4tgpbXUYABkFQwgJq2XYXlxbXAI0g==}
+    dev: true
 
   /@esbuild/android-arm/0.15.18:
     resolution: {integrity: sha512-5GT+kcs2WVGjVs7+boataCkO5Fg0y4kCjzkB5bAip7H4jfnOS3dA6KPiww9W1OEKTKeAcUVhdZGvgI65OXmUnw==}
@@ -144,6 +150,10 @@ packages:
       fastq: 1.15.0
     dev: true
 
+  /@polka/url/1.0.0-next.21:
+    resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
+    dev: true
+
   /@rollup/pluginutils/4.2.1:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
     engines: {node: '>= 8.0.0'}
@@ -161,7 +171,7 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@types/estree': registry.npmmirror.com/@types/estree/1.0.0
+      '@types/estree': 1.0.0
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
@@ -169,6 +179,10 @@ packages:
   /@sxzz/popperjs-es/2.11.7:
     resolution: {integrity: sha512-Ccy0NlLkzr0Ex2FKvh2X+OyERHXJ88XJ1MXtsI9y9fGexlaXaVTPzBCRBwIxFkORuOb+uBqeu+RqnpgYTEZRUQ==}
     dev: false
+
+  /@types/estree/1.0.0:
+    resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
+    dev: true
 
   /acorn-node/1.8.2:
     resolution: {integrity: sha512-8mt+fslDufLYntIoPAaIMUe/lrbrehIiwmR3t2k9LljIzoigEPF27eLk2hy8zSGzmR/ogr7zbRKINMo1u0yh5A==}
@@ -185,6 +199,12 @@ packages:
 
   /acorn/7.4.1:
     resolution: {integrity: sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+    dev: true
+
+  /acorn/8.8.1:
+    resolution: {integrity: sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==}
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: true
@@ -277,6 +297,18 @@ packages:
     hasBin: true
     dev: true
 
+  /debug/4.3.4:
+    resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
+    dev: true
+
   /defined/1.0.1:
     resolution: {integrity: sha512-hsBd2qSVCRE+5PmNdHt1uzyrFu5d3RwmFDKzyNZMFq/EwDNJF7Ee5+D5oEKF0hU6LhtoUF1macFvOe4AskQC1Q==}
     dev: true
@@ -301,6 +333,10 @@ packages:
 
   /electron-to-chromium/1.4.284:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
+    dev: true
+
+  /es-module-lexer/0.10.5:
+    resolution: {integrity: sha512-+7IwY/kiGAacQfY+YBhKMvEmyAJnw5grTUgjG85Pe7vcUI/6b7pZjZG8nQ7+48YhzEAEqrEgD2dCz/JIK+AYvw==}
     dev: true
 
   /esbuild-android-64/0.15.18:
@@ -602,9 +638,25 @@ packages:
       graceful-fs: 4.2.10
     dev: true
 
+  /kolorist/1.6.0:
+    resolution: {integrity: sha512-dLkz37Ab97HWMx9KTes3Tbi3D1ln9fCAy2zr2YVExJasDRPGRaKcoE4fycWNtnCAJfjFqe0cnY+f8KT2JePEXQ==}
+    dev: true
+
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
     engines: {node: '>=10'}
+    dev: true
+
+  /magic-string/0.25.9:
+    resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
+    dependencies:
+      sourcemap-codec: 1.4.8
+
+  /magic-string/0.26.7:
+    resolution: {integrity: sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow==}
+    engines: {node: '>=12'}
+    dependencies:
+      sourcemap-codec: 1.4.8
     dev: true
 
   /merge2/1.4.1:
@@ -622,6 +674,19 @@ packages:
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
+
+  /mrmime/1.0.1:
+    resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}
+    engines: {node: '>=10'}
+    dev: true
+
+  /ms/2.1.2:
+    resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
+    dev: true
+
+  /ms/2.1.3:
+    resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
+    dev: false
 
   /nanoid/3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
@@ -775,6 +840,15 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
+  /sirv/2.0.2:
+    resolution: {integrity: sha512-4Qog6aE29nIjAOKe/wowFTxOdmbEZKb+3tsLljaBRzJwtqto0BChD2zzH0LhgCSXiI+V7X+Y45v14wBZQ1TK3w==}
+    engines: {node: '>= 10'}
+    dependencies:
+      '@polka/url': 1.0.0-next.21
+      mrmime: 1.0.1
+      totalist: 3.0.0
+    dev: true
+
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
@@ -782,6 +856,10 @@ packages:
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
+
+  /sourcemap-codec/1.4.8:
+    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
 
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
@@ -829,9 +907,57 @@ packages:
       is-number: 7.0.0
     dev: true
 
+  /totalist/3.0.0:
+    resolution: {integrity: sha512-eM+pCBxXO/njtF7vdFsHuqb+ElbxqtI4r5EAvk6grfAFyJ6IvWlSkfZ5T9ozC6xWw3Fj1fGoSmrl0gUs46JVIw==}
+    engines: {node: '>=6'}
+    dev: true
+
+  /ufo/1.0.1:
+    resolution: {integrity: sha512-boAm74ubXHY7KJQZLlXrtMz52qFvpsbOxDcZOnw/Wf+LS4Mmyu7JxmzD4tDLtUQtmZECypJ0FrCz4QIe6dvKRA==}
+    dev: true
+
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
+    dev: true
+
+  /unplugin-element-plus/0.4.1_vite@3.2.5:
+    resolution: {integrity: sha512-x8L35sppkbtnAf+aSPXNsLPjCUrM0mWKgujqMIgrHiDQaGbpMlNnbN2kjP5CMclykNOw8fUCreEhtxPyzg8tmw==}
+    engines: {node: '>=14.19.0'}
+    dependencies:
+      '@rollup/pluginutils': 4.2.1
+      es-module-lexer: 0.10.5
+      magic-string: 0.26.7
+      unplugin: 0.7.2_vite@3.2.5
+    transitivePeerDependencies:
+      - esbuild
+      - rollup
+      - vite
+      - webpack
+    dev: true
+
+  /unplugin/0.7.2_vite@3.2.5:
+    resolution: {integrity: sha512-m7thX4jP8l5sETpLdUASoDOGOcHaOVtgNyrYlToyQUvILUtEzEnngRBrHnAX3IKqooJVmXpoa/CwQ/QqzvGaHQ==}
+    peerDependencies:
+      esbuild: '>=0.13'
+      rollup: ^2.50.0
+      vite: ^2.3.0 || ^3.0.0-0
+      webpack: 4 || 5
+    peerDependenciesMeta:
+      esbuild:
+        optional: true
+      rollup:
+        optional: true
+      vite:
+        optional: true
+      webpack:
+        optional: true
+    dependencies:
+      acorn: 8.8.1
+      chokidar: 3.5.3
+      vite: registry.npmmirror.com/vite/3.2.5_iwdbj4p7tcybw7crwxzyorlhpu
+      webpack-sources: 3.2.3
+      webpack-virtual-modules: 0.4.6
     dev: true
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
@@ -849,13 +975,23 @@ packages:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
 
-  /vite-plugin-copy-files/1.1.1_vite@3.2.5:
-    resolution: {integrity: sha512-aBOqqljL3nLttvs8zM4h6opg/FtWiORg3ovsj7/yxRbrOJwmh82BsujC1x5+ZWk9Tmy2a/nnX2iLx/hwASgB9Q==}
+  /vite-plugin-inspect/0.7.14_vite@3.2.5:
+    resolution: {integrity: sha512-C9V93Yy2yUf941oVxIq93K6T1o0SZxoG8MdmyJsnoNDijOAGHT1rVSVjzF/uKFYvgnvLvaXioaoy6ica6aOS0g==}
+    engines: {node: '>=14'}
     peerDependencies:
-      vite: ^3.0.0 || ^4.0.0
+      vite: ^3.1.0 || ^4.0.0
     dependencies:
-      '@rollup/pluginutils': 4.2.1
+      '@antfu/utils': 0.7.2
+      '@rollup/pluginutils': 5.0.2
+      debug: 4.3.4
+      fs-extra: 11.1.0
+      kolorist: 1.6.0
+      sirv: 2.0.2
+      ufo: 1.0.1
       vite: registry.npmmirror.com/vite/3.2.5_iwdbj4p7tcybw7crwxzyorlhpu
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /vite-plugin-static-copy/0.13.0_vite@3.2.5:
@@ -869,6 +1005,15 @@ packages:
       fs-extra: 11.1.0
       picocolors: 1.0.0
       vite: registry.npmmirror.com/vite/3.2.5_iwdbj4p7tcybw7crwxzyorlhpu
+    dev: true
+
+  /webpack-sources/3.2.3:
+    resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
+    engines: {node: '>=10.13.0'}
+    dev: true
+
+  /webpack-virtual-modules/0.4.6:
+    resolution: {integrity: sha512-5tyDlKLqPfMqjT3Q9TAqf2YqjwmnUleZwzJi1A5qXnlBCdj2AtOJ6wAWdglTIDOPgOiOrXeBeFcsQ8+aGQ6QbA==}
     dev: true
 
   /xtend/4.0.2:
@@ -1228,7 +1373,7 @@ packages:
       '@babel/helper-split-export-declaration': registry.npmmirror.com/@babel/helper-split-export-declaration/7.18.6
       '@babel/parser': registry.npmmirror.com/@babel/parser/7.20.7
       '@babel/types': registry.npmmirror.com/@babel/types/7.20.7
-      debug: registry.npmmirror.com/debug/4.3.4
+      debug: 4.3.4
       globals: registry.npmmirror.com/globals/11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -1501,8 +1646,8 @@ packages:
     version: 4.2.1
     engines: {node: '>= 8.0.0'}
     dependencies:
-      estree-walker: registry.npmmirror.com/estree-walker/2.0.2
-      picomatch: registry.npmmirror.com/picomatch/2.3.1
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
     dev: true
 
   registry.npmmirror.com/@rollup/pluginutils/5.0.2:
@@ -1705,7 +1850,7 @@ packages:
     dependencies:
       '@typescript-eslint/typescript-estree': registry.npmmirror.com/@typescript-eslint/typescript-estree/5.48.0_typescript@4.7.4
       '@typescript-eslint/utils': registry.npmmirror.com/@typescript-eslint/utils/5.48.0_wogtpudmlxya2leoxia5qf2rl4
-      debug: registry.npmmirror.com/debug/4.3.4
+      debug: 4.3.4
       eslint: registry.npmmirror.com/eslint/8.31.0
       tsutils: registry.npmmirror.com/tsutils/3.21.0_typescript@4.7.4
       typescript: registry.npmmirror.com/typescript/4.7.4
@@ -1734,7 +1879,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': registry.npmmirror.com/@typescript-eslint/types/5.48.0
       '@typescript-eslint/visitor-keys': registry.npmmirror.com/@typescript-eslint/visitor-keys/5.48.0
-      debug: registry.npmmirror.com/debug/4.3.4
+      debug: 4.3.4
       globby: registry.npmmirror.com/globby/11.1.0
       is-glob: 4.0.3
       semver: registry.npmmirror.com/semver/7.3.8
@@ -1980,7 +2125,7 @@ packages:
       '@vue/compiler-core': registry.npmmirror.com/@vue/compiler-core/3.2.45
       '@vue/shared': registry.npmmirror.com/@vue/shared/3.2.45
       estree-walker: 2.0.2
-      magic-string: registry.npmmirror.com/magic-string/0.25.9
+      magic-string: 0.25.9
 
   registry.npmmirror.com/@vue/reactivity/3.2.45:
     resolution: {integrity: sha512-PRvhCcQcyEVohW0P8iQ7HDcIOXRjZfAsOds3N99X/Dzewy8TVhTCT4uXpAHfoKjVTJRA0O0K+6QNkDIZAxNi3A==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vue/reactivity/-/reactivity-3.2.45.tgz}
@@ -2104,7 +2249,7 @@ packages:
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
-      acorn: registry.npmmirror.com/acorn/7.4.1
+      acorn: 7.4.1
     dev: true
 
   registry.npmmirror.com/acorn-jsx/5.3.2_acorn@8.8.1:
@@ -2125,14 +2270,6 @@ packages:
     engines: {node: '>=0.4.0'}
     dev: true
 
-  registry.npmmirror.com/acorn/7.4.1:
-    resolution: {integrity: sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/acorn/-/acorn-7.4.1.tgz}
-    name: acorn
-    version: 7.4.1
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-    dev: true
-
   registry.npmmirror.com/acorn/8.8.1:
     resolution: {integrity: sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/acorn/-/acorn-8.8.1.tgz}
     name: acorn
@@ -2147,7 +2284,7 @@ packages:
     version: 6.0.2
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: registry.npmmirror.com/debug/4.3.4
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2570,7 +2707,7 @@ packages:
       supports-color:
         optional: true
     dependencies:
-      ms: registry.npmmirror.com/ms/2.1.3
+      ms: 2.1.3
     dev: false
 
   registry.npmmirror.com/debug/4.3.4:
@@ -2584,7 +2721,7 @@ packages:
       supports-color:
         optional: true
     dependencies:
-      ms: registry.npmmirror.com/ms/2.1.2
+      ms: 2.1.2
     dev: true
 
   registry.npmmirror.com/decimal.js/10.4.3:
@@ -3019,7 +3156,7 @@ packages:
     version: 6.2.1
     engines: {node: '>=6.0.0'}
     dependencies:
-      acorn: registry.npmmirror.com/acorn/7.4.1
+      acorn: 7.4.1
       acorn-jsx: registry.npmmirror.com/acorn-jsx/5.3.2_acorn@7.4.1
       eslint-visitor-keys: registry.npmmirror.com/eslint-visitor-keys/1.3.0
     dev: true
@@ -3801,7 +3938,7 @@ packages:
     version: 1.4.1
     engines: {node: '>=8.10.0'}
     dependencies:
-      acorn: registry.npmmirror.com/acorn/7.4.1
+      acorn: 7.4.1
       eslint-utils: registry.npmmirror.com/eslint-utils/2.1.0
       eslint-visitor-keys: registry.npmmirror.com/eslint-visitor-keys/1.3.0
       espree: registry.npmmirror.com/espree/6.2.1
@@ -3924,7 +4061,7 @@ packages:
     name: magic-string
     version: 0.25.9
     dependencies:
-      sourcemap-codec: registry.npmmirror.com/sourcemap-codec/1.4.8
+      sourcemap-codec: 1.4.8
 
   registry.npmmirror.com/magic-string/0.27.0:
     resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/magic-string/-/magic-string-0.27.0.tgz}
@@ -4036,23 +4173,11 @@ packages:
     name: mlly
     version: 1.0.0
     dependencies:
-      acorn: registry.npmmirror.com/acorn/8.8.1
+      acorn: 8.8.1
       pathe: registry.npmmirror.com/pathe/1.0.0
       pkg-types: registry.npmmirror.com/pkg-types/1.0.1
-      ufo: registry.npmmirror.com/ufo/1.0.1
+      ufo: 1.0.1
     dev: true
-
-  registry.npmmirror.com/ms/2.1.2:
-    resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ms/-/ms-2.1.2.tgz}
-    name: ms
-    version: 2.1.2
-    dev: true
-
-  registry.npmmirror.com/ms/2.1.3:
-    resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ms/-/ms-2.1.3.tgz}
-    name: ms
-    version: 2.1.3
-    dev: false
 
   registry.npmmirror.com/muggle-string/0.1.0:
     resolution: {integrity: sha512-Tr1knR3d2mKvvWthlk7202rywKbiOm4rVFLsfAaSIhJ6dt9o47W4S+JMtWhd/PW9Wrdew2/S2fSvhz3E2gkfEg==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/muggle-string/-/muggle-string-0.1.0.tgz}
@@ -4695,12 +4820,6 @@ packages:
     version: 0.6.1
     engines: {node: '>=0.10.0'}
 
-  registry.npmmirror.com/sourcemap-codec/1.4.8:
-    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz}
-    name: sourcemap-codec
-    version: 1.4.8
-    deprecated: Please use @jridgewell/sourcemap-codec instead
-
   registry.npmmirror.com/spdx-correct/3.1.1:
     resolution: {integrity: sha512-cOYcUWwhCuHCXi49RhFRCyJEK3iPj1Ziz9DpViV3tbZOwXD49QzIN3MpOLJNxh2qwq2lJJZaKMVw9qNi4jTC0w==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/spdx-correct/-/spdx-correct-3.1.1.tgz}
     name: spdx-correct
@@ -4798,7 +4917,7 @@ packages:
     name: strip-literal
     version: 1.0.0
     dependencies:
-      acorn: registry.npmmirror.com/acorn/8.8.1
+      acorn: 8.8.1
     dev: true
 
   registry.npmmirror.com/supports-color/5.5.0:
@@ -4962,12 +5081,6 @@ packages:
     version: 4.7.4
     engines: {node: '>=4.2.0'}
     hasBin: true
-
-  registry.npmmirror.com/ufo/1.0.1:
-    resolution: {integrity: sha512-boAm74ubXHY7KJQZLlXrtMz52qFvpsbOxDcZOnw/Wf+LS4Mmyu7JxmzD4tDLtUQtmZECypJ0FrCz4QIe6dvKRA==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ufo/-/ufo-1.0.1.tgz}
-    name: ufo
-    version: 1.0.1
-    dev: true
 
   registry.npmmirror.com/unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/unbox-primitive/-/unbox-primitive-1.0.2.tgz}
