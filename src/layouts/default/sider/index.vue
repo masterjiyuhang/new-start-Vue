@@ -9,6 +9,7 @@
     class="cchLogo"
     :style="{
       width: settingStore.isCollapse ? '80px' : '200px',
+      transition: 'auto 0.5s',
     }"
   >
     <img :src="logo" alt="cc" />
@@ -22,6 +23,8 @@
       whiteSpace: 'nowrap',
       fontWeight: 'bold',
       color: '#333',
+      transition: 'width 0.5s',
+      padding: '1em',
     }"
   >
     CCH - VUE - admin
