@@ -4,10 +4,8 @@ import { setupI18n } from "@/locales/setupI18n";
 import { setupStore } from "@/stores";
 import App from "./App.vue";
 import router from "./router";
-import "./style/tailwind.css";
-// import "./style/element/index.scss";
-
 import "./assets/main.css";
+import "./style/tailwind.css";
 
 async function bootstrap() {
   const app = createApp(App);

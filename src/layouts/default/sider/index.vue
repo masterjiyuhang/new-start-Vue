@@ -36,7 +36,7 @@
     @open="handleOpen"
     @close="handleClose"
   >
-    <el-sub-menu index="1">
+    <el-sub-menu index="1" @clcik="clickSubMenuItem">
       <template #title>
         <el-icon><location /></el-icon>
         <span>Navigator One</span>
@@ -58,10 +58,6 @@
       <el-icon><icon-menu /></el-icon>
       <template #title>Navigator Two</template>
     </el-menu-item>
-    <el-menu-item index="3" disabled>
-      <el-icon><document /></el-icon>
-      <template #title>Navigator Three</template>
-    </el-menu-item>
     <el-menu-item index="4">
       <el-icon><setting /></el-icon>
       <template #title>Navigator Four</template>
@@ -70,12 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from "@element-plus/icons-vue";
+import { Menu as IconMenu, Location, Setting } from "@element-plus/icons-vue";
 import { useSettingStore } from "@/stores/modules/setting";
 import logo from "@/assets/logo.png";
 
@@ -87,12 +78,20 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
 };
+
+const clickSubMenuItem = (e: any) => {
+  console.log(e);
+};
 </script>
 
 <style scoped>
 .el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;
-  height: calc(80vh);
+  height: calc(60vh);
+}
+
+.el-menu-vertical {
+  border-right: none;
 }
 
 .cchLogo {

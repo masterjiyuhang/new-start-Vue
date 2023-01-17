@@ -6,10 +6,9 @@
     <el-container class="min-w-full min-h-screen">
       <el-header class="bg-red-500">
         <el-button @click="changeCollapse"> chang collapse1 </el-button>
-
         Header
       </el-header>
-      <el-main class="bg-green-300">
+      <el-main class="p-2 bg-green-300 content">
         <RouterView>
           <template #default="{ Component, route }">
             <component :is="Component" :key="route.fullPath" />
@@ -40,5 +39,9 @@ const changeCollapse = () => settingStore.changeCollapse();
 .aside {
   /* width: 200px; */
   min-height: 400px;
+}
+
+.content {
+  padding: 0.5rem;
 }
 </style>

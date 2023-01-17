@@ -4,7 +4,7 @@ import { store } from "..";
 export const useSettingStore = defineStore({
   id: "setting",
   state: () => ({
-    isCollapse: true,
+    isCollapse: false,
     countCCH: 10,
   }),
   getters: {
