@@ -36,15 +36,17 @@
     @open="handleOpen"
     @close="handleClose"
   >
-    <el-sub-menu index="1" @clcik="clickSubMenuItem">
+    <el-sub-menu index="1">
       <template #title>
         <el-icon><location /></el-icon>
         <span>Navigator One</span>
       </template>
       <el-menu-item-group>
         <template #title><span>Group One</span></template>
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
+        <el-menu-item index="dashboard" @click="clickMenuItem"
+          >Dashboard</el-menu-item
+        >
+        <el-menu-item index="about" @click="clickMenuItem">About</el-menu-item>
       </el-menu-item-group>
       <el-menu-item-group title="Group Two">
         <el-menu-item index="1-3">item three</el-menu-item>
@@ -69,7 +71,9 @@
 import { Menu as IconMenu, Location, Setting } from "@element-plus/icons-vue";
 import { useSettingStore } from "@/stores/modules/setting";
 import logo from "@/assets/logo.png";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const settingStore = useSettingStore();
 
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -79,8 +83,9 @@ const handleClose = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
 };
 
-const clickSubMenuItem = (e: any) => {
-  console.log(e);
+const clickMenuItem = (e: any) => {
+  console.log(e.index);
+  router.push(e.index);
 };
 </script>
 
