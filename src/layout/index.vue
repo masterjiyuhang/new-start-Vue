@@ -1,60 +1,31 @@
 <template>
-  <section class="app-main">
-    <RouterView v-slot="{ Component, route }">
-      <el-scrollbar>
-        <el-backtop title="回到顶部" target=".app-main">
-          <el-icon><Top /></el-icon>
-        </el-backtop>
-
-        <transitionMain :route="route">
-          <keep-alive v-if="keepAlive">
-            <component
-              :is="Component"
-              :key="route.fullPath"
-              class="main-content"
-            />
-          </keep-alive>
-        </transitionMain>
-      </el-scrollbar>
-    </RouterView>
-  </section>
+  <div>
+    <div v-if="defaultSet.fixedHeader"></div>
+    <app-main></app-main>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { Top } from "@element-plus/icons-vue";
-import { computed, defineComponent, h, Transition } from "vue";
+import { computed, reactive } from "vue";
+import appMain from "./components/appMain.vue";
+import { useAppStoreHook } from "@/stores/modules/app";
 
-const keepAlive = computed(() => {
-  return true;
-});
+const defaultSet = reactive({
+  sidebar: computed(() => {
+    return useAppStoreHook().sidebar;
+  }),
 
-// const transitions = computed(() => {
-//   return (route) => {
-//     return route.meta.transition;
-//   };
-// });
+  fixedHeader: computed(() => {
+    return true;
+  }),
 
-const transitionMain = defineComponent({
-  render() {
-    const defaultComp = this.$slots.default ? this.$slots.default() : null;
-    return h(
-      Transition,
-      {
-        name: "fade",
-        mode: "out-in",
-        appear: true,
-      },
-      {
-        default: () => [defaultComp],
-      }
-    );
-  },
-  props: {
-    route: {
-      type: undefined,
-      required: true,
-    },
-  },
+  classes: computed(() => {
+    return {
+      hideSidebar: !defaultSet.sidebar.opened,
+      openSidebar: defaultSet.sidebar.opened,
+      withoutAnimation: defaultSet.sidebar.withoutAnimation,
+    };
+  }),
 });
 </script>
 
