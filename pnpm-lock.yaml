@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@intlify/vite-plugin-vue-i18n': ^7.0.0
+  '@pureadmin/utils': ^1.8.5
   '@rushstack/eslint-patch': ^1.1.4
   '@types/jsdom': ^20.0.0
   '@types/node': ^16.11.68
@@ -56,6 +57,7 @@ dependencies:
 
 devDependencies:
   '@intlify/vite-plugin-vue-i18n': registry.npmmirror.com/@intlify/vite-plugin-vue-i18n/7.0.0_vite@3.2.5+vue-i18n@9.2.2
+  '@pureadmin/utils': 1.8.5_vue@3.2.45
   '@rushstack/eslint-patch': registry.npmmirror.com/@rushstack/eslint-patch/1.2.0
   '@types/jsdom': registry.npmmirror.com/@types/jsdom/20.0.1
   '@types/node': registry.npmmirror.com/@types/node/16.18.11
@@ -152,6 +154,20 @@ packages:
 
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
+    dev: true
+
+  /@pureadmin/utils/1.8.5_vue@3.2.45:
+    resolution: {integrity: sha512-dUJUYemELZdp4rpOnlQXU5GH2YWtf22vnw3Ekdn1ksoZu3cv30C6J9TCMsFjJhYhH8ZkfYowjfCx137eByjXXw==}
+    peerDependencies:
+      echarts: '*'
+      vue: '*'
+    peerDependenciesMeta:
+      echarts:
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      vue: registry.npmmirror.com/vue/3.2.45
     dev: true
 
   /@rollup/pluginutils/4.2.1:
@@ -2038,7 +2054,7 @@ packages:
       '@babel/parser': registry.npmmirror.com/@babel/parser/7.20.7
       '@vue/shared': registry.npmmirror.com/@vue/shared/3.2.45
       estree-walker: 2.0.2
-      source-map: registry.npmmirror.com/source-map/0.6.1
+      source-map: 0.6.1
 
   registry.npmmirror.com/@vue/compiler-dom/3.2.45:
     resolution: {integrity: sha512-tyYeUEuKqqZO137WrZkpwfPCdiiIeXYCcJ8L4gWz9vqaxzIQRccTSwSWZ/Axx5YR2z+LvpUbmPNXxuBU45lyRw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vue/compiler-dom/-/compiler-dom-3.2.45.tgz}
@@ -4819,6 +4835,7 @@ packages:
     name: source-map
     version: 0.6.1
     engines: {node: '>=0.10.0'}
+    dev: true
 
   registry.npmmirror.com/spdx-correct/3.1.1:
     resolution: {integrity: sha512-cOYcUWwhCuHCXi49RhFRCyJEK3iPj1Ziz9DpViV3tbZOwXD49QzIN3MpOLJNxh2qwq2lJJZaKMVw9qNi4jTC0w==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/spdx-correct/-/spdx-correct-3.1.1.tgz}
