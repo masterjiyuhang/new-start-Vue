@@ -11,6 +11,7 @@
       (() => {
         var htmlRoot = document.getElementById("htmlRoot");
         var theme = window.localStorage.getItem("__APP__DARK__MODE__");
+        console.log(theme, 'theme....')
         if (htmlRoot && theme) {
           htmlRoot.setAttribute("data-theme", theme);
           theme = htmlRoot = null;

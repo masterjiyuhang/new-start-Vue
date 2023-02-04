@@ -2,7 +2,7 @@ import Axios, {
   Method,
   AxiosError,
   AxiosResponse,
-  AxiosRequestConfig
+  AxiosRequestConfig,
 } from "axios";
 
 export type resultType = {
