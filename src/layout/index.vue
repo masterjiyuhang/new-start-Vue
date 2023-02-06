@@ -17,7 +17,9 @@
 import { computed, defineComponent, h, reactive } from "vue";
 import appMain from "./components/appMain.vue";
 import { useAppStoreHook } from "@/stores/modules/app";
+
 import Sidebar from "./components/sidebar.vue";
+import Tab from "./components/tab.vue";
 
 const defaultSet = reactive({
   sidebar: computed(() => {
@@ -45,7 +47,7 @@ const layoutHeader = defineComponent({
         class: { "fixed-header": defaultSet.fixedHeader },
         style: ["box-shadow: 0 1px 4px #0d0d0d"],
       },
-      { default: () => ["asdasdasd"] }
+      { default: () => ["asdasdasd", h(Tab)] }
     );
   },
 });
