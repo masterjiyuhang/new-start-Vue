@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="htmlRoot">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
@@ -10,13 +10,26 @@
     <script>
       (() => {
         var htmlRoot = document.getElementById("htmlRoot");
-        var theme = window.localStorage.getItem("__APP__DARK__MODE__");
-        console.log(theme, 'theme....')
+        var theme =
+          window.localStorage.getItem("__APP__DARK__MODE__") || "light";
+        console.log(theme, "theme....");
         if (htmlRoot && theme) {
-          htmlRoot.setAttribute("data-theme", theme);
+          htmlRoot.setAttribute("class", theme + "-scheme");
           theme = htmlRoot = null;
         }
       })();
+    </script>
+    <script>
+      // js 监听系统主题模式
+      const scheme = window.matchMedia("(prefers-color-scheme: dark)");
+      console.log(scheme, "scheme");
+      if (scheme.matches) {
+        // 深色模式业务处理代码
+        console.log("深色模式");
+      } else {
+        // 浅色模式业务处理代码
+        console.log("浅色模式");
+      }
     </script>
     <div id="app">
       <style>

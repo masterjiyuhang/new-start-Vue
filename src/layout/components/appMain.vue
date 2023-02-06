@@ -58,4 +58,21 @@ const transitionMain = defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.app-main {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.app-main-nofixed-header {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+.main-content {
+  margin: 24px;
+}
+</style>

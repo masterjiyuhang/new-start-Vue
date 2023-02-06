@@ -6,6 +6,7 @@ import App from "./App.vue";
 import router from "./router";
 import "./assets/main.css";
 import "./style/tailwind.css";
+import "./style/index.scss";
 
 async function bootstrap() {
   const app = createApp(App);

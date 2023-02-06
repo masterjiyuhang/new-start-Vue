@@ -1,14 +1,23 @@
 <template>
-  <div>
-    <div v-if="defaultSet.fixedHeader"></div>
-    <app-main></app-main>
+  <div :class="['app-wrapper']">
+    <Sidebar />
+    <div :class="['main-container']">
+      <div v-if="defaultSet.fixedHeader">
+        <layout-header />
+        <app-main></app-main>
+      </div>
+      <el-scrollbar v-else>
+        <app-main></app-main>
+      </el-scrollbar>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { computed, defineComponent, h, reactive } from "vue";
 import appMain from "./components/appMain.vue";
 import { useAppStoreHook } from "@/stores/modules/app";
+import Sidebar from "./components/sidebar.vue";
 
 const defaultSet = reactive({
   sidebar: computed(() => {
@@ -27,6 +36,25 @@ const defaultSet = reactive({
     };
   }),
 });
+
+const layoutHeader = defineComponent({
+  render() {
+    return h(
+      "div",
+      {
+        class: { "fixed-header": defaultSet.fixedHeader },
+        style: ["box-shadow: 0 1px 4px #0d0d0d"],
+      },
+      { default: () => ["asdasdasd"] }
+    );
+  },
+});
+
+function setTheme(layoutModel: string = "vertical") {
+  window.document.body.setAttribute("layout", layoutModel);
+}
+
+setTheme();
 </script>
 
 <style scoped></style>

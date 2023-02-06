@@ -22,6 +22,7 @@ Object.keys(modules).forEach((key) => {
 });
 
 console.log(
+  "格式化之后的路由",
   formatTwoStageRoutes(
     formatFlatteningRoutes(buildHierarchyTree(ascending(routes)))
   )
