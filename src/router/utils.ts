@@ -1,6 +1,9 @@
+import { usePermissionStoreHook } from "@/stores/modules/permissions";
 import { buildHierarchyTree } from "@/utils/tree";
-import { isAllEmpty } from "@pureadmin/utils";
-import type { RouteRecordRaw } from "vue-router";
+import { isAllEmpty, cloneDeep } from "@pureadmin/utils";
+import type { RouteComponent, RouteRecordRaw } from "vue-router";
+
+import router from "./index";
 
 function handRank(routeInfo: any) {
   const { name, path, parentId, meta } = routeInfo;
@@ -22,6 +25,17 @@ function ascending(arr: any[]) {
       return a?.meta.rank - b?.meta.rank;
     }
   );
+}
+
+/** 过滤meta中showLink为false的菜单 */
+function filterTree(data: RouteComponent[]) {
+  const newTree = cloneDeep(data).filter(
+    (v: { meta: { showLink: boolean } }) => v.meta?.showLink !== false
+  );
+  newTree.forEach(
+    (v: { children }) => v.children && (v.children = filterTree(v.children))
+  );
+  return newTree;
 }
 
 /**
@@ -67,4 +81,18 @@ function formatTwoStageRoutes(routesList: RouteRecordRaw[]) {
   return newRoutesList;
 }
 
-export { ascending, formatFlatteningRoutes, formatTwoStageRoutes };
+function initRouter() {
+  // console.log("初始化路由");
+  const routeList = [];
+  return new Promise((resolve) => {
+    usePermissionStoreHook().handleWholeMenus(routeList);
+    resolve(router);
+  });
+}
+export {
+  ascending,
+  initRouter,
+  filterTree,
+  formatFlatteningRoutes,
+  formatTwoStageRoutes,
+};
