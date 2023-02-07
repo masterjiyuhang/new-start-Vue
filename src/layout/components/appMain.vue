@@ -1,5 +1,5 @@
 <template>
-  <section class="app-main">
+  <section class="app-main" :style="{ paddingTop: '45px' }">
     <RouterView v-slot="{ Component, route }">
       <el-scrollbar>
         <el-backtop title="回到顶部" target=".app-main">
@@ -61,7 +61,7 @@ const transitionMain = defineComponent({
 <style scoped>
 .app-main {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: relative;
   overflow-x: hidden;
 }

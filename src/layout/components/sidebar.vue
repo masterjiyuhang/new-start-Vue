@@ -14,15 +14,16 @@
         @close="handleClose"
       >
         <el-menu-item
-          v-for="item in menuData"
+          v-for="(item, index) in menuData"
           :key="item.id"
           :index="item.path"
         >
-          <template #title
-            ><span>{{ item.meta.title }}</span></template
-          >
+          <template #title>
+            <el-icon><component :is="icons[index]" /></el-icon>
+            <span> {{ item.meta.title }}</span>
+          </template>
         </el-menu-item>
-        <el-sub-menu index="1">
+        <!-- <el-sub-menu index="1">
           <template #title>
             <el-icon><location /></el-icon>
             <span>Navigator One</span>
@@ -51,7 +52,7 @@
         <el-menu-item index="4">
           <el-icon><setting /></el-icon>
           <template #title>Navigator Four</template>
-        </el-menu-item>
+        </el-menu-item> -->
       </el-menu>
     </el-scrollbar>
   </div>
@@ -68,6 +69,7 @@ import {
 import { useRoute } from "vue-router";
 import { usePermissionStoreHook } from "@/stores/modules/permissions";
 
+const icons = [Document, IconMenu, Location, Setting];
 const isCollapse = ref(false);
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath, "handleOpen");

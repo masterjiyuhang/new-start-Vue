@@ -25,6 +25,16 @@
     }
   }
 
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 998;
+    width: calc(100% - 210px);
+    /* fixed-header 属性左上角动画 */
+    transition: width var(--pure-transition-duration);
+  }
+
   .sidebar-container {
     transition: width var(--transition-duration);
     width: $sideBarWidth !important;

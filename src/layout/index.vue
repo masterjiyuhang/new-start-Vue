@@ -18,7 +18,7 @@ import { computed, defineComponent, h, reactive } from "vue";
 import appMain from "./components/appMain.vue";
 import { useAppStoreHook } from "@/stores/modules/app";
 
-import Sidebar from "./components/sidebar.vue";
+import Sidebar from "./components/aside/index.vue";
 import Tab from "./components/tab.vue";
 
 const defaultSet = reactive({

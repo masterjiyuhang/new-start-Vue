@@ -9,9 +9,21 @@ import { RouterView } from "vue-router";
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
 .wrapper {
+  @include clearfix;
+
+  position: relative;
   width: 100%;
+  height: 100%;
 }
 @media (min-width: 1024px) {
   header {
