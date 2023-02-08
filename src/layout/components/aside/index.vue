@@ -13,49 +13,38 @@
         @open="handleOpen"
         @close="handleClose"
       >
-        <el-menu-item
-          v-for="(item, index) in menuData"
-          :key="item.id"
-          :index="item.path"
-        >
-          <template #title>
-            <el-icon><component :is="icons[index]" /></el-icon>
-            <span
-              >{{ item.meta.title
-              }}{{ onlyOneChild(item, item.children) }}</span
-            >
-          </template>
-        </el-menu-item>
-        <!-- <el-sub-menu index="1">
+        <template v-for="(item, index) in menuData" :key="item.id">
+          <!-- 单一菜单 -->
+          <el-menu-item
+            :index="item.path"
+            v-if="hasOneShowingChild(item, item.children)"
+          >
             <template #title>
-              <el-icon><location /></el-icon>
-              <span>Navigator One</span>
+              <el-icon><component :is="icons[index]" /></el-icon>
+              <span>{{ item.meta.title }}</span>
             </template>
-            <el-menu-item-group>
-              <template #title><span>Group One</span></template>
-              <el-menu-item index="1-1">item one</el-menu-item>
-              <el-menu-item index="1-2">item two</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="Group Two">
-              <el-menu-item index="1-3">item three</el-menu-item>
-            </el-menu-item-group>
-            <el-sub-menu index="1-4">
-              <template #title><span>item four</span></template>
-              <el-menu-item index="1-4-1">item one</el-menu-item>
-            </el-sub-menu>
+          </el-menu-item>
+
+          <!-- 有子菜单 -->
+          <el-sub-menu v-else ref="submenu" :index="item.path">
+            <template #title>
+              <el-icon><component :is="icons[index]" /></el-icon>
+              {{ item.meta.title }}
+            </template>
+
+            <template
+              v-for="(childItem, childIndex) in item.children"
+              :key="childItem.id"
+            >
+              <el-menu-item :index="childItem.path">
+                <template #title>
+                  <el-icon><component :is="icons[childIndex]" /></el-icon>
+                  <span>{{ childItem.meta.title }}</span>
+                </template>
+              </el-menu-item>
+            </template>
           </el-sub-menu>
-          <el-menu-item index="2">
-            <el-icon><icon-menu /></el-icon>
-            <template #title>Navigator Two</template>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <el-icon><document /></el-icon>
-            <template #title>Navigator Three</template>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <el-icon><setting /></el-icon>
-            <template #title>Navigator Four</template>
-          </el-menu-item> -->
+        </template>
       </el-menu>
     </el-scrollbar>
   </div>
@@ -82,7 +71,7 @@ const handleClose = (key: string, keyPath: string[]) => {
 };
 
 const route = useRoute();
-console.log(route, "route", route.path);
+// console.log(route, "route", route.path);
 
 const menuData: any = computed(() => {
   return usePermissionStoreHook().wholeMenus;
@@ -106,15 +95,31 @@ type childrenType = {
   parentId?: number;
   pathList?: number[];
 };
+const onlyOneChild: childrenType = ref(null);
 
-const onlyOneChild = (parent: childrenType, children: childrenType[] = []) => {
-  console.log(children, parent, "onlyOneChild ....");
+const hasOneShowingChild = (
+  parent: childrenType,
+  children: childrenType[] = []
+) => {
   const showingChildren = children.filter((item: any) => {
-    console.log(item);
+    onlyOneChild.value = item;
     return true;
   });
 
-  console.log(showingChildren, " showing chidlren");
+  if (showingChildren[0]?.meta?.showParent) {
+    return false;
+  }
+
+  if (showingChildren.length === 1) {
+    return true;
+  }
+
+  if (showingChildren.length === 0) {
+    onlyOneChild.value = { ...parent, path: "", noShowingChildren: true };
+    return true;
+  }
+
+  return false;
 };
 </script>
 

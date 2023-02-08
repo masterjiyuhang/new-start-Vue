@@ -20,7 +20,7 @@ export default {
       name: "CarDetail",
       component: () => import("@/views/car/CarDetail.vue"),
       meta: {
-        title: "汽车管理",
+        title: "汽车详情",
       },
     },
   ],
