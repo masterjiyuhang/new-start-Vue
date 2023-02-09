@@ -123,7 +123,7 @@ function findRouteByPath(
 ) {
   let res = routes.find((item: { path: string }) => item.path == path);
 
-  console.log(path, routes, flag);
+  // console.log(path, routes, flag);
   if (res) {
     return isProxy(res) ? toRaw(res) : res;
   } else {

@@ -10,8 +10,7 @@
         :collapse="isCollapse"
         :collapse-transition="false"
         :default-active="route.path"
-        @open="handleOpen"
-        @close="handleClose"
+        @select="(indexPath) => menuSelect(indexPath, routers)"
       >
         <template v-for="(item, index) in menuData" :key="item.id">
           <!-- 单一菜单 -->
@@ -58,18 +57,13 @@ import {
   Location,
   Setting,
 } from "@element-plus/icons-vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { usePermissionStoreHook } from "@/stores/modules/permissions";
+import { emitter } from "@/utils/mitt";
 
 const icons = [Document, IconMenu, Location, Setting];
 const isCollapse = ref(false);
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath, "handleOpen");
-};
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath, "handleClose");
-};
-
+const routers = useRouter().options.routes;
 const route = useRoute();
 // console.log(route, "route", route.path);
 
@@ -122,7 +116,39 @@ const hasOneShowingChild = (
   return false;
 };
 
-console.log(route, "route...");
+// console.log(route, "route...");
+
+const errorInfo = "当前路由配置不正确，请检查配置";
+const menuSelect = (indexPath, routers) => {
+  console.log(indexPath, routers, "菜单选择 有点机会的");
+
+  let parentPath = "";
+  const parentPathIndex = indexPath.lastIndexOf("/");
+  if (parentPathIndex > 0) {
+    parentPath = indexPath.slice(0, parentPathIndex);
+  }
+
+  /** 找到当前路由的信息 */
+  function findCurrentRoute(indexPath: string, routes) {
+    if (!routes) return console.error(errorInfo);
+    return routes.map((item) => {
+      if (item.path === indexPath) {
+        if (item.redirect) {
+          findCurrentRoute(item.redirect, item.children);
+        } else {
+          /** 切换左侧菜单 通知标签页 */
+          emitter.emit("changLayoutRoute", {
+            indexPath,
+            parentPath,
+          });
+        }
+      } else {
+        if (item.children) findCurrentRoute(indexPath, item.children);
+      }
+    });
+  }
+  findCurrentRoute(indexPath, routers);
+};
 watch(
   () => [route.path],
   () => {
