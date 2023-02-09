@@ -80,7 +80,7 @@ const logout = () => {
 };
 
 const getBreadcrumb = (): void => {
-  console.log("获取面包屑", routes);
+  //   console.log("获取面包屑", routes);
   // 当前路由信息
   let currentRoute;
 
@@ -102,8 +102,14 @@ const getBreadcrumb = (): void => {
     });
   } else {
     // console.log(router.currentRoute.value.path);
-    currentRoute = findRouteByPath(router.currentRoute.value.path, multiTags);
+    currentRoute = findRouteByPath(
+      router.currentRoute.value.path,
+      multiTags,
+      "111"
+    );
   }
+
+  console.log(currentRoute, multiTags, "multiTags");
 
   // 当前路由的父级路径组成的数组
   const parentRoutes = getParentPaths(router.currentRoute.value.path, routes);
@@ -117,7 +123,7 @@ const getBreadcrumb = (): void => {
       //   console.log(path, routes);
       //   const res = findRouteByPath(path, routes);
       //   console.log(res, "res..");
-      matched.push(findRouteByPath(path, routes));
+      matched.push(findRouteByPath(path, routes, "asdasdasd"));
     }
   });
 
@@ -147,6 +153,8 @@ const getBreadcrumb = (): void => {
   levelList.value = matched.filter(
     (item) => item?.meta && item?.meta.title !== false
   );
+
+  console.log(matched, levelList.value);
 };
 
 onMounted(() => {

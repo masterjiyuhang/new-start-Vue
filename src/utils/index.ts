@@ -1,3 +1,5 @@
+import { findCurrentRouteByPath } from "./erHangUtils/index";
+
 const loadEnv = () => {
   return import.meta.env;
 };
@@ -47,4 +49,5 @@ function wrapperEnv(envConf: Recordable): ViteEnv {
   }
   return ret;
 }
-export { loadEnv, wrapperEnv };
+
+export { loadEnv, wrapperEnv, findCurrentRouteByPath };

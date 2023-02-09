@@ -116,8 +116,14 @@ function getParentPaths(path: string, routes: RouteRecordRaw[]) {
 }
 
 /** 查找对应path的路由信息 */
-function findRouteByPath(path: string, routes: RouteRecordRaw[]) {
+function findRouteByPath(
+  path: string,
+  routes: RouteRecordRaw[],
+  flag?: string
+) {
   let res = routes.find((item: { path: string }) => item.path == path);
+
+  console.log(path, routes, flag);
   if (res) {
     return isProxy(res) ? toRaw(res) : res;
   } else {

@@ -1,8 +1,10 @@
 import { buildHierarchyTree } from "./../utils/tree";
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, Router } from "vue-router";
 import type { RouteRecordRaw, RouteComponent } from "vue-router";
 
 import remainingRouter from "./modules/remaining";
+
+import { findCurrentRouteByPath } from "@/utils";
 
 import {
   ascending,
@@ -10,6 +12,7 @@ import {
   formatTwoStageRoutes,
   initRouter,
 } from "./utils";
+import { useMultiTagsStoreHook } from "@/stores/modules/multiTags";
 
 const modules: Record<string, any> = import.meta.glob(
   ["./modules/**/*.ts", "!./modules/**/remaining.ts"],
@@ -47,7 +50,21 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  initRouter();
+  initRouter().then((router: Router) => {
+    const { path } = to;
+    const routes: RouteRecordRaw[] = router.options.routes[0].children!;
+    //  router, router.options.routes[0].children 这个就是layout下面的其他路由
+    const route = findCurrentRouteByPath(path, routes);
+
+    if (!from.name) {
+      if (route && route.meta?.title) {
+        useMultiTagsStoreHook().handleTags("push", {
+          path: route.path,
+          name: route.name,
+        });
+      }
+    }
+  });
   next();
 });
 export default router;
