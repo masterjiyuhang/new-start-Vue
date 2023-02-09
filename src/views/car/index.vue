@@ -1,7 +1,26 @@
 <template>
-  <div>car</div>
+  <div>
+    car
+
+    <el-button @click="handleSayHi">sayHi</el-button>
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ElNotification } from "element-plus";
+
+const handleSayHi = () => {
+  // ElNotification({
+  //   title: "Success",
+  //   message: "This is a success message",
+  //   type: "success",
+  // });
+  ElNotification({
+    title: "Notification Title",
+    message: "Hi~ ",
+    duration: 0,
+  });
+};
+</script>
 
 <style lang="scss" scoped></style>

@@ -122,7 +122,6 @@ const hasOneShowingChild = (
   return false;
 };
 
-
 console.log(route, "route...");
 watch(
   () => [route.path],

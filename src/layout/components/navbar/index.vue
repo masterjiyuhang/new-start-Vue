@@ -80,7 +80,7 @@ const logout = () => {
 };
 
 const getBreadcrumb = (): void => {
-  //   console.log("获取面包屑", routes);
+  // console.log("获取面包屑", routes);
   // 当前路由信息
   let currentRoute;
 
@@ -109,52 +109,50 @@ const getBreadcrumb = (): void => {
     );
   }
 
-  console.log(currentRoute, multiTags, "multiTags");
+  console.log(currentRoute);
+  // // console.log(currentRoute, multiTags, "multiTags");
 
-  // 当前路由的父级路径组成的数组
-  const parentRoutes = getParentPaths(router.currentRoute.value.path, routes);
+  // // 当前路由的父级路径组成的数组
+  // const parentRoutes = getParentPaths(router.currentRoute.value.path, routes);
 
-  // 存放组成面包屑的数组
-  let matched = [] as any[];
+  // // 存放组成面包屑的数组
+  // let matched = [] as any[];
 
-  // 获取每个父级路径对应的路由信息
-  parentRoutes.forEach((path) => {
-    if (path !== "/") {
-      //   console.log(path, routes);
-      //   const res = findRouteByPath(path, routes);
-      //   console.log(res, "res..");
-      matched.push(findRouteByPath(path, routes, "asdasdasd"));
-    }
-  });
+  // // 获取每个父级路径对应的路由信息
+  // parentRoutes.forEach((path) => {
+  //   if (path !== "/") {
+  //     matched.push(findRouteByPath(path, routes, "asdasdasd"));
+  //   }
+  // });
 
-  if (currentRoute?.path !== "/welcome") matched.push(currentRoute);
+  // if (currentRoute?.path !== "/welcome") matched.push(currentRoute);
 
-  if (!isDashboard(matched[0])) {
-    matched = [
-      {
-        path: "/welcome",
-        parentPath: "/",
-        meta: { title: "首页" },
-      } as unknown as RouteLocationMatched,
-    ].concat(matched);
-  }
+  // if (!isDashboard(matched[0])) {
+  //   matched = [
+  //     {
+  //       path: "/welcome",
+  //       parentPath: "/",
+  //       meta: { title: "首页" },
+  //     } as unknown as RouteLocationMatched,
+  //   ].concat(matched);
+  // }
 
-  matched.forEach((item, index) => {
-    if (currentRoute?.query || currentRoute?.params) return;
-    if (item?.children) {
-      item.children.forEach((v) => {
-        if (v?.meta?.title === item?.meta?.title) {
-          matched.splice(index, 1);
-        }
-      });
-    }
-  });
+  // matched.forEach((item, index) => {
+  //   if (currentRoute?.query || currentRoute?.params) return;
+  //   if (item?.children) {
+  //     item.children.forEach((v) => {
+  //       if (v?.meta?.title === item?.meta?.title) {
+  //         matched.splice(index, 1);
+  //       }
+  //     });
+  //   }
+  // });
 
-  levelList.value = matched.filter(
-    (item) => item?.meta && item?.meta.title !== false
-  );
+  // levelList.value = matched.filter(
+  //   (item) => item?.meta && item?.meta.title !== false
+  // );
 
-  console.log(matched, levelList.value);
+  // console.log(matched, levelList.value);
 };
 
 onMounted(() => {
