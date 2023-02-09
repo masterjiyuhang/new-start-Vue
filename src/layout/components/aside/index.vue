@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import {
   Document,
   Menu as IconMenu,
@@ -121,6 +121,15 @@ const hasOneShowingChild = (
 
   return false;
 };
+
+
+console.log(route, "route...");
+watch(
+  () => [route.path],
+  () => {
+    console.log("路由变化了 哈哈哈哈");
+  }
+);
 </script>
 
 <style scoped></style>
