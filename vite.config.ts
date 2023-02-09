@@ -11,7 +11,7 @@ import type { UserConfig, ConfigEnv } from "vite";
 // import { wrapperEnv } from "@/utils";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import Inspect from "vite-plugin-inspect";
-// import ElementPlus from "unplugin-element-plus/vite";
+import ElementPlus from "unplugin-element-plus/vite";
 import path from "node:path";
 
 // https://vitejs.dev/config/
@@ -72,6 +72,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           }),
         ],
       }),
+      ElementPlus(),
       Components({
         resolvers: [ElementPlusResolver({ importStyle: "sass" })],
       }),

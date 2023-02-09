@@ -43,6 +43,6 @@
     "build/**/*.d.ts",
     "mock/**/*.ts",
     "vite.config.ts"
-  ],
+, "src/utils/excelToJs/excelToJs.js"  ],
   "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
 }
