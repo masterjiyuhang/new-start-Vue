@@ -16,6 +16,9 @@ type Events = {
     indexPath: string;
     parentPath: string;
   };
+  changeCurrentRoute: {
+    routeInfo: any;
+  };
 };
 
 export const emitter: Emitter<Events> = mitt<Events>();

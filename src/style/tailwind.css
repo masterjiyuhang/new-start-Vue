@@ -1,20 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer components {
   .flex-c {
-    @apply flex justify-center items-center;
+    @apply flex items-center justify-center;
   }
 
   .flex-ac {
-    @apply flex justify-around items-center;
+    @apply flex items-center justify-around;
   }
 
   .flex-bc {
-    @apply flex justify-between items-center;
+    @apply flex items-center justify-between;
   }
 
   .navbar-bg-hover {
-    @apply dark:text-white dark:hover:!bg-[#242424];
+    @apply dark: text-white dark:hover: !bg-[#242424];
   }
 }

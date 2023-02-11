@@ -44,9 +44,60 @@ export const constantMenus: Array<RouteComponent> = ascending(routes).concat(
   ...remainingRouter
 );
 
+export const erHangBaseRoutes: Array<RouteRecordRaw> = [
+  {
+    path: "/",
+    name: "home",
+    component: () => import("@/erHangLayout/index.vue"),
+    redirect: "/dashboard",
+    meta: {
+      title: "首页",
+      rank: 0,
+    },
+    children: [
+      {
+        path: "/dashboard",
+        name: "dashboard",
+        component: () => import("@/views/dashboard/index.vue"),
+        meta: {
+          title: "首页",
+        },
+      },
+      {
+        path: "/car",
+        redirect: "/car/index",
+        meta: {
+          icon: "guide",
+          title: "列表页",
+          rank: 2,
+        },
+        children: [
+          {
+            path: "/car/index",
+            name: "CarManagement",
+            component: () => import("@/views/car/index.vue"),
+            meta: {
+              title: "汽车管理",
+            },
+          },
+          {
+            path: "/car/detail",
+            name: "CarDetail",
+            component: () => import("@/views/car/CarDetail.vue"),
+            meta: {
+              title: "汽车详情",
+            },
+          },
+        ],
+      },
+    ],
+  },
+];
+
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes: constantRoutes,
+  // routes: constantRoutes,
+  routes: erHangBaseRoutes,
 });
 
 router.beforeEach((to, from, next) => {
