@@ -1,7 +1,9 @@
-# html-static-font
+# Vue3-project
 
 This template should help get you started developing with Vue 3 in Vite.
-## 安装tailwind
+
+## 安装 tailwind
+
 ```bash
 pnpm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 

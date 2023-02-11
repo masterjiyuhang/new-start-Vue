@@ -1,7 +1,9 @@
 <template>
   <div class="sidebar-container has-logo">
     <el-scrollbar wrap-class="scrollbar-wrapper" :class="['pc']">
-      <div>sidebar</div>
+      <div class="flex justify-center text-center">
+        <img src="@/assets/logo.png" alt="" class="w-[20px] h-[20px]" />
+      </div>
 
       <el-menu
         router
