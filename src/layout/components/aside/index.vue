@@ -4,7 +4,7 @@
       <div class="flex justify-center text-center">
         <img src="@/assets/logo.png" alt="" class="w-[20px] h-[20px]" />
       </div>
-
+      {{ route.path }}
       <el-menu
         router
         class="outer-most select-one el-menu-vertical-demo"
@@ -17,12 +17,15 @@
         <template v-for="(item, index) in menuData" :key="item.id">
           <!-- 单一菜单 -->
           <el-menu-item
-            :index="item.path"
-            v-if="hasOneShowingChild(item, item.children)"
+            :index="hasOneShowingChild(item, item.children).onlyOneChild.path"
+            v-if="hasOneShowingChild(item, item.children).haveChildren"
           >
             <template #title>
               <el-icon><component :is="icons[index]" /></el-icon>
-              <span>{{ item.meta.title }}</span>
+              <span>{{
+                hasOneShowingChild(item, item.children).onlyOneChild.path +
+                item.meta.title
+              }}</span>
             </template>
           </el-menu-item>
 
@@ -30,7 +33,7 @@
           <el-sub-menu v-else ref="submenu" :index="item.path">
             <template #title>
               <el-icon><component :is="icons[index]" /></el-icon>
-              {{ item.meta.title }}
+              {{ item.path + item.meta.title }}
             </template>
 
             <template
@@ -40,7 +43,7 @@
               <el-menu-item :index="childItem.path">
                 <template #title>
                   <el-icon><component :is="icons[childIndex]" /></el-icon>
-                  <span>{{ childItem.meta.title }}</span>
+                  <span>{{ childItem.path + childItem.meta.title }}</span>
                 </template>
               </el-menu-item>
             </template>
@@ -67,7 +70,6 @@ const icons = [Document, IconMenu, Location, Setting];
 const isCollapse = ref(false);
 const routers = useRouter().options.routes;
 const route = useRoute();
-// console.log(route, "route", route.path);
 
 const menuData: any = computed(() => {
   return usePermissionStoreHook().wholeMenus;
@@ -91,46 +93,58 @@ type childrenType = {
   parentId?: number;
   pathList?: number[];
 };
-const onlyOneChild: childrenType = ref(null);
 
 const hasOneShowingChild = (
   parent: childrenType,
   children: childrenType[] = []
 ) => {
+  const res = {
+    onlyOneChild: null,
+    haveChildren: false,
+  };
   const showingChildren = children.filter((item: any) => {
-    onlyOneChild.value = item;
-    return true;
+    res.onlyOneChild = item;
+    res.haveChildren = true;
+    return res;
   });
 
   if (showingChildren[0]?.meta?.showParent) {
-    return false;
+    res.haveChildren = false;
+    return res;
   }
 
   if (showingChildren.length === 1) {
-    return true;
+    res.haveChildren = true;
+    return res;
   }
 
   if (showingChildren.length === 0) {
-    onlyOneChild.value = { ...parent, path: "", noShowingChildren: true };
-    return true;
+    res.onlyOneChild = { ...parent, path: "", noShowingChildren: true };
+    res.haveChildren = true;
+    return res;
   }
 
-  return false;
+  res.haveChildren = false;
+  return res;
 };
 
 // console.log(route, "route...");
 
 const errorInfo = "当前路由配置不正确，请检查配置";
-const menuSelect = (indexPath, routers) => {
-  console.log(indexPath, routers, "菜单选择 有点机会的");
 
+/**
+ * 菜单选择
+ * @param indexPath 当前页面路径信息
+ * @param routers 全部路由信息
+ */
+const menuSelect = (indexPath, routers) => {
   let parentPath = "";
   const parentPathIndex = indexPath.lastIndexOf("/");
   if (parentPathIndex > 0) {
     parentPath = indexPath.slice(0, parentPathIndex);
   }
 
-  /** 找到当前路由的信息 */
+  /** 找到当前路由的信息， 就是告诉标签页 menu变化了 */
   function findCurrentRoute(indexPath: string, routes) {
     if (!routes) return console.error(errorInfo);
     return routes.map((item) => {
@@ -151,10 +165,12 @@ const menuSelect = (indexPath, routers) => {
   }
   findCurrentRoute(indexPath, routers);
 };
+
 watch(
-  () => [route.path],
+  () => [route.path, usePermissionStoreHook().wholeMenus],
   () => {
     console.log("路由变化了 哈哈哈哈");
+    menuSelect(route.path, routers);
   }
 );
 </script>
