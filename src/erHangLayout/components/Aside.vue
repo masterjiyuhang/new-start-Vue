@@ -33,32 +33,65 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import { Document, Menu as IconMenu, Setting } from "@element-plus/icons-vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import { emitter } from "@/utils/mitt";
 
+const isCollapse = ref<boolean>(false);
+const route = useRoute();
+const router = useRouter();
+const routers = useRouter().options.routes;
+const baseRoutes: RouteRecordRaw[] = router.options.routes[0].children;
+
 const menuDefaultSetting = reactive({
-  menuDefaultActive: "/car/detail", // 默认展开项
+  menuDefaultActive: route.path, // 默认展开项
   menuPopperMode: "dark", // 	dark / light
 });
 
-const isCollapse = ref<boolean>(false);
-
-const router = useRouter();
-const baseRoutes: RouteRecordRaw[] = router.options.routes[0].children;
-
-const menuSelect = (indexPath: any) => {
+const menuSelect = (indexPath: any, routers) => {
+  // console.log(routers, "routers");
   let parentPath = "";
   const parentPathIndex = indexPath.lastIndexOf("/");
   if (parentPathIndex > 0) {
     parentPath = indexPath.slice(0, parentPathIndex);
   }
 
+  // 设置当前路由信息
   menuDefaultSetting.menuDefaultActive = indexPath;
-  emitter.emit("changeCurrentRoute", { routeInfo: indexPath, parentPath });
+
+  /** 找到当前路由的信息 */
+  function findCurrentRoute(indexPath: string, routes) {
+    const errorInfo = "当前路由配置不正确，请检查配置";
+    if (!routes) return console.error(errorInfo);
+    return routes.map((item) => {
+      if (item.path === indexPath) {
+        if (item.redirect) {
+          findCurrentRoute(item.redirect, item.children);
+        } else {
+          /** 切换左侧菜单 通知标签页 */
+          emitter.emit("changeCurrentRoute", {
+            routeInfo: indexPath,
+            parentPath,
+          });
+        }
+      } else {
+        if (item.children) findCurrentRoute(indexPath, item.children);
+      }
+    });
+  }
+
+  // emitter.emit("changeCurrentRoute", { routeInfo: indexPath, parentPath });
+  findCurrentRoute(indexPath, routers);
 };
+
+watch(
+  () => [route.path],
+  () => {
+    menuSelect(route.path, routers);
+  }
+);
 </script>
 
 <style lang="scss" scoped>

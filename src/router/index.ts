@@ -1,3 +1,4 @@
+import { useTagListsStore } from "./../stores/modules/tagLists";
 import { buildHierarchyTree } from "./../utils/tree";
 import { createRouter, createWebHashHistory, Router } from "vue-router";
 import type { RouteRecordRaw, RouteComponent } from "vue-router";
@@ -96,8 +97,8 @@ export const erHangBaseRoutes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes: constantRoutes,
-  // routes: erHangBaseRoutes,
+  // routes: constantRoutes,
+  routes: erHangBaseRoutes,
 });
 
 router.beforeEach((to, from, next) => {
@@ -110,6 +111,13 @@ router.beforeEach((to, from, next) => {
     if (!from.name) {
       if (route && route.meta?.title) {
         useMultiTagsStoreHook().handleTags("push", {
+          path: route.path,
+          name: route.name,
+          meta: route.meta,
+          where: "路由守卫",
+        });
+
+        useTagListsStore().handleTags("push", {
           path: route.path,
           name: route.name,
           meta: route.meta,
