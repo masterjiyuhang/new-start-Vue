@@ -43,7 +43,7 @@ function dynamicRouteTag(value: string, parentPath: string): void {
 onBeforeMount(() => {
   //  接收侧边栏切换传递过来的参数
   emitter.on("changLayoutRoute", ({ indexPath, parentPath }) => {
-    console.log("接收侧边栏切换传递过来的参数");
+    console.log("接收侧边栏切换传递过来的参数", indexPath, parentPath);
     dynamicRouteTag(indexPath, parentPath);
   });
 });

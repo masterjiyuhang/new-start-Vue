@@ -6,8 +6,8 @@ import App from "./App.vue";
 import router from "./router";
 import "@/style/erHangBaseStyle/index.scss";
 import "./style/tailwind.css";
-// import "./assets/main.css";
-// import "./style/index.scss";
+import "./assets/main.css";
+import "./style/index.scss";
 
 async function bootstrap() {
   const app = createApp(App);

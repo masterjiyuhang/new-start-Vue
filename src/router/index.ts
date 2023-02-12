@@ -96,8 +96,8 @@ export const erHangBaseRoutes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  // routes: constantRoutes,
-  routes: erHangBaseRoutes,
+  routes: constantRoutes,
+  // routes: erHangBaseRoutes,
 });
 
 router.beforeEach((to, from, next) => {
@@ -112,6 +112,8 @@ router.beforeEach((to, from, next) => {
         useMultiTagsStoreHook().handleTags("push", {
           path: route.path,
           name: route.name,
+          meta: route.meta,
+          where: "路由守卫",
         });
       }
     }

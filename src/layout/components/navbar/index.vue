@@ -4,11 +4,6 @@
       :separator-icon="ArrowRight"
       class="!leading-[50px] select-none !text-[18px] breadcrumb-container"
     >
-      <!-- <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion management</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion detail</el-breadcrumb-item> -->
-
       <transition-group name="breadcrumb">
         <el-breadcrumb-item
           class="!inline !items-stretch"
@@ -24,7 +19,7 @@
 
     <div class="vertical-header-right">
       <el-dropdown trigger="click">
-        <span>哈哈</span>
+        <span> {{ levelList }} </span>
         <template #dropdown>
           <el-dropdown-menu class="logout">
             <el-dropdown-item @click="logout"> 退出登录 </el-dropdown-item>
@@ -37,30 +32,16 @@
 
 <script setup lang="ts">
 import { ArrowRight } from "@element-plus/icons-vue";
-import { onMounted, ref, toRaw, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { RouteLocationMatched } from "vue-router";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
-import { isEqual } from "@pureadmin/utils";
 import { useMultiTagsStoreHook } from "@/stores/modules/multiTags";
 
 const route = useRoute();
 const router = useRouter();
 const levelList = ref<any[]>([]);
 const routes: any = router.options.routes;
-// const multiTags: any = [
-//   ...[
-//     {
-//       path: "/welcome",
-//       parentPath: "/",
-//       meta: {
-//         title: "首页",
-//         icon: "homeFilled",
-//       },
-//     },
-//   ],
-// ];
-const multiTags: any = useMultiTagsStoreHook().multiTags;
 
 const isDashboard = (route: RouteLocationMatched): boolean | string => {
   const name = route && (route.name as string);
@@ -81,63 +62,40 @@ const logout = () => {
   console.log("logout");
 };
 
-const getBreadcrumb = (): void => {
-  // console.log("获取面包屑", routes);
-  // 当前路由信息
+const initBreadcrumb = () => {
+  console.log("init 开始");
+
   let currentRoute;
+  const multiTags: any = useMultiTagsStoreHook().multiTags;
 
-  if (Object.keys(route.query).length > 0) {
-    console.log("query > 0");
+  currentRoute = findRouteByPath(route.path, multiTags);
+  console.log(currentRoute, "计算出当前页面的路由信息");
 
-    multiTags.forEach((item) => {
-      if (isEqual(route.query, item?.query)) {
-        currentRoute = toRaw(item);
-      }
-    });
-  } else if (Object.keys(route.params).length > 0) {
-    console.log("params > 0");
+  const parentRoutes = getParentPaths(route.path, routes);
+  console.log(parentRoutes, "parentRoutes......");
 
-    multiTags.forEach((item) => {
-      if (isEqual(route.params, item?.params)) {
-        currentRoute = toRaw(item);
-      }
-    });
-  } else {
-    // console.log(router.currentRoute.value.path);
-    currentRoute = findRouteByPath(
-      router.currentRoute.value.path,
-      multiTags,
-      "111"
-    );
-  }
-
-  console.log(currentRoute, "navbar current router");
-  console.log(currentRoute, multiTags, "multiTags");
-
-  // 当前路由的父级路径组成的数组
-  const parentRoutes = getParentPaths(router.currentRoute.value.path, routes);
-
-  // 存放组成面包屑的数组
-  let matched = [] as any[];
-
+  let matched = [];
   // 获取每个父级路径对应的路由信息
   parentRoutes.forEach((path) => {
-    if (path !== "/") {
-      matched.push(findRouteByPath(path, routes, "asdasdasd"));
-    }
+    if (path !== "/") matched.push(findRouteByPath(path, routes));
   });
+
+  console.log(matched);
 
   if (currentRoute?.path !== "/welcome") matched.push(currentRoute);
 
+  console.log(matched);
   if (!isDashboard(matched[0])) {
     matched = [
       {
         path: "/welcome",
         parentPath: "/",
-        meta: { title: "首页" },
+        meta: { title: "自己加进去的首页" },
       } as unknown as RouteLocationMatched,
     ].concat(matched);
   }
+
+  console.log(matched, levelList, "level list. .");
 
   matched.forEach((item, index) => {
     if (currentRoute?.query || currentRoute?.params) return;
@@ -153,18 +111,17 @@ const getBreadcrumb = (): void => {
   levelList.value = matched.filter(
     (item) => item?.meta && item?.meta.title !== false
   );
-
-  console.log(matched, levelList.value);
 };
 
 onMounted(() => {
-  getBreadcrumb();
+  // getBreadcrumb();
+  initBreadcrumb();
 });
 
 watch(
   () => route.path,
   () => {
-    getBreadcrumb();
+    initBreadcrumb();
   }
 );
 </script>

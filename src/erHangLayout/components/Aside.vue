@@ -50,8 +50,14 @@ const router = useRouter();
 const baseRoutes: RouteRecordRaw[] = router.options.routes[0].children;
 
 const menuSelect = (indexPath: any) => {
+  let parentPath = "";
+  const parentPathIndex = indexPath.lastIndexOf("/");
+  if (parentPathIndex > 0) {
+    parentPath = indexPath.slice(0, parentPathIndex);
+  }
+
   menuDefaultSetting.menuDefaultActive = indexPath;
-  emitter.emit("changeCurrentRoute", { routeInfo: indexPath });
+  emitter.emit("changeCurrentRoute", { routeInfo: indexPath, parentPath });
 };
 </script>
 

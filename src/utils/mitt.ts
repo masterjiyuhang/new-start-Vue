@@ -18,6 +18,7 @@ type Events = {
   };
   changeCurrentRoute: {
     routeInfo: any;
+    parentPath: string;
   };
 };
 
