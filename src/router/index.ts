@@ -51,10 +51,10 @@ export const erHangBaseRoutes: Array<RouteRecordRaw> = [
     name: "home",
     component: () => import("@/erHangLayout/index.vue"),
     redirect: "/dashboard",
-    meta: {
-      title: "首页",
-      rank: 0,
-    },
+    // meta: {
+    //   title: "首页",
+    //   rank: 0,
+    // },
     children: [
       {
         path: "/dashboard",
@@ -62,6 +62,7 @@ export const erHangBaseRoutes: Array<RouteRecordRaw> = [
         component: () => import("@/views/dashboard/index.vue"),
         meta: {
           title: "首页",
+          rank: 0,
         },
       },
       {

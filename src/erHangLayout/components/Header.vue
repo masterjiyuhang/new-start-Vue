@@ -1,11 +1,7 @@
 <template>
   <div class="cch-header">
     <div>
-      {{ breadcrumbList }}
       <el-breadcrumb separator="/">
-        <!-- <div v-for="item in breadcrumbList" :key="item.id">
-          {{ item }}
-        </div> -->
         <el-breadcrumb-item
           class="!inline !items-stretch"
           v-for="item in breadcrumbList"
@@ -16,11 +12,21 @@
           </a>
         </el-breadcrumb-item>
       </el-breadcrumb>
+      <!-- 新的面包屑 -->
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item
+          class="!inline !items-stretch"
+          v-for="item in myBreadcrumbList"
+          :key="item.path"
+        >
+          <a @click.prevent="handleLink(item)">
+            {{ item.meta.title }}
+          </a>
+        </el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
 
-    <div>
-      {{ tagLists }}
-    </div>
+    <div></div>
   </div>
 </template>
 
@@ -35,6 +41,7 @@ const route = useRoute();
 const router = useRouter();
 const defaultRoutes: any = router.options.routes;
 const breadcrumbList = ref<any[]>([]);
+const myBreadcrumbList = ref<any[]>([]);
 
 const tagLists: any = computed(() => {
   return useTagListsStoreHook().tagLists;
@@ -55,6 +62,27 @@ const handleLink = (item: RouteLocationMatched): void => {
 };
 
 const initBreadcrumb = () => {
+  // 我自己的版本
+  let currentRouteMatched = route.matched.filter((item) => {
+    return item.meta && item.meta.title;
+  });
+
+  if (!isDashboard(currentRouteMatched[0])) {
+    currentRouteMatched = [
+      {
+        path: "/dashboard",
+        parentPath: "/",
+        meta: { title: "加进去的首页" },
+      } as unknown as RouteLocationMatched,
+    ].concat(currentRouteMatched);
+  }
+
+  const res = currentRouteMatched.filter((item) => {
+    return item.meta && item.meta.title && item.meta.breadcrumb !== false;
+  });
+  myBreadcrumbList.value = res;
+
+  // 下面是pure admin的版本
   let currentRoute;
   const tagLists: any = useTagListsStoreHook().tagLists;
 
@@ -99,8 +127,6 @@ const initBreadcrumb = () => {
   breadcrumbList.value = matched.filter(
     (item) => item?.meta && item?.meta.title !== false
   );
-
-  console.log(breadcrumbList.value, "breadcrumbList");
 };
 
 // 页面挂载之前执行
@@ -134,8 +160,6 @@ onBeforeMount(() => {
     }
 
     concatPath(defaultRoutes, routeInfo, parentPath);
-
-    console.log(useTagListsStoreHook().tagLists, "最后的结果。");
   });
 });
 
