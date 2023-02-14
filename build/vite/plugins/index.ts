@@ -1,4 +1,4 @@
-import vue from "@vitejs/plugin-vue";
+import vuePlugin from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { viteSingleFile } from "vite-plugin-singlefile";
 import svgLoader from "vite-svg-loader";
@@ -9,13 +9,16 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import Inspect from "vite-plugin-inspect";
 import { viteBuildInfo } from "./viteBuildInfo";
+import { GvaPositionServer } from "./viteCodeServer";
+import { GvaPosition } from "./viteGvaPosition";
 
 export function setupVitePlugins() {
   return [
-    vue(),
-    vueJsx(),
     viteBuildInfo(),
-
+    GvaPositionServer(),
+    GvaPosition(),
+    vuePlugin(),
+    vueJsx(),
     viteSingleFile({ removeViteModuleLoader: true }),
     svgLoader(),
     AutoImport({

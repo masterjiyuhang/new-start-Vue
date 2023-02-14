@@ -7,7 +7,7 @@ export const viteBuildInfo = (): Plugin => {
       console.log(" current command is " + resolvedConfig.command);
     },
     buildStart() {
-      console.log("Hi~ o(*￣▽￣*)ブ 幸存者！ 👏 欢迎光临二航大魔王的世界！");
+      console.log("Hi~ o(*￣▽￣*)ブ ！ 👏 欢迎光临！");
     },
   };
 };

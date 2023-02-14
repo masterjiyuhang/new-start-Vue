@@ -23,8 +23,8 @@
         </template>
         <div v-for="childItem in item.children" :key="childItem.path">
           <el-menu-item :index="childItem.path">
-            <el-icon><icon-menu /></el-icon
-            >{{ childItem.meta.title }}</el-menu-item
+            <el-icon><icon-menu /></el-icon>
+            <span>{{ childItem.meta.title }}</span></el-menu-item
           >
         </div>
       </el-sub-menu>

@@ -12,9 +12,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 
   // const viteEnv = wrapperEnv(env);
   // const { VITE_PORT } = viteEnv;
-
+  const esbuild = {};
+  const optimizeDeps = {};
   return {
-    base: "/",
+    base: "./",
     server: {
       host: "0.0.0.0",
       port: Number(env.VITE_PORT),
@@ -58,14 +59,18 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js",
       },
     },
-
+    esbuild,
+    optimizeDeps,
     build: {
+      target: "es2017",
       terserOptions: {
         compress: {
           drop_console: true,
         },
       },
       minify: "terser",
+      manifest: false, // 是否产出manifest.json
+      sourcemap: false, // 是否产出sourcemap.json
     },
   };
 });
