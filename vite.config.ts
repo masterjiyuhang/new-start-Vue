@@ -1,21 +1,11 @@
-import { fileURLToPath, URL } from "node:url";
+import { fileURLToPath, URL } from "url";
+import path from "path";
 import { defineConfig, loadEnv } from "vite";
-import vue from "@vitejs/plugin-vue";
-import vueJsx from "@vitejs/plugin-vue-jsx";
-import { viteSingleFile } from "vite-plugin-singlefile";
-import svgLoader from "vite-svg-loader";
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import type { UserConfig, ConfigEnv } from "vite";
-// import { wrapperEnv } from "@/utils";
-import { viteStaticCopy } from "vite-plugin-static-copy";
-import Inspect from "vite-plugin-inspect";
-import ElementPlus from "unplugin-element-plus/vite";
-import path from "node:path";
+import { setupVitePlugins } from "./build/vite/plugins";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
+export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
 
   const env = loadEnv(mode, root);
@@ -43,14 +33,14 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/fallback/, ""),
         },
-        // 使用 proxy 实例
-        "/apio": {
-          target: "http://jsonplaceholder.typicode.com",
-          changeOrigin: true,
-          configure: (proxy, options) => {
-            // proxy 是 'http-proxy' 的实例
-          },
-        },
+        // // 使用 proxy 实例
+        // "/apio": {
+        //   target: "http://jsonplaceholder.typicode.com",
+        //   changeOrigin: true,
+        //   configure: (proxy, options) => {
+        //     // proxy 是 'http-proxy' 的实例
+        //   },
+        // },
       },
     },
     css: {
@@ -60,32 +50,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
         },
       },
     },
-    plugins: [
-      vue(),
-      vueJsx(),
-      viteSingleFile({ removeViteModuleLoader: true }),
-      svgLoader(),
-      AutoImport({
-        resolvers: [
-          ElementPlusResolver({
-            importStyle: "sass",
-          }),
-        ],
-      }),
-      ElementPlus(),
-      Components({
-        resolvers: [ElementPlusResolver({ importStyle: "sass" })],
-      }),
-      viteStaticCopy({
-        targets: [
-          {
-            src: "build/config.js",
-            dest: "",
-          },
-        ],
-      }),
-      Inspect(),
-    ],
+    plugins: setupVitePlugins(),
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
