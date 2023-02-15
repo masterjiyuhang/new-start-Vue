@@ -55,20 +55,9 @@
 import { emitter } from "@/utils/mitt";
 import { computed, onUnmounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useTabs } from "@/hooks/useTab";
 
-const fmtTitle = (title, now) => {
-  const reg = /\$\{(.+?)\}/;
-  const reg_g = /\$\{(.+?)\}/g;
-  const result = title.match(reg_g);
-  if (result) {
-    result.forEach((item) => {
-      const key = item.match(reg)[1];
-      const value = now.params[key] || now.query[key];
-      title = title.replace(item, value);
-    });
-  }
-  return title;
-};
+const { historyMap, isSame, formatName, fmtTitle } = useTabs();
 
 const route = useRoute();
 const router = useRouter();
@@ -81,12 +70,7 @@ const currentRouteName = computed(() => {
 const activeValue = ref("");
 const contextMenuVisible = ref(false);
 
-const formatName = (item) => {
-  return item.name + JSON.stringify(item.query) + JSON.stringify(item.params);
-};
-
-const openContextMenu = (e) => {
-  console.log(e, "openContextMenu");
+const openContextMenu = (e: any) => {
   if (
     currentState.tabLists.length === 1 &&
     route.name === currentState.defaultRouter
@@ -100,8 +84,9 @@ const openContextMenu = (e) => {
     id = e.srcElement.id;
   }
   if (id) {
+    // 控制tab的弹窗的变量
     contextMenuVisible.value = true;
-    let width;
+    let width: number;
     if (currentState.isCollapse) {
       width = 54;
     } else {
@@ -111,7 +96,6 @@ const openContextMenu = (e) => {
       width = 0;
     }
 
-    console.log(e.clientX, "asdasdasd");
     currentState.left = e.clientX - width + 200;
     currentState.left = e.clientX;
     currentState.top = e.clientY + 10;
@@ -142,7 +126,7 @@ const closeAll = () => {
   ];
   router.push({ name: currentState.defaultRouter });
   contextMenuVisible.value = false;
-  sessionStorage.setItem("historys", JSON.stringify(currentState.tabLists));
+  sessionStorage.setItem("tabList", JSON.stringify(currentState.tabLists));
 };
 const closeLeft = () => {
   let right;
@@ -159,7 +143,7 @@ const closeLeft = () => {
   if (rightIndex > activeIndex) {
     router.push(right);
   }
-  sessionStorage.setItem("historys", JSON.stringify(currentState.tabLists));
+  sessionStorage.setItem("tabList", JSON.stringify(currentState.tabLists));
 };
 const closeRight = () => {
   let right;
@@ -176,7 +160,7 @@ const closeRight = () => {
   if (leftIndex < activeIndex) {
     router.push(right);
   }
-  sessionStorage.setItem("historys", JSON.stringify(currentState.tabLists));
+  sessionStorage.setItem("tabList", JSON.stringify(currentState.tabLists));
 };
 const closeOther = () => {
   let right;
@@ -187,30 +171,7 @@ const closeOther = () => {
     return formatName(item) === currentState.rightActive;
   });
   router.push(right);
-  sessionStorage.setItem("historys", JSON.stringify(currentState.tabLists));
-};
-
-const isSame = (route1, route2) => {
-  if (route1.name !== route2.name) {
-    return false;
-  }
-  if (
-    Object.keys(route1.query).length !== Object.keys(route2.query).length ||
-    Object.keys(route1.params).length !== Object.keys(route2.params).length
-  ) {
-    return false;
-  }
-  for (const key in route1.query) {
-    if (route1.query[key] !== route2.query[key]) {
-      return false;
-    }
-  }
-  for (const key in route1.params) {
-    if (route1.params[key] !== route2.params[key]) {
-      return false;
-    }
-  }
-  return true;
+  sessionStorage.setItem("tabList", JSON.stringify(currentState.tabLists));
 };
 
 const setTab = (route) => {
@@ -232,8 +193,6 @@ const setTab = (route) => {
   }
   window.sessionStorage.setItem("activeValue", formatName(route));
 };
-
-const historyMap = ref({});
 
 const changeTab = (TabsPaneContext) => {
   const name = TabsPaneContext?.props?.name;
@@ -289,7 +248,7 @@ watch(
 
 watch(
   () => route,
-  (to, now) => {
+  (to, _now) => {
     if (to.name === "Login" || to.name === "Reload") {
       return;
     }
@@ -297,7 +256,7 @@ watch(
       (item) => !item.meta.closeTab
     );
     setTab(to);
-    sessionStorage.setItem("historys", JSON.stringify(currentState.tabLists));
+    sessionStorage.setItem("tabList", JSON.stringify(currentState.tabLists));
     activeValue.value = window.sessionStorage.getItem("activeValue");
   },
   { deep: true }
@@ -306,7 +265,7 @@ watch(
 watch(
   () => currentState.tabLists,
   () => {
-    sessionStorage.setItem("historys", JSON.stringify(currentState.tabLists));
+    sessionStorage.setItem("tabList", JSON.stringify(currentState.tabLists));
     historyMap.value = {};
     currentState.tabLists.forEach((item) => {
       historyMap.value[formatName(item)] = item;
@@ -327,10 +286,10 @@ const initTabs = () => {
   emitter.on("closeAllPage", () => {
     closeAll();
   });
-  emitter.on("mobile", (data) => {
+  emitter.on("mobile", (data: any) => {
     currentState.isMobile = data;
   });
-  emitter.on("collapse", (data) => {
+  emitter.on("collapse", (data: boolean) => {
     currentState.isCollapse = data;
   });
 

@@ -20,6 +20,12 @@ type Events = {
     routeInfo: any;
     parentPath: string;
   };
+
+  setKeepAlive: {};
+  closeThisPage: {};
+  closeAllPage: {};
+  mobile: {};
+  collapse: {};
 };
 
 export const emitter: Emitter<Events> = mitt<Events>();
