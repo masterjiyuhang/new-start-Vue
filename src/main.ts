@@ -1,6 +1,4 @@
 import "@/style/erHangBaseStyle/index.scss";
-import "./assets/main.css";
-import "./style/index.scss";
 import "./style/tailwind.css";
 
 import { createApp } from "vue";
