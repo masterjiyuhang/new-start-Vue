@@ -1,32 +1,34 @@
 <template>
-  <div class="cch-header">
-    <div>
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item
-          class="!inline !items-stretch"
-          v-for="item in breadcrumbList"
-          :key="item.path"
-        >
-          <a @click.prevent="handleLink(item)">
-            {{ item.meta.title }}
-          </a>
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-      <!-- 新的面包屑 -->
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item
-          class="!inline !items-stretch"
-          v-for="item in myBreadcrumbList"
-          :key="item.path"
-        >
-          <a @click.prevent="handleLink(item)">
-            {{ item.meta.title }}
-          </a>
-        </el-breadcrumb-item>
-      </el-breadcrumb>
+  <div class="cch-header bg-slate-300">
+    <div class="header-left">
+      <div>
+        <el-breadcrumb separator="/">
+          <el-breadcrumb-item
+            class="!inline !items-stretch"
+            v-for="item in breadcrumbList"
+            :key="item.path"
+          >
+            <a @click.prevent="handleLink(item)">
+              {{ item.meta.title }}
+            </a>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+        <!-- 新的面包屑 -->
+        <!-- <el-breadcrumb separator="/">
+          <el-breadcrumb-item
+            class="!inline !items-stretch"
+            v-for="item in myBreadcrumbList"
+            :key="item.path"
+          >
+            <a @click.prevent="handleLink(item)">
+              {{ item.meta.title }}
+            </a>
+          </el-breadcrumb-item>
+        </el-breadcrumb> -->
+      </div>
     </div>
 
-    <div></div>
+    <div class="header-right">当前用户</div>
   </div>
 </template>
 
@@ -177,6 +179,24 @@ watch(
 
 <style lang="scss" scoped>
 .cch-header {
-  background-color: #bfa;
+  // background-color: #bfa;
+  min-height: 60px;
+  display: flex;
+  justify-content: space-between;
+
+  .header-left {
+    float: left;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .header-right {
+    display: flex;
+    min-width: 280px;
+    align-items: center;
+    column-rule: #333;
+    justify-content: flex-end;
+  }
 }
 </style>

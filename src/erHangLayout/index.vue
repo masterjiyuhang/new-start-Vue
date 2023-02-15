@@ -5,7 +5,11 @@
         <Aside />
       </el-aside>
       <el-container>
-        <el-header class="!p-[0px]"><Header /></el-header>
+        <el-header class="!p-[0px] !h-[120px] bg-slate-500">
+          <Header />
+          <Tabs />
+        </el-header>
+
         <el-main><RouterView /></el-main>
         <el-footer class="!p-[0px]"><Footer /></el-footer>
       </el-container>
@@ -17,6 +21,7 @@
 import Aside from "./components/Aside.vue";
 import Footer from "./components/Footer.vue";
 import Header from "./components/Header.vue";
+import Tabs from "./components/Tabs/index.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -27,7 +32,7 @@ import Header from "./components/Header.vue";
   height: 100%;
 
   .cch-aside {
-    background-color: #fd8;
+    background-color: #eee;
   }
 }
 </style>
