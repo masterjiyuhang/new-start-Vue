@@ -66,11 +66,38 @@ export const erHangBaseRoutes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: "/able",
+        redirect: "/able/index",
+        meta: {
+          icon: "guide",
+          title: "能力列表",
+          rank: 2,
+        },
+        children: [
+          {
+            path: "/able/index",
+            name: "HomeView",
+            component: () => import("@/views/HomeView.vue"),
+            meta: {
+              title: "HOME页",
+            },
+          },
+          {
+            path: "/able/about",
+            name: "AboutView",
+            component: () => import("@/views/AboutView.vue"),
+            meta: {
+              title: "ABOUT页",
+            },
+          },
+        ],
+      },
+      {
         path: "/car",
         redirect: "/car/index",
         meta: {
           icon: "guide",
-          title: "列表页",
+          title: "汽车相关",
           rank: 2,
         },
         children: [

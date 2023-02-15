@@ -9,6 +9,8 @@ import App from "./App.vue";
 import router from "./router";
 
 import { initDom } from "./utils/positionToCode";
+
+// 用于开发模式 shift 定位 编译器中的代码
 initDom();
 
 async function bootstrap() {

@@ -86,17 +86,17 @@ const openContextMenu = (e: any) => {
   if (id) {
     // 控制tab的弹窗的变量
     contextMenuVisible.value = true;
-    let width: number;
-    if (currentState.isCollapse) {
-      width = 54;
-    } else {
-      width = 220;
-    }
-    if (currentState.isMobile) {
-      width = 0;
-    }
+    // let width: number;
+    // if (currentState.isCollapse) {
+    //   width = 54;
+    // } else {
+    //   width = 220;
+    // }
+    // if (currentState.isMobile) {
+    //   width = 0;
+    // }
 
-    currentState.left = e.clientX - width + 200;
+    // currentState.left = e.clientX - width + 200;
     currentState.left = e.clientX;
     currentState.top = e.clientY + 10;
     currentState.rightActive = id.substring(4);
@@ -278,7 +278,7 @@ watch(
 );
 
 const initTabs = () => {
-  // 全局监听 关闭当前页面函数
+  // 全局监听 关闭当前页面函数 但是目前没有其他地方调用呢 可以在页面的appmain里面全局调用这个方法  来关闭这个页面
   emitter.on("closeThisPage", () => {
     removeTab(formatName(route));
   });

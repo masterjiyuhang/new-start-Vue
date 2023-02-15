@@ -38,6 +38,7 @@ import { useRouter, useRoute, RouteLocationMatched } from "vue-router";
 import { emitter } from "@/utils/mitt";
 import { useTagListsStoreHook } from "@/stores/modules/tagLists";
 import { findRouteByPath, getParentPaths } from "@/router/utils";
+import { useNav } from "@/hooks/useNav";
 
 const route = useRoute();
 const router = useRouter();
@@ -45,14 +46,11 @@ const defaultRoutes: any = router.options.routes;
 const breadcrumbList = ref<any[]>([]);
 const myBreadcrumbList = ref<any[]>([]);
 
+const { isDashboard } = useNav();
+
 const tagLists: any = computed(() => {
   return useTagListsStoreHook().tagLists;
 });
-const isDashboard = (route: RouteLocationMatched): boolean | string => {
-  const name = route && (route.name as string);
-  if (!name) return false;
-  return name.trim().toLocaleLowerCase() === "Dashboard".toLocaleLowerCase();
-};
 
 const handleLink = (item: RouteLocationMatched): void => {
   const { redirect, path } = item;
@@ -169,6 +167,7 @@ onMounted(() => {
   initBreadcrumb();
 });
 
+// 监听页面路由变化 动态变化面包屑内容
 watch(
   () => route.path,
   () => {
