@@ -1,14 +1,11 @@
 <template>
-  <div class="welcome">welcome</div>
+  <div class="welcome">welcome {{ count }}</div>
 </template>
 
 <script setup lang="ts">
-// import { useRouter, useRoute } from "vue-router";
+import { useCounterStore } from "@/stores/modules/count";
 
-// const router = useRouter();
-// const route = useRoute();
-// console.log(router);
-// console.log(route);
+const { count } = useCounterStore();
 </script>
 
 <style scoped>

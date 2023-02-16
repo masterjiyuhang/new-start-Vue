@@ -5,13 +5,11 @@ import type { UserConfig, ConfigEnv } from "vite";
 import { setupVitePlugins } from "./build/vite/plugins";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
+export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const root = process.cwd();
 
   const env = loadEnv(mode, root);
 
-  // const viteEnv = wrapperEnv(env);
-  // const { VITE_PORT } = viteEnv;
   const esbuild = {};
   const optimizeDeps = {};
   return {
@@ -34,14 +32,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/fallback/, ""),
         },
-        // // 使用 proxy 实例
-        // "/apio": {
-        //   target: "http://jsonplaceholder.typicode.com",
-        //   changeOrigin: true,
-        //   configure: (proxy, options) => {
-        //     // proxy 是 'http-proxy' 的实例
-        //   },
-        // },
       },
     },
     css: {
@@ -51,7 +41,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         },
       },
     },
-    plugins: setupVitePlugins(),
+    plugins: setupVitePlugins({ command, mode }),
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
