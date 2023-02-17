@@ -1,5 +1,5 @@
 <template>
-  <div>dashboard</div>
+  <div>dashboard {{ $t("home.title") }}</div>
 </template>
 
 <script lang="ts">
