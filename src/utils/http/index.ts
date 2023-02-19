@@ -13,7 +13,6 @@ import type {
 import { stringify } from "qs";
 import NProgress from "../progress";
 
-
 const defaultConfig: AxiosRequestConfig = {
   baseURL: import.meta.env.VITE_BASE_API ?? "/",
   // 请求超时时间
