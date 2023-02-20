@@ -1,5 +1,5 @@
 <template>
-  <div>dashboard {{ $t("home.title") }}</div>
+  <div class="cch-dashboard">dashboard {{ $t("home.title") }}</div>
 </template>
 
 <script lang="ts">
@@ -22,4 +22,8 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@include b(dashboard) {
+  background-color: #ffa;
+}
+</style>

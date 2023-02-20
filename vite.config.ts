@@ -37,7 +37,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "~/style/element/index.scss" as *;`,
+          additionalData: `@use "~/style/element/index.scss" as *; @import "~/style/scss/mixin.scss";`,
         },
       },
     },
