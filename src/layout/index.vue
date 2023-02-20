@@ -1,10 +1,37 @@
 <template>
-  <div>
-    layout page
-    <RouterView />
+  <div class="cch-layout">
+    <Sidebar />
+    <Body>
+      <Header />
+      <Content>
+        <slot />
+      </Content>
+    </Body>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script lang="ts">
+export default {
+  name: "CchLayout",
+};
+</script>
+<script setup lang="ts">
+import Header from "./components/Header.vue";
+import Sidebar from "./components/Sidebar/Sidebar.vue";
+import Content from "./components/Content.vue";
+import Body from "./components/Body.vue";
+</script>
 
-<style scoped></style>
+<style lang="scss">
+@include b(layout) {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  @include pseudo(after) {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+</style>
