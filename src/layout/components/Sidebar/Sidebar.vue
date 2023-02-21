@@ -1,13 +1,21 @@
 <template>
   <div :class="[isCollapse ? 'cch-sidebar--collapse' : '']" class="cch-sidebar">
-    sidebar
+    <div v-if="!isCollapse" class="flex-c">
+      <img src="@/assets/logo.png" width="65" />
+    </div>
+    <div>
+      <Menu title="部门列表" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import Menu from "./menu";
+import { ref, provide } from "vue";
 
 const isCollapse = ref(false);
+
+provide("isCollapse", isCollapse.value);
 </script>
 
 <style lang="scss">

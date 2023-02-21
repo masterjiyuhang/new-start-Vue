@@ -25,5 +25,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 @include b(dashboard) {
   background-color: #ffa;
+  min-height: 80vh;
 }
 </style>
