@@ -25,6 +25,6 @@ const createI18nOptions = async (): Promise<I18nOptions> => {
 export const setupI18n = async (app: App) => {
   const i18nOptions = await createI18nOptions();
 
-  console.log(i18nOptions, "i18n options");
+  // console.log(i18nOptions, "i18n options");
   app.use(createI18n(i18nOptions) as I18n);
 };
