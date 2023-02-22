@@ -6,7 +6,9 @@
     <div>
       <Menu title="列表" />
     </div>
-    <el-button @click="changeCollapse">Change Collapse</el-button>
+    <el-button @click="changeCollapse"
+      >Change Collapse {{ isCollapse }}</el-button
+    >
   </div>
 </template>
 
@@ -14,16 +16,28 @@
 import Menu from "./menu";
 import { ref, provide, computed, reactive } from "vue";
 import { constantMenus } from "@/router/index";
+import { emitter } from "@/utils/mitt";
+// import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
+// import { storeToRefs } from "pinia";
+// const { changeIsCollapse } = useGlobalSettingStore();
 
-const isCollapse = ref(false);
+// const { isCollapse } = storeToRefs(useGlobalSettingStore());
+// const changeCollapse = () => {
+//   changeIsCollapse();
+// };
+
 const sidebarState = reactive({
   menuList: [],
 });
 console.log(constantMenus, "constantMenus menu 等待处理中");
 
+const isCollapse = ref(false);
 const changeCollapse = () => {
   isCollapse.value = !isCollapse.value;
+  emitter.emit("changeSidebarCollapse", isCollapse.value);
+  // changeIsCollapse();
 };
+
 // 先按照weight排个序
 const r1 = constantMenus
   .reduce((pre, next) => {

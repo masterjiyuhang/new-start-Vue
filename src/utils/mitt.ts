@@ -26,6 +26,8 @@ type Events = {
   closeAllPage: {};
   mobile: {};
   collapse: {};
+
+  changeSidebarCollapse: {};
 };
 
 export const emitter: Emitter<Events> = mitt<Events>();

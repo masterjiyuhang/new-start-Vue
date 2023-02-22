@@ -5,9 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { emitter } from "@/utils/mitt";
 
 const isCollapse = ref<any>(false);
+onMounted(() => {
+  emitter.on("changeSidebarCollapse", (value) => {
+    console.log(value, "监听事件变化了被");
+    isCollapse.value = value;
+  });
+});
 </script>
 
 <style lang="scss">

@@ -35,6 +35,7 @@
     "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^3.1.2",
     "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "@vue/compiler-dom": "^3.2.47",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
     "@vue/test-utils": "^2.1.0",

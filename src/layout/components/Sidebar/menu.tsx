@@ -136,7 +136,7 @@ export default defineComponent({
       return (
         <el-menu-item index={url} key={`__cch_m_i_${index}_${path}`}>
           {meta && meta.icon && renderIcon(meta.icon)}
-          {name}
+          <span>{name}</span>
         </el-menu-item>
       );
     };
@@ -153,7 +153,7 @@ export default defineComponent({
               return (
                 <>
                   {meta && meta.icon && renderIcon(meta.icon)}
-                  {name}
+                  <span>{name}</span>
                 </>
               );
             },
