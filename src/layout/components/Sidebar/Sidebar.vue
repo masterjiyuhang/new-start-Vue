@@ -1,14 +1,12 @@
 <template>
   <div :class="[isCollapse ? 'cch-sidebar--collapse' : '']" class="cch-sidebar">
     <div v-if="!isCollapse" class="flex-c">
-      <img src="@/assets/logo.png" width="65" />
+      <img src="@/assets/logo.png" :width="logoWidth" />
     </div>
     <div>
       <Menu title="列表" />
     </div>
-    <el-button @click="changeCollapse"
-      >Change Collapse {{ isCollapse }}</el-button
-    >
+    <el-button @click="changeCollapse"> {{ isCollapse }}</el-button>
   </div>
 </template>
 
@@ -17,25 +15,26 @@ import Menu from "./menu";
 import { ref, provide, computed, reactive } from "vue";
 import { constantMenus } from "@/router/index";
 import { emitter } from "@/utils/mitt";
-// import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
-// import { storeToRefs } from "pinia";
-// const { changeIsCollapse } = useGlobalSettingStore();
+import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
+import { storeToRefs } from "pinia";
+const { changeIsCollapse } = useGlobalSettingStore();
 
-// const { isCollapse } = storeToRefs(useGlobalSettingStore());
+const { isCollapse } = storeToRefs(useGlobalSettingStore());
 // const changeCollapse = () => {
 //   changeIsCollapse();
 // };
+const logoWidth = ref(65);
 
 const sidebarState = reactive({
   menuList: [],
 });
 console.log(constantMenus, "constantMenus menu 等待处理中");
 
-const isCollapse = ref(false);
+// const isCollapse = ref(false);
 const changeCollapse = () => {
-  isCollapse.value = !isCollapse.value;
+  // isCollapse.value = !isCollapse.value;
+  changeIsCollapse();
   emitter.emit("changeSidebarCollapse", isCollapse.value);
-  // changeIsCollapse();
 };
 
 // 先按照weight排个序
