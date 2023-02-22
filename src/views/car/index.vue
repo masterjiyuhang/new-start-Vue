@@ -2,6 +2,8 @@
   <div>
     car
 
+    <el-button @click="handleSayHi" type="primary">sayHi</el-button>
+    <el-button @click="handleSayHi" type="danger">sayHi</el-button>
     <el-button @click="handleSayHi">sayHi</el-button>
   </div>
 </template>

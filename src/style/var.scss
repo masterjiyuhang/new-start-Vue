@@ -1,0 +1,5 @@
+@forward "./common/globals.scss" with (
+  $side-bar-width: 200px,
+  $page-margin: 10px,
+  $page-padding: 10px
+);

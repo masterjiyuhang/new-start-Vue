@@ -22,11 +22,6 @@ const router = createRouter({
           component: () => import("../views/welcome/index.vue"),
         },
         {
-          path: "/asd",
-          name: "asda",
-          component: () => import("../views/car/index.vue"),
-        },
-        {
           path: "/car",
           name: "车辆管理",
           redirect: "/car/list",

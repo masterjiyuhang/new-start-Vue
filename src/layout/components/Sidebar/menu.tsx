@@ -50,17 +50,6 @@ export default defineComponent({
         },
       },
       {
-        path: "/asd",
-        name: "welcomasde",
-        meta: {
-          icon: (
-            <el-icon>
-              <Apple />
-            </el-icon>
-          ),
-        },
-      },
-      {
         path: "/car",
         name: "车辆管理",
         weight: -2,

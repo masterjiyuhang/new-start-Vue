@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@include b(dashboard) {
+@include cch.b(dashboard) {
   background-color: #ffa;
   min-height: 80vh;
 }

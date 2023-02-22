@@ -23,12 +23,12 @@ import Body from "./components/Body.vue";
 </script>
 
 <style lang="scss">
-@include b(layout) {
+@include cch.b(layout) {
   position: relative;
   height: 100%;
   width: 100%;
 
-  @include pseudo(after) {
+  @include cch.pseudo(after) {
     content: "";
     display: table;
     clear: both;

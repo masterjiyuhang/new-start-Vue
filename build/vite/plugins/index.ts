@@ -8,7 +8,7 @@ import AutoImport from "unplugin-auto-import/vite";
 import ElementPlus from "unplugin-element-plus/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-import { viteStaticCopy } from "vite-plugin-static-copy";
+// import { viteStaticCopy } from "vite-plugin-static-copy";
 import Inspect from "vite-plugin-inspect";
 import { viteMockServe } from "vite-plugin-mock";
 
@@ -36,18 +36,22 @@ export function setupVitePlugins({ command }: ConfigEnv) {
         }),
       ],
     }),
-    ElementPlus(),
+
     Components({
       resolvers: [ElementPlusResolver({ importStyle: "sass" })],
     }),
-    viteStaticCopy({
-      targets: [
-        {
-          src: "build/config.js",
-          dest: "",
-        },
-      ],
+
+    ElementPlus({
+      useSource: true,
     }),
+    // viteStaticCopy({
+    //   targets: [
+    //     {
+    //       src: "build/config.js",
+    //       dest: "",
+    //     },
+    //   ],
+    // }),
     Inspect(),
   ];
 }

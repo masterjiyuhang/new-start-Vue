@@ -37,7 +37,10 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "~/style/element/index.scss" as *; @import "~/style/scss/mixin.scss"; @import "~/style/scss/var.scss";`,
+          // additionalData: `@import "~/style/element/index.scss"; @import "~/style/scss/mixins/mixin.scss";  @import "~/style/common/globals.scss";  @import "~/style/var.scss";`,
+          additionalData: `@use "~/style/element/index.scss" as *; @use "~/style/scss/mixins/mixin.scss" as cch; @use "~/style/var.scss" as cch-variables;`,
+          // additionalData: `@use "~/style/element/index.scss" as *; @use "~/style/scss/mixins/mixin.scss" as *; @use "~/style/common/globals.scss" as *;  @use "~/style/var.scss" as *;`,
+          // additionalData: `@use "~/style/element/index.scss" as *; @import "~/style/scss/mixins/mixin.scss"; @import "~/style/common/globals.scss";  @import "~/style/var.scss";`,
         },
       },
     },

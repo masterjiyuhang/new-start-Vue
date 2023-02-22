@@ -1,4 +1,4 @@
-@import './function';
+@import "./function";
 
 /* Placeholder
  -------------------------- */
@@ -24,7 +24,7 @@
 
 // 块（block
 @mixin b($block) {
-  $b: $namespace+'-'+$block !global;
+  $b: $namespace + "-" + $block !global;
 
   .#{$b} {
     @content;
@@ -38,7 +38,12 @@
   $current-selector: "";
 
   @each $unit in $element {
-    $current-selector: #{$current-selector + "." + $b + $element-separator + $unit + ","};
+    $current-selector: #{$current-selector +
+      "." +
+      $b +
+      $element-separator +
+      $unit +
+      ","};
   }
 
   @if hitAllSpecialNestRule($selector) {
@@ -49,9 +54,7 @@
         }
       }
     }
-  }
-
-  @else {
+  } @else {
     @at-root {
       #{$current-selector} {
         @content;
@@ -66,7 +69,11 @@
   $current-selector: "";
 
   @each $unit in $modifier {
-    $current-selector: #{$current-selector + & + $modifier-separator + $unit + ","};
+    $current-selector: #{$current-selector +
+      & +
+      $modifier-separator +
+      $unit +
+      ","};
   }
 
   @at-root {
@@ -78,7 +85,7 @@
 
 @mixin configurable-m($modifier, $E-flag: false) {
   $selector: &;
-  $interpolation: '';
+  $interpolation: "";
 
   @if $E-flag {
     $interpolation: $element-separator + $E-flag;
@@ -93,15 +100,23 @@
   }
 }
 
-@mixin spec-selector($specSelector: '', $element: $E, $modifier: false, $block: $B) {
-  $modifier-combo: '';
+@mixin spec-selector(
+  $specSelector: "",
+  $element: $E,
+  $modifier: false,
+  $block: $B
+) {
+  $modifier-combo: "";
 
   @if $modifier {
     $modifier-combo: $modifier-separator + $modifier;
   }
 
   @at-root {
-    #{&}#{$specSelector}.#{$block + $element-separator + $element + $modifier-combo} {
+    #{&}#{$specSelector}.#{$block
+      + $element-separator
+      + $element
+      + $modifier-combo} {
       @content;
     }
   }
@@ -109,7 +124,7 @@
 
 @mixin meb($modifier: false, $element: $E, $block: $B) {
   $selector: &;
-  $modifier-combo: '';
+  $modifier-combo: "";
 
   @if $modifier {
     $modifier-combo: $modifier-separator + $modifier;
@@ -133,11 +148,11 @@
 }
 
 @mixin extend-rule($name) {
-  @extend #{'%shared-'+$name};
+  @extend #{"%shared-" + $name};
 }
 
 @mixin share-rule($name) {
-  $rule-name: '%shared-'+$name;
+  $rule-name: "%shared-" + $name;
 
   @at-root #{$rule-name} {
     @content;
@@ -145,14 +160,14 @@
 }
 
 @mixin pseudo($pseudo) {
-  @at-root #{&}#{':#{$pseudo}'} {
+  @at-root #{&}#{":#{$pseudo}"} {
     @content;
   }
 }
 
 /* 通用 图片处理 $img 指路径资源
  -------------------------- */
-@mixin base-icon($img, $width:16px, $height:16px) {
+@mixin base-icon($img, $width: 16px, $height: 16px) {
   display: inline-block;
   height: $height;
   position: relative;
@@ -177,7 +192,7 @@
  -------------------------- */
 @mixin border-1px($color: #ccc, $radius: 2px, $style: solid) {
   position: relative;
-  
+
   &::after {
     border: 1RPX $style $color;
     border-radius: $radius;
@@ -191,7 +206,7 @@
     top: 0;
     transform-origin: 0 0;
     width: 100%;
-    
+
     @content;
 
     @media (min-resolution: 2dppx) {
@@ -237,9 +252,15 @@
 
 /* 处理文本选中
  -------------------------- */
- @mixin user-select($value) {
+@mixin user-select($value) {
   -moz-user-select: $value;
   -webkit-user-select: $value;
   -ms-user-select: $value;
   user-select: $value;
+}
+
+@mixin is-windows {
+  .is-window {
+    @content;
+  }
 }

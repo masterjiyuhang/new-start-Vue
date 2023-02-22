@@ -1,141 +1,3 @@
-$side-bar-width: 200px;
-$page-margin: 10px;
-$page-padding: 10px;
-
-/// original button 蓝色的button
-$original: #3178d7;
-/// color||Color|0
-$button-original-border-color: $original !default;
-/// color||Color|0
-$button-original-font-color: $color-white !default;
-/// color||Color|0
-$button-original-background-color: $original !default;
-
-// 字体
-$font-family-base: "Chinese Quote", -apple-system, BlinkMacSystemFont,
-  "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-  "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", "Segoe UI Symbol" !default;
-
-// 背景颜
-$bg-color: #f8f8f8;
-// 主题色
-$primary: #fd521d !default;
-
-$primary-light: #fb9919 !default;
-// 辅助色
-$danger: #fb9919 !default;
-
-$blue: #01a0ec !default;
-
-$green: #2ab26a !default;
-
-$black: #000 !default;
-
-$border-yellow: #f3aa88 !default;
-
-// border color
-$border-color: #d8d8d8 !default;
-
-$border-hover: #bbb !default;
-
-$border: #ddd !default;
-
-$border-box: #eee !default;
-
-// font color
-$font-color: #505050 !default;
-// 淡的color e2e2e2
-$light-border-color: #e2e2e2 !default;
-
-$cate-font-color: #b79310;
-
-// Global app direction
-$app-direction: ltr !default;
-
-$background-color-base: #f5f7fa;
-
-// The minimum dimensions at which your layout will change,
-// adapting to different screen sizes, for use in media queries
-$screen-breakpoints: (
-  xs: 0,
-) !default;
-
-//  进度条背景颜色
-$nprogress: $primary;
-
-// header 高度
-$header-height: 64px;
-
-/* sidebar
--------------------------- */
-$side-bar-width: 256px;
-$side-bar-width-mini: 64px;
-$side-bar-animate: 0.2s;
-
-// 导航条背景色
-$nav-bg: #4c4c4c;
-$nav-select-bg: #454545;
-
-/* Colors
--------------------------- */
-$color-white: #fff !default;
-$color-black: #000 !default;
-
-$color-primary: $primary !default;
-$color-primary-light-1: mix($color-white, $color-primary, 10%) !default;
-$color-primary-light-2: mix($color-white, $color-primary, 20%) !default;
-$color-primary-light-3: mix($color-white, $color-primary, 30%) !default;
-$color-primary-light-4: mix($color-white, $color-primary, 40%) !default;
-$color-primary-light-5: mix($color-white, $color-primary, 50%) !default;
-$color-primary-light-6: mix($color-white, $color-primary, 60%) !default;
-$color-primary-light-7: mix($color-white, $color-primary, 70%) !default;
-$color-primary-light-8: mix($color-white, $color-primary, 80%) !default;
-$color-primary-light-9: mix($color-white, $color-primary, 90%) !default;
-
-$select-hover-background: $bg-color;
-$menu-item-hover-fill: $color-primary-light-9;
-
-$border-color-lighter: #ebeef5 !default;
-$border-radius-base: 4px !default;
-
-$font-size-base: 14px !default;
-$color-text-regular: #606266 !default;
-$color-text-secondary: #909399 !default;
-$color-text-placeholder: #c0c4cc !default;
-
-/* page
--------------------------- */
-$page-padding: 16px !default;
-$page-margin: 20px !default;
-$page-border-radius: 2px !default;
-
-/* toolbar
--------------------------- */
-$toolbar-padding: 10px !default;
-
-$table-row-hover-background: #f5f7fa !default;
-
-/* search
--------------------------- */
-$search-link-color: #3d5266 !default;
-$search-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2) !default;
-$search-box-shadow-windows: 0 2px 12px 0 rgba(0, 0, 0, 0.5) !default;
-$search-height: 400px !default;
-$search-tab-active: $nav-select-bg;
-$search-condition-item-hover-fill: $color-primary-light-9 !default;
-$search-condition-item-hover-color: $color-primary-light-2 !default;
-
-// Global Card
-// ----------------------------------
-$card-header-height: 34px !default;
-$card-header-color: $font-color !default;
-$card-radius: 0 !default;
-$card-footer-height: 50px !default;
-
-$container-border-radius: 6px;
-$container-background-color: #fff;
-$container-padding: 16px;
 
 @mixin input-cover() {
   @include position(0, null, null, 0);
@@ -237,17 +99,9 @@ $container-padding: 16px;
 //    md
 //    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl))
 //    md
-@function breakpoint-next(
-  $name,
-  $breakpoints: $screen-breakpoints,
-  $breakpoint-names: map-keys($breakpoints)
-) {
+@function breakpoint-next($name, $breakpoints: $screen-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
   $n: index($breakpoint-names, $name);
-  @return if(
-    $n < length($breakpoint-names),
-    nth($breakpoint-names, $n + 1),
-    null
-  );
+  @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
 }
 
 // Maximum breakpoint width. Null for the largest (last) breakpoint.
@@ -272,6 +126,7 @@ $container-padding: 16px;
     @content;
   }
 }
+
 
 // Text Direction - ltr / rtl
 // $app-direction: multi | rtl | ltr | null (default)
@@ -320,6 +175,7 @@ $container-padding: 16px;
   }
 }
 
+
 // SVG Background Image Mixin
 // @param {string} $svg
 // ----------------------------------------------------------
@@ -336,14 +192,10 @@ $container-padding: 16px;
     $flipped-url: $svg;
     $flipped-url: str-replace($flipped-url, "<path", "<path #{$transform}");
     $flipped-url: str-replace($flipped-url, "<line", "<line #{$transform}");
-    $flipped-url: str-replace(
-      $flipped-url,
-      "<polygon",
-      "<polygon #{$transform}"
-    );
+    $flipped-url: str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
     $flipped-url: url-encode($flipped-url);
 
-    @include ltr() {
+    @include ltr () {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
     @include rtl() {
@@ -387,42 +239,15 @@ $container-padding: 16px;
     @include multi-dir() {
       #{$prop}: $top;
     }
-  } @else if
-    $top ==
-    $bottom and
-    $end ==
-    $start and
-    $top !=
-    null and
-    $end !=
-    null
-  {
+  } @else if $top == $bottom and $end == $start and $top != null and $end != null {
     @include multi-dir() {
       #{$prop}: $top $end;
     }
-  } @else if
-    $end ==
-    $start and
-    $top !=
-    null and
-    $end !=
-    null and
-    $bottom !=
-    null
-  {
+  } @else if $end == $start and $top != null and $end != null and $bottom != null {
     @include multi-dir() {
       #{$prop}: $top $end $bottom;
     }
-  } @else if
-    $top !=
-    null and
-    $end !=
-    null and
-    $bottom !=
-    null and
-    $start !=
-    null
-  {
+  } @else if $top != null and $end != null and $bottom != null and $start != null {
     @include ltr() {
       #{$prop}: $top $end $bottom $start;
     }
@@ -514,19 +339,8 @@ $container-padding: 16px;
 // @param {string} $bottom-end
 // @param {string} $bottom-start
 // ----------------------------------------------------------
-@mixin border-radius(
-  $top-start,
-  $top-end: $top-start,
-  $bottom-end: $top-start,
-  $bottom-start: $top-end
-) {
-  @if $top-start ==
-    $top-end and
-    $top-start ==
-    $bottom-end and
-    $top-start ==
-    $bottom-start
-  {
+@mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
+  @if $top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start {
     @include multi-dir() {
       border-radius: $top-start;
     }
@@ -591,12 +405,7 @@ $container-padding: 16px;
   }
 }
 
-@mixin background-position(
-  $horizontal,
-  $horizontal-amount: null,
-  $vertical: null,
-  $vertical-amount: null
-) {
+@mixin background-position($horizontal, $horizontal-amount: null, $vertical: null, $vertical-amount: null) {
   @if $horizontal == start or $horizontal == end {
     $horizontal-ltr: null;
     $horizontal-rtl: null;
@@ -609,17 +418,14 @@ $container-padding: 16px;
     }
 
     @include ltr() {
-      background-position: $horizontal-ltr $horizontal-amount $vertical
-        $vertical-amount;
+      background-position: $horizontal-ltr $horizontal-amount $vertical $vertical-amount;
     }
     @include rtl() {
-      background-position: $horizontal-rtl $horizontal-amount $vertical
-        $vertical-amount;
+      background-position: $horizontal-rtl $horizontal-amount $vertical $vertical-amount;
     }
   } @else {
     @include multi-dir() {
-      background-position: $horizontal $horizontal-amount $vertical
-        $vertical-amount;
+      background-position: $horizontal $horizontal-amount $vertical $vertical-amount;
     }
   }
 }
@@ -664,10 +470,10 @@ $container-padding: 16px;
 
   @each $transform in $transforms {
     @if (str-index($transform, translate3d)) {
-      $transform: str-replace($transform, "translate3d(");
-      $transform: str-replace($transform, ")");
+      $transform: str-replace($transform, 'translate3d(');
+      $transform: str-replace($transform, ')');
 
-      $coordinates: str-split($transform, ",");
+      $coordinates: str-split($transform, ',');
 
       $x: nth($coordinates, 1);
       $y: nth($coordinates, 2);
@@ -684,7 +490,7 @@ $container-padding: 16px;
     }
   }
 
-  @if $x == "0" or $x == null {
+  @if $x == '0' or $x == null {
     @include multi-dir() {
       transform: $ltr-translate $extra;
     }
@@ -698,6 +504,7 @@ $container-padding: 16px;
     }
   }
 }
+
 
 // Add safe-area-padding for all directions
 // @param {string} $top
@@ -718,42 +525,25 @@ $container-padding: 16px;
   $safe-area-end-env: null;
 
   @if ($start) {
-    $safe-area-start: unquote(
-      "calc(constant(safe-area-inset-left) + #{$start})"
-    );
-    $safe-area-start-env: unquote(
-      "calc(env(safe-area-inset-left) + #{$start})"
-    );
+    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
   @if ($end) {
     $safe-area-end: unquote("calc(constant(safe-area-inset-right) + #{$end})");
     $safe-area-end-env: unquote("calc(env(safe-area-inset-right) + #{$end})");
   }
-  @if ($top) {
+  @if ($top){
     $safe-area-top: unquote("calc(constant(safe-area-inset-top) + #{$top})");
     $safe-area-top-env: unquote("calc(env(safe-area-inset-top) + #{$top})");
   }
-  @if ($bottom) {
-    $safe-area-bottom: unquote(
-      "calc(constant(safe-area-inset-bottom) + #{$bottom})"
-    );
-    $safe-area-bottom-env: unquote(
-      "calc(env(safe-area-inset-bottom) + #{$bottom})"
-    );
+  @if ($bottom){
+    $safe-area-bottom: unquote("calc(constant(safe-area-inset-bottom) + #{$bottom})");
+    $safe-area-bottom-env: unquote("calc(env(safe-area-inset-bottom) + #{$bottom})");
   }
 
-  @include padding(
-    $safe-area-top,
-    $safe-area-end,
-    $safe-area-bottom,
-    $safe-area-start
-  );
-  @include padding(
-    $safe-area-top-env,
-    $safe-area-end-env,
-    $safe-area-bottom-env,
-    $safe-area-start-env
-  );
+  @include padding($safe-area-top, $safe-area-end, $safe-area-bottom, $safe-area-start);
+  @include padding($safe-area-top-env, $safe-area-end-env, $safe-area-bottom-env, $safe-area-start-env);
+
 }
 
 // Add safe area padding horizontal
@@ -771,34 +561,27 @@ $container-padding: 16px;
     $safe-area-end-env: unquote("calc(env(safe-area-inset-right) + #{$end})");
   }
   @if ($start) {
-    $safe-area-start: unquote(
-      "calc(constant(safe-area-inset-left) + #{$start})"
-    );
-    $safe-area-start-env: unquote(
-      "calc(env(safe-area-inset-left) + #{$start})"
-    );
+    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
 
   @include padding-horizontal($safe-area-start, $safe-area-end);
   @include padding-horizontal($safe-area-start-env, $safe-area-end-env);
 }
 
+
 // Add safe position horizontal
 // @param {string} $start - amount to position start
 // @param {string} $end - amount to left: 0; end
 // ----------------------------------------------------------
-@mixin safe-position-horizontal($start: null, $end: null) {
+@mixin safe-position-horizontal($start: null, $end: null){
   $safe-area-start: null;
   $safe-area-end: null;
   $safe-area-start-env: null;
   $safe-area-end-env: null;
   @if ($start) {
-    $safe-area-start: unquote(
-      "calc(constant(safe-area-inset-left) + #{$start})"
-    );
-    $safe-area-start-env: unquote(
-      "calc(env(safe-area-inset-left) + #{$start})"
-    );
+    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
   @if ($end) {
     $safe-area-end: unquote("calc(constant(safe-area-inset-right) + #{$end})");
@@ -837,6 +620,7 @@ $container-padding: 16px;
 @mixin user-select($value) {
   user-select: $value;
 }
+
 
 @mixin is-windows {
   .is-window {

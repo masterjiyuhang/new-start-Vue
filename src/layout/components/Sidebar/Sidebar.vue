@@ -19,11 +19,11 @@ provide("isCollapse", isCollapse.value);
 </script>
 
 <style lang="scss">
-$select-bg: $nav-select-bg;
+$select-bg: cch-variables.$nav-select-bg;
 
 %icon {
   i.rc-sidebar-icon {
-    color: $primary;
+    color: cch-variables.$primary;
   }
 }
 
@@ -31,7 +31,7 @@ $select-bg: $nav-select-bg;
   display: none;
 }
 
-@include b(sidebar) {
+@include cch.b(sidebar) {
   position: fixed;
   left: 0;
   top: 0;
@@ -39,13 +39,13 @@ $select-bg: $nav-select-bg;
   z-index: 1001;
   overflow: hidden;
   height: 100%;
-  background-color: $nav-bg;
+  background-color: cch-variables.$nav-bg;
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-  width: $side-bar-width;
-  transition: width $side-bar-animate ease-in;
+  width: cch-variables.$side-bar-width;
+  transition: width cch-variables.$side-bar-animate ease-in;
 
-  @include m(collapse) {
-    width: $side-bar-width-mini !important;
+  @include cch.m(collapse) {
+    width: cch-variables.$side-bar-width-mini !important;
 
     .el-menu-item {
       span {
@@ -64,17 +64,17 @@ $select-bg: $nav-select-bg;
     }
 
     .rc-sidebar__logo {
-      transition: all $side-bar-animate;
+      transition: all cch-variables.$side-bar-animate;
     }
   }
 
-  @include e(logo) {
+  @include cch.e(logo) {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 64px;
     line-height: 64px;
-    background: $primary;
+    background: cch-variables.$primary;
     color: #fff;
     text-align: center;
     font-size: 24px;
@@ -84,11 +84,11 @@ $select-bg: $nav-select-bg;
     .site-name {
       margin-left: 10px;
 
-      @include text-overflow-1;
+      @include cch.text-overflow-1;
     }
   }
 
-  @include e(menu) {
+  @include cch.e(menu) {
     padding-top: 16px;
   }
 
@@ -98,16 +98,16 @@ $select-bg: $nav-select-bg;
   }
 
   .el-menu {
-    background-color: $nav-bg;
+    background-color: cch-variables.$nav-bg;
     width: 100% !important;
     border: 0;
-    transition: height $side-bar-animate ease-in;
+    transition: height cch-variables.$side-bar-animate ease-in;
 
     .el-menu-item,
     .el-submenu__title {
       color: #fff;
       font-size: 13px;
-      transition: background-color $side-bar-animate linear;
+      transition: background-color cch-variables.$side-bar-animate linear;
 
       span {
         font-size: 14px;
@@ -120,9 +120,9 @@ $select-bg: $nav-select-bg;
       }
 
       // 选中状态
-      @include when(active) {
+      @include cch.when(active) {
         background-color: $select-bg;
-        color: $primary;
+        color: cch-variables.$primary;
         position: relative;
 
         @extend %icon;
@@ -134,19 +134,19 @@ $select-bg: $nav-select-bg;
           position: absolute;
           top: 0;
           left: 0;
-          background-color: $primary;
+          background-color: cch-variables.$primary;
         }
       }
     }
   }
 
   // 收起菜单时 弹出菜单
-  @include e(menu-popper) {
+  @include cch.e(menu-popper) {
     .el-menu-item,
     .el-submenu__title {
-      @include when(active) {
-        background-color: $select-hover-background;
-        color: $primary;
+      @include cch.when(active) {
+        background-color: cch-variables.$select-hover-background;
+        color: cch-variables.$primary;
       }
     }
   }

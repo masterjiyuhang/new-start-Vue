@@ -1,17 +1,65 @@
 $--colors: (
+  "white": #ffffff,
+  "black": #000000,
   "primary": (
     "base": #ffd6a5,
+    "light-7": red,
+  ),
+  "success": (
+    "base": #21ba45,
+  ),
+  "warning": (
+    "base": #f2711c,
+  ),
+  "danger": (
+    "base": #db2828,
+  ),
+  "error": (
+    "base": #db2828,
+  ),
+  "info": (
+    "base": #42b8dd,
+  ),
+  "default": (
+    "base": #bfa,
   ),
 );
 
 @forward "element-plus/theme-chalk/src/common/var.scss" with (
   $colors: $--colors,
+  $button: (
+    "font-weight": 500,
+  ),
   $date-editor: (
     "daterange-width": 260px,
+  ),
+  // $button-padding-horizontal: (
+  //   "default": 80px,
+  // )
+  $button-font-size:
+    (
+      "default": 16px,
+    ),
+  $fill-color: (
+    "": #b07d62,
+    "light": #c38e70,
+    "lighter": #cd9777,
+    "extra-light": #d69f7e,
+    "dark": #deab90,
+    "darker": #e6b8a2,
+    "blank": #edc4b3,
+  ),
+  $border-color: (
+    "": #fff,
+    "light": #e4e7ed,
+    "lighter": #ebeef5,
+    "extra-light": #f2f6fc,
+    "dark": #d4d7de,
+    "darker": #cdd0d6,
   )
 );
 
 :root {
-  --el-color-primary: #a0c4ff;
+  // --el-color-primary: #a0c4ff;
   --el-menu-icon-width: 40px;
 }
