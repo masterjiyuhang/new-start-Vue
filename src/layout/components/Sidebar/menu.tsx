@@ -33,7 +33,8 @@ export default defineComponent({
   props,
   inject: ["isCollapse", "menuList"],
 
-  setup(props, { emit }) {
+  // setup(props, { emit }) {
+  setup() {
     const isCollapse: any = inject("isCollapse");
     const provideMenuList: Ref = inject("menuList");
     const menuList = unref(provideMenuList.value);
@@ -54,55 +55,55 @@ export default defineComponent({
       );
     };
 
-    const menuLists = [
-      {
-        path: "/dashboard",
-        name: "dashboard",
-        meta: {
-          icon: "Apple",
-        },
-      },
-      {
-        path: "/welcome",
-        name: "welcome",
-        meta: {
-          icon: "Apple",
-        },
-      },
-      {
-        path: "/car",
-        name: "车辆管理",
-        weight: -2,
-        meta: {
-          icon: "Menu",
-        },
-        children: [
-          {
-            path: "/car/list",
-            name: "列表",
-            meta: {
-              icon: "Menu",
-            },
-          },
-          {
-            path: "/car/detail",
-            name: "详情",
-            children: [
-              {
-                path: "/car/detail/asdasd",
-                name: "详情列表",
-                meta: {
-                  icon: "Apple",
-                },
-              },
-            ],
-            meta: {
-              icon: "Apple",
-            },
-          },
-        ],
-      },
-    ];
+    // const menuLists = [
+    //   {
+    //     path: "/dashboard",
+    //     name: "dashboard",
+    //     meta: {
+    //       icon: "Apple",
+    //     },
+    //   },
+    //   {
+    //     path: "/welcome",
+    //     name: "welcome",
+    //     meta: {
+    //       icon: "Apple",
+    //     },
+    //   },
+    //   {
+    //     path: "/car",
+    //     name: "车辆管理",
+    //     weight: -2,
+    //     meta: {
+    //       icon: "Menu",
+    //     },
+    //     children: [
+    //       {
+    //         path: "/car/list",
+    //         name: "列表",
+    //         meta: {
+    //           icon: "Menu",
+    //         },
+    //       },
+    //       {
+    //         path: "/car/detail",
+    //         name: "详情",
+    //         children: [
+    //           {
+    //             path: "/car/detail/asdasd",
+    //             name: "详情列表",
+    //             meta: {
+    //               icon: "Apple",
+    //             },
+    //           },
+    //         ],
+    //         meta: {
+    //           icon: "Apple",
+    //         },
+    //       },
+    //     ],
+    //   },
+    // ];
 
     const selected = ref("");
     const route = useRoute();
