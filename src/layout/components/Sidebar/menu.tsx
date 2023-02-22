@@ -1,18 +1,9 @@
-import {
-  DefineComponent,
-  defineComponent,
-  inject,
-  PropType,
-  ref,
-  renderList,
-  unref,
-  watch,
-} from "vue";
+import { defineComponent, inject, PropType, ref, renderList, unref, watch } from "vue";
 import type { Ref } from "vue";
 import { ElMenu, ElSubMenu, ElMenuItem, ElIcon } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
 // import { Apple, Menu } from "@element-plus/icons-vue";
-import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import { useRenderElementIcon } from "@/hooks/useRenderElementIcon";
 
 const props = {
   /** 头部最左边的标题 */
@@ -40,20 +31,22 @@ export default defineComponent({
     const menuList = unref(provideMenuList.value);
     // console.log(isCollapse, menuList);
 
-    // 渲染图标
-    const renderIcon = (icon?: string) => {
-      if (!icon) {
-        return null;
-      }
-      const IconComp = (
-        ElementPlusIconsVue as { [key: string]: DefineComponent }
-      )[icon];
-      return (
-        <el-icon>
-          <IconComp />
-        </el-icon>
-      );
-    };
+    const { renderIcon } = useRenderElementIcon();
+
+    // // 渲染图标
+    // const renderIcon = (icon?: string) => {
+    //   if (!icon) {
+    //     return null;
+    //   }
+    //   const IconComp = (
+    //     ElementPlusIconsVue as { [key: string]: DefineComponent }
+    //   )[icon];
+    //   return (
+    //     <el-icon>
+    //       <IconComp />
+    //     </el-icon>
+    //   );
+    // };
 
     // const menuLists = [
     //   {
