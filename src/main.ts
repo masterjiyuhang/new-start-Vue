@@ -17,6 +17,8 @@ async function bootstrap() {
   setupStore;
   app.use(router);
 
+  app.config.unwrapInjectedRef = true;
+
   app.mount("#app");
 }
 

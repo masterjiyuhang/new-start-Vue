@@ -1,7 +1,18 @@
-import { defineComponent, inject, PropType, ref, renderList } from "vue";
+import {
+  DefineComponent,
+  defineComponent,
+  inject,
+  PropType,
+  ref,
+  renderList,
+  unref,
+  watch,
+} from "vue";
+import type { Ref } from "vue";
 import { ElMenu, ElSubMenu, ElMenuItem, ElIcon } from "element-plus";
-import { useRouter } from "vue-router";
-import { Apple, Menu } from "@element-plus/icons-vue";
+import { useRoute, useRouter } from "vue-router";
+// import { Apple, Menu } from "@element-plus/icons-vue";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 const props = {
   /** 头部最左边的标题 */
@@ -20,33 +31,42 @@ export default defineComponent({
   components: { ElMenu, ElSubMenu, ElMenuItem, ElIcon },
   emits: ["click"],
   props,
-  inject: ["isCollapse"],
+  inject: ["isCollapse", "menuList"],
 
   setup(props, { emit }) {
-    const isCollapse = inject("isCollapse");
-    console.log(isCollapse, props.title, "asdasdasd");
+    const isCollapse: any = inject("isCollapse");
+    const provideMenuList: Ref = inject("menuList");
+    const menuList = unref(provideMenuList.value);
+    // console.log(isCollapse, menuList);
 
-    const menuList = [
+    // 渲染图标
+    const renderIcon = (icon?: string) => {
+      if (!icon) {
+        return null;
+      }
+      const IconComp = (
+        ElementPlusIconsVue as { [key: string]: DefineComponent }
+      )[icon];
+      return (
+        <el-icon>
+          <IconComp />
+        </el-icon>
+      );
+    };
+
+    const menuLists = [
       {
         path: "/dashboard",
         name: "dashboard",
         meta: {
-          icon: (
-            <el-icon>
-              <Apple />
-            </el-icon>
-          ),
+          icon: "Apple",
         },
       },
       {
         path: "/welcome",
         name: "welcome",
         meta: {
-          icon: (
-            <el-icon>
-              <Apple />
-            </el-icon>
-          ),
+          icon: "Apple",
         },
       },
       {
@@ -54,33 +74,30 @@ export default defineComponent({
         name: "车辆管理",
         weight: -2,
         meta: {
-          icon: (
-            <el-icon>
-              <Menu />
-            </el-icon>
-          ),
+          icon: "Menu",
         },
         children: [
           {
             path: "/car/list",
             name: "列表",
             meta: {
-              icon: (
-                <el-icon>
-                  <Apple />
-                </el-icon>
-              ),
+              icon: "Menu",
             },
           },
           {
             path: "/car/detail",
             name: "详情",
+            children: [
+              {
+                path: "/car/detail/asdasd",
+                name: "详情列表",
+                meta: {
+                  icon: "Apple",
+                },
+              },
+            ],
             meta: {
-              icon: (
-                <el-icon>
-                  <Apple />
-                </el-icon>
-              ),
+              icon: "Apple",
             },
           },
         ],
@@ -88,17 +105,18 @@ export default defineComponent({
     ];
 
     const selected = ref("");
+    const route = useRoute();
     const router = useRouter();
 
-    const handleOpen = () => {
-      console.log("打开");
-    };
-    const handleClose = () => {
-      console.log("关闭");
-    };
+    // const handleOpen = () => {
+    //   console.log("打开");
+    // };
+    // const handleClose = () => {
+    //   console.log("关闭");
+    // };
 
+    // 菜单选择时赋值
     const onSelect = (index) => {
-      console.log(index, "打开");
       // 在新标签打开
       if (index.indexOf("target=_blank") !== -1) {
         const link = document.createElement("a");
@@ -111,27 +129,29 @@ export default defineComponent({
       router.push(index);
     };
 
+    // 渲染menu
     const renderMenuItem = (menu, index) => {
-      const { path, meta, name } = menu;
+      const { url, path, meta, name } = menu;
       return (
-        <el-menu-item index={path} key={`__cch_m_i_${index}_${path}`}>
-          {meta && meta.icon}
+        <el-menu-item index={url} key={`__cch_m_i_${index}_${path}`}>
+          {meta && meta.icon && renderIcon(meta.icon)}
           {name}
         </el-menu-item>
       );
     };
 
+    // 渲染有children的menu
     const renderChildItem = (menu, index) => {
-      const { meta, path, name, children } = menu;
+      const { url, meta, path, name, children } = menu;
       return (
         <el-sub-menu
-          index={path}
+          index={url}
           key={`__cch_sub_m_i_${index}_${path}`}
           v-slots={{
             title: () => {
               return (
                 <>
-                  {meta.icon}
+                  {meta && meta.icon && renderIcon(meta.icon)}
                   {name}
                 </>
               );
@@ -147,20 +167,32 @@ export default defineComponent({
         </el-sub-menu>
       );
     };
+
+    // 初始化时给menu默认打开的菜单赋值
+    selected.value = route.path;
+
+    // 监听路由变化，赋值menu展开项
+    watch(
+      () => route.path,
+      (newVal) => {
+        // console.log(newVal, "监听到的吧");
+        selected.value = newVal;
+      }
+    );
+
     return () => (
       <div>
+        {/* <a href="">{selected.value}</a> */}
         <el-menu
           ref="menu"
-          default-active="/dashboard"
+          default-active={selected.value}
           class="el-menu-vertical-demo"
-          collapse={isCollapse}
-          onOpen={handleOpen}
+          collapse={isCollapse.value}
+          // onOpen={handleOpen}
+          // onClose={handleClose}
           onSelect={onSelect}
-          onClose={handleClose}
         >
           {menuList.map((item, index) => {
-            console.log(item, index);
-
             if (item.children) {
               return renderChildItem(item, index);
             }

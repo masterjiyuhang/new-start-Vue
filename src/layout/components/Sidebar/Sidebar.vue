@@ -4,18 +4,67 @@
       <img src="@/assets/logo.png" width="65" />
     </div>
     <div>
-      <Menu title="部门列表" />
+      <Menu title="列表" />
     </div>
+    <el-button @click="changeCollapse">Change Collapse</el-button>
   </div>
 </template>
 
 <script setup lang="ts">
 import Menu from "./menu";
-import { ref, provide } from "vue";
+import { ref, provide, computed, reactive } from "vue";
+import { constantMenus } from "@/router/index";
 
 const isCollapse = ref(false);
+const sidebarState = reactive({
+  menuList: [],
+});
+console.log(constantMenus, "constantMenus menu 等待处理中");
 
-provide("isCollapse", isCollapse.value);
+const changeCollapse = () => {
+  isCollapse.value = !isCollapse.value;
+};
+// 先按照weight排个序
+const r1 = constantMenus
+  .reduce((pre, next) => {
+    // console.log(pre, next);
+    return pre.concat(next);
+  }, [])
+  .sort((A, B) => {
+    const weightA = A.meta.weight;
+    const weightB = B.meta.weight;
+    return weightB - weightA;
+  });
+
+sidebarState.menuList = r1.map((item) => {
+  if (item.children) {
+    // 孩子节点
+    item.children.map((childMenu) => {
+      childMenu.url = `${item.path}/${childMenu.path}`;
+      // 孙子节点
+      if (childMenu.children) {
+        childMenu.children = childMenu.children.map((grandsonMenu) => {
+          grandsonMenu.url = `${item.path}/${childMenu.path}/${grandsonMenu.path}`;
+          return grandsonMenu;
+        });
+      }
+      return childMenu;
+    });
+  }
+  item.url = item.path;
+  return item;
+});
+
+provide(
+  "isCollapse",
+  computed(() => {
+    return isCollapse.value;
+  })
+);
+provide(
+  "menuList",
+  computed(() => sidebarState.menuList)
+);
 </script>
 
 <style lang="scss">
@@ -57,7 +106,7 @@ $select-bg: cch-variables.$nav-select-bg;
       }
     }
 
-    .el-submenu__title {
+    .el-sub-menu__title {
       span {
         @extend %hidemenu;
       }
@@ -104,7 +153,7 @@ $select-bg: cch-variables.$nav-select-bg;
     transition: height cch-variables.$side-bar-animate ease-in;
 
     .el-menu-item,
-    .el-submenu__title {
+    .el-sub-menu__title {
       color: #fff;
       font-size: 13px;
       transition: background-color cch-variables.$side-bar-animate linear;
@@ -143,7 +192,7 @@ $select-bg: cch-variables.$nav-select-bg;
   // 收起菜单时 弹出菜单
   @include cch.e(menu-popper) {
     .el-menu-item,
-    .el-submenu__title {
+    .el-sub-menu__title {
       @include cch.when(active) {
         background-color: cch-variables.$select-hover-background;
         color: cch-variables.$primary;
