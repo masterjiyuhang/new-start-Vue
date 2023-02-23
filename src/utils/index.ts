@@ -1,27 +1,33 @@
-import { findCurrentRouteByPath } from "./erHangUtils/index";
+import { isProxy, toRaw } from "vue";
+import type { RouteRecordRaw } from "vue-router";
+
+export const findCurrentRouteByPath = (
+  path: string,
+  routes: RouteRecordRaw[]
+) => {
+  let res = routes.find((item) => item.path === path);
+
+  if (res) {
+    return isProxy(res) ? toRaw(res) : res;
+  } else {
+    for (let i = 0; i < routes.length; i++) {
+      if (
+        routes[i].children instanceof Array &&
+        routes[i].children!.length > 0
+      ) {
+        res = findCurrentRouteByPath(path, routes[i].children!);
+        if (res) {
+          return isProxy(res) ? toRaw(res) : res;
+        }
+      }
+    }
+  }
+  return null;
+};
 
 const loadEnv = () => {
   return import.meta.env;
 };
-
-declare type Recordable<T = any> = Record<string, T>;
-
-declare interface ViteEnv {
-  VITE_PORT: number;
-  VITE_USE_MOCK: boolean;
-  VITE_USE_PWA: boolean;
-  VITE_PUBLIC_PATH: string;
-  VITE_PROXY: [string, string][];
-  VITE_GLOB_APP_TITLE: string;
-  VITE_GLOB_APP_SHORT_NAME: string;
-  VITE_USE_CDN: boolean;
-  VITE_DROP_CONSOLE: boolean;
-  VITE_BUILD_COMPRESS: "gzip" | "brotli" | "none";
-  VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
-  VITE_LEGACY: boolean;
-  VITE_USE_IMAGEMIN: boolean;
-  VITE_GENERATE_UI: string;
-}
 
 function wrapperEnv(envConf: Recordable): ViteEnv {
   const ret: any = {};
@@ -50,4 +56,40 @@ function wrapperEnv(envConf: Recordable): ViteEnv {
   return ret;
 }
 
-export { loadEnv, wrapperEnv, findCurrentRouteByPath };
+/**
+ * 数组去重
+ */
+type arr<T> = Array<T>;
+export const uniqueArr = (arr: arr<any>) => [...new Set(arr)];
+
+/**
+ * 判断设备类型
+ * @returns 设备类型
+ */
+export const getCurrentDevice = () =>
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|OperaMini/i.test(
+    navigator.userAgent
+  )
+    ? "Mobile"
+    : "PC";
+
+/**
+ * 判断两日期之间的天数
+ * @param date1
+ * @param date2
+ * @returns
+ */
+export const getDays = (date1, date2) =>
+  Math.ceil(Math.abs(date1.getTime() - date2.getTime()) / 86400000);
+
+/**
+ * rgb转换为 15进制
+ * @param r
+ * @param g
+ * @param b
+ * @returns
+ */
+export const rgbToHex = (r, g, b) =>
+  "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+
+export { loadEnv, wrapperEnv };

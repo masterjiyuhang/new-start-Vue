@@ -1,11 +1,3 @@
-/*
- * @Author: jiyuhang syjzjyh@163.com
- * @Date: 2023-02-17 16:53:34
- * @LastEditors: jiyuhang syjzjyh@163.com
- * @LastEditTime: 2023-02-17 16:55:25
- * @FilePath: \new-start-Vue\mock\utils.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 import { ResultEnum } from "./httpEnum";
 declare type Recordable<T = any> = Record<string, T>;
 

@@ -8,7 +8,7 @@ import { onMounted } from "vue";
 
 onMounted(() => {
   emitter.on("changeSidebarCollapse", (value) => {
-    console.log("Tabs中监听菜单是否折叠", value);
+    console.log(value, "Tabs 中监听菜单是否折叠");
   });
 });
 </script>

@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    /** TS 严格模式 */
     "strict": false,
     "noLib": false,
     "forceConsistentCasingInFileNames": true,
@@ -22,8 +23,16 @@
     "lib": ["dom", "esnext"],
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "types": ["vite-svg-loader", "node", "jsdom", "vite/client"],
+    "types": [
+      "vite-svg-loader",
+      "node",
+      "jsdom",
+      "vite/client",
+      /** Element Plus 的 Volar 插件支持 */
+      "element-plus/global"
+    ],
     "removeComments": true,
+    /** 非相对模块导入的路径映射配置，根据 baseUrl 配置进行路径计算 */
     "paths": {
       "@/*": ["./src/*"],
       "/@/*": ["src/*"],
@@ -42,7 +51,9 @@
     "build/**/*.ts",
     "build/**/*.d.ts",
     "mock/**/*.ts",
-    "vite.config.ts"
-, "src/utils/excelToJs/excelToJs.js"  ],
+    "vite.config.ts",
+    "src/utils/excelToJs/excelToJs.js"
+  ],
+  /** 编译器默认排除的编译文件 */
   "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
 }

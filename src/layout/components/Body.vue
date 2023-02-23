@@ -11,7 +11,7 @@ import { emitter } from "@/utils/mitt";
 const isCollapse = ref<any>(false);
 onMounted(() => {
   emitter.on("changeSidebarCollapse", (value) => {
-    console.log(value, "监听事件变化了被");
+    console.log(value, "Body 中监听Collapse变化了被");
     isCollapse.value = value;
   });
 });

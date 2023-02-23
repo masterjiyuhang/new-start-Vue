@@ -1,28 +1,24 @@
 <template>
   <div :class="[isCollapse ? 'cch-sidebar--collapse' : '']" class="cch-sidebar">
-    <div v-if="!isCollapse" class="flex-c">
+    <div class="flex-c">
       <img src="@/assets/logo.png" :width="logoWidth" />
     </div>
     <div>
       <Menu title="列表" />
     </div>
-    <el-button @click="changeCollapse"> {{ isCollapse }}</el-button>
+    <!-- <el-button @click="changeCollapse"> {{ isCollapse }}</el-button> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import Menu from "./menu";
-import { ref, provide, computed, reactive } from "vue";
+import { ref, provide, computed, reactive, watch } from "vue";
 import { constantMenus } from "@/router/index";
-import { emitter } from "@/utils/mitt";
+// import { emitter } from "@/utils/mitt";
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 import { storeToRefs } from "pinia";
-const { changeIsCollapse } = useGlobalSettingStore();
 
 const { isCollapse } = storeToRefs(useGlobalSettingStore());
-// const changeCollapse = () => {
-//   changeIsCollapse();
-// };
 const logoWidth = ref(65);
 
 const sidebarState = reactive({
@@ -30,12 +26,13 @@ const sidebarState = reactive({
 });
 console.log(constantMenus, "constantMenus menu 等待处理中");
 
-// const isCollapse = ref(false);
-const changeCollapse = () => {
-  // isCollapse.value = !isCollapse.value;
-  changeIsCollapse();
-  emitter.emit("changeSidebarCollapse", isCollapse.value);
-};
+// const { changeIsCollapse } = useGlobalSettingStore();
+// // const isCollapse = ref(false);
+// const changeCollapse = () => {
+//   // isCollapse.value = !isCollapse.value;
+//   changeIsCollapse();
+//   // emitter.emit("changeSidebarCollapse", isCollapse.value);
+// };
 
 // 先按照weight排个序
 const r1 = constantMenus
@@ -78,6 +75,13 @@ provide(
   "menuList",
   computed(() => sidebarState.menuList)
 );
+
+watch(
+  () => isCollapse.value,
+  (newVal) => {
+    logoWidth.value = newVal ? 30 : 65;
+  }
+);
 </script>
 
 <style lang="scss">
@@ -114,9 +118,9 @@ $select-bg: cch-variables.$nav-select-bg;
         @extend %hidemenu;
       }
 
-      &.is-active {
-        display: none;
-      }
+      // &.is-active {
+      //   display: none;
+      // }
     }
 
     .el-sub-menu__title {

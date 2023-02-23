@@ -2,6 +2,11 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { DefineComponent } from "vue";
 
 export function useRenderElementIcon() {
+  /**
+   * 渲染Element的Icon
+   * @param icon
+   * @returns
+   */
   const renderIcon = (icon: string) => {
     if (!icon) {
       return null;

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <el-icon @click="handleChangeCollapse">
+      <Expand v-if="isCollapse" />
+      <Fold v-else />
+    </el-icon>
+    <!-- <el-icon><Fold /></el-icon> -->
     header
     <!-- <div class="rc-header__tool" @click="onToggleCollapse">
       <i :class="[isMenuAsideCollapse ? 'rc-icon-packup' : 'rc-icon-un']" />
@@ -11,15 +16,19 @@
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 import { storeToRefs } from "pinia";
 import { watch } from "vue";
+import { Expand, Fold } from "@element-plus/icons-vue";
 
+const { changeIsCollapse } = useGlobalSettingStore();
 const { isCollapse } = storeToRefs(useGlobalSettingStore());
 
 watch(
   () => isCollapse.value,
   (newVal) => {
-    console.log(newVal, "header");
+    console.log(newVal, "header 中监听collapse变化");
   }
 );
+
+const handleChangeCollapse = changeIsCollapse;
 </script>
 
 <style scoped></style>
