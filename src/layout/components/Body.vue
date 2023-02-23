@@ -5,16 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { emitter } from "@/utils/mitt";
+import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
+import { storeToRefs } from "pinia";
 
-const isCollapse = ref<any>(false);
-onMounted(() => {
-  emitter.on("changeSidebarCollapse", (value) => {
-    console.log(value, "Body 中监听Collapse变化了被");
-    isCollapse.value = value;
-  });
-});
+const { isCollapse } = storeToRefs(useGlobalSettingStore());
 </script>
 
 <style lang="scss">

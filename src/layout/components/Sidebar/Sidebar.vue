@@ -24,7 +24,7 @@ const logoWidth = ref(65);
 const sidebarState = reactive({
   menuList: [],
 });
-console.log(constantMenus, "constantMenus menu 等待处理中");
+// console.log(constantMenus, "constantMenus menu 等待处理中");
 
 // const { changeIsCollapse } = useGlobalSettingStore();
 // // const isCollapse = ref(false);

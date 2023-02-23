@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div class="flex-bc">
     <el-icon @click="handleChangeCollapse">
       <Expand v-if="isCollapse" />
       <Fold v-else />
     </el-icon>
     <!-- <el-icon><Fold /></el-icon> -->
-    header
+
     <!-- <div class="rc-header__tool" @click="onToggleCollapse">
       <i :class="[isMenuAsideCollapse ? 'rc-icon-packup' : 'rc-icon-un']" />
     </div> -->
+    <div>header{{ isCollapse }}用户</div>
   </div>
 </template>
 

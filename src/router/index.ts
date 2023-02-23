@@ -1,5 +1,5 @@
+import NProgress from "@/utils/progress";
 import { createRouter, createWebHistory } from "vue-router";
-
 const LAYOUT = () => import("@/layout/index.vue");
 
 const modules: Record<string, any> = import.meta.glob(["./modules/**/*.ts"], {
@@ -69,6 +69,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  console.log(from, to);
+  NProgress.start();
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });
 export default router;
