@@ -39,3 +39,6 @@ pnpm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 
 npx tailwindcss init -p
 ```
+
+## tabs init
+初始化页面上面的tabs
