@@ -1,31 +1,32 @@
 <template>
   <div class="cch-tabs">
     <el-tabs
-      v-model="editableTabsValue"
+      v-model="currentTab"
       type="card"
-      closable
       @tab-remove="removeTab"
+      @tab-click="clickTab"
+      @tab-change="changeTab"
     >
       <el-tab-pane
-        v-for="item in editableTabs"
+        v-for="item in tablist"
+        :closable="item.name !== 'dashboard'"
         :key="handleCurrentTabName(item)"
         :label="item.meta.title"
         :name="handleCurrentTabName(item)"
       >
+        <template #label>{{ item.meta.title }}{{ item.name }} </template>
       </el-tab-pane>
     </el-tabs>
 
     <div style="margin-bottom: 20px">
-      <el-button size="small" @click="addTab(editableTabsValue)">
-        add tab{{ editableTabsValue }}
-      </el-button>
+      <el-button size="small">{{ currentTab }} </el-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { emitter } from "@/utils/mitt";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { ref } from "vue";
 import { useNav } from "@/hooks/useNav";
 import { useRoute, useRouter } from "vue-router";
@@ -37,47 +38,19 @@ const { isDashboard } = useNav();
 const handleCurrentTabName = (item) => {
   return (
     item.name.trim().toLocaleLowerCase() +
+    "||||||" +
     JSON.stringify(item.query) +
-    JSON.stringify(item.params)
+    "||||||" +
+    JSON.stringify(item.query)
   );
 };
 
-console.log(isDashboard(route as any), "asdasd");
+const currentTab = ref("");
+const tablist = ref([]);
 
-onMounted(() => {
-  emitter.on("changeSidebarCollapse", (value) => {
-    console.log(value, "Tabs 中监听菜单是否折叠");
-  });
-});
-
-const editableTabsValue = ref("Dashboard");
-const editableTabs = ref([
-  {
-    name: "Dashboard",
-    meta: {
-      title: "分析页",
-    },
-    query: {},
-    params: {},
-  },
-]);
-
-let tabIndex = 1;
-const addTab = (_targetName: string) => {
-  const newTabName = `${++tabIndex}`;
-  editableTabs.value.push({
-    name: newTabName,
-    meta: {
-      title: "New Tab" + newTabName,
-    },
-    query: {},
-    params: {},
-  });
-  editableTabsValue.value = newTabName;
-};
 const removeTab = (targetName: string) => {
-  const tabs = editableTabs.value;
-  // let activeName = editableTabsValue.value;
+  const tabs = tablist.value;
+  // let activeName = currentTab.value;
 
   // 找到当前tab对应的index
   const index = tabs.findIndex((item) => {
@@ -93,21 +66,20 @@ const removeTab = (targetName: string) => {
   );
 
   if (handleCurrentTabName(route) === targetName) {
-    if (editableTabs.value.length === 1) {
-      console.log(1111);
+    if (tablist.value.length === 1) {
       router.push({ name: "dashboard" });
     } else {
-      if (index < editableTabs.value.length - 1) {
+      if (index < tablist.value.length - 1) {
         router.push({
-          name: editableTabs.value[index + 1].name,
-          query: editableTabs.value[index + 1].query,
-          params: editableTabs.value[index + 1].params,
+          name: tablist.value[index + 1].name,
+          query: tablist.value[index + 1].query,
+          params: tablist.value[index + 1].params,
         });
       } else {
         router.push({
-          name: editableTabs.value[index - 1].name,
-          query: editableTabs.value[index - 1].query,
-          params: editableTabs.value[index - 1].params,
+          name: tablist.value[index - 1].name,
+          query: tablist.value[index - 1].query,
+          params: tablist.value[index - 1].params,
         });
       }
     }
@@ -123,10 +95,105 @@ const removeTab = (targetName: string) => {
   //   });
   // }
 
-  // editableTabsValue.value = activeName;
-  // editableTabs.value = tabs.filter((tab) => tab.name !== targetName);
-  editableTabs.value.splice(index, 1);
+  // currentTab.value = activeName;
+  // tablist.value = tabs.filter((tab) => tab.name !== targetName);
+  tablist.value.splice(index, 1);
 };
+
+const clickTab = (TabsPaneContext) => {
+  console.log("click", TabsPaneContext);
+  const name = TabsPaneContext?.props?.name;
+
+  if (!name) return;
+  const clickInfo = name.split("||||||");
+  // 还得接着处理 最后不行就得map了
+  router.push({
+    name: clickInfo[0],
+    query: JSON.parse(clickInfo[1]),
+    params: JSON.parse(clickInfo[2]),
+  });
+  console.log(currentTab.value.split("||||||"));
+};
+const changeTab = (e) => {
+  console.log("change", e);
+};
+
+const isSame = (route1, route2) => {
+  if (route1.name !== route2.name) {
+    return false;
+  }
+  if (
+    Object.keys(route1.query).length !== Object.keys(route2.query).length ||
+    Object.keys(route1.params).length !== Object.keys(route2.params).length
+  ) {
+    return false;
+  }
+  for (const key in route1.query) {
+    if (route1.query[key] !== route2.query[key]) {
+      return false;
+    }
+  }
+  for (const key in route1.params) {
+    if (route1.params[key] !== route2.params[key]) {
+      return false;
+    }
+  }
+  return true;
+};
+
+watch(
+  () => route,
+  (to) => {
+    // console.log(
+    //   now,
+    //   tablist.value.some((item) => isSame(item, to))
+    // );
+    if (!tablist.value.some((item) => isSame(item, to))) {
+      const CurrentRouteItem = {
+        name: to.name,
+        meta: {
+          title: to.meta.title || "meta中没有名字",
+        },
+        query: to.query,
+        params: to.params,
+      };
+      tablist.value.push(CurrentRouteItem);
+      currentTab.value = handleCurrentTabName(to);
+    }
+  },
+  { deep: true }
+);
+onMounted(() => {
+  // 如果是分析页 直接添加
+  if (isDashboard(route as any)) {
+    console.log("isDashboard");
+    tablist.value = [
+      {
+        name: "dashboard",
+        meta: {
+          title: "分析页",
+        },
+        query: {},
+        params: {},
+      },
+    ];
+  } else {
+    // 其他页面 添加路由信息进来呗
+    const { name, meta, query, params } = route;
+    tablist.value.push({
+      name,
+      meta,
+      query: { ...query },
+      params,
+    });
+  }
+
+  console.log(handleCurrentTabName(route), "handleCurrentTabName(route)");
+  currentTab.value = handleCurrentTabName(route);
+  emitter.on("changeSidebarCollapse", (value) => {
+    console.log(value, "Tabs 中监听菜单是否折叠");
+  });
+});
 </script>
 
 <style lang="scss">
