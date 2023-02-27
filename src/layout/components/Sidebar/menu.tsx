@@ -8,7 +8,7 @@ import {
   watch,
 } from "vue";
 import type { Ref } from "vue";
-import { ElMenu, ElSubMenu, ElMenuItem, ElIcon } from "element-plus";
+import { ElMenu, ElSubMenu, ElMenuItem, ElIcon, ElTooltip } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
 // import { Apple, Menu } from "@element-plus/icons-vue";
 import { useRenderElementIcon } from "@/hooks/useRenderElementIcon";
@@ -27,7 +27,7 @@ const props = {
 
 export default defineComponent({
   name: "CchMenu",
-  components: { ElMenu, ElSubMenu, ElMenuItem, ElIcon },
+  components: { ElMenu, ElSubMenu, ElMenuItem, ElIcon, ElTooltip },
   emits: ["click"],
   props,
   inject: ["isCollapse", "menuList"],
@@ -132,12 +132,35 @@ export default defineComponent({
     };
 
     // 渲染menu
-    const renderMenuItem = (menu, index) => {
+    const renderMenuItem = (menu, index, isSubMenuItem = false) => {
       const { url, path, meta, name } = menu;
+
       return (
         <el-menu-item index={url} key={`__cch_m_i_${index}_${path}`}>
-          {meta && meta.icon && renderIcon(meta.icon)}
-          <span>{name}</span>
+          {isCollapse.value ? (
+            // 是不是子菜单
+            isSubMenuItem ? (
+              <>
+                {meta && meta.icon && renderIcon(meta.icon)}
+                <span>{name}</span>
+              </>
+            ) : (
+              <>
+                <el-tooltip placement="right" effect="light" content={name}>
+                  {/* <span>{name}</span> */}
+                  {meta && meta.icon && renderIcon(meta.icon)}
+                  <span>{name}????</span>
+                </el-tooltip>
+              </>
+            )
+          ) : (
+            // )
+            // 展开时
+            <>
+              {meta && meta.icon && renderIcon(meta.icon)}
+              <span>{name}</span>
+            </>
+          )}
         </el-menu-item>
       );
     };
@@ -164,7 +187,7 @@ export default defineComponent({
             if (childMenu.children) {
               return renderChildItem(childMenu, childIndex);
             }
-            return renderMenuItem(childMenu, childIndex);
+            return renderMenuItem(childMenu, childIndex, true);
           })}
         </el-sub-menu>
       );
