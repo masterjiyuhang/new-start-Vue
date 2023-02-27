@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import Tabs from "./Tabs.vue";
+import Tabs from "./Tabs/Tabs.vue";
 </script>
 
 <style scoped></style>
