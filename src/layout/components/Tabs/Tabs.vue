@@ -54,8 +54,8 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { storeToRefs } from "pinia";
-import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
+// import { storeToRefs } from "pinia";
+// import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 
 const route = useRoute();
 const router = useRouter();
@@ -63,7 +63,7 @@ const tabList = ref([]);
 const currentTab = ref("");
 const defaultRouter = ref("dashboard");
 const contextMenuVisible = ref(false);
-const { isCollapse } = storeToRefs(useGlobalSettingStore());
+// const { isCollapse } = storeToRefs(useGlobalSettingStore());
 const left = ref(0);
 const top = ref(0);
 const rightActive = ref("");
@@ -80,14 +80,16 @@ const openContextMenu = (e) => {
   }
   if (id) {
     contextMenuVisible.value = true;
-    let width;
-    if (isCollapse.value) {
-      width = 54;
-    } else {
-      width = 220;
-    }
+    // let width;
+    // if (isCollapse.value) {
+    //   width = 64;
+    // } else {
+    //   width = 200;
+    // }
 
-    left.value = e.clientX - width;
+    // left.value = e.clientX - width;
+
+    left.value = e.clientX;
     top.value = e.clientY + 10;
     rightActive.value = id.substring(4);
   }
