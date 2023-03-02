@@ -7,7 +7,6 @@ export const reactive = <T extends object>(target: T) => {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);
       track(target, key);
-
       if (isObject(res)) {
         return reactive(res);
       }

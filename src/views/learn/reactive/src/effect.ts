@@ -28,10 +28,12 @@ export const track = (target, key) => {
 };
 
 export const trigger = (target, key) => {
-  const depsMap = targetMap.get(target);
+  let depsMap = targetMap.get(target);
+  if (!depsMap) {
+    track(target, key);
+    depsMap = targetMap.get(target);
+  }
   const deps = depsMap.get(key);
 
-  deps.forEach((effect) => {
-    effect();
-  });
+  deps.forEach((effect) => effect());
 };

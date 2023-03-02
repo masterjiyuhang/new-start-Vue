@@ -24,7 +24,7 @@ export default {
         },
         {
           path: "study-reactive",
-          component: () => import("@/views/learn/reactive/ref.vue"),
+          component: () => import("@/views/learn/reactive/reactive.vue"),
           name: "reactive",
           meta: {
             title: "reactive",
