@@ -327,6 +327,7 @@ $height-nav-scroll: 40px;
 @include cch.b(tabs) {
   background-color: #fff;
   color: aliceblue;
+  box-shadow: 0px 2px 8px 0px rgb(0 0 0 / 15%);
 
   .router-history {
     // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
