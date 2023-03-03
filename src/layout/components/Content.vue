@@ -1,14 +1,16 @@
 <template>
-  <Tabs />
-  <div class="cch-content">
-    <div class="cch-content__wrapper">
-      <router-view>
-        <template #default="{ Component, route }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" :key="route.fullPath" />
-          </transition>
-        </template>
-      </router-view>
+  <div>
+    <Tabs />
+    <div class="cch-content">
+      <div class="cch-content__wrapper">
+        <router-view>
+          <template #default="{ Component, route }">
+            <transition name="fade" mode="out-in">
+              <component :is="Component" :key="route.fullPath" />
+            </transition>
+          </template>
+        </router-view>
+      </div>
     </div>
   </div>
 </template>
