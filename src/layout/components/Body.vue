@@ -21,7 +21,7 @@ const { isCollapse } = storeToRefs(useGlobalSettingStore());
   @include cch.m(collapse) {
     margin-left: cch-variables.$side-bar-width-mini !important;
 
-    .rc-content {
+    .cch-content {
       left: cch-variables.$side-bar-width-mini !important;
     }
   }

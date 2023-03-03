@@ -69,5 +69,15 @@ export default {
         icon: "Apple",
       },
     },
+    {
+      path: "watch",
+      name: "Watch",
+      component: () => import("@/views/learn/watch/index.vue"),
+      meta: {
+        title: "watch监听",
+        isMenu: true,
+        icon: "Apple",
+      },
+    },
   ],
 };
