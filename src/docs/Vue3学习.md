@@ -9,13 +9,25 @@
 
 ## Vue3
 
-### ref
+### 模板语法
 
-#### shallowRef
+解析器 将模板解析为AST 抽象语法树 abstract syntax tree
+
+优化器 遍历AST标记静态节点，静态节点不可变，不需要为打上标签的静态节点创建新的虚拟节点，直接克隆已有的虚拟节点。
+
+代码生成器，使用AST生产渲染函数。
+
+**模板编译指的是模板将编译成render函数的过程，渲染函数的作用是每次执行时，会根据最新状态生成新的vnode**。
+
+### 响应式
+
+#### ref家族
+
+##### shallowRef
 
 创建一个跟踪自身 `.value` 变化的 ref，但不会使其值也变成响应式的
 
-#### ref
+##### ref
 
 1. 接受一个内部值并返回一个[响应式](https://so.csdn.net/so/search?q=响应式&spm=1001.2101.3001.7020)且可变的 ref 对象。ref 对象仅有一个 `.value` property，指向该内部值。
 2. 注意被ref包装之后需要.value 来进行赋值
@@ -36,7 +48,7 @@
 
 
 
-#### customerRef
+##### customerRef
 
 customRef 是个工厂函数要求我们返回一个对象 并且实现 get 和 set 适合去做防抖之类的
 
@@ -66,7 +78,7 @@ export function useDebouncedRef(value, delay = 200) {
 
 
 
-#### triggerRef
+##### triggerRef
 
 强制更新页面DOM，通常在对浅引用的内部值进行深度变更后使用。
 
@@ -89,15 +101,15 @@ triggerRef(shallow)
 
 
 
-#### isRef
+##### isRef
 
 判断是不是一个ref对象
 
 
 
-### reactive
+#### reactive家族
 
-#### reactive
+##### reactive
 
 - 用来绑定复杂的数据类型 例如 对象 数组。
 
@@ -111,26 +123,26 @@ triggerRef(shallow)
 
 
 
-#### readonly
+##### readonly
 
 拷贝一份proxy对象将其设置为只读
 
 
 
-#### shallowReactive
+##### shallowReactive
 
 只能对浅层的数据，如果是深层的数据只会改变值。不会改变视图
 
 
 
-#### shallowReadonly
+##### shallowReadonly
 
 - [`readonly()`](https://cn.vuejs.org/api/reactivity-core.html#readonly) 的浅层作用形式
 - 和 `readonly()` 不同，这里没有深层级的转换：只有根层级的属性变为了只读。属性的值都会被原样存储和暴露，这也意味着值为 ref 的属性**不会**被自动解包了。
 
-### to
+#### to家族
 
-#### toRef
+##### toRef
 
 - 基于响应式对象上的一个属性，创建一个对应的 ref。这样创建的 ref 与其源属性保持同步：改变源属性的值将更新 ref 的值，反之亦然。
 
@@ -201,7 +213,7 @@ triggerRef(shallow)
 
 
 
-#### toRefs
+##### toRefs
 
 - 将一个响应式对象转换为一个普通对象，这个普通对象的每个属性都是指向源对象相应属性的 ref。 就是结构reactive对象时用。
 
@@ -231,7 +243,7 @@ triggerRef(shallow)
 
 
 
-#### toRaw
+##### toRaw
 
 - 根据Vue创建的一个代理返回其原始对象。
 
@@ -272,7 +284,7 @@ triggerRef(shallow)
 
 
 
-#### markRaw()
+##### markRaw()
 
 - 将一个对象标记为不可被转为代理。返回该对象本身。
 
@@ -290,6 +302,16 @@ triggerRef(shallow)
     
     
 
-### computed
+#### computed 
 
 计算属性就是**当依赖的属性的值发生变化的时候，才会触发他的更改**，如果依赖的值，不发生变化的时候，使用的是缓存中的属性值。
+
+接受一个getter函数，返回一个只读的响应式ref对象。
+
+##### 计算属性缓存和方法的区别
+
+不同之处在于**计算属性值会基于其响应式依赖被缓存**。一个计算属性仅会在其响应式依赖更新时才重新计算。这意味着只要 `author.books` 不改变，无论多少次访问 `publishedBooksMessage` 都会立即返回先前的计算结果，而不用重复执行 getter 函数。
+
+相比之下，方法调用**总是**会在重渲染发生时再次执行函数。
+
+**不要在 getter 中做异步请求或者更改 DOM**！
