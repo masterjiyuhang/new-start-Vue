@@ -1,13 +1,12 @@
 import {
   defineComponent,
   inject,
-  PropType,
   ref,
   renderList,
   unref,
   watch,
 } from "vue";
-import type { Ref } from "vue";
+import type { PropType, Ref } from "vue";
 import { ElMenu, ElSubMenu, ElMenuItem, ElIcon, ElTooltip } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
 // import { Apple, Menu } from "@element-plus/icons-vue";
@@ -118,7 +117,7 @@ export default defineComponent({
     // };
 
     // 菜单选择时赋值
-    const onSelect = (index) => {
+    const onSelect = (index: any) => {
       // 在新标签打开
       if (index.indexOf("target=_blank") !== -1) {
         const link = document.createElement("a");
@@ -166,7 +165,7 @@ export default defineComponent({
     };
 
     // 渲染有children的menu
-    const renderChildItem = (menu, index) => {
+    const renderChildItem = (menu: any, index: any) => {
       const { url, meta, path, name, children } = menu;
       return (
         <el-sub-menu

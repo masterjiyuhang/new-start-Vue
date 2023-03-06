@@ -13,7 +13,7 @@ import { emitter } from "@/utils/mitt";
 
 // 关闭当前页 触发tabs里面的关闭
 const handleCloseCurrentPage = () => {
-  emitter.emit("closeThisPage");
+  emitter.emit("closeThisPage", true);
 };
 </script>
 

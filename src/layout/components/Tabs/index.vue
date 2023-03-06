@@ -212,9 +212,9 @@ const fmtTitle = (title: any, now: any) => {
 };
 
 const changeTab = (TabsPaneContext: any) => {
-  const name = TabsPaneContext?.props?.name;
+  const name: any = TabsPaneContext?.props?.name;
   if (!name) return;
-  const tab = historyMap.value[name];
+  const tab: any = historyMap.value[name];
   router.push({
     name: tab.name,
     query: tab.query,
@@ -223,7 +223,7 @@ const changeTab = (TabsPaneContext: any) => {
 };
 const removeTab = (tab: any) => {
   contextMenuVisible.value = false;
-  const index = tabList.value.findIndex(
+  const index: any = tabList.value.findIndex(
     (item: any) => formatName(item) === tab
   );
   if (formatName(route) === tab) {
@@ -249,7 +249,7 @@ const removeTab = (tab: any) => {
 };
 
 const initTabs = () => {
-  const initTabsList = [
+  const initTabsList: any = [
     {
       name: "dashboard",
       meta: {
@@ -297,7 +297,7 @@ watch(
     if (to.name === "Login" || to.name === "Reload") {
       return;
     }
-    tabList.value = tabList.value.filter((item) => !item.meta.closeTab);
+    tabList.value = tabList.value.filter((item: any) => !item.meta.closeTab);
     setTab(to);
     sessionStorage.setItem("tabList", JSON.stringify(tabList.value));
     currentTab.value = window.sessionStorage.getItem("currentTab");
@@ -310,7 +310,7 @@ watch(
   () => tabList.value,
   () => {
     historyMap.value = {};
-    tabList.value.forEach((item) => {
+    tabList.value.forEach((item: any) => {
       historyMap.value[formatName(item)] = item;
     });
   },
