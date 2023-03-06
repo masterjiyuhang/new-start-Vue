@@ -31,7 +31,7 @@ interface WatchEffectOptions {
 
 const stopWatch = watchEffect(
   (onCleanup) => {
-    console.log(msg1.value);
+    // console.log(msg1.value);
 
     // 清理回调会在该副作用下一次执行前被调用，可以用来清理无效的副作用，例如等待中的异步请求 (参见下面的示例)。
     onCleanup(() => {

@@ -19,6 +19,7 @@ export const useGlobalSettingStore = defineStore("globalSetting", () => {
 
   function initIsCollapse() {
     const res = sessionStorage.getItem("Collapse");
+
     if (!res) {
       // 没取到 给初始值
       emitter.emit("changeSidebarCollapse", false);
@@ -26,13 +27,13 @@ export const useGlobalSettingStore = defineStore("globalSetting", () => {
       return ref(false);
     } else {
       // 取到了 广播出去
-      const currentCollapse = Boolean(res);
+      const currentCollapse = JSON.parse(res);
       emitter.emit("changeSidebarCollapse", currentCollapse);
       return ref(currentCollapse);
     }
   }
 
-  return { isCollapse, changeIsCollapse };
+  return { isCollapse, changeIsCollapse, initIsCollapse };
 });
 
 export function useGlobalSettingStoreWithOut() {

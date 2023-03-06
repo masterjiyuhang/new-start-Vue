@@ -1,6 +1,7 @@
 import NProgress from "@/utils/progress";
 import { createRouter, createWebHistory } from "vue-router";
 const LAYOUT = () => import("@/layout/index.vue");
+// import { useGlobalSettingStoreWithOut } from "@/stores/modules/globalSetting";
 
 const modules: Record<string, any> = import.meta.glob(["./modules/**/*.ts"], {
   eager: true,
@@ -69,6 +70,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
+  // const { initIsCollapse } = useGlobalSettingStoreWithOut();
+  // initIsCollapse();
   NProgress.start();
 });
 
