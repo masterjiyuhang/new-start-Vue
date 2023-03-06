@@ -59,16 +59,16 @@ import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
-const tabList = ref([]);
-const currentTab = ref("");
-const defaultRouter = ref("dashboard");
-const contextMenuVisible = ref(false);
+const tabList = ref<any>([]);
+const currentTab = ref<any>("");
+const defaultRouter = ref<any>("dashboard");
+const contextMenuVisible = ref<any>(false);
 // const { isCollapse } = storeToRefs(useGlobalSettingStore());
 const left = ref(0);
 const top = ref(0);
 const rightActive = ref("");
 
-const openContextMenu = (e) => {
+const openContextMenu = (e: any) => {
   if (tabList.value.length === 1 && route.name === defaultRouter.value) {
     return false;
   }
@@ -110,15 +110,15 @@ const closeAll = () => {
   sessionStorage.setItem("tabList", JSON.stringify(tabList.value));
 };
 const closeLeft = () => {
-  let right;
-  const rightIndex = tabList.value.findIndex((item) => {
+  let right: any;
+  const rightIndex = tabList.value.findIndex((item: any) => {
     if (formatName(item) === rightActive.value) {
       right = item;
     }
     return formatName(item) === rightActive.value;
   });
   const activeIndex = tabList.value.findIndex(
-    (item) => formatName(item) === currentTab.value
+    (item: any) => formatName(item) === currentTab.value
   );
   tabList.value.splice(0, rightIndex);
   if (rightIndex > activeIndex) {
@@ -127,15 +127,15 @@ const closeLeft = () => {
   sessionStorage.setItem("tabList", JSON.stringify(tabList.value));
 };
 const closeRight = () => {
-  let right;
-  const leftIndex = tabList.value.findIndex((item) => {
+  let right: any;
+  const leftIndex = tabList.value.findIndex((item: any) => {
     if (formatName(item) === rightActive.value) {
       right = item;
     }
     return formatName(item) === rightActive.value;
   });
   const activeIndex = tabList.value.findIndex(
-    (item) => formatName(item) === currentTab.value
+    (item: any) => formatName(item) === currentTab.value
   );
   tabList.value.splice(leftIndex + 1, tabList.value.length);
   if (leftIndex < activeIndex) {
@@ -144,8 +144,8 @@ const closeRight = () => {
   sessionStorage.setItem("tabList", JSON.stringify(tabList.value));
 };
 const closeOther = () => {
-  let right;
-  tabList.value = tabList.value.filter((item) => {
+  let right: any;
+  tabList.value = tabList.value.filter((item: any) => {
     if (formatName(item) === rightActive.value) {
       right = item;
     }
@@ -155,12 +155,12 @@ const closeOther = () => {
   sessionStorage.setItem("tabList", JSON.stringify(tabList.value));
 };
 
-const formatName = (item) => {
+const formatName = (item: any) => {
   return item.name + JSON.stringify(item.query) + JSON.stringify(item.params);
 };
 
-const setTab = (route) => {
-  const isSame = (route1, route2) => {
+const setTab = (route: any) => {
+  const isSame = (route1: any, route2: any) => {
     if (route1.name !== route2.name) {
       return false;
     }
@@ -182,7 +182,7 @@ const setTab = (route) => {
     }
     return true;
   };
-  const flag = tabList.value.some((item) => isSame(item, route));
+  const flag = tabList.value.some((item: any) => isSame(item, route));
 
   if (!flag) {
     const obj: any = {};
@@ -197,12 +197,12 @@ const setTab = (route) => {
   window.sessionStorage.setItem("currentTab", formatName(route));
 };
 
-const fmtTitle = (title, now) => {
+const fmtTitle = (title: any, now: any) => {
   const reg = /\$\{(.+?)\}/;
   const reg_g = /\$\{(.+?)\}/g;
   const result = title.match(reg_g);
   if (result) {
-    result.forEach((item) => {
+    result.forEach((item: any) => {
       const key = item.match(reg)[1];
       const value = now.params[key] || now.query[key];
       title = title.replace(item, value);
@@ -211,7 +211,7 @@ const fmtTitle = (title, now) => {
   return title;
 };
 
-const changeTab = (TabsPaneContext) => {
+const changeTab = (TabsPaneContext: any) => {
   const name = TabsPaneContext?.props?.name;
   if (!name) return;
   const tab = historyMap.value[name];
@@ -221,9 +221,11 @@ const changeTab = (TabsPaneContext) => {
     params: tab.params,
   });
 };
-const removeTab = (tab) => {
+const removeTab = (tab: any) => {
   contextMenuVisible.value = false;
-  const index = tabList.value.findIndex((item) => formatName(item) === tab);
+  const index = tabList.value.findIndex(
+    (item: any) => formatName(item) === tab
+  );
   if (formatName(route) === tab) {
     if (tabList.value.length === 1) {
       router.push({ name: defaultRouter.value });
@@ -257,7 +259,8 @@ const initTabs = () => {
       params: {},
     },
   ];
-  tabList.value = JSON.parse(sessionStorage.getItem("tabList")) || initTabsList;
+  tabList.value =
+    JSON.parse(sessionStorage.getItem("tabList") as string) || initTabsList;
 
   if (!window.sessionStorage.getItem("currentTab")) {
     currentTab.value = formatName(route);

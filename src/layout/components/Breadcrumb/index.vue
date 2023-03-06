@@ -19,9 +19,9 @@ import { ref, watchEffect } from "vue";
 
 const route = useRoute();
 const router = useRouter();
-const levelList = ref([]);
+const levelList = ref<any>([]);
 
-function isDashboard(route) {
+function isDashboard(route: any) {
   const name = route && route.name;
   if (!name) {
     return false;
@@ -40,11 +40,12 @@ function getBreadcrumb() {
   }
 
   levelList.value = matched.filter(
-    (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
+    (item: any) =>
+      item.meta && item.meta.title && item.meta.breadcrumb !== false
   );
 }
 
-function handleLink(item) {
+function handleLink(item: any) {
   const { redirect, path } = item;
   if (redirect) {
     router.push(redirect);

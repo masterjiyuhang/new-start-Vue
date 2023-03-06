@@ -11,7 +11,8 @@
 
 <script lang="ts" setup>
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { shallowRef, triggerRef, watchEffect, customRef, ref, Ref } from "vue";
+import { shallowRef, triggerRef, watchEffect, customRef, ref } from "vue";
+import type { Ref } from "vue";
 
 const child = ref<string>("二航");
 console.log(child);
@@ -39,8 +40,8 @@ const changeShallowRef = () => {
   console.log(shallow.value);
 };
 
-function useDebouncedRef(value, delay = 200) {
-  let timeout;
+function useDebouncedRef(value: any, delay = 200) {
+  let timeout: any;
   return customRef((track, trigger) => {
     return {
       get() {

@@ -35,7 +35,7 @@ export default defineComponent({
   // setup(props, { emit }) {
   setup() {
     const isCollapse: any = inject("isCollapse");
-    const provideMenuList: Ref = inject("menuList");
+    const provideMenuList: any = inject("menuList");
     const menuList = unref(provideMenuList.value);
     // console.log(isCollapse, menuList);
 
@@ -132,7 +132,7 @@ export default defineComponent({
     };
 
     // 渲染menu
-    const renderMenuItem = (menu, index, isSubMenuItem = false) => {
+    const renderMenuItem = (menu: any, index: any, isSubMenuItem = false) => {
       const { url, path, meta, name } = menu;
 
       return (
@@ -217,7 +217,7 @@ export default defineComponent({
           // onClose={handleClose}
           onSelect={onSelect}
         >
-          {menuList.map((item, index) => {
+          {menuList.map((item: any, index: any) => {
             if (item.children) {
               return renderChildItem(item, index);
             }

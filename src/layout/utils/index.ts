@@ -3,14 +3,14 @@ const hasOwnProperty = Object.prototype.hasOwnProperty;
 
 const _toString = Object.prototype.toString;
 
-export function hasOwn(obj, key) {
+export function hasOwn(obj: any, key: any) {
   return hasOwnProperty.call(obj, key);
 }
 
 /**
  * Remove an item from an array
  */
-export function remove(arr, item) {
+export function remove(arr: any, item: any) {
   if (arr.length) {
     const index = arr.indexOf(item);
     if (index > -1) {
@@ -19,19 +19,19 @@ export function remove(arr, item) {
   }
 }
 
-export function isRegExp(v) {
+export function isRegExp(v: any) {
   return _toString.call(v) === "[object RegExp]";
 }
 
-export function isAsyncPlaceholder(node) {
+export function isAsyncPlaceholder(node: any) {
   return node.isComment && node.asyncFactory;
 }
 
-export function isDef(v) {
+export function isDef(v: any) {
   return v !== undefined && v !== null;
 }
 
-export function getFirstComponentChild(children) {
+export function getFirstComponentChild(children: any) {
   if (Array.isArray(children)) {
     for (let i = 0; i < children.length; i++) {
       const c = children[i];
@@ -47,7 +47,7 @@ export function getFirstComponentChild(children) {
  * @param obj 待检测的数据
  * @return {Boolean} 布尔值
  */
-export function isArray(obj) {
+export function isArray(obj: any): any {
   return Array.isArray
     ? Array.isArray(obj)
     : Object.prototype.toString.call(obj) === "[object Array]";

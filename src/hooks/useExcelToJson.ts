@@ -18,13 +18,13 @@ export function useExcelToJson() {
       sourcePath
     );
 
-    const excel = xlsx.parse(path.resolve(xlsxPath, `./${name}.xlsx`));
+    const excel: any = xlsx.parse(path.resolve(xlsxPath, `./${name}.xlsx`));
 
-    const data = excel[0].data;
+    const data: any = excel[0].data;
 
-    const result = [];
+    const result: any[] = [];
     // 字段过滤
-    _.forEach(data.slice(1), (d) => {
+    _.forEach(data.slice(1), (d: any) => {
       result.push({
         id: d[0],
         name_cn: d[1] || "",

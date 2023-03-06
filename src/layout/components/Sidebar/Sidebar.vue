@@ -40,20 +40,20 @@ const r1 = constantMenus
     // console.log(pre, next);
     return pre.concat(next);
   }, [])
-  .sort((A, B) => {
+  .sort((A: any, B: any) => {
     const weightA = A.meta.weight;
     const weightB = B.meta.weight;
     return weightB - weightA;
   });
 
-sidebarState.menuList = r1.map((item) => {
+sidebarState.menuList = r1.map((item: any) => {
   if (item.children) {
     // 孩子节点
-    item.children.map((childMenu) => {
+    item.children.map((childMenu: any) => {
       childMenu.url = `${item.path}/${childMenu.path}`;
       // 孙子节点
       if (childMenu.children) {
-        childMenu.children = childMenu.children.map((grandsonMenu) => {
+        childMenu.children = childMenu.children.map((grandsonMenu: any) => {
           grandsonMenu.url = `${item.path}/${childMenu.path}/${grandsonMenu.path}`;
           return grandsonMenu;
         });

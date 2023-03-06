@@ -2,7 +2,7 @@ import { track, trigger } from "./effect";
 
 const isObject = (val: any): val is object =>
   toString.call(val) === "[object Object]";
-export const reactive = <T extends object>(target: T) => {
+export const reactive = <T extends object>(target: T): any => {
   return new Proxy(target, {
     get(target, key, receiver) {
       const res = Reflect.get(target, key, receiver);

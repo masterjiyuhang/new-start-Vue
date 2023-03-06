@@ -9,8 +9,8 @@ export const initDom = () => {
   }
 };
 
-const getFilePath = (e) => {
-  let element = e;
+const getFilePath = (e: any): any => {
+  let element: any = e;
   if (e.target) {
     element = e.target;
   }
@@ -21,8 +21,8 @@ const getFilePath = (e) => {
   return getFilePath(element.parentNode);
 };
 
-const sendRequestToOpenFileInEditor = (filePath) => {
-  const protocol = window.location.protocol
+const sendRequestToOpenFileInEditor = (filePath: any): any => {
+  const protocol: any = window.location.protocol
     ? window.location.protocol
     : "http:";
   const hostname = window.location.hostname

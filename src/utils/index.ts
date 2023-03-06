@@ -1,10 +1,11 @@
+import type { Recordable } from "vite-plugin-mock";
 import { isProxy, toRaw } from "vue";
 import type { RouteRecordRaw } from "vue-router";
 
 export const findCurrentRouteByPath = (
   path: string,
   routes: RouteRecordRaw[]
-) => {
+): any => {
   let res = routes.find((item) => item.path === path);
 
   if (res) {
@@ -79,7 +80,7 @@ export const getCurrentDevice = () =>
  * @param date2
  * @returns
  */
-export const getDays = (date1, date2) =>
+export const getDays = (date1: any, date2: any) =>
   Math.ceil(Math.abs(date1.getTime() - date2.getTime()) / 86400000);
 
 /**
@@ -89,7 +90,7 @@ export const getDays = (date1, date2) =>
  * @param b
  * @returns
  */
-export const rgbToHex = (r, g, b) =>
+export const rgbToHex = (r: any, g: any, b: any) =>
   "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 
 export { loadEnv, wrapperEnv };

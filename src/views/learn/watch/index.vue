@@ -10,7 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { DebuggerEvent, reactive, ref, watch, watchEffect } from "vue";
+import { reactive, ref, watch, watchEffect } from "vue";
+import type { DebuggerEvent } from "vue";
 
 // 侦听一个或多个响应式数据源，并在数据源变化时调用所给的回调函数。
 const state = reactive({ count: 0 });

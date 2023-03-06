@@ -1,10 +1,10 @@
 import { isRegExp, remove, getFirstComponentChild } from "../utils";
 
-function getComponentName(opts) {
+function getComponentName(opts: any) {
   return opts && (opts.Ctor.options.name || opts.tag);
 }
 
-function matches(pattern, name) {
+function matches(pattern: any, name: any) {
   if (Array.isArray(pattern)) {
     return pattern.indexOf(name) > -1;
   } else if (typeof pattern === "string") {
@@ -16,8 +16,8 @@ function matches(pattern, name) {
   return false;
 }
 
-function pruneCacheEntry(cache, key, keys, current?: any) {
-  const cached = cache[key];
+function pruneCacheEntry(cache: any, key: any, keys: any, current?: any) {
+  const cached: any = cache[key];
   if (cached && (!current || cached.tag !== current.tag)) {
     cached.componentInstance.$destroy();
   }
@@ -25,7 +25,7 @@ function pruneCacheEntry(cache, key, keys, current?: any) {
   remove(keys, key);
 }
 
-function pruneCache(keepAliveInstance, filter) {
+function pruneCache(keepAliveInstance: any, filter: any) {
   const { cache, keys, _vnode } = keepAliveInstance;
   for (const key in cache) {
     const cachedNode = cache[key];
@@ -42,7 +42,7 @@ function pruneCache(keepAliveInstance, filter) {
 const patternTypes = [String, RegExp, Array];
 
 export default {
-  name: "RcCache",
+  name: "JcCache",
   // 不能开启会导致 key 会增加 transition 的key
   // abstract: true,
 
@@ -64,11 +64,11 @@ export default {
   },
 
   mounted() {
-    this.$watch("include", (val) => {
-      pruneCache(this, (name) => matches(val, name));
+    this.$watch("include", (val: any) => {
+      pruneCache(this, (name: any) => matches(val, name));
     });
-    this.$watch("exclude", (val) => {
-      pruneCache(this, (name) => !matches(val, name));
+    this.$watch("exclude", (val: any) => {
+      pruneCache(this, (name: any) => !matches(val, name));
     });
   },
 
@@ -77,7 +77,7 @@ export default {
      *
      * 收到销毁 缓存
      */
-    close(key) {
+    close(key: any) {
       const { cache, keys } = this;
       if (keys.indexOf(key) === -1) {
         console.error(`tab 关闭了一个没有缓存的 key: ${key}`); // eslint-disable-line

@@ -22,7 +22,7 @@ type Events = {
   };
 
   setKeepAlive: {};
-  closeThisPage: {};
+  closeThisPage: string;
   closeAllPage: {};
   mobile: {};
   collapse: {};

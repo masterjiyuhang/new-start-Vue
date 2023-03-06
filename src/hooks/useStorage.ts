@@ -29,8 +29,8 @@ export interface StorageLike {
 
 const defaultWindow = isClient ? window : undefined;
 export function useStorage<T extends string | number | boolean | object | null>(
-  key,
-  defaults,
+  key: any,
+  defaults: any,
   storage: StorageLike | undefined,
   options: UseStorageOptions<T> = {}
 ) {
@@ -40,8 +40,8 @@ export function useStorage<T extends string | number | boolean | object | null>(
   if (!storage) {
     try {
       storage = defaultWindow?.localStorage;
-    } catch (e) {
-      onError(e);
+    } catch (e: any) {
+      onError && onError(e);
     }
   }
 
@@ -49,12 +49,12 @@ export function useStorage<T extends string | number | boolean | object | null>(
 
   const rawInit: T =
     typeof defaults === "function" ? (defaults as any)() : unref(defaults);
-  const rawInitType = guessSerializerType(rawInit);
-  const serializer = options.serializer ?? StorageSerializers[rawInitType];
+  const rawInitType: any = guessSerializerType(rawInit);
+  const serializer: any = options.serializer ?? StorageSerializers[rawInitType];
 }
 
-export function useSessionStorage(key, value?) {
-  const res = sessionStorage.getItem(key);
+export function useSessionStorage(key: any, value?: any) {
+  const res: any = sessionStorage.getItem(key);
   console.log(res, "resss");
   if (res === undefined) {
     return ref("暂无数据");

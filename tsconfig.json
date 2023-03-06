@@ -3,19 +3,16 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    /** TS 严格模式 */
-    "strict": false,
+    "strict": true,
     "noLib": false,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "strictFunctionTypes": false,
     "jsx": "preserve",
-    "importHelpers": true,
     "baseUrl": ".",
     "allowJs": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "isolatedModules": true,
     "resolveJsonModule": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -23,18 +20,10 @@
     "lib": ["dom", "esnext"],
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "types": [
-      "vite-svg-loader",
-      "node",
-      "jsdom",
-      "vite/client",
-      /** Element Plus 的 Volar 插件支持 */
-      "element-plus/global"
-    ],
+    "types": ["vite/client"],
     "removeComments": true,
-    /** 非相对模块导入的路径映射配置，根据 baseUrl 配置进行路径计算 */
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["src/*"],
       "/@/*": ["src/*"],
       "/#/*": ["types/*"]
     }
@@ -47,13 +36,10 @@
     "src/**/*.vue",
     "types/**/*.d.ts",
     "types/**/*.ts",
-    "types/*.ts",
     "build/**/*.ts",
     "build/**/*.d.ts",
     "mock/**/*.ts",
-    "vite.config.ts",
-    "src/utils/excelToJs/excelToJs.js"
+    "vite.config.ts"
   ],
-  /** 编译器默认排除的编译文件 */
   "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
 }

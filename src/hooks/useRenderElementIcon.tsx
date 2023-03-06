@@ -1,5 +1,5 @@
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-import { DefineComponent } from "vue";
+import type { DefineComponent } from "vue";
 
 export function useRenderElementIcon() {
   /**

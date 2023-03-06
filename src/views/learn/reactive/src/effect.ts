@@ -1,5 +1,5 @@
 // 依赖发生变化的时候执行fn函数 实现依赖收集和依赖的更新
-let activeEffect;
+let activeEffect: any;
 export const effect = (fn: Function) => {
   const _effect = function () {
     activeEffect = _effect;
@@ -10,7 +10,7 @@ export const effect = (fn: Function) => {
 };
 
 const targetMap = new WeakMap();
-export const track = (target, key) => {
+export const track = (target: any, key: any) => {
   let depsMap = targetMap.get(target);
   if (!depsMap) {
     depsMap = new Map();
@@ -27,7 +27,7 @@ export const track = (target, key) => {
   deps.add(activeEffect);
 };
 
-export const trigger = (target, key) => {
+export const trigger = (target: any, key: any) => {
   let depsMap = targetMap.get(target);
   if (!depsMap) {
     track(target, key);
@@ -35,5 +35,5 @@ export const trigger = (target, key) => {
   }
   const deps = depsMap.get(key);
 
-  deps.forEach((effect) => effect());
+  deps.forEach((effect: any) => effect());
 };
