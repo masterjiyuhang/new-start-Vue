@@ -9,3 +9,5 @@ https://blog.csdn.net/m0_62883662/article/details/128589677
 `docker exec -it container-id bash` 
 
 `docker build -t my-new-start .`
+
+`docker pull node:16`
