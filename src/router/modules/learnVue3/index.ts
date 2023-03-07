@@ -79,5 +79,15 @@ export default {
         icon: "Apple",
       },
     },
+    {
+      path: "lifestyle",
+      name: "lifestyle",
+      component: () => import("@/views/learn/life/index.vue"),
+      meta: {
+        title: "生命周期",
+        isMenu: true,
+        icon: "Apple",
+      },
+    },
   ],
 };
