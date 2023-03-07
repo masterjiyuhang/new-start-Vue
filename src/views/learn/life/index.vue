@@ -22,6 +22,8 @@ import TestLife from "./src/compoents/TestLife.vue";
 
 const isShow = ref(true);
 
+console.log("父组件 setup");
+
 // 当这个钩子被调用时，组件已经完成了其响应式状态的设置，但还没有创建 DOM 节点。它即将首次执行 DOM 渲染过程。
 onBeforeMount(() => {
   console.log("父组件 onBeforeMount");
@@ -37,13 +39,18 @@ onMounted(() => {
 onBeforeUpdate(() => {
   console.log("父组件 onBeforeUpdate");
 });
+
 onUpdated(() => {
   console.log("父组件 onUpdated");
 });
-onBeforeUnmount(() => {});
-console.log("父组件 onBeforeUnmount");
-onUnmounted(() => {});
-console.log("父组件 onUnmounted");
+onBeforeUnmount(() => {
+  console.log("父组件 onBeforeUnmount");
+});
+
+onUnmounted(() => {
+  console.log("父组件 onUnmounted");
+});
+
 onRenderTracked((e) => {
   console.log("父组件 onRenderTracked", e);
 });
