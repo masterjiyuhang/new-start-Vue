@@ -18,7 +18,7 @@ import {
   onRenderTriggered,
   ref,
 } from "vue";
-import TestLife from "./src/compoents/TestLife.vue";
+import TestLife from "./src/components/TestLife.vue";
 
 const isShow = ref(true);
 

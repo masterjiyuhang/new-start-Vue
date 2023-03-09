@@ -80,11 +80,21 @@ export default {
       },
     },
     {
-      path: "lifestyle",
-      name: "lifestyle",
+      path: "lifecycle",
+      name: "lifecycle",
       component: () => import("@/views/learn/life/index.vue"),
       meta: {
         title: "生命周期",
+        isMenu: true,
+        icon: "Apple",
+      },
+    },
+    {
+      path: "learnSlot",
+      name: "learnSlot",
+      component: () => import("@/views/learn/slot/index.vue"),
+      meta: {
+        title: "插槽",
         isMenu: true,
         icon: "Apple",
       },
