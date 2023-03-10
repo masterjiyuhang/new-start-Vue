@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { isReactive, onMounted, ref, toRaw, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 // import { storeToRefs } from "pinia";
 // import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
@@ -156,7 +156,11 @@ const closeOther = () => {
 };
 
 const formatName = (item: any) => {
-  return item.name + JSON.stringify(item.query) + JSON.stringify(item.params);
+  return (
+    item.name +
+    JSON.stringify(item.query) +
+    (item.name === "PageNotFound" ? "{}" : JSON.stringify(item.params))
+  );
 };
 
 const setTab = (route: any) => {
@@ -176,14 +180,19 @@ const setTab = (route: any) => {
       }
     }
     for (const key in route1.params) {
-      if (route1.params[key] !== route2.params[key]) {
+      const r1 = isReactive(route1.params[key])
+        ? toRaw(route1.params[key])
+        : route1.params[key];
+      const r2 = route2.params[key];
+      const isArr = Array.isArray(r1) && Array.isArray(r2);
+      const flag = isArr ? r1.toString === r2.toString : r1 === r2;
+      if (!flag) {
         return false;
       }
     }
     return true;
   };
   const flag = tabList.value.some((item: any) => isSame(item, route));
-
   if (!flag) {
     const obj: any = {};
     obj.name = route.name;
@@ -193,7 +202,7 @@ const setTab = (route: any) => {
     obj.params = route.params;
     tabList.value.push(obj);
   }
-
+  currentTab.value = formatName(route);
   window.sessionStorage.setItem("currentTab", formatName(route));
 };
 
@@ -211,6 +220,7 @@ const fmtTitle = (title: any, now: any) => {
   return title;
 };
 
+// 切换tab 只负责路由跳转
 const changeTab = (TabsPaneContext: any) => {
   const name: any = TabsPaneContext?.props?.name;
   if (!name) return;
@@ -295,6 +305,7 @@ watch(
 watch(
   () => route,
   (to) => {
+    // console.log("监听路由变化");
     if (to.name === "Login" || to.name === "Reload") {
       return;
     }
@@ -310,6 +321,7 @@ const historyMap = ref({});
 watch(
   () => tabList.value,
   () => {
+    // console.log("tablist 列表变化监听");
     historyMap.value = {};
     tabList.value.forEach((item: any) => {
       historyMap.value[formatName(item)] = item;

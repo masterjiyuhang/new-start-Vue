@@ -26,6 +26,12 @@
       <div class="">
         <!-- {{ activeTab }} -->
         {{ item.meta.title }}
+        <span
+          v-show="initTabList.length > 1"
+          class="ml-2"
+          @click="handleRemoveTab(item)"
+          >X</span
+        >
       </div>
     </div>
   </div>
@@ -34,12 +40,11 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useMultiTagsStore } from "@/stores/modules/tabs";
+// import { useMultiTagsStore } from "@/stores/modules/tabs";
 const route = useRoute();
 const router = useRouter();
 
-const { getMultiTagList } = useMultiTagsStore();
-console.log(getMultiTagList);
+// const { getMultiTagList } = useMultiTagsStore();
 
 const initTabList = ref<any[]>([]);
 const isHover = ref<boolean>(false);
@@ -67,9 +72,28 @@ const handleClickTab = (tab: any) => {
   });
 };
 
+const handleRemoveTab = (tab: any) => {
+  console.log(tab.name, "remove tab");
+
+  const index = initTabList.value.findIndex((item) => item.name === tab.name);
+  initTabList.value.splice(index, 1);
+
+  console.log(initTabList.value, "zxcxczxczxczxc");
+
+  const newRoute = initTabList.value.slice(-1);
+  const routeItem = {
+    name: newRoute[0].name,
+    query: newRoute[0]?.query ?? {},
+    params: newRoute[0]?.params ?? {},
+  };
+  console.log(routeItem, "new ");
+  router.push(routeItem);
+};
+
 watch(
   () => route,
   (newVal) => {
+    console.log("监听路有变化！！！！！！");
     const currentInfo = {
       name: newVal.name,
       meta: {
@@ -79,7 +103,6 @@ watch(
       params: newVal.params,
     };
 
-    console.log(newVal.name, "newVal.name", initTabList.value);
     // 想标签组中添加当前标签 需要判断是否已经有这个标签了
     const notFlag = initTabList.value.some((item) => item.name === newVal.name);
     !notFlag && initTabList.value.push(currentInfo);
@@ -105,7 +128,7 @@ $base-tabs-height: 60px;
     border: 1px solid #333;
     border-radius: 4px;
     color: #333;
-    width: 80px;
+    width: 120px;
     text-align: center;
 
     cursor: pointer;
