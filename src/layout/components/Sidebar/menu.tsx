@@ -20,9 +20,9 @@ const props = {
 export default defineComponent({
   name: "CchMenu",
   components: { ElMenu, ElSubMenu, ElMenuItem, ElIcon, ElTooltip },
-  emits: ["click"],
-  props,
   inject: ["isCollapse", "menuList"],
+  props,
+  emits: ["click"],
 
   // setup(props, { emit }) {
   setup() {

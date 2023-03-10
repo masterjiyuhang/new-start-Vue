@@ -221,6 +221,7 @@ const changeTab = (TabsPaneContext: any) => {
     params: tab.params,
   });
 };
+
 const removeTab = (tab: any) => {
   contextMenuVisible.value = false;
   const index: any = tabList.value.findIndex(
@@ -318,6 +319,7 @@ watch(
     deep: true,
   }
 );
+
 onMounted(() => {
   initTabs();
 });
@@ -338,8 +340,10 @@ $height-nav-scroll: 40px;
     padding: 0 6px;
     border-top: 1px solid $border-color;
     padding: 0;
+
     .el-tabs {
       background-color: #fff;
+
       .el-tabs__header {
         margin: 0px 0 0 0;
         border: none;
@@ -350,19 +354,23 @@ $height-nav-scroll: 40px;
           border-radius: 5px;
           height: $height-nav-scroll;
           height: $height-nav-scroll;
+
           + .el-tabs__item {
             border-left: 0px solid $border-color;
           }
         }
+
         .el-tabs__item.is-active {
           background-color: rgba(136, 216, 185, 0.39);
         }
+
         .el-tabs__nav {
           border: none;
         }
       }
     }
   }
+
   .contextmenu {
     width: 100px;
     margin: 0;
@@ -377,9 +385,11 @@ $height-nav-scroll: 40px;
     color: #333;
     box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.2);
   }
+
   .el-tabs__item .el-icon-close {
     color: initial !important;
   }
+
   .el-tabs__item .dot {
     content: "";
     width: 9px;
@@ -394,6 +404,7 @@ $height-nav-scroll: 40px;
     margin: 0;
     padding: 7px 16px;
   }
+
   .contextmenu li:hover {
     background: #f2f2f2;
     cursor: pointer;

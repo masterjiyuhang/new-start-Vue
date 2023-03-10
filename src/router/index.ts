@@ -1,5 +1,6 @@
 import NProgress from "@/utils/progress";
 import { createRouter, createWebHistory } from "vue-router";
+import { PAGE_NOT_FOUND_ROUTE } from "./basic";
 const LAYOUT = () => import("@/layout/index.vue");
 // import { useGlobalSettingStoreWithOut } from "@/stores/modules/globalSetting";
 
@@ -24,51 +25,12 @@ const router = createRouter({
       name: "home",
       component: LAYOUT,
       redirect: "/dashboard",
-      children: [
-        ...routes,
-        // {
-        //   path: "/dashboard",
-        //   name: "dashboard",
-        //   component: () => import("../views/dashboard/index.vue"),
-        // },
-        // {
-        //   path: "/welcome",
-        //   name: "welcome",
-        //   component: () => import("../views/welcome/index.vue"),
-        // },
-        // {
-        //   path: "/car",
-        //   name: "车辆管理",
-        //   redirect: "/car/list",
-        //   meta: {
-        //     weight: -2,
-        //     icon: "Menu",
-        //   },
-        //   children: [
-        //     {
-        //       path: "/car/list",
-        //       name: "列表",
-        //       // D:\workplace\learn\new-start-Vue\src\views\car\CarDetail.vue
-        //       component: () => import("@/views/car/index.vue"),
-        //       meta: {
-        //         icon: "Apple",
-        //       },
-        //     },
-        //     {
-        //       path: "/car/detail",
-        //       name: "详情",
-        //       component: () => import("@/views/car/CarDetail.vue"),
-        //       meta: {
-        //         icon: "Apple",
-        //       },
-        //     },
-        //   ],
-        // },
-      ],
+      children: [...constantMenus, PAGE_NOT_FOUND_ROUTE],
     },
   ],
 });
 
+// eslint-disable-next-line no-unused-vars
 router.beforeEach((to, from) => {
   // const { initIsCollapse } = useGlobalSettingStoreWithOut();
   // initIsCollapse();

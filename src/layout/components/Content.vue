@@ -1,6 +1,7 @@
 <template>
   <div>
     <Tabs />
+    <Tab />
     <div class="cch-content">
       <div class="cch-content__wrapper">
         <router-view>
@@ -17,6 +18,7 @@
 
 <script setup lang="ts">
 import Tabs from "./Tabs/index.vue";
+import Tab from "./Tabs/tabs.vue";
 </script>
 
 <style scoped lang="scss">
@@ -27,7 +29,8 @@ import Tabs from "./Tabs/index.vue";
   position: absolute;
   left: cch-variables.$side-bar-width;
   right: 0;
-  top: 65px;
+  // top: 65px;
+  top: 125px;
   bottom: 0;
   overflow: hidden;
   transition: left cch-variables.$side-bar-animate;

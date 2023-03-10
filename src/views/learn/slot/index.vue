@@ -2,7 +2,7 @@
   <div>
     <testSlot>
       <!-- 具名插槽 -->
-      <template v-slot:header> 上面的插槽 </template>
+      <template #header> 上面的插槽 </template>
       <!-- 作用域插槽 带数据 父组件可以拿到子组件的值 -->
       <template #default="{ userData }">
         <div>{{ userData.name }} - {{ userData.age }}</div>
