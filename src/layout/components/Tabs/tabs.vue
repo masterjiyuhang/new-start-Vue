@@ -40,11 +40,13 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-// import { useMultiTagsStore } from "@/stores/modules/tabs";
+import { useMultiTagsStore } from "@/stores/modules/tabs";
 const route = useRoute();
 const router = useRouter();
 
-// const { getMultiTagList } = useMultiTagsStore();
+const { getMultiTagList } = useMultiTagsStore();
+
+console.log(getMultiTagList, "tag list ");
 
 const initTabList = ref<any[]>([]);
 const isHover = ref<boolean>(false);
@@ -110,6 +112,7 @@ watch(
   },
   { deep: true, immediate: true }
 );
+
 onMounted(() => {
   initTab();
 });
@@ -117,6 +120,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 $base-tabs-height: 60px;
+
 @include cch.b(base-tabs) {
   height: $base-tabs-height;
   box-shadow: 0px 2px 8px 0px rgba(92, 105, 167, 0.15);
