@@ -29,7 +29,7 @@
         <span
           v-show="initTabList.length > 1"
           class="ml-2"
-          @click="handleRemoveTab(item)"
+          @click.stop="handleRemoveTab(item)"
           >X</span
         >
       </div>
@@ -80,9 +80,12 @@ const handleRemoveTab = (tab: any) => {
   const index = initTabList.value.findIndex((item) => item.name === tab.name);
   initTabList.value.splice(index, 1);
 
-  console.log(initTabList.value, "zxcxczxczxczxc");
-
+  console.log(initTabList.value, "before");
+  console.log(initTabList.value.length);
+  
   const newRoute = initTabList.value.slice(-1);
+  console.log(initTabList.value, "after");
+
   const routeItem = {
     name: newRoute[0].name,
     query: newRoute[0]?.query ?? {},
@@ -107,7 +110,9 @@ watch(
 
     // 想标签组中添加当前标签 需要判断是否已经有这个标签了
     const notFlag = initTabList.value.some((item) => item.name === newVal.name);
-    !notFlag && initTabList.value.push(currentInfo);
+    if (!notFlag) {
+        initTabList.value.push(currentInfo);
+    }
     activeTab.value = (newVal.name as string) ?? "dashboard";
   },
   { deep: true, immediate: true }
