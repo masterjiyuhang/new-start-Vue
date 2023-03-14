@@ -16,7 +16,10 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from "vue";
 
-const Dashboard = defineAsyncComponent(() => import("./SyncComp.vue"));
+const Dashboard = defineAsyncComponent({
+  loader: () => import("./SyncComp.vue"),
+  delay: 1500,
+});
 </script>
 
 <style scoped></style>

@@ -32,7 +32,7 @@ import Tab from "./Tabs/tabs.vue";
   // top: 65px;
   top: 125px;
   bottom: 0;
-  overflow: hidden;
+  overflow: auto;
   transition: left cch-variables.$side-bar-animate;
   padding: 20px;
 }

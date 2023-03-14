@@ -8,7 +8,11 @@ export interface requestParams {
   query: any;
 }
 
-export function resultSuccess<T = Recordable>(result: T, { message = "ok" }) {
+export function resultSuccess<T = Recordable>(
+  result: T,
+  { message = "ok" } = {}
+) {
+  console.log(result, "result...");
   return {
     code: ResultEnum.SUCCESS,
     result,
