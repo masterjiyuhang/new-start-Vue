@@ -99,5 +99,15 @@ export default {
         icon: "Apple",
       },
     },
+    {
+      path: "learnSuspense",
+      name: "learnSuspense",
+      component: () => import("@/views/learn/Suspense/index.vue"),
+      meta: {
+        title: "异步",
+        isMenu: true,
+        icon: "Apple",
+      },
+    },
   ],
 };
