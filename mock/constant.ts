@@ -19,13 +19,13 @@ export const routerList = {
     {
       path: "/dataScreen",
       name: "dataScreen",
-      component: "/dataScreen/index",
+      component: "/dashboard/index",
       meta: {
         icon: "Histogram",
         title: "数据大屏",
         isLink: "",
         isHide: false,
-        isFull: true,
+        isFull: false,
         isAffix: false,
         isKeepAlive: true,
       },

@@ -19,16 +19,16 @@ export const GvaPosition = (): Plugin => {
   };
 };
 
-const codeLineTrack = (code, id) => {
+const codeLineTrack = (code: any, id: any) => {
   const lineList = code.split("\n");
   const newList = [];
-  lineList.forEach((item, index) => {
+  lineList.forEach((item: any, index: any) => {
     newList.push(addLineAttr(item, index + 1, id)); // 添加位置属性，index+1为具体的代码行号
   });
   return newList.join("\n");
 };
 
-const addLineAttr = (lineStr, line, id) => {
+const addLineAttr = (lineStr: any, line: any, id: any) => {
   // console.log("addLineAttr", lineStr, id, line);
   if (!/^\s+</.test(lineStr)) {
     return lineStr;
@@ -38,7 +38,6 @@ const addLineAttr = (lineStr, line, id) => {
   let leftTagList = lineStr.match(reg);
 
   if (leftTagList) {
-    // console.log("这块什么时候能执行啊");
     leftTagList = Array.from(new Set(leftTagList));
     leftTagList.forEach((item) => {
       const skip = [
@@ -50,6 +49,7 @@ const addLineAttr = (lineStr, line, id) => {
         "El",
         "router-view",
       ];
+      console.log(item, skip.some((i) => item.indexOf(i) > -1))
       if (item && !skip.some((i) => item.indexOf(i) > -1)) {
         const reg = new RegExp(`${item}`);
         const location = `${item} code-location="${id}:${line}"`;
