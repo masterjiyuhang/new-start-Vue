@@ -44,4 +44,10 @@ export const errorRouter: RouteRecordRaw[] = [
       title: "404页面",
     },
   },
+  // 解决刷新页面，路由警告
+  {
+    // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
+    path: "/:pathMatch(.*)*",
+    component: () => import("@/views/error/404.vue"),
+  },
 ];

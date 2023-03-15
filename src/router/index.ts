@@ -79,7 +79,7 @@ router.beforeEach(async (to, from, next) => {
   const authStore = AuthStore();
   authStore.setRouteName(to.name as string);
   if (!authStore.authMenuListGet.length) {
-    console.log("路由守卫");
+    console.log("路由守卫666666666", to);
     await initDynamicRouter();
     return next({ ...to, replace: true });
   }
