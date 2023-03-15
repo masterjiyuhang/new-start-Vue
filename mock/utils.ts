@@ -9,13 +9,12 @@ export interface requestParams {
 }
 
 export function resultSuccess<T = Recordable>(
-  result: T,
+  data: T,
   { message = "ok" } = {}
 ) {
-  console.log(result, "result...");
   return {
     code: ResultEnum.SUCCESS,
-    result,
+    data,
     message,
     type: "success",
   };
@@ -23,11 +22,11 @@ export function resultSuccess<T = Recordable>(
 
 export function resultError(
   message = "Request failed",
-  { code = ResultEnum.ERROR, result = null } = {}
+  { code = ResultEnum.ERROR, data = null } = {}
 ) {
   return {
     code,
-    result,
+    data,
     message,
     type: "error",
   };

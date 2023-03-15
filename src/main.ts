@@ -1,6 +1,6 @@
 import "./style/tailwind.css";
 import { createApp } from "vue";
-import { createPinia } from "pinia";
+// import { createPinia } from "pinia";
 import { setupStore } from "@/stores";
 import App from "./App.vue";
 import router from "./router";
@@ -13,8 +13,8 @@ initDom();
 async function bootstrap() {
   const app = createApp(App);
   await setupI18n(app);
-  app.use(createPinia());
-  setupStore;
+  // app.use(createPinia());
+  setupStore(app);
   app.use(router);
 
   app.config.unwrapInjectedRef = true;

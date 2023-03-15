@@ -1,40 +1,119 @@
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { defineStore } from "pinia";
 import { store } from "../index";
 import { emitter } from "@/utils/mitt";
+import { DEFAULT_PRIMARY } from "@/config";
+import { ThemeConfigProps } from "../interface";
+import { piniaPersistConfig } from "../storePlugin";
+// import { piniaPersistConfig } from "./../storePlugin";
 
-export const useGlobalSettingStore = defineStore("globalSetting", () => {
-  const isCollapse = initIsCollapse();
-  // const isCollapse = ref(
-  //   sessionStorage.getItem("Collapse")
-  //     ? Boolean(sessionStorage.getItem("Collapse"))
-  //     : false
-  // );
-  function changeIsCollapse() {
-    isCollapse.value = !isCollapse.value;
-    // 其实多此一举 就是看看好用不好用
-    emitter.emit("changeSidebarCollapse", isCollapse.value);
-    sessionStorage.setItem("Collapse", String(isCollapse.value));
-  }
 
-  function initIsCollapse() {
-    const res = sessionStorage.getItem("Collapse");
+export const useGlobalSettingStore = defineStore(
+  "globalSetting",
+  () => {
+    const isCollapse = initIsCollapse();
 
-    if (!res) {
-      // 没取到 给初始值
-      emitter.emit("changeSidebarCollapse", false);
-      sessionStorage.setItem("Collapse", String(false));
-      return ref(false);
-    } else {
-      // 取到了 广播出去
-      const currentCollapse = JSON.parse(res);
-      emitter.emit("changeSidebarCollapse", currentCollapse);
-      return ref(currentCollapse);
+    const token = ref<string>("");
+
+    const assemblySize = ref<string>("default");
+
+    const keepAliveName = ref<string[]>([]);
+
+    let ThemeConfig = reactive<ThemeConfigProps>({
+      // 当前页面是否全屏
+      maximize: false,
+      // 布局切换 ==>  纵向：vertical | 经典：classic | 横向：transverse | 分栏：columns
+      layout: "vertical",
+      // 默认 primary 主题颜色
+      primary: DEFAULT_PRIMARY,
+      // 深色模式
+      isDark: false,
+      // 灰色模式
+      isGrey: false,
+      // 色弱模式
+      isWeak: false,
+      // 折叠菜单
+      isCollapse: false,
+      // 面包屑导航
+      breadcrumb: true,
+      // 面包屑导航图标
+      breadcrumbIcon: true,
+      // 标签页
+      tabs: true,
+      // 标签页图标
+      tabsIcon: true,
+      // 页脚
+      footer: true,
+    });
+
+    const setToken = (str: string) => {
+      token.value = str;
+      console.log(token, 'token的值');
+    };
+
+    function changeIsCollapse() {
+      isCollapse.value = !isCollapse.value;
+      // 其实多此一举 就是看看好用不好用
+      emitter.emit("changeSidebarCollapse", isCollapse.value);
+      sessionStorage.setItem("Collapse", String(isCollapse.value));
     }
-  }
 
-  return { isCollapse, changeIsCollapse, initIsCollapse };
-});
+    function initIsCollapse() {
+      const res = sessionStorage.getItem("Collapse");
+
+      if (!res) {
+        // 没取到 给初始值
+        emitter.emit("changeSidebarCollapse", false);
+        sessionStorage.setItem("Collapse", String(false));
+        return ref(false);
+      } else {
+        // 取到了 广播出去
+        const currentCollapse = JSON.parse(res);
+        emitter.emit("changeSidebarCollapse", currentCollapse);
+        return ref(currentCollapse);
+      }
+    }
+
+    const addKeepAliveName = (name: string) => {
+      !keepAliveName.value.includes(name) && keepAliveName.value.push(name);
+    };
+
+    const removeKeepAliveName = (name: string) => {
+      keepAliveName.value = keepAliveName.value.filter((item) => item !== name);
+    };
+
+    const setKeepAliveName = (keepAliveNameList: string[] = []) => {
+      keepAliveName.value = keepAliveNameList;
+    };
+
+    const setThemeConfig = (themeConfig: ThemeConfigProps) => {
+      ThemeConfig = themeConfig;
+    };
+
+    const someState = ref("你好 pinia");
+
+    return {
+      someState,
+      token,
+      isCollapse,
+      keepAliveName,
+      assemblySize,
+      ThemeConfig,
+      changeIsCollapse,
+      initIsCollapse,
+      setToken,
+      addKeepAliveName,
+      removeKeepAliveName,
+      setKeepAliveName,
+      setThemeConfig,
+    };
+  },
+
+  {
+    // persist: true,
+    persist: piniaPersistConfig("globalSetting"),
+  }
+);
 
 export function useGlobalSettingStoreWithOut() {
   return useGlobalSettingStore(store);

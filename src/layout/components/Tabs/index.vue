@@ -279,7 +279,9 @@ const initTabs = () => {
     currentTab.value = window.sessionStorage.getItem("currentTab");
   }
 
-  setTab(route);
+  console.log(route.meta.isMenu, 'route.meta.isMenu')
+
+  route.meta.isMenu && setTab(route);
 
   if (window.sessionStorage.getItem("needCloseAll") === "true") {
     closeAll();

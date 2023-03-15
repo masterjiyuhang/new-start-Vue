@@ -33,6 +33,7 @@ specifiers:
   npm-run-all: ^4.1.5
   nprogress: ^0.2.0
   pinia: ^2.0.23
+  pinia-plugin-persistedstate: ^3.1.0
   postcss: ^8.4.21
   prettier: ^2.7.1
   qs: ^6.11.0
@@ -66,6 +67,7 @@ dependencies:
   node-xlsx: 0.21.0
   nprogress: registry.npmmirror.com/nprogress/0.2.0
   pinia: registry.npmmirror.com/pinia/2.0.28_e7lp6ggkpgyi5vqd44m2kxvk6i
+  pinia-plugin-persistedstate: 3.1.0_pinia@2.0.28
   qs: registry.npmmirror.com/qs/6.11.0
   vue: registry.npmmirror.com/vue/3.2.45
   vue-i18n: registry.npmmirror.com/vue-i18n/9.2.2_vue@3.2.45
@@ -1195,6 +1197,14 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /pinia-plugin-persistedstate/3.1.0_pinia@2.0.28:
+    resolution: {integrity: sha512-8UN+vYMEPBdgNLwceY08mi5olI0wkYaEb8b6hD6xW7SnBRuPydWHlEhZvUWgNb/ibuf4PvufpvtS+dmhYjJQOw==}
+    peerDependencies:
+      pinia: ^2.0.0
+    dependencies:
+      pinia: registry.npmmirror.com/pinia/2.0.28_e7lp6ggkpgyi5vqd44m2kxvk6i
+    dev: false
 
   /postcss-import/14.1.0_postcss@8.4.21:
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}

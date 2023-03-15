@@ -40,13 +40,8 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useMultiTagsStore } from "@/stores/modules/tabs";
 const route = useRoute();
 const router = useRouter();
-
-const { getMultiTagList } = useMultiTagsStore();
-
-console.log(getMultiTagList, "tag list ");
 
 const initTabList = ref<any[]>([]);
 const isHover = ref<boolean>(false);
@@ -82,7 +77,7 @@ const handleRemoveTab = (tab: any) => {
 
   console.log(initTabList.value, "before");
   console.log(initTabList.value.length);
-  
+
   const newRoute = initTabList.value.slice(-1);
   console.log(initTabList.value, "after");
 
@@ -111,7 +106,7 @@ watch(
     // 想标签组中添加当前标签 需要判断是否已经有这个标签了
     const notFlag = initTabList.value.some((item) => item.name === newVal.name);
     if (!notFlag) {
-        initTabList.value.push(currentInfo);
+      initTabList.value.push(currentInfo);
     }
     activeTab.value = (newVal.name as string) ?? "dashboard";
   },

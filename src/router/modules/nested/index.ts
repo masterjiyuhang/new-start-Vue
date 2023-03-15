@@ -7,6 +7,7 @@ export default {
     isMenu: true,
     icon: "Menu",
   },
+  redirect: "/nested/menu1/menu1-1",
   children: [
     {
       path: "menu1",
@@ -38,6 +39,7 @@ export default {
         isMenu: true,
         icon: "Menu",
       },
+      redirect: "/nested/menu1/menu1-1",
     },
     {
       path: "menu2",

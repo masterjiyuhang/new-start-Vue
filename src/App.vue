@@ -4,9 +4,9 @@ import { RouterView } from "vue-router";
 </script>
 
 <template>
-  <div class="wrapper">
+  <el-config-provider :size="'small'">
     <RouterView />
-  </div>
+  </el-config-provider>
 </template>
 
 <style lang="scss" scoped>

@@ -1,4 +1,5 @@
 import { MockMethod } from "vite-plugin-mock";
+import { routerList, authButtonList } from "./constant";
 import { resultPageSuccess, resultSuccess } from "./utils";
 
 const accountList = (() => {
@@ -43,6 +44,30 @@ export default [
     method: "get",
     response: () => {
       return resultSuccess(companyList);
+    },
+  },
+  {
+    url: "/basic-api/getRouterList",
+    timeout: 200,
+    method: "get",
+    response: () => {
+      return resultSuccess(routerList.data);
+    },
+  },
+  {
+    url: "/basic-api/authButtonList",
+    timeout: 200,
+    method: "get",
+    response: () => {
+      return resultSuccess(authButtonList.data);
+    },
+  },
+  {
+    url: "/basic-api/login",
+    timeout: 200,
+    method: "post",
+    response: () => {
+      return resultSuccess({ access_token: "@id" });
     },
   },
 ] as MockMethod[];

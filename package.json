@@ -20,6 +20,7 @@
     "node-xlsx": "^0.21.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.23",
+    "pinia-plugin-persistedstate": "^3.1.0",
     "qs": "^6.11.0",
     "vue": "^3.2.41",
     "vue-i18n": "^9.2.2",
