@@ -162,3 +162,24 @@ export function getTimeState() {
   if (hours >= 18 && hours <= 24) return `晚上好 🌛`;
   if (hours >= 0 && hours <= 6) return `凌晨好 🌛`;
 }
+
+/**
+ * @description 获取浏览器默认语言
+ * @return string
+ */
+export function getBrowserLang() {
+  const browserLang = navigator.language
+    ? navigator.language
+    : navigator.browserLanguage;
+  let defaultBrowserLang = "";
+  if (
+    browserLang.toLowerCase() === "cn" ||
+    browserLang.toLowerCase() === "zh" ||
+    browserLang.toLowerCase() === "zh-cn"
+  ) {
+    defaultBrowserLang = "zh";
+  } else {
+    defaultBrowserLang = "en";
+  }
+  return defaultBrowserLang;
+}

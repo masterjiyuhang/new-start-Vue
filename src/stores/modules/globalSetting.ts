@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { store } from "../index";
 import { emitter } from "@/utils/mitt";
 import { DEFAULT_PRIMARY } from "@/config";
-import { ThemeConfigProps } from "../interface";
+import { AssemblySizeType, ThemeConfigProps } from "../interface";
 import { piniaPersistConfig } from "../storePlugin";
 // import { piniaPersistConfig } from "./../storePlugin";
 
@@ -17,6 +17,8 @@ export const useGlobalSettingStore = defineStore(
     const assemblySize = ref<string>("default");
 
     const keepAliveName = ref<string[]>([]);
+
+    const language = ref<string>("en");
 
     const ThemeConfig = ref<ThemeConfigProps>({
       // 当前页面是否全屏
@@ -90,6 +92,16 @@ export const useGlobalSettingStore = defineStore(
       ThemeConfig.value = themeConfig;
     };
 
+    // 设置element组件的大小
+    const setAssemblySizeSize = (newAssemblySize: AssemblySizeType) => {
+      assemblySize.value = newAssemblySize;
+    };
+
+    // 修改语言
+    const changeLanguage = (newLang: string) => {
+      language.value = newLang;
+    };
+
     const someState = ref("你好 pinia");
 
     return {
@@ -99,6 +111,7 @@ export const useGlobalSettingStore = defineStore(
       keepAliveName,
       assemblySize,
       ThemeConfig,
+      language,
       changeIsCollapse,
       initIsCollapse,
       setToken,
@@ -106,6 +119,8 @@ export const useGlobalSettingStore = defineStore(
       removeKeepAliveName,
       setKeepAliveName,
       setThemeConfig,
+      setAssemblySizeSize,
+      changeLanguage,
     };
   },
 

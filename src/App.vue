@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
 // import LogoSvg from "@/assets/logo.svg?component";
+
+import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
+import { storeToRefs } from "pinia";
+
+const { assemblySize } = storeToRefs(useGlobalSettingStore());
 </script>
 
 <template>
-  <el-config-provider :size="'small'">
+  <el-config-provider :size="assemblySize">
     <RouterView />
   </el-config-provider>
 </template>

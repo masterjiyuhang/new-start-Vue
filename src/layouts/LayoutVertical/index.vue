@@ -25,7 +25,7 @@
     <el-container>
       <el-header>
         <HeaderLeft />
-        <!-- <ToolBarRight /> -->
+        <HeaderRight />
       </el-header>
       <Main />
     </el-container>
@@ -41,6 +41,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import HeaderLeft from "../components/header/HeaderLeft.vue";
+import HeaderRight from "../components/header/HeaderRight.vue";
 
 const route = useRoute();
 const activeMenu = computed(() =>
