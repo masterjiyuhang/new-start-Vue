@@ -1,10 +1,10 @@
 <template>
   <el-container class="layout">
     <el-aside>
-      <div class="menu" :style="{ width: isCollapse ? '65px' : '210px' }">
-        <div class="logo flx-center">
+      <div class="menu" :style="{ width: ThemeConfig.isCollapse ? '65px' : '210px' }">
+        <div class="logo flex-c">
           <img src="@/assets/logo.png" alt="logo" />
-          <span v-show="!isCollapse">Geeker Admin</span>
+          <span v-show="!ThemeConfig.isCollapse">Cch Admin</span>
         </div>
         <el-scrollbar>
           <el-menu
@@ -24,8 +24,8 @@
     </el-aside>
     <el-container>
       <el-header>
-        <!-- <ToolBarLeft />
-        <ToolBarRight /> -->
+        <HeaderLeft />
+        <!-- <ToolBarRight /> -->
       </el-header>
       <Main />
     </el-container>
@@ -40,15 +40,16 @@ import { AuthStore } from "@/stores/modules/auth";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
+import HeaderLeft from "../components/header/HeaderLeft.vue";
 
 const route = useRoute();
 const activeMenu = computed(() =>
   route.meta.activeMenu ? route.meta.activeMenu : route.path
 );
-const { isCollapse } = useGlobalSettingStore();
-const { showMenuListGet: menuList } = storeToRefs(AuthStore());
+const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 
-console.log(menuList.value);
+const isCollapse = computed(() => useGlobalSettingStore().ThemeConfig.isCollapse);
+const { showMenuListGet: menuList } = storeToRefs(AuthStore());
 </script>
 
 <style scoped lang="scss">

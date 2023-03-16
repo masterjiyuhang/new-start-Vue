@@ -28,6 +28,9 @@ type Events = {
   collapse: {};
 
   changeSidebarCollapse: {};
+
+  // 刷新当前页面
+  refreshCurrentPage: boolean;
 };
 
 export const emitter: Emitter<Events> = mitt<Events>();

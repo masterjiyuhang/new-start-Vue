@@ -1,4 +1,4 @@
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import { store } from "../index";
 import { emitter } from "@/utils/mitt";
@@ -6,7 +6,6 @@ import { DEFAULT_PRIMARY } from "@/config";
 import { ThemeConfigProps } from "../interface";
 import { piniaPersistConfig } from "../storePlugin";
 // import { piniaPersistConfig } from "./../storePlugin";
-
 
 export const useGlobalSettingStore = defineStore(
   "globalSetting",
@@ -19,7 +18,7 @@ export const useGlobalSettingStore = defineStore(
 
     const keepAliveName = ref<string[]>([]);
 
-    let ThemeConfig = reactive<ThemeConfigProps>({
+    const ThemeConfig = ref<ThemeConfigProps>({
       // 当前页面是否全屏
       maximize: false,
       // 布局切换 ==>  纵向：vertical | 经典：classic | 横向：transverse | 分栏：columns
@@ -48,7 +47,7 @@ export const useGlobalSettingStore = defineStore(
 
     const setToken = (str: string) => {
       token.value = str;
-      console.log(token, 'token的值');
+      console.log(token, "token的值");
     };
 
     function changeIsCollapse() {
@@ -87,7 +86,8 @@ export const useGlobalSettingStore = defineStore(
     };
 
     const setThemeConfig = (themeConfig: ThemeConfigProps) => {
-      ThemeConfig = themeConfig;
+      console.log("set theme config", themeConfig);
+      ThemeConfig.value = themeConfig;
     };
 
     const someState = ref("你好 pinia");

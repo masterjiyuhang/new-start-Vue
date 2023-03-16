@@ -1,5 +1,12 @@
 <template>
-  <div class="cch-dashboard">dashboard {{ $t("home.title") }}</div>
+  <div class="cch-dashboard">
+    <h1>dashboard page</h1>
+    <h2>{{ $t("home.title") }}</h2>
+
+    <div v-for="item in accountList" :key="item.id">
+      <span>account: {{ item.account }}</span>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,11 +17,13 @@ export default {
 
 <script lang="ts" setup>
 import { getAccountListApi } from "@/api/index";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+
+const accountList = ref<any[]>([]);
 
 const getAccountList = async () => {
-  const res = await getAccountListApi();
-  console.log(res);
+  const { data } = await getAccountListApi();
+  accountList.value = data.items;
 };
 
 onMounted(() => {

@@ -4,6 +4,7 @@
       <!-- <ul v-for="(item, index) in list" :key="index">
             <li>{{ item.id }} - {{ item.account }}</li>
           </ul> -->
+      <h1>哈哈</h1>
 
       <div v-for="item in state.companyList" :key="item.id">
         {{ item.name }}
@@ -30,7 +31,7 @@ const state = reactive<any>({
 const getCompanyList = async () => {
   const res: any = await getCompanyListApi();
   console.log(res, "company list");
-  state.companyList = res.result;
+  state.companyList = res.data;
 };
 
 // getAccountList();

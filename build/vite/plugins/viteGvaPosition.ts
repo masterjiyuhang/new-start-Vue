@@ -49,7 +49,7 @@ const addLineAttr = (lineStr: any, line: any, id: any) => {
         "El",
         "router-view",
       ];
-      console.log(item, skip.some((i) => item.indexOf(i) > -1))
+      // console.log(item, skip.some((i) => item.indexOf(i) > -1))
       if (item && !skip.some((i) => item.indexOf(i) > -1)) {
         const reg = new RegExp(`${item}`);
         const location = `${item} code-location="${id}:${line}"`;

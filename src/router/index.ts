@@ -84,6 +84,8 @@ router.beforeEach(async (to, from, next) => {
     return next({ ...to, replace: true });
   }
 
+  console.log(to, '这货是啥')
+
   // 7.正常访问页面
   next();
 });

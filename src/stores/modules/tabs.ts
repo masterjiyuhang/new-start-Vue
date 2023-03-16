@@ -2,6 +2,7 @@ import { store } from "@/stores";
 import { defineStore } from "pinia";
 import { TabsState, TabsMenuProps } from "@/stores/interface";
 import router from "@/router";
+import { piniaPersistConfig } from "../storePlugin";
 
 export const useTabsStore = defineStore({
   id: "multiTags",
@@ -51,6 +52,8 @@ export const useTabsStore = defineStore({
       });
     },
   },
+
+  persist: piniaPersistConfig("multiTags")
 });
 
 export function useTabsStoreWithOut() {

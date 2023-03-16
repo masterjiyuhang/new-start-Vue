@@ -4,6 +4,11 @@ export default {
     hint: "计算机科学和软件工程",
     guessYouLike: "猜你喜欢",
   },
+
+  tabs: {
+    more: "更多.",
+  },
+
   registration: {
     mainTitle: "我要参会",
 

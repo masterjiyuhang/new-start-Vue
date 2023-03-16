@@ -4,6 +4,9 @@ export default {
     hint: "Computer Science And Software Engineering",
     guessYouLike: "Guess You Like",
   },
+  tabs: {
+    more: "More.",
+  },
   registration: {
     mainTitle: "Registration on JC Events",
 
