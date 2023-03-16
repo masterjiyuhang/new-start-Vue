@@ -12,3 +12,7 @@ export const getAuthButtonListApi = (params: any = {}) => {
 export const loginApi = (params: any = {}) => {
   return http.request<any>("post", "/login", params);
 };
+
+export const logoutApi = (params: any = {}) => {
+  return http.request<any>("post", "/logout", params);
+};

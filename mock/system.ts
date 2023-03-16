@@ -70,4 +70,12 @@ export default [
       return resultSuccess({ access_token: "@id" });
     },
   },
+  {
+    url: "/basic-api/logout",
+    timeout: 200,
+    method: "post",
+    response: () => {
+      return resultSuccess({ success: true });
+    },
+  },
 ] as MockMethod[];
