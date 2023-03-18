@@ -25,6 +25,17 @@
       />
     </div>
 
+    <div class="theme-item">
+      <span>暗黑模式</span>
+      <el-switch
+        v-model="ThemeConfig.isDark"
+        @change="switchDark"
+        inline-prompt
+        :active-icon="Sunny"
+        :inactive-icon="Moon"
+      ></el-switch>
+    </div>
+
     <!-- 界面设置 -->
     <el-divider class="divider" content-position="center">
       <el-icon><Setting /></el-icon>
@@ -40,11 +51,12 @@ import { DEFAULT_PRIMARY } from "@/config";
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 import { storeToRefs } from "pinia";
 import { useTheme } from "@/hooks/useTheme";
+import { Sunny, Moon } from "@element-plus/icons-vue";
 
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 const drawer = ref(false);
 
-const { changePrimary } = useTheme();
+const { changePrimary, switchDark } = useTheme();
 
 // rtl / ltr / ttb / btt
 const direction = ref("rtl");

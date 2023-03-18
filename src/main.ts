@@ -9,6 +9,10 @@ import { setupI18n } from "./locales/setupI18n";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import "@/style/erHangBaseStyle/index.scss";
 
+// element dark(内置暗黑模式)
+import "element-plus/theme-chalk/dark/css-vars.css";
+import "@/style/element/theme-dark.scss";
+
 // 用于开发模式 shift 定位 编译器中的代码
 initDom();
 
