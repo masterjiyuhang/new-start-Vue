@@ -4,8 +4,12 @@ import { RouterView } from "vue-router";
 
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 import { storeToRefs } from "pinia";
+import { useTheme } from "@/hooks/useTheme";
 
+const { initTheme } = useTheme();
 const { assemblySize } = storeToRefs(useGlobalSettingStore());
+
+initTheme();
 </script>
 
 <template>
