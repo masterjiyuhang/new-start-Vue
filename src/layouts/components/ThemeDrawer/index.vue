@@ -36,6 +36,21 @@
       ></el-switch>
     </div>
 
+    <div class="theme-item">
+      <span>灰色模式</span>
+      <el-switch
+        v-model="ThemeConfig.isGrey"
+        @change="changeGreyOrWeak($event, 'grey')"
+      />
+    </div>
+    <div class="theme-item">
+      <span>色弱模式</span>
+      <el-switch
+        v-model="ThemeConfig.isWeak"
+        @change="changeGreyOrWeak($event, 'weak')"
+      />
+    </div>
+
     <!-- 界面设置 -->
     <el-divider class="divider" content-position="center">
       <el-icon><Setting /></el-icon>
@@ -56,7 +71,7 @@ import { Sunny, Moon } from "@element-plus/icons-vue";
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 const drawer = ref(false);
 
-const { changePrimary, switchDark } = useTheme();
+const { changePrimary, switchDark, changeGreyOrWeak } = useTheme();
 
 // rtl / ltr / ttb / btt
 const direction = ref("rtl");
