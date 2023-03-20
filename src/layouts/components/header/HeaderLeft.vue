@@ -1,13 +1,16 @@
 <template>
   <div class="header-left">
     <CollapseIcon />
-    <Breadcrumb />
+    <Breadcrumb v-if="ThemeConfig.breadcrumb"/>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
+import { storeToRefs } from "pinia";
 import Breadcrumb from "./components/Breadcrumb.vue";
 import CollapseIcon from "./components/CollapseIcon.vue";
+const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 </script>
 
 <style scoped>

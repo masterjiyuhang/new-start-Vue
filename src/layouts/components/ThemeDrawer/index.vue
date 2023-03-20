@@ -56,6 +56,23 @@
       <el-icon><Setting /></el-icon>
       界面设置
     </el-divider>
+    <div class="theme-item">
+			<span>折叠菜单</span>
+			<el-switch v-model="ThemeConfig.isCollapse" />
+		</div>
+    <div class="theme-item">
+			<span>面包屑</span>
+			<el-switch v-model="ThemeConfig.breadcrumb" />
+		</div>
+    <div class="theme-item">
+			<span>标签栏</span>
+			<el-switch v-model="ThemeConfig.tabs" />
+		</div>
+    <div class="theme-item">
+			<span>页脚</span>
+			<el-switch v-model="ThemeConfig.footer" />
+		</div>
+
   </el-drawer>
 </template>
 
