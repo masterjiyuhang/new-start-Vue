@@ -206,7 +206,7 @@ const colorList = [
 
 onBeforeMount(() => {
   emitter.on("openThemeDrawer", () => {
-    console.log("监听抽屉打开");
+    // console.log("监听抽屉打开");
     drawer.value = true;
   });
 });
