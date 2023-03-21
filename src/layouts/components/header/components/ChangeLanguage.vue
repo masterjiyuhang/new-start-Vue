@@ -1,6 +1,6 @@
 <template>
   <el-dropdown trigger="click" @command="handleSetLanguage">
-    <IconChangeLanguage class="toolBar-icon" />
+    <IconChangeLanguage class="toolBar-icon" :style="{'--color': 'red'}" />
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item
@@ -30,7 +30,7 @@ const { language } = storeToRefs(useGlobalSettingStore());
 const i18n = useI18n();
 
 const handleSetLanguage = (lang: string) => {
-  console.log(lang, "当前语言");
+  // console.log(lang, "当前语言");
   i18n.locale.value = lang;
   changeLanguage(lang);
 };

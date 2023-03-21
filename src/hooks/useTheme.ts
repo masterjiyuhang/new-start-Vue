@@ -16,10 +16,10 @@ export const useTheme = () => {
         message: `主题颜色已重置为 ${DEFAULT_PRIMARY}`,
       });
     }
-    console.log(ThemeConfig.value.primary, "主题颜色");
+    // console.log(ThemeConfig.value.primary, "主题颜色");
     setThemeConfig({ ...ThemeConfig.value, primary: val });
 
-    console.log(ThemeConfig.value.primary, "主题颜色");
+    // console.log(ThemeConfig.value.primary, "主题颜色");
 
     document.documentElement.style.setProperty(
       "--el-color-primary",
