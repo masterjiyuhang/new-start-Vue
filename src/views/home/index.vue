@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import welcome from "@/assets/system/welcome.png";
+import welcome from "@/assets/system/HalloweenIllustrations2.png";
 // import { useCounterStore } from "@/stores/modules/count";
 // import { useTestStore } from "@/stores/modules/test";
 
@@ -37,7 +37,7 @@ import welcome from "@/assets/system/welcome.png";
 
   .home-img {
 		width: 70%;
-		max-width: 1200px;
+		max-width: 800px;
 		margin-bottom: 20px;
 	}
 }
