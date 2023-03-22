@@ -18,4 +18,16 @@
   .navbar-bg-hover {
     @apply dark: text-white dark:hover: !bg-[#242424];
   }
+
+  .page-card {
+    @apply flex items-center justify-center w-full h-full;
+  }
+
+  .sle {
+    @apply truncate;
+  }
+
+  .mle {
+    @apply overflow-hidden;
+  }
 }

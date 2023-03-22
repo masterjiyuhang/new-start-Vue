@@ -8,6 +8,9 @@ export default {
   tabs: {
     more: "更多.",
   },
+  dashboard: {
+    title: '统计分析页'
+  },
 
   registration: {
     mainTitle: "我要参会",

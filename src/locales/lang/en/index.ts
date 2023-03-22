@@ -4,6 +4,9 @@ export default {
     hint: "Computer Science And Software Engineering",
     guessYouLike: "Guess You Like",
   },
+  dashboard: {
+    title: 'Dashboard Page'
+  },
   tabs: {
     more: "More.",
   },
