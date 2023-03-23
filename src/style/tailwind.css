@@ -20,7 +20,7 @@
   }
 
   .page-card {
-    @apply flex items-center justify-center w-full h-full;
+    @apply flex items-center justify-center;
   }
 
   .sle {
