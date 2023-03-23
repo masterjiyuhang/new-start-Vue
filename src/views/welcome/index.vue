@@ -7,8 +7,10 @@
 
 <script setup lang="ts">
 import { useCounterStore } from "@/stores/modules/count";
+import { storeToRefs } from "pinia";
 
-const { count, increment } = useCounterStore();
+const { increment } = useCounterStore();
+const { count } = storeToRefs(useCounterStore());
 </script>
 
 <style scoped>

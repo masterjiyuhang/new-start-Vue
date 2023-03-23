@@ -29,7 +29,7 @@
 
 <script lang="ts" setup>
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
-import { computed, nextTick } from "vue";
+import { computed, nextTick, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { emitter } from "@/utils/mitt";
 import { useTabsStore } from "@/stores/modules/tabs";
@@ -92,6 +92,15 @@ const closeAllTab = () => {
 
 // 首页时不展示关闭当前页
 const isHomePath = computed(() => route.fullPath === HOME_URL);
+
+onMounted(() => {
+  emitter.on("closeThisPage", (e) => {
+    console.log("tabs close emmiter close this page", e);
+    if (e) {
+      closeCurrentTab();
+    }
+  });
+});
 </script>
 
 <style scoped lang="scss">

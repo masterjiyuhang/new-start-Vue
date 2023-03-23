@@ -11,7 +11,7 @@ export const useCounterStore = defineStore(
     function increment() {
       count.value++;
 
-      console.log("为啥不好使了呢", count.value);
+      console.log("新的count值", count.value);
     }
 
     return { count, doubleCount, increment };

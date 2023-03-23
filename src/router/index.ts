@@ -7,32 +7,10 @@ import { staticRouter, errorRouter } from "./basic";
 import { initDynamicRouter } from "./dynamicRouter";
 // const LAYOUT = () => import("@/layout/index.vue");
 
-const modules: Record<string, any> = import.meta.glob(["./modules/**/*.ts"], {
-  eager: true,
-});
-
-const routes: any[] = [];
-
-Object.keys(modules).forEach((key) => {
-  routes.push(modules[key].default);
-});
-
-// 导出routes作为待处理的menu菜单
-export const constantMenus = routes;
-
+console.log(staticRouter, "staticRouter");
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    ...staticRouter,
-    ...errorRouter,
-    // {
-    //   path: "/",
-    //   name: "home",
-    //   component: LAYOUT,
-    //   redirect: "/dashboard",
-    //   children: [...constantMenus, PAGE_NOT_FOUND_ROUTE],
-    // },
-  ],
+  routes: [...staticRouter, ...errorRouter],
   strict: false,
   scrollBehavior: () => ({ left: 0, top: 0 }),
 });
@@ -84,7 +62,7 @@ router.beforeEach(async (to, from, next) => {
     return next({ ...to, replace: true });
   }
 
-  console.log(to, '这货是啥')
+  console.log(to, "这货是啥");
 
   // 7.正常访问页面
   next();

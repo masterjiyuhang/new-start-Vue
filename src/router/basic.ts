@@ -1,6 +1,21 @@
 import { HOME_URL, LOGIN_URL } from "@/config/index";
 import { RouteRecordRaw } from "vue-router";
 
+const modules: Record<string, any> = import.meta.glob(["./modules/**/*.ts"], {
+  eager: true,
+});
+
+// 导出constantMenus作为待处理的menu菜单
+const constantMenuRoutes: any[] = [];
+
+Object.keys(modules).forEach((key) => {
+  constantMenuRoutes.push(modules[key].default);
+});
+
+// modules下面导出的路由信息
+export const moduleRouteList = constantMenuRoutes;
+console.log(constantMenuRoutes, "constantMenus");
+
 export const PAGE_NOT_FOUND_ROUTE = {
   path: "/:path(.*)*",
   name: "PageNotFound",
@@ -31,7 +46,7 @@ export const staticRouter: RouteRecordRaw[] = [
     component: () => import("@/layouts/index.vue"),
     // component: () => import("@/layouts/indexAsync.vue"),
     redirect: HOME_URL,
-    children: [],
+    children: [...moduleRouteList],
   },
 ];
 

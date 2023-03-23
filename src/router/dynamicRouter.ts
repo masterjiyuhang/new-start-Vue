@@ -30,7 +30,7 @@ export const initDynamicRouter = async () => {
       return Promise.reject("No permission");
     }
 
-    // 3.添加动态路由
+    // 3.添加动态路由  会执行很多次~
     useAuthStore.flatMenuListGet.forEach((item: any) => {
       item.children && delete item.children;
       if (item.component && isType(item.component) == "string") {
@@ -41,6 +41,8 @@ export const initDynamicRouter = async () => {
       } else {
         router.addRoute("layout", item);
       }
+
+      // console.log(router.getRoutes(), "router..");
     });
   } catch (error) {
     console.log("baocuo!");

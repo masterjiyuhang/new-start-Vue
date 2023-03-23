@@ -2,9 +2,9 @@
   <div>
     car detail
 
-    <el-button type="primary" @click="handleCloseCurrentPage"
-      >关闭当前页面</el-button
-    >
+    <el-button type="primary" @click="handleCloseCurrentPage">
+      关闭当前页面
+    </el-button>
   </div>
 </template>
 

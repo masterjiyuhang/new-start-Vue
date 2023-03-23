@@ -6,14 +6,13 @@
     <div>
       <Menu title="列表" />
     </div>
-    <!-- <el-button @click="changeCollapse"> {{ isCollapse }}</el-button> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import Menu from "./menu";
 import { ref, provide, computed, reactive, watch } from "vue";
-import { constantMenus } from "@/router/index";
+import { moduleRouteList } from "@/router/basic";
 // import { emitter } from "@/utils/mitt";
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 import { storeToRefs } from "pinia";
@@ -24,18 +23,9 @@ const logoWidth = ref(65);
 const sidebarState = reactive({
   menuList: [],
 });
-// console.log(constantMenus, "constantMenus menu 等待处理中");
-
-// const { changeIsCollapse } = useGlobalSettingStore();
-// // const isCollapse = ref(false);
-// const changeCollapse = () => {
-//   // isCollapse.value = !isCollapse.value;
-//   changeIsCollapse();
-//   // emitter.emit("changeSidebarCollapse", isCollapse.value);
-// };
 
 // 先按照weight排个序
-const r1 = constantMenus
+const r1 = moduleRouteList
   .reduce((pre, next) => {
     // console.log(pre, next);
     return pre.concat(next);

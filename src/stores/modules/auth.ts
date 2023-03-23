@@ -4,6 +4,7 @@ import { defineStore } from "pinia";
 import { AuthState } from "@/stores/interface";
 import { getFlatArr, getShowMenuList } from "@/utils";
 import { store } from "../index";
+import { moduleRouteList } from "@/router/basic";
 // import { piniaPersistConfig } from "./../storePlugin";
 
 export const AuthStore = defineStore({
@@ -37,7 +38,7 @@ export const AuthStore = defineStore({
     // getAuthMenuList
     async getAuthMenuList() {
       const { data } = await getRouterListApi();
-      this.authMenuList = data;
+      this.authMenuList = data.concat(moduleRouteList);
     },
     // setRouteName
     async setRouteName(name: string) {
