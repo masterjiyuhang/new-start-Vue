@@ -7,7 +7,7 @@ import { staticRouter, errorRouter } from "./basic";
 import { initDynamicRouter } from "./dynamicRouter";
 // const LAYOUT = () => import("@/layout/index.vue");
 
-console.log(staticRouter, "staticRouter");
+// console.log(staticRouter, "staticRouter");
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [...staticRouter, ...errorRouter],
@@ -62,7 +62,7 @@ router.beforeEach(async (to, from, next) => {
     return next({ ...to, replace: true });
   }
 
-  console.log(to, "这货是啥");
+  console.log(to, "路由守卫，这货是啥");
 
   // 7.正常访问页面
   next();

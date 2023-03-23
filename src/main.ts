@@ -7,8 +7,10 @@ import router from "./router";
 import { initDom } from "./utils/positionToCode";
 import { setupI18n } from "./locales/setupI18n";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-import "@/style/erHangBaseStyle/index.scss";
+// custom directives
+import directives from "@/directives/index";
 
+import "@/style/erHangBaseStyle/index.scss";
 // element dark(内置暗黑模式)
 import "element-plus/theme-chalk/dark/css-vars.css";
 import "@/style/element/theme-dark.scss";
@@ -31,6 +33,8 @@ async function bootstrap() {
   app.config.unwrapInjectedRef = true;
 
   app.mount("#app");
+
+  app.use(directives);
 }
 
 bootstrap();

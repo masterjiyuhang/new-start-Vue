@@ -14,7 +14,7 @@ Object.keys(modules).forEach((key) => {
 
 // modules下面导出的路由信息
 export const moduleRouteList = constantMenuRoutes;
-console.log(constantMenuRoutes, "constantMenus");
+// console.log(constantMenuRoutes, "constantMenus");
 
 export const PAGE_NOT_FOUND_ROUTE = {
   path: "/:path(.*)*",
