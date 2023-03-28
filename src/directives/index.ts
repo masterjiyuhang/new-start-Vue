@@ -2,13 +2,15 @@ import { App, Directive } from "vue";
 import copy from "./modules/copy";
 import watermark from "./modules/waterMarker";
 import throttle from "./modules/throttle";
-import debounce from './modules/debounce'
+import debounce from "./modules/debounce";
+import RippleDirective from "./modules/ripper/index";
 
 const directivesList: any = {
   copy,
   watermark,
   throttle,
-  debounce
+  debounce,
+  RippleDirective,
 };
 
 const directives = {

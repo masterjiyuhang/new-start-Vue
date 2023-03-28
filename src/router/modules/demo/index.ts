@@ -1,0 +1,46 @@
+export default {
+  path: "/demo",
+  name: "demo",
+  meta: {
+    title: "一些例子",
+    icon: "Menu",
+    isLink: "",
+    isHide: false,
+    isFull: false,
+    isAffix: false,
+    isKeepAlive: true,
+  },
+  redirect: "/demo/ripple",
+  children: [
+    {
+      path: "/demo/ripple",
+      name: "ripple",
+      component: "/demo/ripple/index",
+      // component: () => import("@/views/car/index.vue"),
+      meta: {
+        title: "水波纹",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    // {
+    //   path: "/car/detail",
+    //   name: "carDetail",
+    //   component: "/car/CarDetail",
+    //   // component: () => import("@/views/car/CarDetail.vue"),
+    //   meta: {
+    //     title: "车辆管理-详情",
+    //     icon: "Apple",
+    //     isLink: "",
+    //     isHide: false,
+    //     isFull: false,
+    //     isAffix: false,
+    //     isKeepAlive: true,
+    //   },
+    // },
+  ],
+};
