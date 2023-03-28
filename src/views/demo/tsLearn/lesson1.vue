@@ -76,6 +76,18 @@ const state = reactive({
       type: "boolean",
       example: true,
     },
+    {
+      id: 4,
+      name: "非常大的整数",
+      type: "bigint",
+      example: "Bigint(1000)",
+    },
+    {
+      id: 5,
+      name: "symbol",
+      type: "Symbol",
+      example: "Symbol('name')",
+    },
   ], // 原始类型
   arr: [
     {
@@ -121,7 +133,7 @@ const myName = ref<string>("erhang");
 
 // 函数 TypeScript 允许你指定函数的输入值和输出值的类型。
 const greet = (name: string): void => {
-  ElMessage.error(`哈哈 你输入了，${name.toLocaleLowerCase()}!!`);
+  ElMessage.success(`哈哈 你输入了，${name.toLocaleLowerCase()}!!`);
 };
 watchEffect(() => {
   /**
@@ -158,13 +170,56 @@ const printCoord = (pt: Point) => {
   console.log("The coordinate's x value is " + pt.x);
   console.log("The coordinate's y value is " + pt.y);
 };
-printCoord({ x: 2, y: 3 });
 
 const getBear = (item: Bear): Bear => {
   return item;
 };
 const bear: Bear = getBear({ name: "小蜜蜂", honey: true, hobby: "采蜜" });
-console.log(bear, "看看小蜜蜂吧");
+
+/**
+ * 类型断言
+ * 你知道一个值的类型，typescript不知道
+ * 使用as作为类型断言指定一个更具体的内容
+ * 就像类型注解一样，类型断言也会被编译器移除，并且不会影响任何运行时的行为。
+ * 你也可以使用尖括号语法（注意不能在 .tsx 文件内使用），是等价的。
+ * 因为类型断言会在编译的时候被移除，所以运行时并不会有类型断言的检查，即使类型断言是错误的，也不会有异常或者 null 产生。
+ */
+const myCanvas = document.getElementById("main-canvas") as HTMLCanvasElement;
+const myCanvas1 = <HTMLCanvasElement>document.getElementById("main_canvas");
+
+/**
+ * 字面量类型 Literal Types
+ * 这种方式声明的变量则不能被修改，如果结合联合类型，就显得有用多了。
+ *
+ * 使用 as const 转为一个类型字面量
+ */
+
+let x: "hello" | "left" = "hello";
+// as const 效果跟 const 类似，但是对类型系统而言，它可以确保所有的属性都被赋予一个字面量类型，而不是一个更通用的类型比如 string 或者 number 。
+let y = "asd" as const;
+
+/**
+ * 非空断言操作符 （后缀 !）(Non-null Assertion Operator)
+ * TypeScript 提供了一个特殊的语法，可以在不做任何检查的情况下，从类型中移除 null 和 undefined，
+ * 这就是在任意表达式后面写上 ! ，这是一个有效的类型断言，表示它的值不可能是 null 或者 undefined。
+ */
+function liveDangerously(x?: number | null) {
+  // No error
+  // 只有当你明确的知道这个值不可能是 null 或者 undefined 时才使用 ! 。
+  console.log(x!.toFixed());
+}
+
+// 页面垃圾桶
+const trashCans = reactive([
+  liveDangerously,
+  y,
+  x,
+  myCanvas1,
+  myCanvas,
+  bear,
+  printCoord,
+]);
+console.log("这是一个当前页面的垃圾桶~", trashCans);
 </script>
 
 <style scoped></style>
