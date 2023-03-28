@@ -1,5 +1,5 @@
 <template>
-    <div>menu1-3</div>
+    <div class="wrapper-page">menu1-3</div>
   </template>
   
   <script setup lang="ts"></script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper-page">
     menu2
 
     <h2>
