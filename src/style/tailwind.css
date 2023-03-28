@@ -15,19 +15,33 @@
     @apply flex items-center justify-between;
   }
 
+  /* 为导航栏元素添加颜色变化和悬停事件的效果 */
   .navbar-bg-hover {
     @apply dark: text-white dark:hover: !bg-[#242424];
   }
 
+  /* 将元素居中并平均分配空间 */
   .page-card {
     @apply flex items-center justify-center;
   }
 
+  /* 为元素设置自动溢出且截断文本 */
   .sle {
     @apply truncate;
   }
 
+  /* 为元素设置手动溢出隐藏文本 */
   .mle {
     @apply overflow-hidden;
+  }
+
+  .ts-demo-card {
+    @apply p-2 text-base shadow-cyan-600 text-cyan-700;
+    box-shadow: 0 0 2px;
+  }
+
+  .ts-demo-card-child {
+    @apply p-2 text-base shadow-yellow-400 text-cyan-400;
+    box-shadow: 0 0 2px;
   }
 }
