@@ -144,7 +144,7 @@ watchEffect(async () => {
    */
 
   //  通过使用 nextTick 方法可以确保在组件完成初始渲染后再执行 greet 函数，避免在组件挂载时的多余调用。
-  await nextTick()
+  await nextTick();
   console.log(myName.value, "watchEffect 是否有变化");
   greet(myName.value);
 });
@@ -232,6 +232,7 @@ const trashCans = reactive([
   bear,
   printCoord,
 ]);
+
 console.log("这是一个当前页面的垃圾桶~", trashCans);
 </script>
 
