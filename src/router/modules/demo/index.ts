@@ -43,11 +43,25 @@ export default {
       children: [
         {
           path: "/demo/learnTS/lesson1",
-          name: "menu11",
+          name: "leson1",
           component: "/demo/tsLearn/lesson1",
           meta: {
             icon: "Menu",
             title: "第一节-基础类型",
+            isLink: "",
+            isHide: false,
+            isFull: false,
+            isAffix: false,
+            isKeepAlive: true,
+          },
+        },
+        {
+          path: "/demo/learnTS/lesson2",
+          name: "leson2",
+          component: "/demo/tsLearn/lesson2",
+          meta: {
+            icon: "Menu",
+            title: "第二节-基础类型",
             isLink: "",
             isHide: false,
             isFull: false,

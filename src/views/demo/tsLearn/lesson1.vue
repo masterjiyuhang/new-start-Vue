@@ -48,12 +48,12 @@
       </div>
     </div>
 
-    <el-input v-model="myName" class="mt-5"></el-input>
+    <!-- <el-input v-model="myName" class="mt-5"></el-input> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watchEffect } from "vue";
+import { ref, reactive, watchEffect, watch, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 
 const state = reactive({
@@ -135,16 +135,29 @@ const myName = ref<string>("erhang");
 const greet = (name: string): void => {
   ElMessage.success(`哈哈 你输入了，${name.toLocaleLowerCase()}!!`);
 };
-watchEffect(() => {
+watchEffect(async () => {
   /**
    * watchEffect 的回调函数会运行两次。
    * 这是因为在该响应式变量创建时，它还没有下一帧可监控的变化，所以打印初始值并调用 greet 成功，随后在set value的过程中它会再次运行 watchEffect 回调函数。
    * 这些行为在测试 RxJS 等库时很常见。常见的解决方法是使用 watch 函数，将 immediate 选项设置为 true。这样不仅可以解决这个问题，还可以处理在第一个监测到的变化时调用回调的情况。
    * 所以，如果希望每次响应式变量的值更新时只运行一次回调函数，可以尝试使用 watch 函数，并设置 immediate 选项为 true。
    */
-  console.log(myName.value, "是否有变化");
+
+  //  通过使用 nextTick 方法可以确保在组件完成初始渲染后再执行 greet 函数，避免在组件挂载时的多余调用。
+  await nextTick()
+  console.log(myName.value, "watchEffect 是否有变化");
   greet(myName.value);
 });
+
+watch(
+  () => myName.value,
+  (newValue) => {
+    console.log(newValue, "watch  是否有变化");
+
+    greet(myName.value);
+  },
+  { immediate: true } // 设置 immediate 选项为 true
+);
 
 // 类型别名
 type Point = {
