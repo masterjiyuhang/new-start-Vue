@@ -811,6 +811,36 @@ export const routerList = {
       },
       children: [
         {
+          path: "/learn/tsx",
+          name: "learnTsx",
+          redirect: "/learn/tsx/lesson1",
+          meta: {
+            icon: "Menu",
+            title: "learnTsx",
+            isLink: "",
+            isHide: false,
+            isFull: false,
+            isAffix: false,
+            isKeepAlive: false,
+          },
+          children: [
+            {
+              path: "/learn/tsx/lesson1",
+              name: "tsx-lesson1",
+              component: "/learn/tsx/lesson1",
+              meta: {
+                icon: "Menu",
+                title: "学习tsx",
+                isLink: "",
+                isHide: false,
+                isFull: false,
+                isAffix: false,
+                isKeepAlive: false,
+              },
+            },
+          ]
+        },
+        {
           path: "/learn/reactive",
           name: "reactive",
           redirect: "/learn/reactive/study-ref",
