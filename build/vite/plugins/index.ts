@@ -30,6 +30,8 @@ export function setupVitePlugins({ command }: ConfigEnv) {
     viteSingleFile({ removeViteModuleLoader: true }),
     svgLoader(),
     AutoImport({
+      imports:['vue'],
+      dts: 'auto-import.d.ts',  // 生成的类型文件
       resolvers: [
         ElementPlusResolver({
           importStyle: "sass",
