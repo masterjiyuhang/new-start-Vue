@@ -60,7 +60,6 @@ const value = computed({
 .cch-dialog {
   width: 300px;
   height: 300px;
-  background-color: #f8f8f8;
   border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
