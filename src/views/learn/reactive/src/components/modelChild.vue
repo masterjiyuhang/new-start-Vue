@@ -12,10 +12,10 @@
 
     <div class="cch-dialog" v-if="propData.modelValue">
       <div class="header">
-        标题 <span class="cursor-pointer" @click="close">X</span>
+        标题 <span class="text-red-300 cursor-pointer" @click="close">X</span>
       </div>
-      <div class="content" @click="sendMsg">内容 {{ contentMsg }}</div>
-      <div class="footer">底部</div>
+      <div class="content text-cyan-400" @click="sendMsg">内容 {{ contentMsg }}</div>
+      <div class="text-orange-800 footer">底部</div>
     </div>
   </div>
 </template>

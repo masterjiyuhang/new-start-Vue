@@ -1,7 +1,7 @@
 <template>
   <div v-show="propsData.modelValue">
     <!-- 接受更多的参数 -->
-    <div>{{ title }}</div>
+    <div class="text-orange-300">{{ title }}</div>
 
     <button @click="shuffle">Shuffle</button>
     <transition-group class="wraps" name="mmm" tag="ul">
