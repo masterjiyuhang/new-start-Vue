@@ -896,6 +896,20 @@ export const routerList = {
                 isKeepAlive: false,
               },
             },
+            {
+              path: "/learn/reactive/study-vModel",
+              name: "VModel",
+              component: "/learn/reactive/learnVModel",
+              meta: {
+                icon: "Menu",
+                title: "学习v-Model",
+                isLink: "",
+                isHide: false,
+                isFull: false,
+                isAffix: false,
+                isKeepAlive: false,
+              },
+            },
           ],
         },
         {
