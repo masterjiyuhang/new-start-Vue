@@ -9,7 +9,12 @@
       @getMsg="getMsg"
     />
 
-    <modelChildMore/>
+    {{ cellNumber }}
+    <modelChildMore
+      v-model="modelValue"
+      v-model:cell-number="cellNumber"
+      v-model:title="title"
+    />
   </div>
 </template>
 
@@ -22,7 +27,7 @@ import { ref } from "vue";
 import modelChild from "./src/components/modelChild.vue";
 import modelChildMore from "./src/components/modelChildMore.vue";
 
-const modelValue = ref(false);
+const modelValue = ref(true);
 
 const update = (e: boolean) => {
   console.log(e, "传递过来的e");
@@ -32,6 +37,11 @@ const update = (e: boolean) => {
 const getMsg = (msg: string) => {
   console.log("接受消息", msg);
 };
+
+// const cellNumber = Math.floor(Math.random() * 100)
+
+const cellNumber = ref(20);
+const title = ref("我是标题");
 </script>
 
 <style lang="scss" scoped></style>
