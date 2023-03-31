@@ -27,10 +27,14 @@ type PropsType = {
   modelValue: boolean;
   cellNumber: number;
   title: string;
+  titleModifiers?: {
+    capitalize: false;
+  };
+  modelModifiers?: { default: () => {} };
 };
 
 const propsData = defineProps<PropsType>();
-
+console.log(propsData.titleModifiers, "看看title的修饰符");
 const emits = defineEmits([
   "update:modelValue",
   "update:cellNumber",
@@ -49,7 +53,11 @@ let items = ref(
   )
 );
 const shuffle = () => {
-  emits("update:title", "我要改变");
+  let newTitle = "jiyuhang 我要改变 注意看 我的首字母大写了！！";
+  if (propsData?.titleModifiers?.capitalize) {
+    newTitle = newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
+  }
+  emits("update:title", newTitle);
   emits("update:cellNumber", Math.floor(Math.random() * 100));
   // items.value = _.shuffle(items.value);
 };

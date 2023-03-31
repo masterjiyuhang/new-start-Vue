@@ -13,7 +13,7 @@
     <modelChildMore
       v-model="modelValue"
       v-model:cell-number="cellNumber"
-      v-model:title="title"
+      v-model:title.capitalize="title"
     />
   </div>
 </template>
