@@ -4,12 +4,13 @@ html.dark {
   --cch-bg-color: #141414;
   --cch-main-bg-color: #0d0d0d;
   --cch-border-light: 1px solid #4c4c4d;
+  --cch-base-text-color: #fcfcfc;
 
   // * wangEditor
   --w-e-toolbar-color: #595959;
   --w-e-toolbar-bg-color: #eeeeee;
   --w-e-textarea-bg-color: #141414;
-  --w-e-textarea-color: #eeeeee;
+  --w-e-textarea-color: #fcfcfc;
 
   // * 以下为自定义暗黑模式内容
   // login
@@ -174,5 +175,5 @@ html.dark {
   // --el-mask-color: rgba(0, 0, 0, 0.8);
   // --el-mask-color-extra-light: rgba(0, 0, 0, 0.3);
 
-  // color: unset;
+  color: var(--cch-base-text-color);
 }
