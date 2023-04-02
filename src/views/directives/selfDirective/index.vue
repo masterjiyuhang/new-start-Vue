@@ -1,14 +1,25 @@
 <template>
   <div>
     <input v-focus.cchInput="{ text: bindText }" />
+    <div v-for="(item, index) in arr" :key="index">
+      <img height="500" :data-index="item" v-lazy="item" width="360" alt="" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { DirectiveBinding } from "vue";
+import type { DirectiveBinding, Directive } from "vue";
 import { ref } from "vue";
 
 const bindText = ref("哈哈 我是二航");
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const images: Record<string, { default: string }> = import.meta.globEager(
+  "@/assets/shopping/*.png"
+);
+let arr = Object.values(images).map((v) => v.default);
+console.log(arr);
 
 setTimeout(() => {
   bindText.value = "二航跑路了";
@@ -61,7 +72,11 @@ const vFocus = {
 
   // 绑定元素的父组件更新前调用
   beforeUpdate(el, binding: DirectiveBinding, vnode, prevVnode) {
-    console.log("before update 钩子中查看oldValue", binding.oldValue, binding.value);
+    console.log(
+      "before update 钩子中查看oldValue",
+      binding.oldValue,
+      binding.value
+    );
   },
 
   // 在绑定元素的父组件
@@ -73,6 +88,21 @@ const vFocus = {
 
   // 绑定元素的父组件卸载后调用
   unmounted(el, binding, vnode, prevVnode) {},
+};
+
+let vLazy: Directive<HTMLImageElement, string> = async (el, binding) => {
+  let url = await import("@/assets/logo.png");
+  el.src = url.default;
+  let observer = new IntersectionObserver((entries) => {
+    console.log(entries[0], el);
+    if (entries[0].intersectionRatio > 0 && entries[0].isIntersecting) {
+      setTimeout(() => {
+        el.src = binding.value;
+        observer.unobserve(el);
+      }, 2000);
+    }
+  });
+  observer.observe(el);
 };
 </script>
 
