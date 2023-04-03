@@ -14,6 +14,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const optimizeDeps = {};
   return {
     base: "./",
+    root: './', // js导入的资源路径，src
     server: {
       host: "0.0.0.0",
       port: Number(env.VITE_PORT),
