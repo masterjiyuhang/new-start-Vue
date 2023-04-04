@@ -36,14 +36,16 @@ FROM node:16
 
 WORKDIR /cch_web/
 COPY . .
-RUN npm config set registry https://registry.npm.taobao.org
-RUN yarn && yarn build-only
+RUN npm install -g pnpm --registry=https://registry.npm.taobao.org
+RUN pnpm config set registry https://registry.npm.taobao.org
+RUN pnpm install && pnpm run build-only
 
 FROM nginx:alpine
-LABEL MAINTAINER="SliverHorn@sliver_horn@qq.com"
+# LABEL MAINTAINER="SliverHorn@sliver_horn@qq.com"
 
 COPY .docker-compose/my.conf /etc/nginx/conf.d/my.conf
 COPY --from=0 /cch_web/dist /usr/share/nginx/html
+EXPOSE 8080
 RUN cat /etc/nginx/nginx.conf
 RUN cat /etc/nginx/conf.d/my.conf
 RUN ls -al /usr/share/nginx/html
