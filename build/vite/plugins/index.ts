@@ -16,7 +16,8 @@ import { viteBuildInfo } from "./viteBuildInfo";
 import { GvaPositionServer } from "./viteCodeServer";
 import { GvaPosition } from "./viteGvaPosition";
 
-export function setupVitePlugins({ command }: ConfigEnv) {
+export function setupVitePlugins({ command, mode }: ConfigEnv) {
+  console.log(mode, 'mode..')
   return [
     viteBuildInfo(),
     GvaPositionServer(),

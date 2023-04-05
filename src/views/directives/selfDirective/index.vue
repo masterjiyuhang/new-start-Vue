@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="wrapper-page directive-page">
     <input v-focus.cchInput="{ text: bindText }" />
-    <div v-for="(item, index) in arr" :key="index">
-      <img height="500" :data-index="item" v-lazy="item" width="360" alt="" />
+    <!-- 图片懒加载 -->
+    <div v-for="(item, index) in arr" :key="index" class="lazy-load-box">
+      <img :data-index="item" v-lazy="item" alt="" class="lazy-image" />
     </div>
   </div>
 </template>
@@ -19,7 +20,6 @@ const images: Record<string, { default: string }> = import.meta.globEager(
   "@/assets/shopping/*.png"
 );
 let arr = Object.values(images).map((v) => v.default);
-console.log(arr);
 
 setTimeout(() => {
   bindText.value = "二航跑路了";
@@ -95,14 +95,13 @@ const vFocus = {
  * 当一个 IntersectionObserver 对象被创建时，其被配置为监听根中一段给定比例的可见区域。
  * 一旦 IntersectionObserver 被创建，则无法更改其配置，所以一个给定的观察者对象只能用来监听可见区域的特定变化值；
  * 然而，你可以在同一个观察者对象中配置监听多个目标元素。
- * @param el 
- * @param binding 
+ * @param el
+ * @param binding
  */
 let vLazy: Directive<HTMLImageElement, string> = async (el, binding) => {
   let url = await import("@/assets/logo.png");
   el.src = url.default;
   let observer = new IntersectionObserver((entries) => {
-    console.log(entries[0], el);
     if (entries[0].intersectionRatio > 0 && entries[0].isIntersecting) {
       setTimeout(() => {
         el.src = binding.value;
@@ -114,4 +113,13 @@ let vLazy: Directive<HTMLImageElement, string> = async (el, binding) => {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.directive-page {
+  .lazy-load-box {
+    .lazy-image {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+</style>
