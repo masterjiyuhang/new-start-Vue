@@ -36,7 +36,7 @@ export default {
         title: "车辆管理-详情",
         icon: "Apple",
         isLink: "",
-        isHide: false,
+        isHide: true,
         isFull: false,
         isAffix: false,
         isDetail: true,
