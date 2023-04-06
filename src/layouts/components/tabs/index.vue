@@ -40,6 +40,7 @@ import { AuthStore } from "@/stores/modules/auth";
 import { useTabsStore } from "@/stores/modules/tabs";
 import { storeToRefs } from "pinia";
 import MoreButton from "./components/MoreButton.vue";
+// import { isFunction } from "@/utils/is";
 
 const route = useRoute();
 const router = useRouter();
@@ -56,6 +57,13 @@ const tabClick = (tabItem: TabsPaneContext) => {
   const fullPath = tabItem.props.name as string;
   router.push(fullPath);
 };
+
+// console.log(router.currentRoute.value.params.id, route.meta, "route......");
+
+// 当前路由元信息内的id  如果是详情页会用到
+const currentId = computed(() => {
+  return route.meta.isDetail ? router.currentRoute.value.params.id : "";
+});
 
 // Remove Tab
 const tabRemove = (fullPath: string) => {
@@ -101,11 +109,14 @@ const tabsDrop = () => {
 watch(
   () => route.fullPath,
   () => {
+    // console.log(route.meta, "路由元信息");
     if (route.meta.isFull) return;
     tabsMenuValue.value = route.fullPath;
     const tabsParams = {
       icon: route.meta.icon as string,
-      title: route.meta.title as string,
+      title: currentId.value
+        ? (route.meta.title as string) + currentId.value
+        : (route.meta.title as string),
       path: route.fullPath,
       name: route.name as string,
       close: !route.meta.isAffix,

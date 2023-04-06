@@ -28,7 +28,7 @@ export default {
       },
     },
     {
-      path: "/car/detail",
+      path: "/car/detail/:id",
       name: "carDetail",
       component: "/car/CarDetail",
       // component: () => import("@/views/car/CarDetail.vue"),
@@ -39,6 +39,7 @@ export default {
         isHide: false,
         isFull: false,
         isAffix: false,
+        isDetail: true,
         isKeepAlive: true,
       },
     },

@@ -30,13 +30,15 @@ declare namespace Menu {
   }
   interface MetaProps {
     icon: string;
-    title: string;
+    title: string | function;
     activeMenu?: string;
     isLink?: string;
     isHide: boolean;
     isFull: boolean;
     isAffix: boolean;
     isKeepAlive: boolean;
+    isDetail: boolean;
+    selfTitle?: function;
   }
 }
 
