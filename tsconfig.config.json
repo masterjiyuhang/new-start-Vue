@@ -1,0 +1,24 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "include": [
+    "vite.config.*",
+    "vitest.config.*",
+    "cypress.config.*",
+    "playwright.config.*",
+    "types/*.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "types/*.d.ts",
+    "mock/*.ts",
+    "vite.config.ts"
+  ],
+  "paths": {
+    "@/*": ["src/*"],
+    "@/api/*": ["src/api/*"]
+  },
+  "compilerOptions": {
+    "composite": true,
+    "types": ["vite-svg-loader", "node"]
+  }
+}

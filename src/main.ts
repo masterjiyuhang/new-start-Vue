@@ -7,8 +7,11 @@ import router from "./router";
 import { initDom } from "./utils/positionToCode";
 import { setupI18n } from "./locales/setupI18n";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-// custom directives
+// customer directives
 import directives from "@/directives/index";
+
+// customer component
+import { setupComp } from "@/components";
 
 import "@/style/erHangBaseStyle/index.scss";
 // element dark(内置暗黑模式)
@@ -24,6 +27,9 @@ async function bootstrap() {
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component);
   }
+
+  // 初始化自定义组件
+  setupComp(app);
 
   await setupI18n(app);
   setupStore(app);

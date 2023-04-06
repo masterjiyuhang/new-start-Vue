@@ -25,6 +25,10 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <cch-table />
+
+    <cch-dialog :visible="true"/>
   </div>
 </template>
 
