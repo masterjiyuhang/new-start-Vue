@@ -20,11 +20,11 @@ export const GvaPosition = (): Plugin => {
 };
 
 const codeLineTrack = (code: any, id: any) => {
-  const lineList = code.split("\n");
-  const newList = [];
-  lineList.forEach((item: any, index: any) => {
-    newList.push(addLineAttr(item, index + 1, id)); // 添加位置属性，index+1为具体的代码行号
-  });
+  const lineList: string[] = code.split("\n");
+  const newList: string[] = [];
+  lineList.forEach((item: string, index: number) =>
+    newList.push(addLineAttr(item, index + 1, id) as string)
+  );
   return newList.join("\n");
 };
 
@@ -48,6 +48,7 @@ const addLineAttr = (lineStr: any, line: any, id: any) => {
         "el-",
         "El",
         "router-view",
+        "cch-",
       ];
       // console.log(item, skip.some((i) => item.indexOf(i) > -1))
       if (item && !skip.some((i) => item.indexOf(i) > -1)) {
