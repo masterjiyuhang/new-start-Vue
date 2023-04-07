@@ -42,3 +42,6 @@ npx tailwindcss init -p
 
 ## tabs init
 初始化页面上面的tabs
+
+## upload
+自定义table组件
