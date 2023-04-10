@@ -28,6 +28,21 @@ export default {
       },
     },
     {
+      path: "/demo/currentLocationInfo",
+      name: "currentLocationInfo",
+      component: "/demo/locationInfo/index",
+      // component: () => import("@/views/car/index.vue"),
+      meta: {
+        title: "获取位置信息",
+        icon: "Aim",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    {
       path: "/demo/learnTS",
       name: "lesson1",
       redirect: "/demo/learnTS/lesson1",

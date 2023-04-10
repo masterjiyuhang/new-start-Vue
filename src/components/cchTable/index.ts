@@ -1,6 +1,3 @@
-
 import Table from "./src/table";
 
-
-
-export default Table
+export default Table;
