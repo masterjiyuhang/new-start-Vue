@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper-page">
     <div>水波纹组件</div>
-    <div class="demo-box" v-RippleDirective>content</div>
+    <div class="select-none demo-box" v-RippleDirective>content</div>
 
     <div class="heart"></div>
   </div>

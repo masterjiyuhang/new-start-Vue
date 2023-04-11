@@ -15,9 +15,13 @@ import { viteMockServe } from "vite-plugin-mock";
 import { viteBuildInfo } from "./viteBuildInfo";
 import { GvaPositionServer } from "./viteCodeServer";
 import { GvaPosition } from "./viteGvaPosition";
+import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
+import path from "path";
 
 export function setupVitePlugins({ command, mode }: ConfigEnv) {
-  console.log(mode, 'mode..')
+  console.log(mode, "mode..", [
+    path.resolve(__dirname, "../../../src/locales/lang/**/*.ts"),
+  ]);
   return [
     viteBuildInfo(),
     GvaPositionServer(),
@@ -30,9 +34,12 @@ export function setupVitePlugins({ command, mode }: ConfigEnv) {
     }),
     viteSingleFile({ removeViteModuleLoader: true }),
     svgLoader(),
+    VueI18nPlugin({
+      // include: [path.resolve(__dirname, '../../../src/locales/lang/**/*.ts')],
+    }),
     AutoImport({
-      imports:['vue'],
-      dts: 'auto-import.d.ts',  // 生成的类型文件
+      imports: ["vue"],
+      dts: "auto-import.d.ts", // 生成的类型文件
       resolvers: [
         ElementPlusResolver({
           importStyle: "sass",
