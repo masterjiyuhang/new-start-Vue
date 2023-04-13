@@ -22,7 +22,37 @@
             <CchTypeCode :values="[systemTile]" :cursor="false" :speed="150" />
           </h2>
         </div>
-        <el-button type="primary" @click="login">Login button</el-button>
+        <el-form
+          :rules="loginFormRules"
+          :model="ruleForm"
+          ref="ruleFormRef"
+          size="large"
+        >
+          <el-form-item prop="userName">
+            <el-input
+              clearable
+              v-model="ruleForm.userName"
+              :placeholder="'请输入账号'"
+              :prefix-icon="renderIcon_v2('User')"
+            />
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              type="password"
+              clearable
+              v-model="ruleForm.password"
+              :placeholder="'请输入密码'"
+              :prefix-icon="renderIcon_v2('Lock')"
+            />
+          </el-form-item>
+          <el-form-item>
+            <div class="w-full h-[20px] flex-bc">
+              <el-checkbox v-model="checked"> 记住密码 </el-checkbox>
+              <el-button link type="primary"> 忘记密码? </el-button>
+            </div>
+            <el-button class="w-full mt-4" type="primary" @click="login">Login button</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
@@ -36,22 +66,79 @@ import { initDynamicRouter } from "@/router/dynamicRouter";
 import { HOME_URL } from "@/config";
 import { useRouter } from "vue-router";
 import { ElNotification } from "element-plus";
+import type { FormInstance, FormRules } from "element-plus";
 import { getTimeState } from "@/utils";
 import { storeToRefs } from "pinia";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { useTheme } from "@/hooks/useTheme";
+import { reactive, ref } from "vue";
+
+import { REGEXP_PWD } from "./utils/rule";
+
+import { useRenderElementIcon } from "@/hooks/useRenderElementIcon";
 
 // 系统名称
 const systemTile = import.meta.env.VITE_GLOB_APP_TITLE;
 const { switchDark } = useTheme();
-
 const { setToken, setKeepAliveName, token, someState } =
   useGlobalSettingStore();
-
-const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 const { closeMultipleTab } = useTabsStore();
+const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 const router = useRouter();
 
+const { renderIcon_v2 } = useRenderElementIcon();
+
+console.log(renderIcon_v2);
+
+const ruleFormRef = ref<FormInstance>();
+// 表单对象
+const ruleForm = reactive<LoginFormData>({
+  userName: "",
+  password: "",
+  verifyCode: "",
+});
+
+const loginState = reactive({
+  verifyCode: "",
+});
+
+const loginFormRules = reactive<FormRules>({
+  userName: [{ required: true, message: "请输入账号", trigger: "blur" }],
+  password: [
+    {
+      validator: (_rule, value, callback) => {
+        if (value === "") {
+          callback(new Error("请输入密码"));
+        } else if (!REGEXP_PWD.test(value)) {
+          callback(
+            new Error("密码格式应为8-18位数字、字母、符号的任意两种组合")
+          );
+        } else {
+          callback();
+        }
+      },
+      trigger: "blur",
+    },
+  ],
+  verifyCode: [
+    {
+      validator: (_rule, value, callback) => {
+        if (value === "") {
+          callback(new Error("请输入验证码"));
+        } else if (loginState.verifyCode !== value) {
+          callback(new Error("请输入正确的验证码"));
+        } else {
+          callback();
+        }
+      },
+      trigger: "blur",
+    },
+  ],
+});
+
+const checked = ref<boolean>(false);
+
+// 登录事件
 const login = async () => {
   console.log(someState, "11111111", token);
   // 1.执行登录接口

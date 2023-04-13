@@ -1,5 +1,5 @@
 import { defineComponent, inject, ref, renderList, unref, watch } from "vue";
-import type { PropType, Ref } from "vue";
+import type { PropType } from "vue";
 import { ElMenu, ElSubMenu, ElMenuItem, ElIcon, ElTooltip } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
 // import { Apple, Menu } from "@element-plus/icons-vue";
