@@ -17,11 +17,13 @@
       <div class="login-form">
         <div class="login-logo">
           <img class="login-icon" src="@/assets/logo.png" alt="" />
-          <h2 class="logo-text">Cch-Admin</h2>
+          <h2 class="logo-text">
+            <!-- 打印效果展示系统名称 -->
+            <CchTypeCode :values="[systemTile]" :cursor="false" :speed="150" />
+          </h2>
         </div>
         <el-button type="primary" @click="login">Login button</el-button>
       </div>
-
     </div>
   </div>
 </template>
@@ -39,6 +41,8 @@ import { storeToRefs } from "pinia";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { useTheme } from "@/hooks/useTheme";
 
+// 系统名称
+const systemTile = import.meta.env.VITE_GLOB_APP_TITLE;
 const { switchDark } = useTheme();
 
 const { setToken, setKeepAliveName, token, someState } =
@@ -147,14 +151,14 @@ const login = async () => {
 }
 
 @media screen and (max-width: 1250px) {
-	.login-left {
-		display: none;
-	}
+  .login-left {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 600px) {
-	.login-form {
-		width: 97% !important;
-	}
+  .login-form {
+    width: 97% !important;
+  }
 }
 </style>
