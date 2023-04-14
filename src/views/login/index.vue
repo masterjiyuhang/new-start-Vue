@@ -77,7 +77,7 @@
               <el-button
                 v-for="(item, index) in loginState.operates"
                 :key="index"
-                class="mt-4"
+                class="mt-4 form-btn"
                 size="default"
               >
                 {{ $t(item.title) }}
@@ -357,6 +357,21 @@ onMounted(() => {
 @media screen and (max-width: 600px) {
   .login-form {
     width: 97% !important;
+    .form-btn {
+      width: 33%;
+      color: #f80;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    :deep(.el-button > span) {
+      display: inline-block;
+      align-items: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 1.5;
+    }
   }
 }
 </style>
