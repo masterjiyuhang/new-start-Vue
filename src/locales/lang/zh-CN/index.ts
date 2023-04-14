@@ -5,11 +5,26 @@ export default {
     guessYouLike: "猜你喜欢",
   },
 
+  login: {
+    loginBtn: "登录",
+    thirdLogin: "第三方登录",
+    phoneLogin: "手机登录",
+    qRCodeLogin: "二维码登录",
+    register: "注册",
+
+    weChatLogin: "微信登录",
+    alipayLogin: "支付宝登录",
+    qqLogin: "QQ登录",
+    weiboLogin: "微博登录",
+    phone: "手机号码",
+    smsVerifyCode: "短信验证码",
+  },
+
   tabs: {
     more: "更多.",
   },
   dashboard: {
-    title: '统计分析页'
+    title: "统计分析页",
   },
 
   registration: {

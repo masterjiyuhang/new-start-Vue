@@ -50,7 +50,7 @@ export function useRenderElementIcon() {
       name: "SelfIcon",
       render() {
         return h(
-          "el-icon",
+          "span",
           {
             class: "cch-self-icon",
           },

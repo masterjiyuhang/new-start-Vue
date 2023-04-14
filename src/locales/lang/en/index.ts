@@ -4,8 +4,24 @@ export default {
     hint: "Computer Science And Software Engineering",
     guessYouLike: "Guess You Like",
   },
+
+  login: {
+    loginBtn: "Login",
+    thirdLogin: "Third Login",
+    phoneLogin: "Phone Login",
+    qRCodeLogin: "QRCode Login",
+    register: "Register",
+
+    weChatLogin: "WeChat Login",
+    alipayLogin: "Alipay Login",
+    qqLogin: "QQ Login",
+    weiboLogin: "Weibo Login",
+    phone: "Phone",
+    smsVerifyCode: "SMS VerifyCode",
+  },
+
   dashboard: {
-    title: 'Dashboard Page'
+    title: "Dashboard Page",
   },
   tabs: {
     more: "More.",

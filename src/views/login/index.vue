@@ -45,12 +45,66 @@
               :prefix-icon="renderIcon_v2('Lock')"
             />
           </el-form-item>
+          <el-form-item prop="verifyCode">
+            <el-input
+              clearable
+              v-model="ruleForm.verifyCode"
+              :placeholder="'请输入验证码'"
+              :prefix-icon="renderIcon_v2('Star')"
+            >
+              <!-- <template #prepend>Http://</template> -->
+              <template #append>
+                <GenerateImageCode v-model:code="imgCode" />
+              </template>
+            </el-input>
+          </el-form-item>
           <el-form-item>
             <div class="w-full h-[20px] flex-bc">
               <el-checkbox v-model="checked"> 记住密码 </el-checkbox>
               <el-button link type="primary"> 忘记密码? </el-button>
             </div>
-            <el-button class="w-full mt-4" type="primary" @click="login">Login button</el-button>
+            <el-button
+              class="w-full mt-4"
+              type="primary"
+              @click="handleLogin(ruleFormRef)"
+              >{{ $t("login.loginBtn") }}</el-button
+            >
+          </el-form-item>
+
+          <!-- 登录方式选择 -->
+          <el-form-item>
+            <div class="w-full h-[20px] flex justify-between items-center">
+              <el-button
+                v-for="(item, index) in loginState.operates"
+                :key="index"
+                class="w-full mt-4"
+                size="default"
+              >
+                {{ $t(item.title) }}
+              </el-button>
+            </div>
+          </el-form-item>
+
+          <el-form-item>
+            <el-divider>
+              <p class="text-gray-500 text-xs">{{ $t("login.thirdLogin") }}</p>
+            </el-divider>
+            <div class="w-full flex justify-evenly">
+              <span
+              class="cursor-pointer"
+                v-for="(item, index) in loginState.thirdParty"
+                :key="index"
+                :title="$t(item.title)"
+              >
+                {{ $t(item.title) }}
+                <!-- {{ renderIcon_v2(item.icon) }} -->
+                <!-- <IconifyIconOnline
+                  :icon="`ri:${item.icon}-fill`"
+                  width="20"
+                  class="cursor-pointer text-gray-500 hover:text-blue-400"
+                /> -->
+              </span>
+            </div>
           </el-form-item>
         </el-form>
       </div>
@@ -71,37 +125,70 @@ import { getTimeState } from "@/utils";
 import { storeToRefs } from "pinia";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { useTheme } from "@/hooks/useTheme";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 
 import { REGEXP_PWD } from "./utils/rule";
 
 import { useRenderElementIcon } from "@/hooks/useRenderElementIcon";
+import GenerateImageCode from "@/components/GenerateImageCode/src/index";
 
 // 系统名称
 const systemTile = import.meta.env.VITE_GLOB_APP_TITLE;
 const { switchDark } = useTheme();
-const { setToken, setKeepAliveName, token, someState } =
-  useGlobalSettingStore();
+const { setToken, setKeepAliveName, token } = useGlobalSettingStore();
 const { closeMultipleTab } = useTabsStore();
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 const router = useRouter();
 
 const { renderIcon_v2 } = useRenderElementIcon();
 
-console.log(renderIcon_v2);
+// console.log(renderIcon_v2);
 
 const ruleFormRef = ref<FormInstance>();
 // 表单对象
 const ruleForm = reactive<LoginFormData>({
-  userName: "",
-  password: "",
+  userName: "cchzuishuai",
+  password: "cch123456",
   verifyCode: "",
 });
 
 const loginState = reactive({
   verifyCode: "",
+  operates: [
+    {
+      title: "login.phoneLogin",
+    },
+    {
+      title: "login.qRCodeLogin",
+    },
+    {
+      title: "login.register",
+    },
+  ],
+  thirdParty: [
+    {
+      title: "login.weChatLogin",
+      icon: "wechat",
+    },
+    {
+      title: "login.alipayLogin",
+      icon: "alipay",
+    },
+    {
+      title: "login.qqLogin",
+      icon: "qq",
+    },
+    {
+      title: "login.weiboLogin",
+      icon: "weibo",
+    },
+  ],
 });
 
+// 图片验证码
+const imgCode = ref<string>("");
+
+// 表单校验规则
 const loginFormRules = reactive<FormRules>({
   userName: [{ required: true, message: "请输入账号", trigger: "blur" }],
   password: [
@@ -136,35 +223,55 @@ const loginFormRules = reactive<FormRules>({
   ],
 });
 
+// 记住密码
 const checked = ref<boolean>(false);
 
 // 登录事件
-const login = async () => {
-  console.log(someState, "11111111", token);
-  // 1.执行登录接口
-  const { data } = await loginApi();
-  setToken(data.access_token);
-  console.log("login 登录", data, token);
+const handleLogin = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  await formEl.validate(async (valid, fields) => {
+    if (valid) {
+      console.log("submit!");
+      // 1.执行登录接口
+      const { data } = await loginApi();
+      setToken(data.access_token);
+      console.log("login 登录", data, token);
 
-  // 2.添加动态路由
-  await initDynamicRouter();
+      // 2.添加动态路由
+      await initDynamicRouter();
 
-  // 3.清空 tabs、keepAlive 保留的数据
-  closeMultipleTab();
-  setKeepAliveName();
+      // 3.清空 tabs、keepAlive 保留的数据
+      closeMultipleTab();
+      setKeepAliveName();
 
-  // 4.跳转到首页
-  router.push(HOME_URL);
-  ElNotification({
-    title: getTimeState(),
-    message: "欢迎登录 Cch-Admin",
-    type: "success",
-    duration: 3000,
+      // 4.跳转到首页
+      router.push(HOME_URL);
+      ElNotification({
+        title: getTimeState(),
+        message: "欢迎登录 Cch-Admin",
+        type: "success",
+        duration: 3000,
+      });
+    } else {
+      console.log("error submit!", fields);
+    }
   });
+  // console.log(someState, "11111111", token);
 };
+
+// 给验证码赋值
+watch(imgCode, (newVal) => {
+  loginState.verifyCode = newVal;
+});
+
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
+:deep(.el-input-group__append, .el-input-group__prepend) {
+  padding: 0;
+}
+
 .cch-login-page {
   display: flex;
   justify-content: center;
