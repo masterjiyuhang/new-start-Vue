@@ -77,7 +77,7 @@
               <el-button
                 v-for="(item, index) in loginState.operates"
                 :key="index"
-                class="w-full mt-4"
+                class="mt-4"
                 size="default"
               >
                 {{ $t(item.title) }}
@@ -91,18 +91,15 @@
             </el-divider>
             <div class="w-full flex justify-evenly">
               <span
-              class="cursor-pointer"
+                class="cursor-pointer"
                 v-for="(item, index) in loginState.thirdParty"
                 :key="index"
                 :title="$t(item.title)"
               >
-                {{ $t(item.title) }}
-                <!-- {{ renderIcon_v2(item.icon) }} -->
-                <!-- <IconifyIconOnline
-                  :icon="`ri:${item.icon}-fill`"
-                  width="20"
-                  class="cursor-pointer text-gray-500 hover:text-blue-400"
-                /> -->
+                <renderIcon :name="item.icon" />
+                <el-icon>
+                  <component :is="renderIcon_v3(item.icon)" />
+                </el-icon>
               </span>
             </div>
           </el-form-item>
@@ -131,18 +128,22 @@ import { REGEXP_PWD } from "./utils/rule";
 
 import { useRenderElementIcon } from "@/hooks/useRenderElementIcon";
 import GenerateImageCode from "@/components/GenerateImageCode/src/index";
+import { useI18n } from "vue-i18n";
+
+import renderIcon from "./components/renderIcon.vue";
 
 // 系统名称
 const systemTile = import.meta.env.VITE_GLOB_APP_TITLE;
 const { switchDark } = useTheme();
-const { setToken, setKeepAliveName, token } = useGlobalSettingStore();
+const { setToken, setKeepAliveName, token, changeLanguage } =
+  useGlobalSettingStore();
 const { closeMultipleTab } = useTabsStore();
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 const router = useRouter();
+const { language } = storeToRefs(useGlobalSettingStore());
+const i18n = useI18n();
 
-const { renderIcon_v2 } = useRenderElementIcon();
-
-// console.log(renderIcon_v2);
+const { renderIcon_v2, renderIcon_v3 } = useRenderElementIcon();
 
 const ruleFormRef = ref<FormInstance>();
 // 表单对象
@@ -168,19 +169,19 @@ const loginState = reactive({
   thirdParty: [
     {
       title: "login.weChatLogin",
-      icon: "wechat",
+      icon: "Star",
     },
     {
       title: "login.alipayLogin",
-      icon: "alipay",
+      icon: "Bell",
     },
     {
       title: "login.qqLogin",
-      icon: "qq",
+      icon: "Aim",
     },
     {
       title: "login.weiboLogin",
-      icon: "weibo",
+      icon: "House",
     },
   ],
 });
@@ -264,7 +265,10 @@ watch(imgCode, (newVal) => {
   loginState.verifyCode = newVal;
 });
 
-onMounted(() => {});
+onMounted(() => {
+  i18n.locale.value = language.value;
+  changeLanguage(language.value);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -328,7 +332,7 @@ onMounted(() => {});
         }
       }
       .el-form-item {
-        margin-bottom: 40px;
+        margin-bottom: 20px;
       }
       .login-btn {
         display: flex;

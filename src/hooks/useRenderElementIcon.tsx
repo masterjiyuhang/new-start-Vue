@@ -46,6 +46,8 @@ export function useRenderElementIcon() {
     const IconComp = (
       ElementPlusIconsVue as { [key: string]: DefineComponent }
     )[icon];
+
+    console.log(IconComp, "v2........");
     return defineComponent({
       name: "SelfIcon",
       render() {
@@ -61,8 +63,18 @@ export function useRenderElementIcon() {
       },
     });
   };
+
+  const renderIcon_v3 = (icon): Component => {
+    const IconComp = (
+      ElementPlusIconsVue as { [key: string]: DefineComponent }
+    )[icon];
+
+    console.log(IconComp);
+    return IconComp;
+  };
   return {
     renderIcon,
     renderIcon_v2,
+    renderIcon_v3,
   };
 }
