@@ -308,7 +308,7 @@ onMounted(() => {
     }
     .login-form {
       width: 420px;
-      padding: 50px 40px 45px;
+      padding: 50px 40px 25px;
       background-color: #ffffff;
       border-radius: 10px;
       box-shadow: 2px 3px 7px rgb(0 0 0 / 20%);
