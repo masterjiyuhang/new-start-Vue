@@ -7,7 +7,7 @@ import { storeToRefs } from "pinia";
 import { useTheme } from "@/hooks/useTheme";
 
 const { initTheme } = useTheme();
-const { assemblySize} = storeToRefs(useGlobalSettingStore());
+const { assemblySize } = storeToRefs(useGlobalSettingStore());
 
 initTheme();
 </script>

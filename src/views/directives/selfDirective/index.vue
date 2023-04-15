@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper-page directive-page">
+    {{ bindText }}
     <input v-focus.cchInput="{ text: bindText }" />
     <!-- 图片懒加载 -->
     <div v-for="(item, index) in arr" :key="index" class="lazy-load-box">
@@ -54,10 +55,13 @@ const vFocus = {
   // 或事件监听器应用前调用
   created(el, binding, vnode, prevVnode) {
     // 下面会介绍各个参数的细节
+    console.log("created", el, binding, vnode, prevVnode);
   },
 
   // 在元素被插入到 DOM 前调用
-  beforeMount(el, binding, vnode, prevVnode) {},
+  beforeMount(el, binding, vnode, prevVnode) {
+    console.log("beforeMount", el, binding, vnode, prevVnode);
+  },
 
   // 在绑定元素的父组件
   // 及他自己的所有子节点都挂载完成后调用
@@ -75,19 +79,28 @@ const vFocus = {
     console.log(
       "before update 钩子中查看oldValue",
       binding.oldValue,
-      binding.value
+      binding.value,
+      el,
+      vnode,
+      prevVnode
     );
   },
 
   // 在绑定元素的父组件
   // 及他自己的所有子节点都更新后调用
-  updated(el, binding, vnode, prevVnode) {},
+  updated(el, binding, vnode, prevVnode) {
+    console.log("updated", el, binding, vnode, prevVnode);
+  },
 
   // 绑定元素的父组件卸载前调用
-  beforeUnmount(el, binding, vnode, prevVnode) {},
+  beforeUnmount(el, binding, vnode, prevVnode) {
+    console.log("beforeUnmount", el, binding, vnode, prevVnode);
+  },
 
   // 绑定元素的父组件卸载后调用
-  unmounted(el, binding, vnode, prevVnode) {},
+  unmounted(el, binding, vnode, prevVnode) {
+    console.log("unmounted", el, binding, vnode, prevVnode);
+  },
 };
 
 /**

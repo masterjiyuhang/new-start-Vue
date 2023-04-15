@@ -37,7 +37,7 @@ const assemblySizeListCh = reactive<{ [key: string]: string }>({
 });
 
 const setAssemblySize = (item: AssemblySizeType) => {
-  console.log(item, "设置");
+  // console.log(currentAssemblySize.value, item, "设置");
   if (currentAssemblySize.value === item) return;
   setAssemblySizeSize(item);
 };
