@@ -2,14 +2,18 @@
   <div class="cch-login-page">
     <div class="login-box flex-ac w-[96%] h-[94%]">
       <!-- <SwitchDark class="dark" /> -->
-      <el-switch
-        v-model="ThemeConfig.isDark"
-        @change="switchDark"
-        inline-prompt
-        :active-icon="Sunny"
-        :inactive-icon="Moon"
-        class="dark"
-      />
+      <div class="dark flex-c">
+        <!-- 切换模式 -->
+        <el-switch
+          v-model="ThemeConfig.isDark"
+          @change="switchDark"
+          inline-prompt
+          :active-icon="Sunny"
+          :inactive-icon="Moon"
+        />
+        <!-- 切换语言 -->
+        <ChangeLanguage class="ml-2" />
+      </div>
       <div class="login-left">
         <img src="@/assets/system/HalloweenIllustrations1.png" alt="login" />
       </div>
@@ -87,9 +91,9 @@
 
           <el-form-item>
             <el-divider>
-              <p class="text-gray-500 text-xs">{{ $t("login.thirdLogin") }}</p>
+              <p class="text-xs text-gray-500">{{ $t("login.thirdLogin") }}</p>
             </el-divider>
-            <div class="w-full flex justify-evenly">
+            <div class="flex w-full justify-evenly">
               <span
                 class="cursor-pointer"
                 v-for="(item, index) in loginState.thirdParty"
@@ -131,6 +135,7 @@ import GenerateImageCode from "@/components/GenerateImageCode/src/index";
 import { useI18n } from "vue-i18n";
 
 import renderIcon from "./components/renderIcon.vue";
+import ChangeLanguage from "@/layouts/components/header/components/ChangeLanguage.vue";
 
 // 系统名称
 const systemTile = import.meta.env.VITE_GLOB_APP_TITLE;
