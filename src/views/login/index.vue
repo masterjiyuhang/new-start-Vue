@@ -312,7 +312,7 @@ onMounted(() => {
       }
     }
     .login-form {
-      width: 420px;
+      width: 450px;
       padding: 50px 40px 25px;
       background-color: #ffffff;
       border-radius: 10px;
@@ -349,6 +349,22 @@ onMounted(() => {
           width: 185px;
         }
       }
+
+      .form-btn {
+        width: 33%;
+        color: #fee;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      :deep(.el-button > span) {
+        display: inline-block;
+        align-items: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 1.5;
+      }
     }
   }
 }
@@ -356,6 +372,24 @@ onMounted(() => {
 @media screen and (max-width: 1250px) {
   .login-left {
     display: none;
+  }
+
+  .login-form {
+    .form-btn {
+      width: 33%;
+      color: #fee;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    :deep(.el-button > span) {
+      display: inline-block;
+      align-items: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      line-height: 1.5;
+    }
   }
 }
 
