@@ -7,6 +7,10 @@ export default defineComponent({
       type: String,
       required: false,
     },
+    showTooltip: {
+      type: Boolean,
+      default: false
+    }
   },
   setup(props) {
     const count = ref(1);
