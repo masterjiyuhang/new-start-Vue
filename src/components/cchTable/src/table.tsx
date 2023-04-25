@@ -10,6 +10,10 @@ export default defineComponent({
     showTooltip: {
       type: Boolean,
       default: false
+    },
+    showFooter: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
