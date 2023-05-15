@@ -49,7 +49,6 @@ onBeforeUnmount(() => {
 
 onBeforeMount(() => {
   emitter.on("refreshCurrentPage", (flag) => {
-    console.log(flag, "刷新当前页面");
     isRouterShow.value = flag;
   });
 });

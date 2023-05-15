@@ -1,5 +1,3 @@
-import { ConfigEnv } from "vite";
-
 import vuePlugin from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { viteSingleFile } from "vite-plugin-singlefile";
@@ -16,21 +14,20 @@ import { viteBuildInfo } from "./viteBuildInfo";
 import { GvaPositionServer } from "./viteCodeServer";
 import { GvaPosition } from "./viteGvaPosition";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-import path from "path";
+import { cdn } from "./cdnPlugin";
 
-export function setupVitePlugins({ command, mode }: ConfigEnv) {
-  console.log(mode, "mode..", [
-    path.resolve(__dirname, "../../../src/locales/lang/**/*.ts"),
-  ]);
+export function setupVitePlugins({ command, isBuild, VITE_CDN }) {
   return [
     viteBuildInfo(),
     GvaPositionServer(),
     GvaPosition(),
     vuePlugin(),
     vueJsx(),
+    VITE_CDN ? cdn : null,
     viteMockServe({
       mockPath: "mock",
       localEnabled: command === "serve",
+      prodEnabled: isBuild,
     }),
     viteSingleFile({ removeViteModuleLoader: true }),
     svgLoader(),

@@ -28,13 +28,20 @@
 
     <cch-table />
 
-    <cch-dialog :visible="true"/>
+    <cch-dialog :visible="true" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import { getCarListApi } from "@/api/car";
 import { ElNotification } from "element-plus";
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+
+onMounted(async () => {
+  const res = await getCarListApi();
+  console.log(res);
+});
 
 const router = useRouter();
 const handleSayHi = () => {

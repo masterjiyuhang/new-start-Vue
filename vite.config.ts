@@ -7,17 +7,21 @@ import { setupVitePlugins } from "./build/vite/plugins";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const root = process.cwd();
+  const isBuild = command === "build";
+  const { VITE_PORT, VITE_CDN } = loadEnv(mode, root);
 
-  const env = loadEnv(mode, root);
+  // vite 插件
+  const plugins = setupVitePlugins({ command, isBuild, VITE_CDN });
 
   const esbuild = {};
   const optimizeDeps = {};
+
   return {
     base: "./",
-    root: './', // js导入的资源路径，src
+    root: "./", // js导入的资源路径，src
     server: {
       host: "0.0.0.0",
-      port: Number(env.VITE_PORT),
+      port: Number(VITE_PORT),
       proxy: {
         // 字符串简写写法
         "/foo": "http://localhost:4567",
@@ -27,6 +31,12 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
+        "/basic-api/car-base": {
+          target: "http://localhost:3000",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/basic-api\/car-base/, ""),
+        },
+
         // 正则表达式写法
         "^/fallback/.*": {
           target: "http://jsonplaceholder.typicode.com",
@@ -45,7 +55,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
         },
       },
     },
-    plugins: setupVitePlugins({ command, mode }),
+    plugins,
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
