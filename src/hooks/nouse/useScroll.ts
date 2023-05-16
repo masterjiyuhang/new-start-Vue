@@ -5,7 +5,6 @@ import { useThrottleFn } from "@vueuse/core";
 
 import { ref, onMounted, watch, onUnmounted } from "vue";
 
-
 export function useScroll(
     refEl: Ref<Element | Window | null>,
     options?: {

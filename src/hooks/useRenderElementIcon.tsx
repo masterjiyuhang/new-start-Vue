@@ -47,7 +47,7 @@ export function useRenderElementIcon() {
       ElementPlusIconsVue as { [key: string]: DefineComponent }
     )[icon];
 
-    console.log(IconComp, "v2........");
+    // console.log(IconComp, "v2........");
     return defineComponent({
       name: "SelfIcon",
       render() {

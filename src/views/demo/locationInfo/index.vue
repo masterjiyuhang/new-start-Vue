@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-// import { useGeolocation } from "@vueuse/core";
 import { useGeoLocation } from "@/hooks/useGeoLocation";
 import { onMounted, reactive } from "vue";
 const { isSupported, useCchLocal } = useGeoLocation();
