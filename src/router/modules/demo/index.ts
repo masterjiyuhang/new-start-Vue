@@ -28,6 +28,21 @@ export default {
       },
     },
     {
+      path: "/demo/seamlessScroll",
+      name: "seamlessScroll",
+      component: "/demo/seamlessScroll/index",
+      // component: () => import("@/views/car/index.vue"),
+      meta: {
+        title: "无缝滚动",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    {
       path: "/demo/currentLocationInfo",
       name: "currentLocationInfo",
       component: "/demo/locationInfo/index",
