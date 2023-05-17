@@ -21,7 +21,13 @@
           </div>
         </template>
 
-        <SeamlessScroll ref="scroll" />
+        <SeamlessScroll ref="scroll">
+          <ul>
+            <li v-for="(item, index) in listData" :key="index">
+              <span class="title" v-text="item.title"></span>
+            </li>
+          </ul>
+        </SeamlessScroll>
       </el-card>
     </el-space>
   </div>
@@ -39,6 +45,36 @@ const changeDirection = (val) => {
   (unref(scroll) as any).reset();
   unref(classOption).direction = val;
 };
+
+const listData = ref([
+  {
+    title: "无缝滚动第一行无缝滚动第一行！！！！！！！！！！",
+  },
+  {
+    title: "无缝滚动第二行无缝滚动第二行！！！！！！！！！！",
+  },
+  {
+    title: "无缝滚动第三行无缝滚动第三行！！！！！！！！！！",
+  },
+  {
+    title: "无缝滚动第四行无缝滚动第四行！！！！！！！！！！",
+  },
+  {
+    title: "无缝滚动第五行无缝滚动第五行！！！！！！！！！！",
+  },
+  {
+    title: "无缝滚动第六行无缝滚动第六行！！！！！！！！！！",
+  },
+  {
+    title: "无缝滚动第七行无缝滚动第七行！！！！！！！！！！",
+  },
+  {
+    title: "无缝滚动第八行无缝滚动第八行！！！！！！！！！！",
+  },
+  {
+    title: "无缝滚动第九行无缝滚动第九行！！！！！！！！！！",
+  },
+]);
 </script>
 
 <style scoped></style>
