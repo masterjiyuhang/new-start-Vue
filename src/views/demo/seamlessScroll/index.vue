@@ -21,13 +21,26 @@
           </div>
         </template>
 
-        <SeamlessScroll ref="scroll">
+        <!-- <SeamlessScroll ref="scroll-my">
           <ul>
             <li v-for="(item, index) in listData" :key="index">
               <span class="title" v-text="item.title"></span>
             </li>
           </ul>
-        </SeamlessScroll>
+        </SeamlessScroll> -->
+
+        <TestScroll
+          ref="scroll"
+          :data="listData"
+          :class-option="classOption"
+          class="warp"
+        >
+          <ul class="item">
+            <li v-for="(item, index) in listData" :key="index">
+              <span class="title" v-text="item.title" />
+            </li>
+          </ul>
+        </TestScroll>
       </el-card>
     </el-space>
   </div>
@@ -35,6 +48,7 @@
 
 <script setup lang="ts">
 import { reactive, ref, unref } from "vue";
+import TestScroll from "./src/TestScroll.vue";
 
 const classOption = reactive({
   direction: "top",
@@ -77,4 +91,36 @@ const listData = ref([
 ]);
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    margin-right: 20px;
+  }
+}
+
+.warp {
+  width: 360px;
+  height: 270px;
+  margin: 0 auto;
+  overflow: hidden;
+
+  ul {
+    padding: 0;
+    margin: 0 auto;
+    list-style: none;
+
+    li,
+    a {
+      display: flex;
+      justify-content: space-between;
+      height: 30px;
+      font-size: 15px;
+      line-height: 30px;
+    }
+  }
+}
+</style>
