@@ -102,7 +102,6 @@ class HttpClient {
       cancelAfter = 0,
       debounceEnabled = false,
       debounceWait = 0,
-      ...axiosConfig
     } = config || {};
 
     // 检查是否开启了缓存
