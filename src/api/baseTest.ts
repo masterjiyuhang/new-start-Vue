@@ -15,10 +15,12 @@ export const getWeiboHostListApi = () => {
 export const getCompanyListApi = (params: any = {}) => {
   return http.request("get", "/getCompanyList", {
     ...params,
-    cancelEnabled: true,
-    cancelAfter: 1000,
+    // cancelEnabled: true,
+    // cancelAfter: 1000,
     debounceEnabled: true,
     debounceWait: 800,
+    cacheEnabled: true, // 启用缓存
+    cacheMaxAge: 60 * 1000,
   });
 };
 

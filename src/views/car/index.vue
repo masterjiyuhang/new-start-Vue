@@ -7,6 +7,10 @@
     <el-button @click="getList">get company list</el-button>
     <el-button @click="testGetWeiboHostListApi">get weibo list</el-button>
 
+    <div v-for="(item, index) in rr" :key="index">
+      {{ item }}
+    </div>
+
     <el-table :data="tableData" style="width: 100%">
       <el-table-column fixed prop="date" label="Date" width="150" />
       <el-table-column prop="name" label="Name" width="220" />
@@ -37,7 +41,7 @@
 <script lang="ts" setup>
 // import { getCarListApi } from "@/api/car";
 import { ElNotification } from "element-plus";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { getWeiboHostListApi, getCompanyListApi } from "@/api/baseTest";
 
@@ -46,11 +50,13 @@ onMounted(async () => {
   // console.log(res);
 });
 
+let rr = ref()
+
 const testGetWeiboHostListApi = async () => await getWeiboHostListApi();
 const getList = async () => {
   try {
     const res = await getCompanyListApi();
-    console.log(res);
+    rr.value = res
   } catch (error) {
     console.log(error);
   }

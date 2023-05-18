@@ -6,6 +6,7 @@ import axios, {
 } from "axios";
 import { debounce } from "lodash";
 import qs from "qs";
+import LRU from "lru-cache";
 
 type RequestConfig = {
   cacheEnabled?: boolean; // 是否启用缓存，默认为 false
@@ -17,6 +18,11 @@ type RequestConfig = {
 
   cancelEnabled?: boolean;
   cancelAfter?: number;
+};
+
+type CacheEntry<T> = {
+  data: T;
+  timestamp: number;
 };
 
 const defaultConfig: AxiosRequestConfig = {
@@ -36,15 +42,18 @@ class HttpClient {
   private axiosInstance: AxiosInstance;
   private requestQueue: Map<string, CancelTokenSource>;
   private debounceRequest: any; // 防抖请求函数
+  private cache: LRU<string, CacheEntry<any>>; // 缓存
 
   constructor() {
     this.axiosInstance = axios.create(defaultConfig);
     this.requestQueue = new Map<string, CancelTokenSource>();
+    this.cache = new LRU<string, CacheEntry<any>>({ max: 100 });
 
     this.httpInterceptorsRequestHandler();
     this.httpInterceptorsResponseHandler();
   }
 
+  // 请求拦截器
   private httpInterceptorsRequestHandler(): void {
     this.axiosInstance.interceptors.request.use(
       async (config: AxiosRequestConfig & RequestConfig): Promise<any> => {
@@ -58,6 +67,7 @@ class HttpClient {
     );
   }
 
+  // 响应拦截器
   private httpInterceptorsResponseHandler(): void {
     this.axiosInstance.interceptors.response.use(
       async (response: any): Promise<any> => {
@@ -95,19 +105,47 @@ class HttpClient {
       ...axiosConfig
     } = config || {};
 
+    // 检查是否开启了缓存
+    if (cacheEnabled) {
+      const cacheKey = `${method}:${url}`;
+      const cacheEntry = this.cache.get(cacheKey);
+      let cacheHit = false; // 标志变量，用于判断是否已经返回过缓存结果
+      // 如果缓存存在并且缓存没有过期 命中缓存 直接返回缓存数据
+      if (cacheEntry && Date.now() - cacheEntry.timestamp <= cacheMaxAge) {
+        console.log("命中缓存 直接走缓存");
+        if (!cacheHit) {
+          cacheHit = true;
+          return Promise.resolve(cacheEntry.data);
+        }
+      }
+    }
+
     // 如果启用了防抖且等待时间大于 0，则使用防抖请求函数
     if (debounceEnabled && debounceWait > 0) {
-      return this.sendDebouncedRequest<T>(
-        method,
-        url,
-        axiosConfig,
-        debounceWait
-      );
+      return this.sendDebouncedRequest<T>(method, url, config, debounceWait);
     }
 
     // 不使用取消重复请求和防抖时立即发起请求
-    return this.makeRequest<T>(method, url, axiosConfig);
+    return this.makeRequest<T>(method, url, config);
   }
+
+  /**
+   * 存储缓存
+   * @param flag 是否开启存储缓存
+   * @param method 方法
+   * @param url 请求地址
+   * @param response 返回数据
+   */
+  private saveCache = (flag, method, url, response) => {
+    if (flag) {
+      const cacheKey = `${method}:${url}`;
+      const cacheEntry: CacheEntry<any> = {
+        data: response,
+        timestamp: Date.now(),
+      };
+      this.cache.set(cacheKey, cacheEntry);
+    }
+  };
 
   /**
    * 发起防抖请求
@@ -119,7 +157,7 @@ class HttpClient {
   private sendDebouncedRequest<T>(
     method: string,
     url: string,
-    config?: AxiosRequestConfig,
+    config?: AxiosRequestConfig & RequestConfig,
     debounceWait?: number
   ): Promise<T | any> {
     if (this.debounceRequest) {
@@ -139,6 +177,8 @@ class HttpClient {
           cancelToken: source.token,
         })
           .then((response) => {
+            // Cache the response if cacheEnabled is true
+            this.saveCache(config?.cacheEnabled, method, url, response);
             resolve(response);
           })
           .catch((error) => {
@@ -163,8 +203,9 @@ class HttpClient {
   private makeRequest<T>(
     method: string,
     url: string,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig & RequestConfig
   ): Promise<T | any> {
+    console.log("普通请求开始");
     return new Promise<T>((resolve, reject) => {
       this.axiosInstance
         .request<T>({
@@ -173,6 +214,8 @@ class HttpClient {
           ...config,
         })
         .then((response) => {
+          // Cache the response if cacheEnabled is true
+          this.saveCache(config?.cacheEnabled, method, url, response);
           resolve(response.data);
         })
         .catch((error) => {
