@@ -4,6 +4,8 @@
     <el-button @click="handleSayHi" type="primary">sayHi</el-button>
     <el-button @click="handleSayHi" type="danger">sayHi</el-button>
     <el-button @click="handleSayHi">sayHi</el-button>
+    <el-button @click="getList">get company list</el-button>
+    <el-button @click="testGetWeiboHostListApi">get weibo list</el-button>
 
     <el-table :data="tableData" style="width: 100%">
       <el-table-column fixed prop="date" label="Date" width="150" />
@@ -29,26 +31,25 @@
     <cch-table />
 
     <cch-dialog :visible="true" />
-
-    <el-button @click="getList">get list</el-button>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { getCarListApi } from "@/api/car";
+// import { getCarListApi } from "@/api/car";
 import { ElNotification } from "element-plus";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { getWeiboHostListApi } from "@/api/test";
+import { getWeiboHostListApi, getCompanyListApi } from "@/api/baseTest";
 
 onMounted(async () => {
-  const res = await getCarListApi();
-  console.log(res);
+  // const res = await getCarListApi();
+  // console.log(res);
 });
 
+const testGetWeiboHostListApi = async () => await getWeiboHostListApi();
 const getList = async () => {
   try {
-    const res = await getWeiboHostListApi();
+    const res = await getCompanyListApi();
     console.log(res);
   } catch (error) {
     console.log(error);

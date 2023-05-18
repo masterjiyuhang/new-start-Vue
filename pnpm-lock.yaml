@@ -19,6 +19,9 @@ dependencies:
   http-server:
     specifier: ^14.1.1
     version: 14.1.1
+  lru-cache:
+    specifier: ^7.14.0
+    version: 7.18.3
   mitt:
     specifier: ^3.0.0
     version: 3.0.0
@@ -3530,6 +3533,11 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /lru-cache@7.18.3:
+    resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
+    engines: {node: '>=12'}
+    dev: false
 
   /magic-string@0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
