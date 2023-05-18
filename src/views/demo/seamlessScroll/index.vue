@@ -103,7 +103,7 @@ const listData = ref([
 }
 
 .warp {
-  width: 360px;
+  // width: 460px;
   height: 270px;
   margin: 0 auto;
   overflow: hidden;

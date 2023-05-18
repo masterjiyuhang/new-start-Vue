@@ -29,6 +29,8 @@
     <cch-table />
 
     <cch-dialog :visible="true" />
+
+    <el-button @click="getList">get list</el-button>
   </div>
 </template>
 
@@ -37,12 +39,21 @@ import { getCarListApi } from "@/api/car";
 import { ElNotification } from "element-plus";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { getWeiboHostListApi } from "@/api/test";
 
 onMounted(async () => {
   const res = await getCarListApi();
   console.log(res);
 });
 
+const getList = async () => {
+  try {
+    const res = await getWeiboHostListApi();
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
 const router = useRouter();
 const handleSayHi = () => {
   // ElNotification({
