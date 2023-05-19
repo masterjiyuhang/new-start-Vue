@@ -1,17 +1,22 @@
-import type {
-  AxiosInstance,
-  AxiosRequestConfig,
-  CustomParamsSerializer,
-} from "axios";
-import Axios from "axios";
-import type {
-  PureHttpError,
-  RequestMethods,
-  PureHttpResponse,
-  PureHttpRequestConfig,
-} from "./types.d";
-import { stringify } from "qs";
-import NProgress from "../progress";
+import NProgress from "@/utils/progress";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { debounce } from "lodash";
+import qs from "qs";
+import LRU from "lru-cache";
+
+type RequestConfig = {
+  cacheEnabled?: boolean; // 是否启用缓存，默认为 false
+  cacheMaxAge?: number; // 缓存的最大时间，默认为 0，表示不过期
+  debounceEnabled?: boolean; // 是否启用防抖，默认为 false
+  debounceWait?: number; // 防抖等待时间，默认为 0
+  retryEnabled?: boolean; // 是否启用自动重试，默认为 false
+  retryCount?: number; // 自动重试次数，默认为 0
+};
+
+type CacheEntry<T> = {
+  data: T;
+  timestamp: number;
+};
 
 const defaultConfig: AxiosRequestConfig = {
   baseURL: import.meta.env.VITE_BASE_API ?? "/",
@@ -23,55 +28,28 @@ const defaultConfig: AxiosRequestConfig = {
     "X-Requested-With": "XMLHttpRequest",
   },
   // 数组格式参数序列化（https://github.com/axios/axios/issues/5142）
-  paramsSerializer: {
-    serialize: stringify as unknown as CustomParamsSerializer,
-  },
+  paramsSerializer: (params) => qs.stringify(params),
 };
 
-class PureHttp {
+class HttpClient {
+  private axiosInstance: AxiosInstance;
+  private debounceRequest: any; // 防抖请求函数
+  private cache: LRU<string, CacheEntry<any>>; // 缓存
+
   constructor() {
-    this.httpInterceptorsRequest();
-    this.httpInterceptorsResponse();
+    this.axiosInstance = axios.create(defaultConfig);
+    this.cache = new LRU<string, CacheEntry<any>>({ max: 100 });
+
+    this.httpInterceptorsRequestHandler();
+    this.httpInterceptorsResponseHandler();
   }
 
-  /** token过期后，暂存待执行的请求 */
-  private static requests = [];
-
-  /** 防止重复刷新token */
-  private static isRefreshing = false;
-
-  /** 初始化配置对象 */
-  private static initConfig: PureHttpRequestConfig = {};
-
-  /** 保存当前Axios实例对象 */
-  private static axiosInstance: AxiosInstance = Axios.create(defaultConfig);
-
-  /** 重连原始请求 */
-  // private static retryOriginalRequest(config: PureHttpRequestConfig) {
-  //   return new Promise((resolve) => {
-  //     PureHttp.requests.push(() => {
-  //       resolve(config);
-  //     });
-  //   });
-  // }
-
-  /** 请求拦截 */
-  private httpInterceptorsRequest(): void {
-    PureHttp.axiosInstance.interceptors.request.use(
-      async (config: PureHttpRequestConfig) => {
+  // 请求拦截器
+  private httpInterceptorsRequestHandler(): void {
+    this.axiosInstance.interceptors.request.use(
+      async (config: AxiosRequestConfig & RequestConfig): Promise<any> => {
         // 开启进度条动画
         NProgress.start();
-        // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
-        if (typeof config.beforeRequestCallback === "function") {
-          config.beforeRequestCallback(config);
-          return config;
-        }
-        if (PureHttp.initConfig.beforeRequestCallback) {
-          PureHttp.initConfig.beforeRequestCallback(config);
-          return config;
-        }
-        /** 请求白名单，放置一些不需要token的接口（通过设置请求白名单，防止token过期后再请求造成的死循环问题） */
-        const whiteList = ["/refreshToken", "/login"];
         return config;
       },
       (error) => {
@@ -80,80 +58,163 @@ class PureHttp {
     );
   }
 
-  /** 响应拦截 */
-  private httpInterceptorsResponse(): void {
-    const instance = PureHttp.axiosInstance;
-    instance.interceptors.response.use(
-      (response: PureHttpResponse) => {
-        const $config = response.config;
-        // 关闭进度条动画
+  // 响应拦截器
+  private httpInterceptorsResponseHandler(): void {
+    this.axiosInstance.interceptors.response.use(
+      async (response: any): Promise<any> => {
+        // 开启进度条动画
         NProgress.done();
-        // 优先判断post/get等方法是否传入回掉，否则执行初始化设置等回掉
-        if (typeof $config.beforeResponseCallback === "function") {
-          $config.beforeResponseCallback(response);
-          return response.data;
-        }
-        if (PureHttp.initConfig.beforeResponseCallback) {
-          PureHttp.initConfig.beforeResponseCallback(response);
-          return response.data;
-        }
-        return response.data;
+        return response;
       },
-      (error: PureHttpError) => {
-        const $error = error;
-        $error.isCancelRequest = Axios.isCancel($error);
-        // 关闭进度条动画
+      (error) => {
         NProgress.done();
-        // 所有的响应异常 区分来源为取消请求/非取消请求
-        return Promise.reject($error);
+        return Promise.reject(error);
       }
     );
   }
 
-  /** 通用请求工具函数 */
+  /**
+   * 发起请求
+   * @param method 请求方法
+   * @param url 请求 URL
+   * @param config 请求配置
+   */
   public request<T>(
-    method: RequestMethods,
+    method: string,
     url: string,
-    param?: AxiosRequestConfig,
-    axiosConfig?: PureHttpRequestConfig
-  ): Promise<T> {
-    const config = {
-      method,
-      url,
-      ...param,
-      ...axiosConfig,
-    } as PureHttpRequestConfig;
+    config?: AxiosRequestConfig & RequestConfig
+  ): Promise<T | any> {
+    const {
+      cacheEnabled = false,
+      cacheMaxAge = 0,
+      // retryEnabled = false,
+      // retryCount = 0,
+      debounceEnabled = true,
+      debounceWait = 800,
+    } = config || {};
 
-    // 单独处理自定义请求/响应回掉
-    return new Promise((resolve, reject) => {
-      PureHttp.axiosInstance
-        .request(config)
-        .then((response: any) => {
-          resolve(response);
+    // 检查是否开启了缓存
+    if (cacheEnabled) {
+      const cacheKey = `${method}:${url}`;
+      const cacheEntry = this.cache.get(cacheKey);
+      let cacheHit = false; // 标志变量，用于判断是否已经返回过缓存结果
+      // 如果缓存存在并且缓存没有过期 命中缓存 直接返回缓存数据
+      if (cacheEntry && Date.now() - cacheEntry.timestamp <= cacheMaxAge) {
+        console.log("命中缓存 直接走缓存");
+        if (!cacheHit) {
+          cacheHit = true;
+          return Promise.resolve(cacheEntry.data);
+        }
+      }
+    }
+
+    // 如果启用了防抖且等待时间大于 0，则使用防抖请求函数
+    if (debounceEnabled && debounceWait > 0) {
+      return this.sendDebouncedRequest<T>(method, url, config, debounceWait);
+    }
+
+    // 不使用取消重复请求和防抖时立即发起请求
+    return this.makeRequest<T>(method, url, config);
+  }
+
+  /**
+   * 存储缓存
+   * @param flag 是否开启存储缓存
+   * @param method 方法
+   * @param url 请求地址
+   * @param response 返回数据
+   */
+  private saveCache = (flag, method, url, response) => {
+    if (flag) {
+      const cacheKey = `${method}:${url}`;
+      const cacheEntry: CacheEntry<any> = {
+        data: response,
+        timestamp: Date.now(),
+      };
+      this.cache.set(cacheKey, cacheEntry);
+    }
+  };
+
+  /**
+   * 发起防抖请求
+   * @param method 请求方法
+   * @param url 请求 URL
+   * @param config 请求配置
+   * @param debounceWait 防抖等待时间
+   */
+  private sendDebouncedRequest<T>(
+    method: string,
+    url: string,
+    config?: AxiosRequestConfig & RequestConfig,
+    debounceWait?: number
+  ): Promise<T | any> {
+    if (this.debounceRequest) {
+      // 取消上一次防抖请求
+      this.debounceRequest.cancel();
+    }
+
+    // 创建 CancelTokenSource
+    const source = axios.CancelToken.source();
+
+    return new Promise<T>((resolve, reject) => {
+      // 创建防抖请求函数，并将防抖等待时间作为参数传递
+      this.debounceRequest = debounce(() => {
+        // 发起请求
+        this.makeRequest<T>(method, url, {
+          ...config,
+          cancelToken: source.token,
         })
-        .catch((error) => {
-          reject(error);
-        });
+          .then((response) => {
+            // Cache the response if cacheEnabled is true
+            this.saveCache(config?.cacheEnabled, method, url, response);
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+          .finally(() => {
+            this.debounceRequest = null; // 请求完成后重置防抖请求函数
+          });
+      }, debounceWait);
+
+      // 调用防抖请求函数
+      this.debounceRequest();
     });
   }
 
-  /** 单独抽离的post工具函数 */
-  public post<T, P>(
+  /**
+   * 发起请求
+   * @param method 请求方法
+   * @param url 请求 URL
+   * @param config 请求配置
+   */
+  private makeRequest<T>(
+    method: string,
     url: string,
-    params?: T,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>("post", url, params, config);
-  }
-
-  /** 单独抽离的get工具函数 */
-  public get<T, P>(
-    url: string,
-    params?: T,
-    config?: PureHttpRequestConfig
-  ): Promise<P> {
-    return this.request<P>("get", url, params, config);
+    config?: AxiosRequestConfig & RequestConfig
+  ): Promise<T | any> {
+    console.log("普通请求开始");
+    return new Promise<T>((resolve, reject) => {
+      this.axiosInstance
+        .request<T>({
+          method,
+          url,
+          ...config,
+        })
+        .then((response) => {
+          // Cache the response if cacheEnabled is true
+          this.saveCache(config?.cacheEnabled, method, url, response);
+          resolve(response.data);
+        })
+        .catch((error) => {
+          const wrapperError = new Error(`Request failed for ${url}`);
+          wrapperError.name = "HttpRequestError";
+          wrapperError.message = error;
+          reject(wrapperError);
+        })
+        .finally(() => {});
+    });
   }
 }
-
-export const http = new PureHttp();
+export const http = new HttpClient();
+export default HttpClient;

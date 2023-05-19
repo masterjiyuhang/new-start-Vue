@@ -87,10 +87,10 @@ class HttpClient {
     const {
       cacheEnabled = false,
       cacheMaxAge = 0,
-      retryEnabled = false,
-      retryCount = 0,
-      debounceEnabled = false,
-      debounceWait = 0,
+      // retryEnabled = false,
+      // retryCount = 0,
+      debounceEnabled = true,
+      debounceWait = 800,
     } = config || {};
 
     // 检查是否开启了缓存

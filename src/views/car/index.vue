@@ -45,21 +45,21 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { getWeiboHostListApi, getCompanyListApi } from "@/api/baseTest";
 
-import Request from "@/utils/request/index";
+// import Request from "@/utils/request/index";
 
 onMounted(async () => {
 
-  const http = new Request({});
-  // http.request("get", "/getCompanyList", {}).then(res => {
-  //   console.log(res)
-  // })
-  http.get("/getCompanyList", {}).then((res) => {
-    console.log(res);
-  });
+  // const http = new Request({});
+  // // http.request("get", "/getCompanyList", {}).then(res => {
+  // //   console.log(res)
+  // // })
+  // http.get("/getCompanyList", {}).then((res) => {
+  //   console.log(res);
+  // });
 
-  http.get("/getWeiboHostList", {}).then((res) => {
-      console.log(res);
-    });
+  // http.get("/getWeiboHostList", {}).then((res) => {
+  //     console.log(res);
+  //   });
 });
 
 let rr = ref();
