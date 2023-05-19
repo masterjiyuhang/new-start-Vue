@@ -5,7 +5,7 @@ const http = new Http();
 export const getWeiboHostListApi = () => {
   return http.request("get", "https://tenapi.cn/v2/weibohot", {
     // cancelEnabled: true,
-    // cancelAfter: 3000,
+    // cancelAfter: 1000,
     debounceEnabled: true,
     debounceWait: 2000,
   });
@@ -16,11 +16,11 @@ export const getCompanyListApi = (params: any = {}) => {
   return http.request("get", "/getCompanyList", {
     ...params,
     // cancelEnabled: true,
-    // cancelAfter: 1000,
-    debounceEnabled: true,
-    debounceWait: 800,
-    cacheEnabled: true, // 启用缓存
-    cacheMaxAge: 60 * 1000,
+    cancelAfter: 1000,
+    // debounceEnabled: true,
+    // debounceWait: 800,
+    // cacheEnabled: true, // 启用缓存
+    // cacheMaxAge: 60 * 1000,
   });
 };
 

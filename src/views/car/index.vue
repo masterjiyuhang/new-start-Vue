@@ -45,18 +45,30 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { getWeiboHostListApi, getCompanyListApi } from "@/api/baseTest";
 
+import Request from "@/utils/request/index";
+
 onMounted(async () => {
-  // const res = await getCarListApi();
-  // console.log(res);
+
+  const http = new Request({});
+  // http.request("get", "/getCompanyList", {}).then(res => {
+  //   console.log(res)
+  // })
+  http.get("/getCompanyList", {}).then((res) => {
+    console.log(res);
+  });
+
+  http.get("/getWeiboHostList", {}).then((res) => {
+      console.log(res);
+    });
 });
 
-let rr = ref()
+let rr = ref();
 
 const testGetWeiboHostListApi = async () => await getWeiboHostListApi();
 const getList = async () => {
   try {
     const res = await getCompanyListApi();
-    rr.value = res
+    rr.value = res;
   } catch (error) {
     console.log(error);
   }

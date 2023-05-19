@@ -1,9 +1,5 @@
 import NProgress from "@/utils/progress";
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  CancelTokenSource,
-} from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { debounce } from "lodash";
 import qs from "qs";
 import LRU from "lru-cache";
@@ -15,9 +11,6 @@ type RequestConfig = {
   debounceWait?: number; // 防抖等待时间，默认为 0
   retryEnabled?: boolean; // 是否启用自动重试，默认为 false
   retryCount?: number; // 自动重试次数，默认为 0
-
-  cancelEnabled?: boolean;
-  cancelAfter?: number;
 };
 
 type CacheEntry<T> = {
@@ -40,13 +33,11 @@ const defaultConfig: AxiosRequestConfig = {
 
 class HttpClient {
   private axiosInstance: AxiosInstance;
-  private requestQueue: Map<string, CancelTokenSource>;
   private debounceRequest: any; // 防抖请求函数
   private cache: LRU<string, CacheEntry<any>>; // 缓存
 
   constructor() {
     this.axiosInstance = axios.create(defaultConfig);
-    this.requestQueue = new Map<string, CancelTokenSource>();
     this.cache = new LRU<string, CacheEntry<any>>({ max: 100 });
 
     this.httpInterceptorsRequestHandler();
@@ -98,8 +89,6 @@ class HttpClient {
       cacheMaxAge = 0,
       retryEnabled = false,
       retryCount = 0,
-      cancelEnabled = false,
-      cancelAfter = 0,
       debounceEnabled = false,
       debounceWait = 0,
     } = config || {};
