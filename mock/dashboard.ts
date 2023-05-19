@@ -5,7 +5,7 @@ export default [
   {
     url: "/basic-api/system/getDashboardList",
     timeout: 100,
-    method: "get",
+    method: "post",
     response: () => {
       return resultSuccess({
         "todayVisits|10-100": 0,

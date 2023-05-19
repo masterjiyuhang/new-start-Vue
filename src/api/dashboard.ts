@@ -1,5 +1,9 @@
 import { http } from "@/utils/http";
 
-export const getDashboardListApi = (params: any = {}) => {
-  return http.request<any>("get", "/system/getDashboardList", params);
+export const getDashboardListApi = (params: any = {
+  name: 'erhang'
+}) => {
+  return http.request<any>("post", "/system/getDashboardList", params, {
+    debounceEnabled: true,
+  });
 };

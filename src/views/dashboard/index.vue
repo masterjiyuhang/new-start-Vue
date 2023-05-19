@@ -3,7 +3,7 @@
     <div class="base-card top">
       <h1>{{ $t("dashboard.title") }}</h1>
 
-      <el-tabs v-model="tabActive" @tab-change="changeTabs">
+      <el-tabs v-model="tabActive1" @tab-change="changeTabs">
         <el-tab-pane
           v-for="item in tabList"
           :key="item.name"
@@ -74,7 +74,7 @@
 
     <div class="base-card bottom">
       <div class="bottom-title">数据来源</div>
-      <el-tabs v-model="tabActive" @tab-change="changeTabs">
+      <el-tabs v-model="tabActive2" @tab-change="changeTabs">
         <el-tab-pane
           v-for="item in tabList"
           :key="item.name"
@@ -107,7 +107,8 @@ const state = reactive({
 });
 const accountList = ref<any[]>([]);
 
-const tabActive = ref(1);
+const tabActive1 = ref(1);
+const tabActive2 = ref(1);
 const pieRef = ref();
 
 const tabList = [
@@ -133,13 +134,6 @@ const getDashboardList = async (params?: any) => {
   state.dashboardData = data;
   pieRef.value.initChart(state.dashboardData.pieData);
 };
-
-// watch(
-//   () => state.dashboardData.pieData,
-//   (newVal) => {
-//     pieRef.value.initChart(newVal);
-//   }
-// );
 
 // 修改tab
 const changeTabs = (name: TabPaneName) => {

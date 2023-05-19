@@ -14,19 +14,12 @@
 </template>
 
 <script setup lang="ts">
-// import { getAccountListApi, getCompanyListApi } from "@/api/index";
 import { getCompanyListApi } from "@/api/index";
 import { reactive } from "vue";
 
-// const list = ref<any>([]);
 const state = reactive<any>({
   companyList: [] as any[],
 });
-
-// const getAccountList = async () => {
-//   const res: any = await getAccountListApi();
-//   list.value = res.result.items;
-// };
 
 const getCompanyList = async () => {
   const res: any = await getCompanyListApi();
@@ -34,7 +27,6 @@ const getCompanyList = async () => {
   state.companyList = res.data;
 };
 
-// getAccountList();
 getCompanyList();
 </script>
 
