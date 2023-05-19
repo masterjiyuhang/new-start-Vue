@@ -88,17 +88,13 @@ class HttpClient {
       cacheMaxAge = 8000,
       // retryEnabled = false,
       // retryCount = 0,
-      debounceEnabled = true,
-      debounceWait = 800,
     } = baseConfig || {};
 
     // 检查是否开启了缓存
     if (cacheEnabled) {
-      console.log(1111);
       const cacheKey = `${method}:${url}`;
       const cacheEntry = this.cache.get(cacheKey);
 
-      console.log(cacheEntry);
       let cacheHit = false; // 标志变量，用于判断是否已经返回过缓存结果
       // 如果缓存存在并且缓存没有过期 命中缓存 直接返回缓存数据
       if (cacheEntry && Date.now() - cacheEntry.timestamp <= cacheMaxAge) {
@@ -121,7 +117,8 @@ class HttpClient {
         .request(config)
         .then((response: any) => {
           // Cache the response if cacheEnabled is true
-          this.saveCache(config?.cacheEnabled, method, url, response);
+          this.saveCache(baseConfig?.cacheEnabled, method, url, response);
+          // this.saveCache(true, method, url, response);
           resolve(response.data);
         })
         .catch((error) => {
@@ -138,7 +135,6 @@ class HttpClient {
    * @param response 返回数据
    */
   private saveCache = (flag, method, url, response) => {
-    console.log("存储一下我看看");
     if (flag) {
       const cacheKey = `${method}:${url}`;
       const cacheEntry: CacheEntry<any> = {
