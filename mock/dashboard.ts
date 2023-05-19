@@ -4,7 +4,7 @@ import { resultSuccess } from "./utils";
 export default [
   {
     url: "/basic-api/system/getDashboardList",
-    timeout: 100,
+    // timeout: 100,
     method: "post",
     response: () => {
       return resultSuccess({
