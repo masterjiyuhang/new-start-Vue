@@ -5,7 +5,7 @@
       <el-card class="box-card" shadow="never">
         <template #header>
           <div class="card-header">
-            <span>无缝滚动示例{{ classOption.direction }}</span>
+            <span>无缝滚动示例</span>
             <el-button
               class="button"
               link
@@ -16,6 +16,42 @@
                 :style="{ color: classOption.direction === 'top' ? 'red' : '' }"
               >
                 向上滚动
+              </span>
+            </el-button>
+            <el-button
+              class="button"
+              link
+              type="primary"
+              @click="changeDirection('bottom')"
+            >
+              <span
+                :style="{ color: classOption.direction === 'bottom' ? 'red' : '' }"
+              >
+                向下滚动
+              </span>
+            </el-button>
+            <el-button
+              class="button"
+              link
+              type="primary"
+              @click="changeDirection('left')"
+            >
+              <span
+                :style="{ color: classOption.direction === 'left' ? 'red' : '' }"
+              >
+                向左滚动
+              </span>
+            </el-button>
+            <el-button
+              class="button"
+              link
+              type="primary"
+              @click="changeDirection('right')"
+            >
+              <span
+                :style="{ color: classOption.direction === 'right' ? 'red' : '' }"
+              >
+                向右滚动
               </span>
             </el-button>
           </div>
@@ -103,7 +139,7 @@ const listData = ref([
 }
 
 .warp {
-  // width: 460px;
+  width: 360px;
   height: 270px;
   margin: 0 auto;
   overflow: hidden;
