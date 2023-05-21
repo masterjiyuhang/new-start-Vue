@@ -4,7 +4,7 @@ interface ScriptOptions {
   src: string;
 }
 
-export function useScript(opts: ScriptOptions) {
+export function useScript(opts: ScriptOptions, fn: Function) {
   const isLoading = ref(false);
   const error = ref(false);
   const success = ref(false);
@@ -18,7 +18,6 @@ export function useScript(opts: ScriptOptions) {
         isLoading.value = false;
         success.value = true;
         error.value = false;
-        resolve("");
       };
 
       script.onerror = function (err) {
@@ -27,6 +26,12 @@ export function useScript(opts: ScriptOptions) {
         error.value = true;
         reject(err);
       };
+
+      console.log(script);
+
+      window.loadData = function (data) {
+        fn(data)
+      }
 
       script.src = opts.src;
       document.head.appendChild(script);
