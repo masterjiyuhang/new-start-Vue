@@ -8,3 +8,7 @@ export const getCarListApi = (params: any = {}) => {
 export const getWBListApi = (params: any = {}) => {
   return http.request<any>("get", "https://tenapi.cn/v2/weibohot", { params });
 };
+
+export const getWeiboApi = () => {
+  return http.request<any>("get", "ten-api/v2/weibohot");
+};

@@ -43,6 +43,11 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/fallback/, ""),
         },
+        "^/basic-api/ten-api/.*": {
+          target: "https://tenapi.cn",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/basic-api\/ten-api/, ""),
+        },
       },
     },
     css: {

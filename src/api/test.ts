@@ -270,12 +270,3 @@ class HttpClient {
 
 export default HttpClient;
 const http = new HttpClient();
-
-export const getWeiboHostListApi = () => {
-  return http.get("https://tenapi.cn/v2/weibohot", {
-    cancelEnabled: true,
-    cancelAfter: 2000,
-    debounceEnabled: true,
-    debounceWait: 3000,
-  });
-};
