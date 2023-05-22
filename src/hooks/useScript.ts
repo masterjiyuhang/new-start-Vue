@@ -1,51 +1,66 @@
 import { onMounted, onUnmounted, ref } from "vue";
 
-interface ScriptOptions {
-  src: string;
-}
-
-export function useScript(opts: ScriptOptions, fn: Function) {
+export function useScript(opts: any) {
+  const JsonpData = ref(null);
+  const JsonpError = ref<any>(null);
   const isLoading = ref(false);
-  const error = ref(false);
-  const success = ref(false);
-  let script: HTMLScriptElement;
 
-  const promise = new Promise((resolve, reject) => {
-    onMounted(() => {
+  let script;
+
+  const getJsonpData = () => {
+    isLoading.value = true;
+
+    return new Promise((resolve, reject) => {
+      const callBackName = `jsonp_callback_${Date.now()}`;
+
+      // 创建全局回掉函数
+      window[callBackName] = (responseData) => {
+        isLoading.value = false;
+        JsonpData.value = responseData;
+        cleanup();
+        resolve(responseData);
+      };
+
+      // 创建 script 函数
       script = document.createElement("script");
+
+      // 设置回调函数名和 URL
+      const jsonpUrl = `${opts.url}?callback=${callBackName}`;
+      script.src = jsonpUrl;
       script.type = "text/javascript";
-      script.onload = function () {
+      script.async = true;
+
+      console.log(script, "script");
+
+      script.onerror = (err) => {
         isLoading.value = false;
-        success.value = true;
-        error.value = false;
+        JsonpError.value = new Error(
+          `Failed to load JSONP from ${jsonpUrl} ${err}`
+        );
+        cleanup();
+        reject(JsonpError.value);
       };
 
-      script.onerror = function (err) {
-        isLoading.value = false;
-        success.value = false;
-        error.value = true;
-        reject(err);
-      };
+      // 将 script 函数添加到页面中
+      document.body.appendChild(script);
 
-      console.log(script);
-
-      window.loadData = function (data) {
-        fn(data)
+      // 清理函数，移除 script 元素和全局回调函数
+      function cleanup() {
+        delete window[callBackName];
+        document.body.removeChild(script);
       }
-
-      script.src = opts.src;
-      document.head.appendChild(script);
     });
+  };
+
+  onMounted(() => {
+    // getJsonpData();
   });
 
   onUnmounted(() => {
-    script && script.remove();
+    if (script) {
+      document.body.removeChild(script);
+    }
   });
 
-  return {
-    isLoading,
-    error,
-    success,
-    toPromise: () => promise,
-  };
+  return { JsonpData, JsonpError, isLoading, getJsonpData };
 }
