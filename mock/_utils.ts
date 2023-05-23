@@ -1,5 +1,5 @@
 import { App, Component } from "vue";
-import { ResultEnum } from "./httpEnum";
+import { ResultEnum } from "./_httpEnum";
 declare type Recordable<T = any> = Record<string, T>;
 
 export interface requestParams {

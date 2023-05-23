@@ -2,14 +2,15 @@ import { useGlobalSettingStore } from "./../stores/modules/globalSetting";
 import { LOGIN_URL, ROUTER_WHITE_LIST } from "@/config";
 import { AuthStore } from "@/stores/modules/auth";
 import NProgress from "@/utils/progress";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import { staticRouter, errorRouter } from "./basic";
 import { initDynamicRouter } from "./dynamicRouter";
 // const LAYOUT = () => import("@/layout/index.vue");
 
 // console.log(staticRouter, "staticRouter");
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(import.meta.env.BASE_URL),
   routes: [...staticRouter, ...errorRouter],
   strict: false,
   scrollBehavior: () => ({ left: 0, top: 0 }),

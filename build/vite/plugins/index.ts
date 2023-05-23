@@ -25,11 +25,17 @@ export function setupVitePlugins({ command, isBuild, VITE_CDN }) {
     vueJsx(),
     VITE_CDN ? cdn : null,
     viteMockServe({
+      ignore: /^_/,
       mockPath: "mock",
-      localEnabled: command === "serve",
+      localEnabled: !isBuild,
       prodEnabled: isBuild,
+      injectCode: `
+      import { setupProdMockServer } from '../mock/_createProductionServer';
+
+      setupProdMockServer();
+      `,
     }),
-    viteSingleFile({ removeViteModuleLoader: true }),
+    // viteSingleFile({ removeViteModuleLoader: true }),
     svgLoader(),
     VueI18nPlugin({
       // include: [path.resolve(__dirname, '../../../src/locales/lang/**/*.ts')],
