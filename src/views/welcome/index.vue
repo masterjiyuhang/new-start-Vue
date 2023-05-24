@@ -1,9 +1,20 @@
 <template>
   <div class="welcome wrapper-page">
-    welcome {{ count }}
+    <h1>welcome {{ count }} times</h1>
     <el-button @click="increment">count++</el-button>
 
-    <el-table :data="tableData" border style="width: 100%" height="450">
+    <el-button type="danger" @click="refresh">刷新当前页面</el-button>
+
+    <el-button type="success" @click="testWeibo"> 重新获取表格数据 </el-button>
+
+    <el-table
+      v-loading="loading"
+      :data="tableData"
+      border
+      style="width: 100%"
+      height="450"
+      class="mt-[30px]"
+    >
       <el-table-column type="index" />
       <el-table-column prop="hot" label="Hot" width="180" />
       <el-table-column prop="name" label="Name" width="180" />
@@ -42,19 +53,28 @@ import { onMounted, ref } from "vue";
 
 import { getWeiboApi } from "@/api/car";
 import { ElNotification } from "element-plus";
+import { useRefreshPage } from "@/hooks/useRefreshPage";
 
 const BAI_DU_MAP_URL = "https://tenapi.cn/v2/weibohot";
 // "https://api.map.baidu.com/getscript?v=3.0&ak=OaBvYmKX3pjF7YFUFeeBCeGdy9Zp7xB2&services=&t=20210201100830&s=1";
 
+const { refresh } = useRefreshPage();
 const { getJsonpData } = useScript({
   url: BAI_DU_MAP_URL ?? "basic-api/system/getAccountList",
 });
 
+// 表格加载中
+const loading = ref(false);
+
+// 表格数据
 const tableData = ref([]);
 const testWeibo = async () => {
+  loading.value = true;
   const res = await getWeiboApi();
   console.log(res);
   tableData.value = res.data;
+
+  loading.value = false;
 };
 
 const init = async () => {
