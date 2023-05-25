@@ -4,11 +4,8 @@
     :class="{ absolute, [theme]: !!theme }"
     :style="[background ? `background-color: ${background}` : '']"
     v-show="loading"
+    ref="loadingRef"
   >
-    <TestSpinner visible />
-    <main>
-      <slot></slot>
-    </main>
     <footer>
       <slot name="tips">
         {{ tips }}
@@ -18,16 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Transition,
-  createVNode,
-  defineComponent,
-  h,
-  ref,
-  vShow,
-  withCtx,
-  withDirectives,
-} from "vue";
 import { SizeEnum } from "./constant";
 
 defineOptions({
@@ -59,54 +46,26 @@ withDefaults(defineProps<LoadingProps>(), {
 
   tips: "Loading...",
 });
-
-const TestSpinner = defineComponent({
-  name: "TestSpinner",
-  props: {
-    visible: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props) {
-    const afterLeave = ref(false);
-
-    const handleAfterLeave = () => {
-      if (!afterLeave.value) return;
-
-      const target = document.body;
-
-      afterLeave.value = false;
-
-      console.log(target);
-    };
-    return () => {
-      const spinner = h("svg", {
-        class: "circular",
-        viewBox: "0 0 50 50",
-        ...{},
-      });
-
-      const spinnerText = h("p", { class: "text" }, "巴啦啦啦～");
-
-      return h(
-        Transition,
-        {
-          name: "fade",
-          onAfterLeave: handleAfterLeave,
-        },
-        {
-          default: withCtx(() => [
-            withDirectives(
-              createVNode("div", {}, [h("div", {}, [spinner, spinnerText])]),
-              [[vShow, props.visible]]
-            ),
-          ]),
-        }
-      );
-    };
-  },
-});
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.full-loading {
+  display: flex;
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(240 242 245 / 40%);
+
+  &.absolute {
+    position: absolute;
+    z-index: 300;
+    top: 0;
+    left: 0;
+  }
+}
+</style>
