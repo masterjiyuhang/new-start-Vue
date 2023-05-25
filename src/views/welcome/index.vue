@@ -22,12 +22,11 @@
         <el-table-column prop="url" label="Address">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-icon><View /></el-icon>
               <el-link
                 type="primary"
                 style="margin-left: 10px"
                 :href="scope.row.url"
-                >View</el-link
+                >Link</el-link
               >
             </div>
           </template>
@@ -35,13 +34,31 @@
         <el-table-column label="Edit">
           <template #default="scope">
             <div style="display: flex; align-items: center"></div>
-            <el-button type="primary" @click="editRow(scope.row)"
-              >Edit</el-button
-            >
+
+            <el-button type="primary" @click="editRow(scope.row)">
+              <el-icon><View /></el-icon>Detail
+            </el-button>
           </template>
         </el-table-column>
       </el-table-column>
     </el-table>
+    <el-dialog
+      v-model="dialogVisible"
+      title="Tips"
+      width="50%"
+      :before-close="handleClose"
+    >
+      <span>This is a message</span>
+      <iframe :src="currentIframeSrc" frameborder="0" class="w-full"></iframe>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogVisible = false">
+            Confirm
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -92,6 +109,8 @@ const init = async () => {
 const editRow = (row) => {
   console.log(row);
   ElNotification.success(row.name);
+  currentIframeSrc.value = row.url;
+  dialogVisible.value = true;
 };
 onMounted(async () => {
   testWeibo();
@@ -99,6 +118,13 @@ onMounted(async () => {
 });
 const { increment } = useCounterStore();
 const { count } = storeToRefs(useCounterStore());
+
+const dialogVisible = ref(false);
+const currentIframeSrc = ref("");
+const handleClose = (done: () => void) => {
+  currentIframeSrc.value = "";
+  done();
+};
 </script>
 
 <style scoped>
