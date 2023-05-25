@@ -8,10 +8,14 @@ import { setupVitePlugins } from "./build/vite/plugins";
 export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const isBuild = command === "build";
-  const { VITE_PORT, VITE_CDN } = loadEnv(mode, root);
+  const { VITE_PORT, VITE_CDN, VITE_BUILD_COMPRESS } = loadEnv(mode, root);
 
   // vite 插件
-  const plugins = setupVitePlugins({ command, isBuild, VITE_CDN });
+  const plugins = setupVitePlugins({
+    isBuild,
+    VITE_CDN,
+    compress: VITE_BUILD_COMPRESS,
+  });
 
   const esbuild = {};
   const optimizeDeps = {};

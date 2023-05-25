@@ -7,40 +7,42 @@ import { Plugin as importToCDN } from "vite-plugin-cdn-import";
  * 注意：上面提到的仅限外网使用也不是完全肯定的，如果你们公司内网部署的有相关js、css文件，也可以将下面配置对应改一下，整一套内网版cdn
  */
 
-export const cdn = importToCDN({
-  //（prodUrl解释： name: 对应下面modules的name，version: 自动读取本地package.json中dependencies依赖中对应包的版本号，path: 对应下面modules的path，当然也可写完整路径，会替换prodUrl）
-  prodUrl: "https://cdn.bootcdn.net/ajax/libs/{name}/{version}/{path}",
-  modules: [
-    {
-      name: "vue",
-      var: "Vue",
-      path: "vue.global.prod.min.js",
-    },
-    {
-      name: "vue-router",
-      var: "VueRouter",
-      path: "vue-router.global.min.js",
-    },
-    {
-      name: "vue-i18n",
-      var: "VueI18n",
-      path: "vue-i18n.runtime.global.prod.min.js",
-    },
-    {
-      name: "element-plus",
-      var: "ElementPlus",
-      path: "index.full.min.js",
-      css: "index.min.css",
-    },
-    {
-      name: "axios",
-      var: "axios",
-      path: "axios.min.js",
-    },
-    {
-      name: "echarts",
-      var: "echarts",
-      path: "echarts.min.js",
-    },
-  ],
-});
+export const configCdnPlugin = () => {
+  return importToCDN({
+    //（prodUrl解释： name: 对应下面modules的name，version: 自动读取本地package.json中dependencies依赖中对应包的版本号，path: 对应下面modules的path，当然也可写完整路径，会替换prodUrl）
+    prodUrl: "https://cdn.bootcdn.net/ajax/libs/{name}/{version}/{path}",
+    modules: [
+      {
+        name: "vue",
+        var: "Vue",
+        path: "vue.global.prod.min.js",
+      },
+      {
+        name: "vue-router",
+        var: "VueRouter",
+        path: "vue-router.global.min.js",
+      },
+      {
+        name: "vue-i18n",
+        var: "VueI18n",
+        path: "vue-i18n.runtime.global.prod.min.js",
+      },
+      {
+        name: "element-plus",
+        var: "ElementPlus",
+        path: "index.full.min.js",
+        css: "index.min.css",
+      },
+      {
+        name: "axios",
+        var: "axios",
+        path: "axios.min.js",
+      },
+      {
+        name: "echarts",
+        var: "echarts",
+        path: "echarts.min.js",
+      },
+    ],
+  });
+};
