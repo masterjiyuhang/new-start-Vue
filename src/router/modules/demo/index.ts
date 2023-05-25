@@ -101,6 +101,21 @@ export default {
         },
       ],
     },
+    {
+      path: "/demo/loading",
+      name: "loading",
+      component: "/demo/loading/index",
+      // component: () => import("@/views/car/index.vue"),
+      meta: {
+        title: "加载中",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",

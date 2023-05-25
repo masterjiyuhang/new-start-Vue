@@ -45,7 +45,6 @@ export const initDynamicRouter = async () => {
       // console.log(router.getRoutes(), "router..");
     });
   } catch (error) {
-    console.log("baocuo!");
     setToken("");
     router.replace(LOGIN_URL);
     return Promise.reject(error);

@@ -3,7 +3,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import svgLoader from "vite-svg-loader";
 import Inspect from "vite-plugin-inspect";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-// import DefineOptions from 'unplugin-vue-define-options/vite'
+import DefineOptions from 'unplugin-vue-define-options/vite'
 
 import { viteBuildInfo } from "./viteBuildInfo";
 import { GvaPositionServer } from "./viteCodeServer";
@@ -17,7 +17,7 @@ import { configCompressPlugin } from "./compressPlugin";
 
 export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
   return [
-    // DefineOptions(),
+    DefineOptions(),
     viteBuildInfo(),
     GvaPositionServer(),
     GvaPosition(),
