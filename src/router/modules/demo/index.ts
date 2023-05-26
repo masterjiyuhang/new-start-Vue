@@ -116,6 +116,21 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/demo/countTo",
+      name: "countTo",
+      component: "/demo/countTo/index",
+      // component: () => import("@/views/car/index.vue"),
+      meta: {
+        title: "数字动画",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",
