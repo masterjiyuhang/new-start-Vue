@@ -74,6 +74,10 @@ function toggle() {
         />
       </div>
     </div>
+
+    <p class="mt-2">
+      Test  function: <b>{{ customFnNumber.toFixed(8) }}</b>
+    </p>
   </div>
 </template>
 
