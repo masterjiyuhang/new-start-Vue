@@ -38,7 +38,7 @@ export default {
       target: undefined,
     },
     // 如果参数是空值是不传
-    isRemoveField: false,
+    isRemoveField: true,
     // 和 isRemoveField 一起使用
     removeField: [],
   },

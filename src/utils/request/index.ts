@@ -11,7 +11,17 @@ import {
 import { getParams, getUrl } from "./src/utils";
 import { ElLoading, ElNotification } from "element-plus";
 
-class Http {
+/**
+ * 自定义请求配置
+ */
+type SelfRequestConfig = {
+  cacheConfig: {
+    enabled: boolean;
+    maxAge: number;
+  };
+};
+
+class HttpRequest {
   private options: any;
   private initializedPlugins: any;
   public axiosInstance!: AxiosInstance;
@@ -106,10 +116,16 @@ class Http {
     );
   }
 
-  public request<T>(method: string, url: string, config?: AxiosRequestConfig) {
+  public request<T>(
+    method: string,
+    url: string,
+    config?: AxiosRequestConfig & SelfRequestConfig
+  ) {
+    const requestConfig = this.options.requestConfig || {};
+    const opts = { ...requestConfig, ...config };
     return new Promise((resolve, reject) => {
       this.axiosInstance
-        .request<T>({ method, url, ...config })
+        .request<T>({ method, url, ...opts })
         .then((response) => {
           resolve(response);
         })
@@ -166,4 +182,4 @@ class Http {
   }
 }
 
-export default Http;
+export default HttpRequest;
