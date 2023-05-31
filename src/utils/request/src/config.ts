@@ -44,5 +44,8 @@ export default {
     isRemoveField: true,
     // 和 isRemoveField 一起使用
     removeField: [],
+
+    // 接口缓存过期时间
+    maxCacheAge: 5 * 60 * 1000,
   },
 };

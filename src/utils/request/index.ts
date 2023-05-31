@@ -8,7 +8,7 @@ import {
   responseReject,
   responseResolve,
 } from "./src/interceptors";
-import { getParams, getUrl } from "./src/utils";
+// import { getParams, getUrl } from "./src/utils";
 import { ElLoading, ElNotification } from "element-plus";
 import LRUCache from "lru-cache";
 import NProgress from "../progress";
@@ -18,7 +18,9 @@ import NProgress from "../progress";
  */
 type SelfRequestConfig = {
   cacheConfig: {
-    enabled?: boolean;
+    enabled?: boolean; // 是否开启缓存
+    forceUpdate?: boolean; // 是否强制更新缓存
+    forceCache?: boolean; // 是否强制启用缓存
   };
 };
 
@@ -44,7 +46,7 @@ class HttpRequest {
     this.initAxios(this.axiosInstance);
 
     this.lruCache = new LRUCache({
-      ttl: 1000 * 60 * 5,
+      ttl: this.options.maxCacheAge || 1000 * 60 * 5,
       max: 200,
     });
   }
@@ -127,19 +129,21 @@ class HttpRequest {
     method: string,
     url: string,
     config: AxiosRequestConfig & SelfRequestConfig
-  ): Promise<T | any> | undefined {
+  ): Promise<T | any> {
     const { cacheConfig } = config;
     const requestConfig = this.options.requestConfig || {};
     const opts = { ...requestConfig, ...config };
 
-    if (cacheConfig.enabled && method === "get") {
+    // 接口缓存逻辑
+    if (
+      (cacheConfig.enabled && method === "get") ||
+      (cacheConfig.forceCache && cacheConfig.enabled)
+    ) {
       NProgress.start();
       const index = `${method}_${url}`;
-
       const responsePromise = this.lruCache.get(index);
 
-      if (!responsePromise) {
-        NProgress.done();
+      if (!responsePromise || cacheConfig.forceUpdate) {
         return this.makeRequest(method, url, opts);
       } else {
         NProgress.done();
@@ -198,40 +202,40 @@ class HttpRequest {
     });
   }
 
-  public get(url: string, params = {}, config?: AxiosRequestConfig) {
-    const requestConfig = this.options.requestConfig || {};
-    const opts = { ...requestConfig, ...config };
-    opts.params = getParams(params, opts);
-    return this.axiosInstance.get(url, opts);
-  }
+  // public get(url: string, params = {}, config?: AxiosRequestConfig) {
+  //   const requestConfig = this.options.requestConfig || {};
+  //   const opts = { ...requestConfig, ...config };
+  //   opts.params = getParams(params, opts);
+  //   return this.axiosInstance.get(url, opts);
+  // }
 
-  public download(url, params = {}, type = "post", config = {}) {
-    const requestConfig = this.options.requestConfig || {};
-    const opts = { ...requestConfig, ...config };
-    const downloadForm = document.createElement("form");
-    downloadForm.setAttribute("method", type);
-    downloadForm.setAttribute("hidden", "hidden");
-    downloadForm.setAttribute("action", getUrl(url, opts.isApiHost));
+  // public download(url, params = {}, type = "post", config = {}) {
+  //   const requestConfig = this.options.requestConfig || {};
+  //   const opts = { ...requestConfig, ...config };
+  //   const downloadForm = document.createElement("form");
+  //   downloadForm.setAttribute("method", type);
+  //   downloadForm.setAttribute("hidden", "hidden");
+  //   downloadForm.setAttribute("action", getUrl(url, opts.isApiHost));
 
-    const createInput = (name, value) => {
-      const input = document.createElement("input");
-      input.setAttribute("type", "hidden");
-      input.setAttribute("name", name);
-      input.setAttribute("value", value);
+  //   const createInput = (name, value) => {
+  //     const input = document.createElement("input");
+  //     input.setAttribute("type", "hidden");
+  //     input.setAttribute("name", name);
+  //     input.setAttribute("value", value);
 
-      downloadForm.appendChild(input);
-    };
+  //     downloadForm.appendChild(input);
+  //   };
 
-    Object.keys(params).forEach((key) => {
-      createInput(key, params[key]);
-    });
+  //   Object.keys(params).forEach((key) => {
+  //     createInput(key, params[key]);
+  //   });
 
-    const $body = document.body || document.getElementsByTagName("body")[0];
-    $body.appendChild(downloadForm);
-    downloadForm.submit();
-    downloadForm.remove();
-    $body.removeChild(downloadForm);
-  }
+  //   const $body = document.body || document.getElementsByTagName("body")[0];
+  //   $body.appendChild(downloadForm);
+  //   downloadForm.submit();
+  //   downloadForm.remove();
+  //   $body.removeChild(downloadForm);
+  // }
 
   public use(plugin) {
     const installedPlugins =
