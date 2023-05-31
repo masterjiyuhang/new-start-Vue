@@ -204,7 +204,7 @@ class HttpClient {
         .then((response) => {
           // Cache the response if cacheEnabled is true
           this.saveCache(config?.cacheEnabled, method, url, response);
-          resolve(response.data);
+          resolve(response as any);
         })
         .catch((error) => {
           const wrapperError = new Error(`Request failed for ${url}`);

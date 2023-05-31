@@ -1,3 +1,6 @@
+/**
+ * request 默认配置
+ */
 export default {
   // url 前缀
   baseURL: "/basic-api",
@@ -5,7 +8,7 @@ export default {
    * axios 配置
    * @see https://github.com/mzabriskie/axios
    */
-  axios: {
+  axiosConfig: {
     timeout: 20000,
     withCredentials: true,
     baseURL: "",

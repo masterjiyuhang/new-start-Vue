@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
-import Config from "./src/config";
-import { isUndefined } from "lodash";
+import BaseAxiosConfig from "./src/config";
+import { merge, isUndefined } from "lodash";
 import {
   requestResolve,
   requestReject,
@@ -10,14 +10,15 @@ import {
 } from "./src/interceptors";
 import { getParams, getUrl } from "./src/utils";
 import { ElLoading, ElNotification } from "element-plus";
+import LRUCache from "lru-cache";
+import NProgress from "../progress";
 
 /**
  * 自定义请求配置
  */
 type SelfRequestConfig = {
   cacheConfig: {
-    enabled: boolean;
-    maxAge: number;
+    enabled?: boolean;
   };
 };
 
@@ -25,25 +26,31 @@ class HttpRequest {
   private options: any;
   private initializedPlugins: any;
   public axiosInstance!: AxiosInstance;
+  private lruCache!: LRUCache<string, any>;
 
   constructor(options: any) {
+    if (BaseAxiosConfig.baseURL) {
+      BaseAxiosConfig.axiosConfig.baseURL = BaseAxiosConfig.baseURL;
+    }
+
     // 合并options选项
     this.init(options);
 
-    if (Config.baseURL) {
-      Config.axios.baseURL = Config.baseURL;
-    }
-
     // 创建axios实例
-    this.axiosInstance = axios.create(this.options.axios);
+    this.axiosInstance = axios.create(this.options.axiosConfig);
 
     this.initGlobalApi();
 
     this.initAxios(this.axiosInstance);
+
+    this.lruCache = new LRUCache({
+      ttl: 1000 * 60 * 5,
+      max: 200,
+    });
   }
 
   private init(options: any): void {
-    this.options = { ...Config, ...options };
+    this.options = merge({}, BaseAxiosConfig, options);
   }
 
   private initGlobalApi(): void {
@@ -119,10 +126,27 @@ class HttpRequest {
   public request<T>(
     method: string,
     url: string,
-    config?: AxiosRequestConfig & SelfRequestConfig
-  ) {
+    config: AxiosRequestConfig & SelfRequestConfig
+  ): Promise<T | any> | undefined {
+    const { cacheConfig } = config;
     const requestConfig = this.options.requestConfig || {};
     const opts = { ...requestConfig, ...config };
+
+    if (cacheConfig.enabled && method === "get") {
+      NProgress.start();
+      const index = `${method}_${url}`;
+
+      const responsePromise = this.lruCache.get(index);
+
+      if (!responsePromise) {
+        NProgress.done();
+        return this.makeRequest(method, url, opts);
+      } else {
+        NProgress.done();
+        return responsePromise;
+      }
+    }
+
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<T>({ method, url, ...opts })
@@ -130,7 +154,44 @@ class HttpRequest {
           resolve(response);
         })
         .catch((error) => {
-          const wrapperError = new Error(`Request failed for ${url} ${error}`);
+          const wrapperError = new Error(
+            `Request failed for ${url}, error is ${error}`
+          );
+          reject(wrapperError);
+        })
+        .finally(() => {});
+    });
+  }
+
+  /**
+   * 发起请求
+   * @param method 请求方法
+   * @param url 请求 URL
+   * @param config 请求配置
+   */
+  private makeRequest<T>(
+    method: string,
+    url: string,
+    config?: AxiosRequestConfig & SelfRequestConfig
+  ): Promise<T | any> {
+    return new Promise<T>((resolve, reject) => {
+      this.axiosInstance
+        .request<T>({
+          method,
+          url,
+          ...config,
+        })
+        .then((response) => {
+          // Cache the response if cacheEnabled is true
+          if (config?.cacheConfig.enabled) {
+            this.lruCache?.set(`${method}_${url}`, response);
+          }
+          resolve(response as any);
+        })
+        .catch((error) => {
+          const wrapperError = new Error(`Request failed for ${url}`);
+          wrapperError.name = "HttpRequestError";
+          wrapperError.message = error;
           reject(wrapperError);
         })
         .finally(() => {});
