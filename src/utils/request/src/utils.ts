@@ -42,12 +42,26 @@ export function removeEmptyField(
   return copyParams;
 }
 
-
 export function getUrl(url: string, baseURL?: string): string {
   if (!baseURL) {
     return url;
   }
   const arr: string[] = [baseURL];
   arr.push(url);
-  return arr.join('');
+  return arr.join("");
 }
+
+// 自动消息适配弹窗逻辑
+export const autoMessageAdapter = (response) => {
+  const { data } = response;
+
+  if (isUndefined(data.code)) {
+    return false;
+  }
+
+  if (data.code === 0) {
+    return true;
+  }
+
+  return false;
+};

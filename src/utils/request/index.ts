@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 import BaseAxiosConfig from "./src/config";
-import { merge, isUndefined } from "lodash";
+import { merge } from "lodash";
 import {
   requestResolve,
   requestReject,
@@ -12,6 +12,7 @@ import {
 import { ElLoading, ElNotification } from "element-plus";
 import LRUCache from "lru-cache";
 import NProgress from "../progress";
+import { autoMessageAdapter } from "./src/utils";
 
 /**
  * 自定义请求配置
@@ -44,17 +45,17 @@ class HttpRequest {
     this.initGlobalApi();
 
     this.initAxios(this.axiosInstance);
+  }
 
+  private init(options: any): void {
+    this.options = merge({}, BaseAxiosConfig, options);
     this.lruCache = new LRUCache({
       ttl: this.options.maxCacheAge || 1000 * 60 * 5,
       max: 200,
     });
   }
 
-  private init(options: any): void {
-    this.options = merge({}, BaseAxiosConfig, options);
-  }
-
+  // 向options上挂载一些通用方法
   private initGlobalApi(): void {
     this.options.$message = (response, isReject = false) => {
       if (isReject) {
@@ -74,24 +75,11 @@ class HttpRequest {
       });
     };
 
-    // 自动消息是配弹窗逻辑
-    const autoMessageAdapter = (response) => {
-      const { data } = response;
-
-      if (isUndefined(data.code)) {
-        return false;
-      }
-
-      if (data.code === 0) {
-        return true;
-      }
-
-      return false;
-    };
     this.options.$loading = ElLoading.service;
     this.options.$autoMessageAdapter = autoMessageAdapter;
   }
 
+  // 初始化 axios 实例，添加请求和响应拦截器
   private initAxios(service: AxiosInstance): void {
     const LOADING = {
       // 存储执行 loading 的请求队列
@@ -106,6 +94,7 @@ class HttpRequest {
       ...this.options,
     };
 
+    // 请求拦截器
     service.interceptors.request.use(
       (config) => {
         return requestResolve({ options, value: config });
@@ -115,6 +104,7 @@ class HttpRequest {
       }
     );
 
+    // 响应拦截器
     service.interceptors.response.use(
       (response) => {
         return responseResolve({ options, value: response });
@@ -143,14 +133,17 @@ class HttpRequest {
       const index = `${method}_${url}`;
       const responsePromise = this.lruCache.get(index);
 
+      // 没有缓存数据或配置强制更新缓存
       if (!responsePromise || cacheConfig.forceUpdate) {
         return this.makeRequest(method, url, opts);
       } else {
+        // 命中缓存 直接返回缓存的接口结果
         NProgress.done();
         return responsePromise;
       }
     }
 
+    // 没有开启接口缓存逻辑 默认发送请求
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<T>({ method, url, ...opts })
