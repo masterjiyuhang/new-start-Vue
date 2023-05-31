@@ -23,6 +23,10 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   return {
     base: "./",
     root: "./", // js导入的资源路径，src
+
+    define: {
+      "process.env": {},
+    },
     server: {
       host: "0.0.0.0",
       port: Number(VITE_PORT),

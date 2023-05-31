@@ -22,6 +22,7 @@ import "@/style/element/theme-dark.scss";
 initDom();
 
 async function bootstrap() {
+  // window.process = { ...window.process, env: { LOGGER_LEVEL: "warn" } };
   const app = createApp(App);
 
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

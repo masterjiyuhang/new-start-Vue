@@ -18,10 +18,22 @@ import { autoMessageAdapter } from "./src/utils";
  * 自定义请求配置
  */
 type SelfRequestConfig = {
-  cacheConfig: {
+  
+  /**
+   * 是否开启缓存
+   */
+  cacheConfig?: {
     enabled?: boolean; // 是否开启缓存
     forceUpdate?: boolean; // 是否强制更新缓存
     forceCache?: boolean; // 是否强制启用缓存
+  };
+
+  /**
+   * 是否开启截流
+   */
+  throttleConfig?: {
+    enabled?: boolean;
+    threshold?: number;
   };
 };
 
@@ -115,6 +127,50 @@ class HttpRequest {
     );
   }
 
+  /**
+   * 发起请求
+   * @param method 请求方法
+   * @param url 请求 URL
+   * @param config 请求配置
+   */
+  private makeRequest<T>(
+    method: string,
+    url: string,
+    config?: AxiosRequestConfig & SelfRequestConfig
+  ): Promise<T | any> {
+    return new Promise<T>((resolve, reject) => {
+      this.axiosInstance
+        .request<T>({
+          method,
+          url,
+          ...config,
+        })
+        .then((response) => {
+          // Cache the response if cacheEnabled is true
+          if (config?.cacheConfig?.enabled) {
+            this.lruCache?.set(`${method}_${url}`, response);
+          }
+          resolve(response as any);
+        })
+        .catch((error) => {
+          const wrapperError = new Error(`Request failed for ${url}`);
+          wrapperError.name = "HttpRequestError";
+          wrapperError.message = error;
+          reject(wrapperError);
+        })
+        .finally(() => {});
+    });
+  }
+
+  public use(plugin) {
+    const installedPlugins =
+      this.initializedPlugins || (this.initializedPlugins = []);
+
+    if (installedPlugins.indexOf(plugin) > -1) {
+      return this;
+    }
+  }
+
   public request<T>(
     method: string,
     url: string,
@@ -126,8 +182,8 @@ class HttpRequest {
 
     // 接口缓存逻辑
     if (
-      (cacheConfig.enabled && method === "get") ||
-      (cacheConfig.forceCache && cacheConfig.enabled)
+      (cacheConfig?.enabled && method === "get") ||
+      (cacheConfig?.forceCache && cacheConfig?.enabled)
     ) {
       NProgress.start();
       const index = `${method}_${url}`;
@@ -154,41 +210,6 @@ class HttpRequest {
           const wrapperError = new Error(
             `Request failed for ${url}, error is ${error}`
           );
-          reject(wrapperError);
-        })
-        .finally(() => {});
-    });
-  }
-
-  /**
-   * 发起请求
-   * @param method 请求方法
-   * @param url 请求 URL
-   * @param config 请求配置
-   */
-  private makeRequest<T>(
-    method: string,
-    url: string,
-    config?: AxiosRequestConfig & SelfRequestConfig
-  ): Promise<T | any> {
-    return new Promise<T>((resolve, reject) => {
-      this.axiosInstance
-        .request<T>({
-          method,
-          url,
-          ...config,
-        })
-        .then((response) => {
-          // Cache the response if cacheEnabled is true
-          if (config?.cacheConfig.enabled) {
-            this.lruCache?.set(`${method}_${url}`, response);
-          }
-          resolve(response as any);
-        })
-        .catch((error) => {
-          const wrapperError = new Error(`Request failed for ${url}`);
-          wrapperError.name = "HttpRequestError";
-          wrapperError.message = error;
           reject(wrapperError);
         })
         .finally(() => {});
@@ -229,15 +250,6 @@ class HttpRequest {
   //   downloadForm.remove();
   //   $body.removeChild(downloadForm);
   // }
-
-  public use(plugin) {
-    const installedPlugins =
-      this.initializedPlugins || (this.initializedPlugins = []);
-
-    if (installedPlugins.indexOf(plugin) > -1) {
-      return this;
-    }
-  }
 }
 
 export default HttpRequest;

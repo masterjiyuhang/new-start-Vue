@@ -6,7 +6,7 @@ export default {
   baseURL: "/basic-api",
   /**
    * axios 配置
-   * @see https://github.com/mzabriskie/axios
+   * @see https://github.com/axios/axios
    */
   axiosConfig: {
     timeout: 20000,
