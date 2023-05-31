@@ -106,13 +106,12 @@ class Http {
     );
   }
 
-  public request<T>(method: string, url: string, config: AxiosRequestConfig) {
+  public request<T>(method: string, url: string, config?: AxiosRequestConfig) {
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .request<T>({ method, url, ...config })
         .then((response) => {
-          // Cache the response if cacheEnabled is true
-          resolve(response.data);
+          resolve(response);
         })
         .catch((error) => {
           const wrapperError = new Error(`Request failed for ${url} ${error}`);

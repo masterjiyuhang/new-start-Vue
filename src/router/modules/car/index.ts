@@ -28,6 +28,20 @@ export default {
       },
     },
     {
+      path: "/car/management",
+      name: "carManagement",
+      component: "/car/management",
+      meta: {
+        title: "管理",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    {
       path: "/car/detail/:id",
       name: "carDetail",
       component: "/car/CarDetail",

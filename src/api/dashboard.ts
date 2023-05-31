@@ -5,12 +5,7 @@ export const getDashboardListApi = (
     name: "erhang",
   }
 ) => {
-  return http.request<any>(
-    "post",
-    "/system/getDashboardList",
-    { data: params },
-    {
-      debounceEnabled: true,
-    }
-  );
+  return http.request<any>("post", "/system/getDashboardList", {
+    data: params,
+  });
 };

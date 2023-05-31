@@ -6,10 +6,6 @@ import LRU from "lru-cache";
 type RequestConfig = {
   cacheEnabled?: boolean; // 是否启用缓存，默认为 false
   cacheMaxAge?: number; // 缓存的最大时间，默认为 0，表示不过期
-  debounceEnabled?: boolean; // 是否启用防抖，默认为 false
-  debounceWait?: number; // 防抖等待时间，默认为 0
-  retryEnabled?: boolean; // 是否启用自动重试，默认为 false
-  retryCount?: number; // 自动重试次数，默认为 0
 };
 
 type CacheEntry<T> = {
@@ -32,11 +28,10 @@ const defaultConfig: AxiosRequestConfig = {
 
 class HttpClient {
   private axiosInstance: AxiosInstance;
-  private cache: LRU<string, CacheEntry<any>>; // 缓存
+  private defaultCache!: LRU<string, CacheEntry<any>>; // 缓存
 
   constructor() {
     this.axiosInstance = axios.create(defaultConfig);
-    this.cache = new LRU<string, CacheEntry<any>>({ max: 100 });
 
     this.httpInterceptorsRequestHandler();
     this.httpInterceptorsResponseHandler();
@@ -83,26 +78,22 @@ class HttpClient {
     params?: AxiosRequestConfig,
     baseConfig?: RequestConfig
   ): Promise<T | any> {
-    const {
-      cacheEnabled = true,
-      cacheMaxAge = 8000,
-      // retryEnabled = false,
-      // retryCount = 0,
-    } = baseConfig || {};
+    const { cacheEnabled = true, cacheMaxAge = 8000 } = baseConfig || {};
+
+    this.defaultCache = new LRU<string, CacheEntry<any>>({
+      ttl: cacheMaxAge,
+      max: 100,
+    });
 
     // 检查是否开启了缓存
     if (cacheEnabled) {
       const cacheKey = `${method}:${url}`;
-      const cacheEntry = this.cache.get(cacheKey);
+      const cacheEntry = this.defaultCache.get(cacheKey);
 
-      let cacheHit = false; // 标志变量，用于判断是否已经返回过缓存结果
-      // 如果缓存存在并且缓存没有过期 命中缓存 直接返回缓存数据
-      if (cacheEntry && Date.now() - cacheEntry.timestamp <= cacheMaxAge) {
+      // 如果缓存存在 命中缓存 直接返回缓存数据
+      if (cacheEntry) {
         console.log("命中缓存 直接走缓存");
-        if (!cacheHit) {
-          cacheHit = true;
-          return Promise.resolve(cacheEntry.data);
-        }
+        return Promise.resolve(cacheEntry);
       }
     }
 
@@ -116,9 +107,7 @@ class HttpClient {
       this.axiosInstance
         .request(config)
         .then((response: any) => {
-          // Cache the response if cacheEnabled is true
           this.saveCache(baseConfig?.cacheEnabled, method, url, response);
-          // this.saveCache(true, method, url, response);
           resolve(response.data);
         })
         .catch((error) => {
@@ -141,7 +130,7 @@ class HttpClient {
         data: response,
         timestamp: Date.now(),
       };
-      this.cache.set(cacheKey, cacheEntry);
+      this.defaultCache.set(cacheKey, cacheEntry);
     }
   };
 }

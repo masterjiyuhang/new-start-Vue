@@ -39,35 +39,19 @@
 </template>
 
 <script lang="ts" setup>
-// import { getCarListApi } from "@/api/car";
 import { ElNotification } from "element-plus";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { getWeiboHostListApi, getCompanyListApi } from "@/api/baseTest";
+import { getWeiboHostListApi, getTestListApi } from "@/api/baseTest";
 
-// import Request from "@/utils/request/index";
-
-onMounted(async () => {
-
-  // const http = new Request({});
-  // // http.request("get", "/getCompanyList", {}).then(res => {
-  // //   console.log(res)
-  // // })
-  // http.get("/getCompanyList", {}).then((res) => {
-  //   console.log(res);
-  // });
-
-  // http.get("/getWeiboHostList", {}).then((res) => {
-  //     console.log(res);
-  //   });
-});
+onMounted(async () => {});
 
 let rr = ref();
 
 const testGetWeiboHostListApi = async () => await getWeiboHostListApi();
 const getList = async () => {
   try {
-    const res = await getCompanyListApi();
+    const res = await getTestListApi();
     rr.value = res;
   } catch (error) {
     console.log(error);
@@ -75,11 +59,6 @@ const getList = async () => {
 };
 const router = useRouter();
 const handleSayHi = () => {
-  // ElNotification({
-  //   title: "Success",
-  //   message: "This is a success message",
-  //   type: "success",
-  // });
   ElNotification({
     title: "Notification Title",
     message: "Hi~ ",

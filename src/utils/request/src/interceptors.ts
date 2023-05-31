@@ -1,3 +1,4 @@
+import NProgress from "@/utils/progress";
 import { isFunction, isUndefined } from "lodash";
 
 export const [requestResolve, requestReject]: [
@@ -5,6 +6,7 @@ export const [requestResolve, requestReject]: [
   (args: { options: any; value: any }) => any
 ] = [
   function resolve({ options, value }) {
+    NProgress.start();
     const { LOADING } = options;
     const { $requestResolve, $loading } = options;
     // 未考虑 是promise 的情况
@@ -39,6 +41,7 @@ export const [responseResolve, responseReject]: [
   (args: { options: any; value: any }) => any
 ] = [
   async function resolve({ options, value }) {
+    NProgress.done();
     const { LOADING, transformResponse } = options;
     const { $responseResolve, $message, $autoMessageAdapter } = options;
     const { config } = value;
@@ -75,6 +78,7 @@ export const [responseResolve, responseReject]: [
   },
 
   async function reject({ options, value }) {
+    NProgress.done();
     const { LOADING, errorMsg } = options;
     LOADING.loadings = [];
     if (LOADING.$loading) {
