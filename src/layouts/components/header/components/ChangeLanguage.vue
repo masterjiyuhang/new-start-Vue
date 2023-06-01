@@ -22,7 +22,7 @@ import IconChangeLanguage from "@/components/icons/IconChangeLanguage.vue";
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
-import { getBrowserLang } from "@/utils";
+import { getBrowserLang } from "@/utils/system";
 import { useI18n } from "vue-i18n";
 
 const { changeLanguage } = useGlobalSettingStore();

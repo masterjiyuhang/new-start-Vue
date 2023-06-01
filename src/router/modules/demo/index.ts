@@ -131,6 +131,20 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/demo/download",
+      name: "download",
+      component: "/demo/download/index",
+      meta: {
+        title: "下载测试",
+        icon: "Download",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",

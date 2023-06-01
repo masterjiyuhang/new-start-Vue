@@ -46,6 +46,7 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    FooterPage: typeof import('./src/components/WrapperPage/src/footerPage.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconAddMore: typeof import('./src/components/icons/IconAddMore.vue')['default']
     IconChangeLanguage: typeof import('./src/components/icons/IconChangeLanguage.vue')['default']
@@ -61,6 +62,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
+    WrapperPage: typeof import('./src/components/WrapperPage/src/wrapperPage.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

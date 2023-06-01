@@ -3,11 +3,36 @@ import { LOGIN_URL, ROUTER_WHITE_LIST } from "@/config";
 import { AuthStore } from "@/stores/modules/auth";
 import NProgress from "@/utils/progress";
 import { createRouter, createWebHashHistory } from "vue-router";
+import type { RouteRecordRaw } from "vue-router";
+
 import { staticRouter, errorRouter } from "./basic";
 import { initDynamicRouter } from "./dynamicRouter";
-// const LAYOUT = () => import("@/layout/index.vue");
+import { isProxy, toRaw } from "vue";
 
-// console.log(staticRouter, "staticRouter");
+export const findCurrentRouteByPath = (
+  path: string,
+  routes: RouteRecordRaw[]
+): any => {
+  let res = routes.find((item) => item.path === path);
+
+  if (res) {
+    return isProxy(res) ? toRaw(res) : res;
+  } else {
+    for (let i = 0; i < routes.length; i++) {
+      if (
+        routes[i].children instanceof Array &&
+        routes[i].children!.length > 0
+      ) {
+        res = findCurrentRouteByPath(path, routes[i].children!);
+        if (res) {
+          return isProxy(res) ? toRaw(res) : res;
+        }
+      }
+    }
+  }
+  return null;
+};
+
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   // history: createWebHistory(import.meta.env.BASE_URL),
@@ -62,8 +87,6 @@ router.beforeEach(async (to, from, next) => {
     await initDynamicRouter();
     return next({ ...to, replace: true });
   }
-
-  // console.log(to, "路由守卫，这货是啥");
 
   // 7.正常访问页面
   next();

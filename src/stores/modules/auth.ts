@@ -1,8 +1,8 @@
 import { getRouterListApi, getAuthButtonListApi } from "./../../api/auth";
-import { getAllBreadcrumbList } from "./../../utils/index";
+import { getAllBreadcrumbList, getShowMenuList } from "@/utils/system";
+import { getFlatArr } from "@/utils/arr";
 import { defineStore } from "pinia";
 import { AuthState } from "@/stores/interface";
-import { getFlatArr, getShowMenuList } from "@/utils";
 import { store } from "../index";
 import { moduleRouteList } from "@/router/basic";
 // import { piniaPersistConfig } from "./../storePlugin";

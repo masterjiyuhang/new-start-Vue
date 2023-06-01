@@ -122,7 +122,7 @@ import { HOME_URL } from "@/config";
 import { useRouter } from "vue-router";
 import { ElNotification } from "element-plus";
 import type { FormInstance, FormRules } from "element-plus";
-import { getTimeState } from "@/utils";
+import { getTimeState } from "@/utils/system";
 import { storeToRefs } from "pinia";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { useTheme } from "@/hooks/useTheme";
