@@ -145,6 +145,20 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/demo/cropper",
+      name: "cropper",
+      component: "/demo/cropper/index",
+      meta: {
+        title: "图片裁剪",
+        icon: "Crop",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",

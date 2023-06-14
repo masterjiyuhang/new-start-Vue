@@ -15,6 +15,7 @@
     "@element-plus/icons-vue": "^2.1.0",
     "@vueuse/core": "^9.13.0",
     "@vueuse/shared": "^10.1.2",
+    "cropperjs": "^1.5.13",
     "echarts": "^5.4.2",
     "element-plus": "^2.3.3",
     "http-server": "^14.1.1",

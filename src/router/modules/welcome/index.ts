@@ -4,7 +4,7 @@ export default {
   // component: () => import("@/views/welcome/index.vue"),
   component: "/welcome/index",
   meta: {
-    icon: "Stamp",
+    icon: "House",
     title: "欢迎光临",
     isLink: "",
     isHide: false,
