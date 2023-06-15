@@ -147,6 +147,9 @@ devDependencies:
   postcss-nesting:
     specifier: ^11.2.2
     version: 11.2.2(postcss@8.4.21)
+  postcss-pxtorem:
+    specifier: ^6.0.0
+    version: 6.0.0(postcss@8.4.21)
   prettier:
     specifier: ^2.8.7
     version: 2.8.7
@@ -4380,6 +4383,14 @@ packages:
       '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.11)
       postcss: 8.4.21
       postcss-selector-parser: 6.0.11
+    dev: true
+
+  /postcss-pxtorem@6.0.0(postcss@8.4.21):
+    resolution: {integrity: sha512-ZRXrD7MLLjLk2RNGV6UA4f5Y7gy+a/j1EqjAfp9NdcNYVjUMvg5HTYduTjSkKBkRkfqbg/iKrjMO70V4g1LZeg==}
+    peerDependencies:
+      postcss: ^8.0.0
+    dependencies:
+      postcss: 8.4.21
     dev: true
 
   /postcss-selector-parser@6.0.11:

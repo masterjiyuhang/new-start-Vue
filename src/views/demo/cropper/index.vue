@@ -1,6 +1,7 @@
 <template>
   <WrapperPage :title="'cropper'">
     <img ref="imgRef" src="" alt="" />
+    <!-- <div class="test-img"></div> -->
   </WrapperPage>
 </template>
 
@@ -148,4 +149,16 @@ function getRoundedCanvas() {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.test-img {
+  width: 100px;
+  height: 130px;
+
+  background-image: url("@/assets/images/login_left1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+  background-clip: content-box;
+  padding: 10px;
+}
+</style>

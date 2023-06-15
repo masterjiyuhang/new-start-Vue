@@ -159,6 +159,20 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/demo/luckyDraw",
+      name: "luckyDraw",
+      component: "/demo/luckyDraw/index",
+      meta: {
+        title: "抽奖",
+        icon: "Bicycle",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",
