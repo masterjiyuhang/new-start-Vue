@@ -78,7 +78,7 @@ const turntable = reactive([
   position: relative;
   z-index: 1;
   width: 100%;
-  // height: 100%;
+  height: 100%;
   background-color: #f80;
 
   .turntable-bg {
