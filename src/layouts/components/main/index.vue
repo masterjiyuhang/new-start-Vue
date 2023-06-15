@@ -22,11 +22,13 @@ import { onBeforeMount, onBeforeUnmount, ref } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { emitter } from "@/utils/mitt";
 import Footer from "@/layouts/components/footer/index.vue";
+import { storeToRefs } from "pinia";
 
 defineProps<{ codeLocation?: string }>();
 
-const { ThemeConfig, keepAliveName, isCollapse, setThemeConfig } =
-  useGlobalSettingStore();
+const { ThemeConfig, keepAliveName } = storeToRefs(useGlobalSettingStore());
+
+const { setThemeConfig } = useGlobalSettingStore();
 
 // 刷新当前页面
 const isRouterShow = ref<boolean>(true);
@@ -35,10 +37,14 @@ const isRouterShow = ref<boolean>(true);
 const screenWidth = ref(0);
 const listeningWindow = useDebounceFn(() => {
   screenWidth.value = document.body.clientWidth;
-  if (!isCollapse.value && screenWidth.value < 1200)
-    setThemeConfig({ ...ThemeConfig, isCollapse: true });
-  if (isCollapse.value && screenWidth.value > 1200)
-    setThemeConfig({ ...ThemeConfig, isCollapse: false });
+  if (!ThemeConfig.value.isCollapse && screenWidth.value < 1200) {
+    document.documentElement.style.setProperty("font-size", "12px");
+    setThemeConfig({ ...ThemeConfig.value, isCollapse: true });
+  }
+  if (ThemeConfig.value.isCollapse && screenWidth.value > 1200) {
+    document.documentElement.style.setProperty("font-size", "16px");
+    setThemeConfig({ ...ThemeConfig.value, isCollapse: false });
+  }
 }, 100);
 
 window.addEventListener("resize", listeningWindow, false);
