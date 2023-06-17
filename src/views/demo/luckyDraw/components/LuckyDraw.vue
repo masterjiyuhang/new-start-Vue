@@ -58,6 +58,7 @@ const startRun = () => {
   let interval = setInterval(() => {
     deg += 2;
     deg = deg % 360;
+    console.log(deg, "deg");
     turntableRef.value.style[transformJs] = `rotate(${deg}deg)`;
   }, 1);
 
@@ -77,7 +78,11 @@ const startRun = () => {
     return randNum > item.min && randNum <= item.max;
   })[0];
 
-  console.log(randomRes, "randomRes");
+  console.log(
+    randomRes,
+    "randomRes",
+    randomRes.type === turntableSuccess.value && !randomRes.result_img
+  );
 
   // 若中奖没有中奖图片，则为未中奖
   if (randomRes.type === turntableSuccess.value && !randomRes.result_img) {
@@ -85,6 +90,8 @@ const startRun = () => {
       (item) => Number(item.type) === turntableFail.value
     )[0];
   }
+
+  console.log(randomRes, 'sadasda')
   clearInterval(interval);
 
   // 3.计算转动角度
@@ -99,6 +106,7 @@ const startRun = () => {
 
   let transTime = parseFloat((finallyDeg - lastDeg) / 360 + "").toFixed(1);
 
+  console.log(finallyDeg, transTime, "有人操纵的");
   turntableRef.value.style[
     transition
   ] = `${transformCss} ${transTime}s ease-out`;
@@ -112,6 +120,8 @@ const startRun = () => {
       : 0;
     deg = parseInt(deg);
     deg = deg % 360;
+
+    console.log('最后转动的角度', deg);
     turntableRef.value.style[transformJs] = `rotate(${deg}deg)`;
 
     // // 5. 显示中奖结果
