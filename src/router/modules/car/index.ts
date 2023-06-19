@@ -2,7 +2,7 @@ export default {
   path: "/car",
   name: "car",
   meta: {
-    title: "车辆管理",
+    title: "准备飙车",
     icon: "Menu",
     isLink: "",
     isHide: false,
@@ -18,7 +18,7 @@ export default {
       component: "/car/index",
       // component: () => import("@/views/car/index.vue"),
       meta: {
-        title: "车辆管理-列表",
+        title: "车辆列表",
         icon: "Apple",
         isLink: "",
         isHide: false,
@@ -32,7 +32,7 @@ export default {
       name: "carManagement",
       component: "/car/management",
       meta: {
-        title: "管理",
+        title: "车辆管理",
         icon: "Apple",
         isLink: "",
         isHide: false,
@@ -54,6 +54,20 @@ export default {
         isFull: false,
         isAffix: false,
         isDetail: true,
+        isKeepAlive: true,
+      },
+    },
+    {
+      path: "/car/bgfusion",
+      name: "bgfusion",
+      component: "/car/BgFusion/index",
+      meta: {
+        title: "水滴融合",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
         isKeepAlive: true,
       },
     },
