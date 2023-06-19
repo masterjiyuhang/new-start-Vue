@@ -1,11 +1,14 @@
 <template>
   <wrapper-page>
     <div class="fusion-container">asd</div>
+
+    <TankShaking />
   </wrapper-page>
 </template>
 
 <script setup lang="ts">
 import { WrapperPage } from "@/components/WrapperPage";
+import { TankShaking } from "./TankShaking";
 </script>
 
 <style lang="scss" scoped>
