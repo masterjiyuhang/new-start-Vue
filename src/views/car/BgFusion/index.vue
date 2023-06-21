@@ -3,12 +3,15 @@
     <div class="fusion-container">asd</div>
 
     <TankShaking />
+
+    <MobiusBand />
   </wrapper-page>
 </template>
 
 <script setup lang="ts">
 import { WrapperPage } from "@/components/WrapperPage";
 import { TankShaking } from "./TankShaking";
+import { MobiusBand } from "../MobiusBand/index";
 </script>
 
 <style lang="scss" scoped>

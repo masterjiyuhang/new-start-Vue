@@ -87,3 +87,24 @@ export const getDays = (date1: any, date2: any) =>
  */
 export const rgbToHex = (r: any, g: any, b: any) =>
   "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+
+  /**
+   * 
+   * @param promise 
+   * @param errorExt 
+   * @returns 
+   */
+export function await2Js<T, U = Error>(
+  promise: Promise<T>,
+  errorExt?: object
+): Promise<[U, undefined] | [null, T]> {
+  return promise
+    .then<[null, T]>((data: T) => [null, data])
+    .catch<[U, undefined]>((err: U) => {
+      if (errorExt) {
+        const parsedError = Object.assign({}, err, errorExt);
+        return [parsedError, undefined];
+      }
+      return [err, undefined];
+    });
+}

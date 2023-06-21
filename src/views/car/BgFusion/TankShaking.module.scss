@@ -75,13 +75,13 @@
       transform: rotate(0);
     }
     25% {
-      transform: rotate(15deg);
+      transform: rotate(33deg);
     }
     50% {
       transform: rotate(0);
     }
     75% {
-      transform: rotate(-15deg);
+      transform: rotate(-33deg);
     }
     100% {
       transform: rotate(0);
@@ -94,13 +94,13 @@
       filter: drop-shadow(0 0 50px #41c1fb) hue-rotate(0deg);
     }
     25% {
-      transform: rotate(-15deg);
+      transform: rotate(-56deg);
     }
     50% {
       transform: rotate(0);
     }
     75% {
-      transform: rotate(15deg);
+      transform: rotate(90deg);
     }
     100% {
       transform: rotate(0);
