@@ -5,6 +5,8 @@
     <TankShaking />
 
     <MobiusBand />
+
+    <LoadingEffect />
   </wrapper-page>
 </template>
 
@@ -12,6 +14,7 @@
 import { WrapperPage } from "@/components/WrapperPage";
 import { TankShaking } from "./TankShaking";
 import { MobiusBand } from "../MobiusBand/index";
+import { LoadingEffect } from "../LoadingEffect/index";
 </script>
 
 <style lang="scss" scoped>
