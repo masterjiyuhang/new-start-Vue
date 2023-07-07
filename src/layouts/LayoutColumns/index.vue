@@ -1,3 +1,4 @@
+<!-- 分栏布局 -->
 <template>
   <el-container class="layout">
     <div class="aside-split">

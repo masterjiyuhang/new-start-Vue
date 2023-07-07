@@ -9,7 +9,7 @@
     <LoadingEffect />
 
     <div class="reflect-box-container">
-      <div class="btn1">来吧 展示</div>
+      <div class="btn1 text-[#f80]">来吧 展示</div>
       <div class="my-btn"></div>
     </div>
   </wrapper-page>

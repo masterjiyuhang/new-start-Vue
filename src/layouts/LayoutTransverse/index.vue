@@ -4,7 +4,7 @@
     <el-header>
       <div class="logo flex-c">
         <img src="@/assets/logo.png" alt="logo" />
-        <span>CCH Admin</span>
+        <span>Trans Admin</span>
       </div>
 
       <el-menu
