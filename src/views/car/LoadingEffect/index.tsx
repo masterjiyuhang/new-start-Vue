@@ -12,14 +12,14 @@ export const LoadingEffect = defineComponent({
     return () => (
       <div class={styles["loading-container"]}>
         Loading effect
-        <div className={styles.content}>
-          <div className={styles.loadingItem1}>
+        <div class={styles.content}>
+          <div class={styles.loadingItem1}>
             <img src={welcome} />
           </div>
-          <div className={styles.loadingItem2}>
+          <div class={styles.loadingItem2}>
             <img src={img2} />
           </div>
-          <div className={styles.loadingItem3}>
+          <div class={styles.loadingItem3}>
             <img src={img3} />
           </div>
 

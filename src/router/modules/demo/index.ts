@@ -173,6 +173,20 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/demo/stitchMonster",
+      name: "stitchMonster",
+      component: "/demo/stitchMonster/index",
+      meta: {
+        title: "究极缝合怪",
+        icon: "Bicycle",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",
