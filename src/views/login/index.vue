@@ -62,13 +62,13 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item class="login-btn-box">
             <div class="w-full h-[20px] flex-bc">
               <el-checkbox v-model="checked"> 记住密码 </el-checkbox>
               <el-button link type="primary"> 忘记密码? </el-button>
             </div>
             <el-button
-              class="w-full mt-4"
+              class="mt-4 login-btn"
               type="primary"
               @click="handleLogin(ruleFormRef)"
               >{{ $t("login.loginBtn") }}</el-button
@@ -315,8 +315,12 @@ onMounted(() => {
       width: 450px;
       padding: 50px 40px 25px;
       background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 2px 3px 7px rgb(0 0 0 / 20%);
+      box-shadow: inset 20px 20px 20px rgba(0, 0, 0, 0.05),
+        25px 35px 20px rgba(0, 0, 0, 0.05), 25px 30px 30px rgba(0, 0, 0, 0.05),
+        inset -20px -20px 25px rgba(255, 255, 255, 0.9);
+      transition: 0.5s;
+      border-radius: 66% 48% 33% 67% / 22% 95% 55% 62%;
+      position: relative;
 
       .login-logo {
         display: flex;
@@ -341,12 +345,14 @@ onMounted(() => {
       }
       .login-btn {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-top: 40px;
+        justify-content: center;
+        width: 80%;
+        margin: 40px auto 0;
         white-space: nowrap;
-        .el-button {
-          width: 185px;
+        transition: 0.6s;
+
+        &:hover {
+          width: 100%;
         }
       }
 
@@ -365,6 +371,38 @@ onMounted(() => {
         white-space: nowrap;
         line-height: 1.5;
       }
+
+      // .login-btn-box {
+      //   background-color: #f80;
+      // }
+    }
+
+    .login-form:hover {
+      border-radius: 33% 24% 33% 67% / 11% 89% 55% 62%;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50px;
+      left: 85px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #f00;
+      opacity: 0.9;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 90px;
+      left: 110px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #f80;
+      opacity: 0.9;
     }
   }
 }
