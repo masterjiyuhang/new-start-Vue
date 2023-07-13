@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import { HoneyComb } from "./HoneyComb/HoneyComb";
-import { Stitch } from "./Stitch/stitch";
+import { HoneyComb } from "./HoneyComb/honeyComb";
+import { Stitch } from "./Stitch/Stitch";
 </script>
 
 <style scoped></style>
