@@ -1,6 +1,7 @@
 import { defineComponent } from "vue";
 import styles from "./stitch.module.scss";
 
+// 纠结缝合怪
 export const Stitch = defineComponent({
   name: "Stitch",
   setup() {
@@ -13,6 +14,7 @@ export const Stitch = defineComponent({
   },
 });
 
+// 媒体loading
 export const AudioLoading = defineComponent({
   name: "AudioLoading",
   setup() {
@@ -29,6 +31,7 @@ export const AudioLoading = defineComponent({
   },
 });
 
+// 环状loading
 export const AnnulusLoading = defineComponent({
   name: "AnnulusLoading",
   setup() {
