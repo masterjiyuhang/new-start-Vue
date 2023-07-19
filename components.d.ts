@@ -60,6 +60,7 @@ declare module '@vue/runtime-core' {
     Pie: typeof import('./src/components/echartsComp/Pie.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./src/components/icons/SvgIcon.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
     WrapperPage: typeof import('./src/components/WrapperPage/src/wrapperPage.vue')['default']
