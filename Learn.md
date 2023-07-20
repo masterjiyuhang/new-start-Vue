@@ -20,3 +20,7 @@ https://blog.csdn.net/m0_62883662/article/details/128589677
 @babel/plugin-transform-typescript 转换ts的库
 @babel/plugin-syntax-import-meta 编译import等语法
 @types/babel__core
+
+
+## vite plugin
+pnpm i @types/svgo svgo cors debug etag fs-extra svg-baker pathe @types/cors @types/debug @types/etag @types/fs-extra --save-dev
