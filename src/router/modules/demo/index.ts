@@ -187,6 +187,20 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/demo/floatingVue ",
+      name: "floating-vue",
+      component: "/demo/floatingVue/index",
+      meta: {
+        title: "FloatingVue",
+        icon: "Bicycle",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",

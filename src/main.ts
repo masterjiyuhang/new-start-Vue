@@ -13,6 +13,11 @@ import directives from "@/directives/index";
 // customer component
 import { setupComp } from "@/components";
 
+import FloatingVue from 'floating-vue'
+
+import 'floating-vue/dist/style.css'
+
+
 import "@/style/erHangBaseStyle/index.scss";
 // element dark(内置暗黑模式)
 import "element-plus/theme-chalk/dark/css-vars.css";
@@ -34,6 +39,8 @@ async function bootstrap() {
 
   await setupI18n(app);
   setupStore(app);
+
+  app.use(FloatingVue)
 
   app.use(router);
 
