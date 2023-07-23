@@ -9,6 +9,7 @@ export const Stitch = defineComponent({
       <div>
         <AudioLoading />
         <AnnulusLoading />
+        <DotLoading />
       </div>
     );
   },
@@ -45,6 +46,21 @@ export const AnnulusLoading = defineComponent({
           <div class={styles.item5} />
           <div class={styles.item6} />
           <div class={styles.item7} />
+        </div>
+      </div>
+    );
+  },
+});
+
+export const DotLoading = defineComponent({
+  name: "DotLoading",
+  setup() {
+    return () => (
+      <div class={styles.container}>
+        <div class={styles["dot-content"]}>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
         </div>
       </div>
     );

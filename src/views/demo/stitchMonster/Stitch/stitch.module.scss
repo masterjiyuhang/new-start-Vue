@@ -163,4 +163,39 @@
       }
     }
   }
+
+  .dot-content {
+    @keyframes dot-blink {
+      0%,
+      100% {
+        transform: scale(1);
+        background-color: #ccc;
+      }
+
+      50% {
+        transform: scale(1.2);
+        background-color: #007bff;
+      }
+    }
+
+    display: flex;
+    align-items: center;
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      animation: dot-blink 1.5s infinite ease-in-out;
+      border-radius: 50%;
+      background-color: #ccc;
+    }
+
+    .dot:nth-child(2) {
+      animation-delay: 0.3s;
+    }
+
+    .dot:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+  }
 }
