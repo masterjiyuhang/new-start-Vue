@@ -27,7 +27,7 @@
                   <img src="@/assets/system/ProjectManager11.png" alt="" />
                 </div>
                 <span class="item-value">{{
-                  state.dashboardData.newUsers
+                  formatNum(state.dashboardData.newUsers)
                 }}</span>
                 <span class="traffic-name sle">新增用户数</span>
               </div>
@@ -36,7 +36,7 @@
                   <img src="@/assets/system/ProjectManager12.png" alt="" />
                 </div>
                 <span class="item-value">{{
-                  state.dashboardData.activeUsers
+                  formatNum(state.dashboardData.activeUsers)
                 }}</span>
                 <span class="traffic-name sle">活跃用户数</span>
               </div>
@@ -45,7 +45,7 @@
                   <img src="@/assets/system/ProjectManager13.png" alt="" />
                 </div>
                 <span class="item-value">
-                  {{ state.dashboardData.todayVisits }}
+                  {{ formatNum(state.dashboardData.todayVisits) }}
                 </span>
                 <span class="traffic-name sle">今日访问量</span>
               </div>
@@ -54,7 +54,7 @@
                   <img src="@/assets/system/ProjectManager14.png" alt="" />
                 </div>
                 <span class="item-value">
-                  {{ state.dashboardData.yesterdayVisits }}
+                  {{ formatNum(state.dashboardData.yesterdayVisits) }}
                 </span>
                 <span class="traffic-name sle">昨日访问量</span>
               </div>
@@ -95,6 +95,7 @@ import { getDashboardListApi } from "@/api/dashboard";
 import { onMounted, ref, reactive } from "vue";
 import Pie from "@/components/echartsComp/Pie.vue";
 import { TabPaneName } from "element-plus";
+import { formatNum } from "@/utils/number";
 
 const state = reactive({
   dashboardData: {
