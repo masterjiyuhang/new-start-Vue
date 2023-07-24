@@ -15,6 +15,9 @@ import { configCopyPlugin } from "./copyPlugin";
 import { configComponentPlugin } from "./componentPlugin";
 import { configCompressPlugin } from "./compressPlugin";
 
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import path from "path";
+
 export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
   return [
     DefineOptions(),
@@ -31,6 +34,25 @@ export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
       // include: [path.resolve(__dirname, '../../../src/locales/lang/**/*.ts')],
     }),
     configCopyPlugin({ url: "build/config.js" }),
+
+    createSvgIconsPlugin({
+        // Specify the icon folder to be cached
+        iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+        // Specify symbolId format
+        symbolId: 'icon-[dir]-[name]',
+
+        /**
+         * custom insert position
+         * @default: body-last
+         */
+        inject: 'body-last',
+
+        /**
+         * custom dom id
+         * @default: __svg__icons__dom__
+         */
+        customDomId: '__svg__icons__dom__',
+      }),
     Inspect(),
     ...configComponentPlugin(),
     isBuild ? configCompressPlugin(compress) : null,

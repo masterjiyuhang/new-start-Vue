@@ -23,6 +23,8 @@ import "@/style/erHangBaseStyle/index.scss";
 import "element-plus/theme-chalk/dark/css-vars.css";
 import "@/style/element/theme-dark.scss";
 
+import 'virtual:svg-icons-register'; // 自定义icon
+
 // 用于开发模式 shift 定位 编译器中的代码
 initDom();
 

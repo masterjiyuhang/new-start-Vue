@@ -1,11 +1,13 @@
 <template>
   <div class="wrapper-page">
     <img :src="welcome" class="home-img" />
+    <SvgIcon name="Box" color="#f80"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import welcome from "@/assets/system/HalloweenIllustrations11.png";
+import SvgIcon from "@/components/SvgIcon.vue";
 </script>
 
 <style lang="scss" scoped>
