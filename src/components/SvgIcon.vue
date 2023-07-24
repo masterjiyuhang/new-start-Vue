@@ -1,10 +1,14 @@
 <template>
-  <svg aria-hidden="true" class="base-icon">
-    <use :href="symbolId" :fill="color" />
+  <svg
+    :class="[prefixCls, $attrs.class, spin && 'svg-icon-spin']"
+    :style="getStyle"
+    aria-hidden="true"
+  >
+    <use :xlink:href="symbolId" />
   </svg>
 </template>
-
-<script>
+<script lang="ts">
+import type { CSSProperties } from "vue";
 import { defineComponent, computed } from "vue";
 
 export default defineComponent({
@@ -18,22 +22,47 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    color: {
-      type: String,
-      default: "#C9CFDB",
+    size: {
+      type: [Number, String],
+      default: 16,
+    },
+    spin: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
+    const prefixCls = "cch-svg-icon";
     const symbolId = computed(() => `#${props.prefix}-${props.name}`);
-    return { symbolId };
+
+    const getStyle = computed((): CSSProperties => {
+      const { size } = props;
+      let s = `${size}`;
+      s = `${s.replace("px", "")}px`;
+      return {
+        width: s,
+        height: s,
+      };
+    });
+    return { symbolId, prefixCls, getStyle };
   },
 });
 </script>
+<style lang="scss" scoped>
+$prefix-cls: "cch-svg-icon";
 
-<style>
-.base-icon {
-  width: 1em;
-  height: 1em;
-  fill: #c9cfdb;
+.#{$prefix-cls} {
+  display: inline-block;
+  overflow: hidden;
+  fill: currentcolor;
+  vertical-align: -0.15em;
+
+  &-spin {
+    animation: loadingCircle 1s infinite linear;
+  }
+}
+
+.svg-icon-spin {
+  animation: loadingCircle 1s infinite linear;
 }
 </style>
