@@ -23,7 +23,7 @@ export const AudioLoading = defineComponent({
     return () => (
       <div class={styles.container}>
         <div class={styles["auto-loading-content"]}>
-          {list.map((item: number, index: number) => (
+          {list.map((_item: number, index: number) => (
             <span class={styles[`span${index}`]} key={index} />
           ))}
         </div>
