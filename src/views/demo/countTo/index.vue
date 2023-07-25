@@ -40,6 +40,9 @@ function toggle() {
 
 <template>
   <div class="wrapper-page">
+
+    <CountTo prefix="$" :startVal="1" :endVal="9999" class="text-2xl" />
+    
     <el-button type="primary" @click="toggle">Transition</el-button>
 
     <p class="mt-2">

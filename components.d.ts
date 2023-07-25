@@ -7,6 +7,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CountButton: typeof import('./src/components/CountDown/src/CountButton.vue')['default']
+    CountdownInput: typeof import('./src/components/CountDown/src/CountdownInput.vue')['default']
+    CountTo: typeof import('./src/components/CountTo/src/CountTo.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
