@@ -25,7 +25,9 @@
               @click="changeDirection('bottom')"
             >
               <span
-                :style="{ color: classOption.direction === 'bottom' ? 'red' : '' }"
+                :style="{
+                  color: classOption.direction === 'bottom' ? 'red' : '',
+                }"
               >
                 向下滚动
               </span>
@@ -37,7 +39,9 @@
               @click="changeDirection('left')"
             >
               <span
-                :style="{ color: classOption.direction === 'left' ? 'red' : '' }"
+                :style="{
+                  color: classOption.direction === 'left' ? 'red' : '',
+                }"
               >
                 向左滚动
               </span>
@@ -49,7 +53,9 @@
               @click="changeDirection('right')"
             >
               <span
-                :style="{ color: classOption.direction === 'right' ? 'red' : '' }"
+                :style="{
+                  color: classOption.direction === 'right' ? 'red' : '',
+                }"
               >
                 向右滚动
               </span>
