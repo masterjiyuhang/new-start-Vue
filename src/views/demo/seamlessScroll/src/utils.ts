@@ -14,68 +14,40 @@ export const arrayIsEqual = (arr1: Array<any>, arr2: Array<any>) => {
   return true;
 };
 
-export function copyObj() {
+export function copyObj(...args) {
   if (!Array.isArray) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    Array.isArray = function (arg) {
-      return Object.prototype.toString.call(arg) === "[object Array]";
-    };
+    Array.isArray = (arg: any): any =>
+      Object.prototype.toString.call(arg) === "[object Array]";
   }
 
-  let name,
-    options,
-    src,
-    copy,
-    copyIsArray,
-    clone,
-    i = 1,
-    // eslint-disable-next-line prefer-rest-params
-    target = arguments[0] || {},
-    deep = false,
-    // eslint-disable-next-line prefer-const
-    len = arguments.length;
+  let [target, ...sources] = args;
+  let deep = false;
 
   if (typeof target === "boolean") {
     deep = target;
-
-    // eslint-disable-next-line prefer-rest-params
-    target = arguments[i] || {};
-    i++;
+    [target, ...sources] = sources;
   }
 
-  if (typeof target !== "object" && typeof target !== "function") {
+  if (typeof target !== "object" || target === null) {
     target = {};
   }
 
-  if (i === len) {
-    return target;
-  }
+  for (const source of sources) {
+    if (source !== null && typeof source === "object") {
+      for (const name in source) {
+        if (Object.prototype.hasOwnProperty.call(source, name)) {
+          const src = target[name];
+          const copy = source[name];
 
-  for (; i < len; i++) {
-    // eslint-disable-next-line prefer-rest-params
-    if ((options = arguments[i]) !== null) {
-      for (name in options) {
-        src = target[name];
-
-        copy = options[name];
-
-        copyIsArray = Array.isArray(copy);
-
-        if (deep && copy && (typeof copy !== "object" || copyIsArray)) {
-          if (copyIsArray) {
-            copyIsArray = false;
-
-            clone = src && Array.isArray(src) ? src : [];
-          } else {
-            clone = src && typeof src === "object" ? src : {};
+          if (
+            deep &&
+            copy &&
+            (typeof copy === "object" || Array.isArray(copy))
+          ) {
+            target[name] = copyObj(deep, src, copy);
+          } else if (copy !== undefined) {
+            target[name] = copy;
           }
-
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          target[name] = copyObj(deep, clone, copy);
-        } else if (copy !== undefined) {
-          target[name] = copy;
         }
       }
     }

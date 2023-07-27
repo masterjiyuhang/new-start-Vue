@@ -1,12 +1,15 @@
 <template>
   <div :ref="`wrap${classOption['key']}`">
-    <div :ref="'realBox' + classOption['key']" :style="pos">
-      <!-- @mouseenter="enter"
+    <div
+      :ref="'realBox' + classOption['key']"
+      :style="pos"
+      @mouseenter="enter"
       @mouseleave="leave"
       @touchstart.passive="touchStart"
       @touchmove.passive="touchMove"
       @touchend="touchEnd"
-      @mousewheel.passive="wheel" -->
+      @mousewheel.passive="wheel"
+    >
       <div :ref="'slotList' + classOption['key']" :style="float">
         <slot />
       </div>
@@ -51,9 +54,9 @@ export default {
       singleWaitTime: null,
 
       reqFrame: null,
-      // startPos: null,
-      // startPosX: null,
-      // startPosY: null,
+      startPos: null,
+      startPosX: null,
+      startPosY: null,
       isHover: false,
 
       ease: "ease-in",
@@ -92,40 +95,47 @@ export default {
       return copyObj({}, this.defaultOption, this.classOption);
     },
 
-    // leftSwitchState() {
-    //   return this.xPos < 0;
-    // },
+    leftSwitchState() {
+      return this.xPos < 0;
+    },
 
-    // rightSwitchState() {
-    //   return Math.abs(this.xPos) < this.realBoxWidth - this.width;
-    // },
+    rightSwitchState() {
+      return Math.abs(this.xPos) < this.realBoxWidth - this.width;
+    },
 
-    // leftSwitchClass() {
-    //   return this.leftSwitchState ? "" : this.options.switchDisabledClass;
-    // },
+    leftSwitchClass() {
+      return this.leftSwitchState ? "" : this.options.switchDisabledClass;
+    },
 
-    // rightSwitchClass() {
-    //   return this.rightSwitchState ? "" : this.options.switchDisabledClass;
-    // },
+    rightSwitchClass() {
+      return this.rightSwitchState ? "" : this.options.switchDisabledClass;
+    },
 
-    // leftSwitch() {
-    //   return {
-    //     position: "absolute",
-    //     margin: `${this.height / 2}px 0 0 -${this.options.switchOffset}px`,
-    //     transform: "translate(-100%,-50%)",
-    //   };
-    // },
+    leftSwitch() {
+      return {
+        position: "absolute",
+        margin: `${this.height / 2}px 0 0 -${this.options.switchOffset}px`,
+        transform: "translate(-100%,-50%)",
+      };
+    },
 
-    // rightSwitch() {
-    //   return {
-    //     position: "absolute",
-    //     margin: `${this.height / 2}px 0 0 ${
-    //       this.width + this.options.switchOffset
-    //     }px`,
-    //     transform: "translateY(-50%)",
-    //   };
-    // },
+    rightSwitch() {
+      return {
+        position: "absolute",
+        margin: `${this.height / 2}px 0 0 ${
+          this.width + this.options.switchOffset
+        }px`,
+        transform: "translateY(-50%)",
+      };
+    },
 
+    hoverStopSwitch() {
+      return this.options.hoverStop && this.autoPlay && this.scrollSwitch;
+    },
+
+    canTouchScroll() {
+      return this.options.openTouch;
+    },
     isHorizontal() {
       return (
         this.options.direction !== "bottom" && this.options.direction !== "top"
@@ -161,14 +171,6 @@ export default {
     scrollSwitch() {
       return this.data.length > this.options.limitMoveNum;
     },
-
-    // hoverStopSwitch() {
-    //   return this.options.hoverStop && this.autoPlay && this.scrollSwitch;
-    // },
-
-    // canTouchScroll() {
-    //   return this.options.openTouch;
-    // },
 
     baseFontSize() {
       return this.options.isSingleRemUnit
@@ -214,18 +216,155 @@ export default {
   },
 
   methods: {
-    // // 鼠标滚轮事件
-    // wheel(e) {
-    //   const { direction } = this.options;
-    //   if (direction === "left" || direction === "right") {
-    //     return;
-    //   }
-    //   console.log("鼠标滚动事件");
+    // 鼠标滚轮事件
+    wheel(e) {
+      const { direction } = this.options;
+      if (direction === "left" || direction === "right") {
+        return;
+      }
+      console.log("鼠标滚动事件");
 
-    //   debounce(() => {
-    //     e.deltaY > 0 ? (this.yPos -= this.step) : (this.yPos += this.step);
-    //   }, 50)();
-    // },
+      debounce(() => {
+        e.deltaY > 0 ? (this.yPos -= this.step) : (this.yPos += this.step);
+      }, 50)();
+    },
+
+    leftSwitchClick() {
+      if (!this.leftSwitchState) return;
+
+      // 小于单步距离
+      if (Math.abs(this.xPos) < this.options.switchSingleStep) {
+        this.xPos = 0;
+        return;
+      }
+      this.xPos += this.options.switchSingleStep;
+    },
+
+    rightSwitchClick() {
+      if (!this.rightSwitchState) return;
+      // 小于单步距离
+
+      if (
+        this.realBoxWidth - this.width + this.xPos <
+        this.options.switchSingleStep
+      ) {
+        this.xPos = this.width - this.realBoxWidth;
+        return;
+      }
+      this.xPos -= this.options.switchSingleStep;
+    },
+
+    touchStart(e) {
+      if (!this.canTouchScroll) return;
+
+      let timer;
+
+      const touch = e.targetTouches[0];
+      const { waitTime, singleHeight, singleWidth } = this.options;
+
+      this.startPos = {
+        x: touch.pageX,
+        y: touch.pageY,
+      };
+
+      this.startPosY = this.yPos;
+      this.startPosX = this.xPos;
+
+      if (!!singleHeight && !!singleWidth) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          this.scrollCancle();
+        }, waitTime + 20);
+      } else {
+        this.scrollCancle();
+      }
+    },
+
+    touchMove(e) {
+      // 当屏幕有多个touch或者页面被缩放过，就不执行move操作
+      if (
+        !this.canTouchScroll ||
+        e.targetTouches.length > 1 ||
+        (e.scale && e.scale !== 1)
+      ) {
+        return;
+      }
+
+      const touch = e.targetTouches[0];
+      const { direction } = this.options;
+      const endPos = {
+        x: touch.pageX - this.startPos.x,
+        y: touch.pageY - this.startPos.y,
+      };
+      // 阻止触摸事件的默认行为，即阻止滚屏
+      e.preventDefault();
+
+      // dir，1表示纵向滑动，0为横向滑动
+      const dir = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0;
+
+      if (
+        (dir === 1 && direction === "bottom") ||
+        (dir === 1 && direction === "top")
+      ) {
+        // 表示纵向滑动 && 运动方向为上下
+        this.yPos = this.startPosY + endPos.y;
+      } else if (
+        (dir === 0 && direction === "left") ||
+        (dir === 0 && direction === "right")
+      ) {
+        // 为横向滑动 && 运动方向为左右
+        this.xPos = this.startPosX + endPos.x;
+      }
+    },
+
+    touchEnd() {
+      if (!this.canTouchScroll) return;
+      let timer;
+      const { direction } = this.options;
+      this.delay = 50;
+
+      if (direction === "top") {
+        if (this.yPos > 0) this.yPos = 0;
+      } else if (direction === "bottom") {
+        const h = (this.realBoxHeight / 2) * -1;
+        if (this.yPos < h) this.yPos = h;
+      } else if (direction === "left") {
+        if (this.xPos > 0) this.xPos = 0;
+      } else if (direction === "right") {
+        const w = this.realBoxWidth * -1;
+        if (this.xPos < w) this.xPos = w;
+      }
+
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        this.delay = 0;
+        this.scrollMove();
+      }, this.delay);
+    },
+
+    enter() {
+      if (this.hoverStopSwitch) this.scrollStopMove();
+    },
+
+    leave() {
+      if (this.hoverStopSwitch) this.scrollStartMove();
+    },
+
+    scrollStartMove() {
+      this.isHover = false;
+      this.scrollMove();
+    },
+
+    scrollStopMove() {
+      this.isHover = true;
+      // 防止频频hover进出单步滚动,导致定时器乱掉
+      if (this.singleWaitTime) clearTimeout(this.singleWaitTime);
+      this.scrollCancle();
+    },
+
+    scrollCancle() {
+      cancelAnimationFrame(this.reqFrame);
+    },
 
     reset() {
       this.xPos = 0;
@@ -233,131 +372,6 @@ export default {
       this.scrollCancle();
       this.scrollInitMove();
     },
-
-    // leftSwitchClick() {
-    //   if (!this.leftSwitchState) return;
-
-    //   // 小于单步距离
-    //   if (Math.abs(this.xPos) < this.options.switchSingleStep) {
-    //     this.xPos = 0;
-    //     return;
-    //   }
-    //   this.xPos += this.options.switchSingleStep;
-    // },
-
-    // rightSwitchClick() {
-    //   if (!this.rightSwitchState) return;
-    //   // 小于单步距离
-
-    //   if (
-    //     this.realBoxWidth - this.width + this.xPos <
-    //     this.options.switchSingleStep
-    //   ) {
-    //     this.xPos = this.width - this.realBoxWidth;
-    //     return;
-    //   }
-    //   this.xPos -= this.options.switchSingleStep;
-    // },
-
-    scrollCancle() {
-      cancelAnimationFrame(this.reqFrame);
-    },
-
-    // touchStart(e) {
-    //   if (!this.canTouchScroll) return;
-
-    //   let timer;
-
-    //   const touch = e.targetTouches[0];
-    //   const { waitTime, singleHeight, singleWidth } = this.options;
-
-    //   this.startPos = {
-    //     x: touch.pageX,
-    //     y: touch.pageY,
-    //   };
-
-    //   this.startPosY = this.yPos;
-    //   this.startPosX = this.xPos;
-
-    //   if (!!singleHeight && !!singleWidth) {
-    //     if (timer) clearTimeout(timer);
-    //     timer = setTimeout(() => {
-    //       this.scrollCancle();
-    //     }, waitTime + 20);
-    //   } else {
-    //     scrollCancle();
-    //   }
-    // },
-
-    // touchMove(e) {
-    //   // 当屏幕有多个touch或者页面被缩放过，就不执行move操作
-    //   if (
-    //     !this.canTouchScroll ||
-    //     e.targetTouches.length > 1 ||
-    //     (e.scale && e.scale !== 1)
-    //   ) {
-    //     return;
-    //   }
-
-    //   const touch = e.targetTouches[0];
-    //   const { direction } = this.options;
-    //   const endPos = {
-    //     x: touch.pageX - this.startPos.x,
-    //     y: touch.pageY - this.startPos.y,
-    //   };
-    //   // 阻止触摸事件的默认行为，即阻止滚屏
-    //   e.preventDefault();
-
-    //   // dir，1表示纵向滑动，0为横向滑动
-    //   const dir = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0;
-
-    //   if (
-    //     (dir === 1 && direction === "bottom") ||
-    //     (dir === 1 && direction === "top")
-    //   ) {
-    //     // 表示纵向滑动 && 运动方向为上下
-    //     this.yPos = this.startPosY + endPos.y;
-    //   } else if (
-    //     (dir === 0 && direction === "left") ||
-    //     (dir === 0 && direction === "right")
-    //   ) {
-    //     // 为横向滑动 && 运动方向为左右
-    //     this.xPos = this.startPosX + endPos.x;
-    //   }
-    // },
-
-    // touchEnd() {
-    //   if (!this.canTouchScroll) return;
-    //   let timer;
-    //   const { direction } = this.options;
-    //   this.delay = 50;
-
-    //   if (direction === "top") {
-    //     if (this.yPos > 0) this.yPos = 0;
-    //   } else if (direction === "bottom") {
-    //     const h = (this.realBoxHeight / 2) * -1;
-    //     if (this.yPos < h) this.yPos = h;
-    //   } else if (direction === "left") {
-    //     if (this.xPos > 0) this.xPos = 0;
-    //   } else if (direction === "right") {
-    //     const w = this.realBoxWidth * -1;
-    //     if (this.xPos < w) this.xPos = w;
-    //   }
-
-    //   if (timer) clearTimeout(timer);
-    //   timer = setTimeout(() => {
-    //     this.delay = 0;
-    //     this.scrollMove();
-    //   }, this.delay);
-    // },
-
-    // enter() {
-    //   if (this.hoverStopSwitch) this.scrollStopMove();
-    // },
-
-    // leave() {
-    //   if (this.hoverStopSwitch) this.scrollStartMove();
-    // },
 
     scrollMove() {
       // 鼠标移入时拦截scrollMove()
@@ -397,27 +411,26 @@ export default {
 
         if (this.singleWaitTime) clearTimeout(this.singleWaitTime);
 
-        // if (this.realSingleStopHeight) {
-        //   // 是否启动了单行暂停配置
-        //   if (Math.abs(this.yPos) % this.realSingleStopHeight < this.step) {
-        //     this.singleWaitTime = setTimeout(() => {
-        //       this.scrollMove();
-        //     }, waitTime);
-        //   } else {
-        //     scrollMove();
-        //   }
-        // } else if (this.realSingleStopWidth) {
-        //   if (Math.abs(this.xPos) % this.realSingleStopWidth < this.step) {
-        //     this.singleWaitTime = setTimeout(() => {
-        //       this.scrollMove();
-        //     }, waitTime);
-        //   } else {
-        //     this.scrollMove();
-        //   }
-        // } else {
-        //   this.scrollMove();
-        // }
-        this.scrollMove();
+        if (this.realSingleStopHeight) {
+          // 是否启动了单行暂停配置
+          if (Math.abs(this.yPos) % this.realSingleStopHeight < this.step) {
+            this.singleWaitTime = setTimeout(() => {
+              this.scrollMove();
+            }, waitTime);
+          } else {
+            this.scrollMove();
+          }
+        } else if (this.realSingleStopWidth) {
+          if (Math.abs(this.xPos) % this.realSingleStopWidth < this.step) {
+            this.singleWaitTime = setTimeout(() => {
+              this.scrollMove();
+            }, waitTime);
+          } else {
+            this.scrollMove();
+          }
+        } else {
+          this.scrollMove();
+        }
       });
     },
 
@@ -441,7 +454,7 @@ export default {
           }
 
           realBox.style.width = slotListWidth + "px";
-          
+
           this.realBoxWidth = slotListWidth;
         }
 
@@ -471,18 +484,6 @@ export default {
         }
       });
     },
-
-    // scrollStartMove() {
-    //   this.isHover = false;
-    //   this.scrollMove();
-    // },
-
-    // scrollStopMove() {
-    //   this.isHover = true;
-    //   // 防止频频hover进出单步滚动,导致定时器乱掉
-    //   if (this.singleWaitTime) clearTimeout(this.singleWaitTime);
-    //   this.scrollCancle();
-    // },
   },
 };
 </script>
