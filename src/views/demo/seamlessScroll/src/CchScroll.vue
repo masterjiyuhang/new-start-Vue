@@ -1,6 +1,5 @@
 <template>
   <div :ref="`wrap${classOption['key']}`">
-    {{ options }}
     <div :ref="'realBox' + classOption['key']" :style="pos">
       <!-- @mouseenter="enter"
       @mouseleave="leave"
@@ -11,6 +10,7 @@
       <div :ref="'slotList' + classOption['key']" :style="float">
         <slot />
       </div>
+      <div v-html="copyHtml" :style="float" />
     </div>
   </div>
 </template>

@@ -63,16 +63,24 @@
           </div>
         </template>
 
-        <!-- <SeamlessScroll ref="scroll-my">
-          <ul>
-            <li v-for="(item, index) in listData" :key="index">
-              <span class="title" v-text="item.title"></span>
-            </li>
-          </ul>
-        </SeamlessScroll> -->
-
         <TestScroll
           ref="scroll"
+          :data="listData"
+          :class-option="classOption"
+          class="warp"
+          v-if="true"
+        >
+          <ul class="item">
+            <li v-for="(item, index) in listData" :key="index">
+              <span class="title" v-text="item.title" />
+            </li>
+          </ul>
+        </TestScroll>
+      </el-card>
+
+      <el-card v-if="true">
+        <CchScroll
+          ref="scroll2"
           :data="listData"
           :class-option="classOption"
           class="warp"
@@ -82,7 +90,7 @@
               <span class="title" v-text="item.title" />
             </li>
           </ul>
-        </TestScroll>
+        </CchScroll>
       </el-card>
     </el-space>
   </div>
@@ -91,14 +99,18 @@
 <script setup lang="ts">
 import { reactive, ref, unref } from "vue";
 import TestScroll from "./src/TestScroll.vue";
+import CchScroll from "./src/CchScroll.vue";
 
 const classOption = reactive({
-  direction: "top",
+  direction: "right",
 });
 
 const scroll = ref();
+const scroll2 = ref();
+
 const changeDirection = (val) => {
   (unref(scroll) as any).reset();
+  (unref(scroll2) as any).reset();
   unref(classOption).direction = val;
 };
 
