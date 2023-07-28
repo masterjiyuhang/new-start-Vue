@@ -10,7 +10,7 @@
       @touchend="touchEnd"
       @mousewheel.passive="wheel"
     >
-      <div :ref="'slotList' + classOption['key']" :style="float">
+      <div :ref="'slotList' + classOption['key']" :style="float" class="slot-list">
         <slot />
       </div>
       <div v-html="copyHtml" :style="float" />
