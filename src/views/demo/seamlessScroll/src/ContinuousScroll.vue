@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { arrayIsEqual, copyObj, animationFrame } from "@/utils/index";
+import { arrayIsEqual, copyObj, animationFrame } from "./utils";
 
 animationFrame();
 
