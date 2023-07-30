@@ -92,6 +92,33 @@
           </ul>
         </CchScroll>
       </el-card>
+
+      <el-card class="w-[600px]">
+        <ContinuousScroll
+          :data="listData"
+          :class-option="{
+            step: 1, // 数值越大速度滚动越快
+            limitMoveNum: 1, // 开始无缝滚动的数据量 this.dataList.length
+            hoverStop: true, // 是否开启鼠标悬停stop
+            direction: 3, // 0向下 1向上 2向左 3向右
+            // openWatch: true, // 开启数据实时监控刷新dom
+            singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+            singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+            waitTime: 1000, // 单步运动停止的时间(默认值1000ms)
+          }"
+        >
+          <ul class="flex">
+            <li v-for="(item, index) in listData" :key="index">
+              <img
+                class="w-10 h-10"
+                src="@/assets/shopping/OnlineShopping1.png"
+                alt=""
+              />
+              <span v-show="false">{{ item }}</span>
+            </li>
+          </ul>
+        </ContinuousScroll>
+      </el-card>
     </el-space>
   </div>
 </template>
@@ -100,6 +127,7 @@
 import { reactive, ref, unref } from "vue";
 import TestScroll from "./src/TestScroll.vue";
 import CchScroll from "./src/CchScroll.vue";
+import ContinuousScroll from "./src/ContinuousScroll.vue";
 
 const classOption = reactive({
   direction: "right",
