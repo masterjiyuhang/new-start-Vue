@@ -1,5 +1,4 @@
 import type { Plugin } from "vite";
-import type { OptimizedSvg, OptimizeOptions } from "svgo";
 import type { ViteSvgIconsPlugin, FileStats, DomInject } from "./typing";
 import fg from "fast-glob";
 import getEtag from "etag";
@@ -9,6 +8,8 @@ import path from "pathe";
 import Debug from "debug";
 import SVGCompiler from "svg-baker";
 import { optimize } from "svgo";
+import type { OptimizedSvg, OptimizeOptions } from 'svgo'
+
 import { normalizePath } from "vite";
 import {
   SVG_DOM_ID,
