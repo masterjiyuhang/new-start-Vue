@@ -88,7 +88,7 @@ export const useGlobalSettingStore = defineStore(
     };
 
     const setThemeConfig = (themeConfig: ThemeConfigProps) => {
-      console.log("set theme config", themeConfig);
+      // console.log("set theme config", themeConfig);
       ThemeConfig.value = themeConfig;
     };
 

@@ -874,7 +874,7 @@ export const routerList = {
               component: "/learn/reactive/reactive",
               meta: {
                 icon: "Menu",
-                title: "学习ref",
+                title: "学习reactive",
                 isLink: "",
                 isHide: false,
                 isFull: false,
