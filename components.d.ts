@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CchList: typeof import('./src/components/cchList/index.vue')['default']
     CountTo: typeof import('./src/components/CountTo/src/CountTo.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBadge: typeof import('element-plus/es')['ElBadge']
@@ -52,10 +53,12 @@ declare module '@vue/runtime-core' {
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTheme: typeof import('./src/components/icons/IconTheme.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    ListItem: typeof import('./src/components/cchList/src/ListItem.vue')['default']
     Pie: typeof import('./src/components/echartsComp/Pie.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SvgIcon: typeof import('./src/components/icons/SvgIcon.vue')['default']
+    Src: typeof import('./src/components/cchList/src/index.vue')['default']
+    SvgIcon: typeof import('./src/components/SvgIcon.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
     WrapperPage: typeof import('./src/components/WrapperPage/src/wrapperPage.vue')['default']
