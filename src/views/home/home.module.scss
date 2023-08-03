@@ -1,0 +1,55 @@
+.container {
+  $itemWidth: 50px;
+  $margin: 4px;
+  $perHeight: calc(1.732 * $itemWidth + 4 * $margin - 1px);
+
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  // font-size必须
+  font-size: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::before {
+    content: "";
+    height: 100%;
+    width: calc(($itemWidth / 2) + calc($margin / 2));
+    shape-outside: repeating-linear-gradient(
+      transparent 0,
+      transparent 80px,
+      #000 80px,
+      #000 $perHeight
+    );
+    float: left;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      45deg,
+      #f44336,
+      #ff9800,
+      #ffe607,
+      #09d7c4,
+      #1cbed3,
+      #1d8ae2,
+      #bc24d6
+    );
+    // mix-blend-mode: darken;
+    animation: change 8s infinite ease-in-out;
+    // pointer-events必须
+    pointer-events: none;
+  }
+
+  @keyframes change {
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
+}
