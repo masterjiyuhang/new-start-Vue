@@ -77,28 +77,7 @@ watch(
 <style lang="scss">
 $select-bg: cch-variables.$nav-select-bg;
 
-%icon {
-  i.rc-sidebar-icon {
-    color: cch-variables.$primary;
-  }
-}
-
-%hidemenu {
-  display: none;
-}
-
 @include cch.b(sidebar) {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 1001;
-  overflow: hidden;
-  height: 100%;
-  background-color: cch-variables.$nav-bg;
-  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-  width: cch-variables.$side-bar-width;
-  transition: width cch-variables.$side-bar-animate ease-in;
 
   @include cch.m(collapse) {
     width: cch-variables.$side-bar-width-mini !important;
@@ -126,74 +105,27 @@ $select-bg: cch-variables.$nav-select-bg;
 
   @include cch.e(logo) {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     height: 64px;
-    line-height: 64px;
+    overflow: hidden;
     background: cch-variables.$primary;
     color: #fff;
-    text-align: center;
     font-size: 24px;
     font-weight: 600;
-    overflow: hidden;
+    line-height: 64px;
+    text-align: center;
 
     .site-name {
-      margin-left: 10px;
 
       @include cch.text-overflow-1;
+
+      margin-left: 10px;
     }
   }
 
   @include cch.e(menu) {
     padding-top: 16px;
-  }
-
-  .el-scrollbar__wrap {
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  .el-menu {
-    background-color: cch-variables.$nav-bg;
-    width: 100% !important;
-    border: 0;
-    transition: height cch-variables.$side-bar-animate ease-in;
-
-    .el-menu-item,
-    .el-sub-menu__title {
-      color: #fff;
-      font-size: 13px;
-      transition: background-color cch-variables.$side-bar-animate linear;
-
-      span {
-        font-size: 14px;
-      }
-
-      &:hover,
-      &:focus {
-        outline: none;
-        background-color: rgba($select-bg, 0.38);
-      }
-
-      // 选中状态
-      @include cch.when(active) {
-        background-color: $select-bg;
-        color: cch-variables.$primary;
-        position: relative;
-
-        @extend %icon;
-
-        &::after {
-          content: "";
-          height: 100%;
-          width: 3px;
-          position: absolute;
-          top: 0;
-          left: 0;
-          background-color: cch-variables.$primary;
-        }
-      }
-    }
   }
 
   // 收起菜单时 弹出菜单
@@ -206,5 +138,76 @@ $select-bg: cch-variables.$nav-select-bg;
       }
     }
   }
+
+  position: fixed;
+  z-index: 1001;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: cch-variables.$side-bar-width;
+  height: 100%;
+  overflow: hidden;
+  transition: width cch-variables.$side-bar-animate ease-in;
+  background-color: cch-variables.$nav-bg;
+  box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
+
+  .el-scrollbar__wrap {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .el-menu {
+    width: 100% !important;
+    transition: height cch-variables.$side-bar-animate ease-in;
+    border: 0;
+    background-color: cch-variables.$nav-bg;
+
+    .el-menu-item,
+    .el-sub-menu__title {
+      // 选中状态
+      @include cch.when(active) {
+
+        @extend %icon;
+
+        position: relative;
+        background-color: $select-bg;
+        color: cch-variables.$primary;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 3px;
+          height: 100%;
+          background-color: cch-variables.$primary;
+        }
+      }
+
+      transition: background-color cch-variables.$side-bar-animate linear;
+      color: #fff;
+      font-size: 13px;
+
+      span {
+        font-size: 14px;
+      }
+
+      &:hover,
+      &:focus {
+        outline: none;
+        background-color: rgba($select-bg, 0.38);
+      }
+    }
+  }
+}
+
+%icon {
+  i.rc-sidebar-icon {
+    color: cch-variables.$primary;
+  }
+}
+
+%hidemenu {
+  display: none;
 }
 </style>

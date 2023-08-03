@@ -1,6 +1,6 @@
 $--colors: (
-  "white": #ffffff,
-  "black": #000000,
+  "white": #fff,
+  "black": #000,
   "primary": (
     "base": #97bfe7,
     "light-7": red,
@@ -64,21 +64,21 @@ $--colors: (
   box-sizing: border-box;
   padding: 20px;
   overflow-x: hidden;
-  background-color: var(--el-fill-color-blank);
   border: 1px solid var(--el-border-color-light);
   border-radius: 4px;
+  background-color: var(--el-fill-color-blank);
   box-shadow: 0 0 12px rgb(0 0 0 / 5%);
 }
 
 .wrapper-page {
   box-sizing: border-box;
+  height: 100%;
   padding: 20px;
   overflow-x: hidden;
-  background-color: var(--el-fill-color-blank);
   border: 1px solid var(--el-border-color-light);
   border-radius: 4px;
+  background-color: var(--el-fill-color-blank);
   box-shadow: 0 0 12px rgb(0 0 0 / 5%);
-  height: 100%;
 
   // display: flex;
   // flex-direction: column;

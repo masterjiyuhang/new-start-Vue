@@ -153,12 +153,11 @@ function getRoundedCanvas() {
 .test-img {
   width: 100px;
   height: 130px;
-
+  padding: 10px;
+  background-clip: content-box;
   background-image: url("@/assets/images/login_left1.png");
-  background-size: cover;
   background-repeat: no-repeat;
   background-position: right;
-  background-clip: content-box;
-  padding: 10px;
+  background-size: cover;
 }
 </style>

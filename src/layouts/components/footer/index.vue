@@ -11,13 +11,14 @@
 <style lang="scss" scoped>
 .footer {
   height: 30px;
-  background: #ffffff;
   border-top: 1px solid #e4e7ed;
+  background: #fff;
+
   a {
-    font-size: 14px;
     color: #858585;
-    text-decoration: none;
+    font-size: 14px;
     letter-spacing: 0.5px;
+    text-decoration: none;
   }
 }
 </style>

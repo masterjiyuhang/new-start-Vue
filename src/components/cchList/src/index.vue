@@ -21,8 +21,8 @@ provide(ListKey, props);
 
 <style lang="scss" scoped>
 .list {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 </style>

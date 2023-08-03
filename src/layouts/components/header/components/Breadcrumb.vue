@@ -67,27 +67,33 @@ const onBreadcrumbClick = (item: Menu.MenuOptions, index: number) => {
   overflow: hidden;
   mask-image: linear-gradient(
     90deg,
-    #000000 0%,
-    #000000 calc(100% - 50px),
+    #000 0%,
+    #000 calc(100% - 50px),
     transparent
   );
+
   .el-breadcrumb {
     white-space: nowrap;
+
     .el-breadcrumb__item {
-      position: relative;
       display: inline-block;
+      position: relative;
       float: none;
+
       .el-breadcrumb__inner {
         display: inline-flex;
+
         .breadcrumb-icon {
           margin-top: 2px;
           margin-right: 6px;
           font-size: 16px;
         }
+
         .breadcrumb-title {
           margin-top: 3px;
         }
       }
+
       :deep(.el-breadcrumb__separator) {
         position: relative;
         top: -1px;
@@ -95,10 +101,12 @@ const onBreadcrumbClick = (item: Menu.MenuOptions, index: number) => {
     }
   }
 }
+
 .no-icon {
   .el-breadcrumb {
     .el-breadcrumb__item {
       top: -2px;
+
       :deep(.el-breadcrumb__separator) {
         top: 2px;
       }

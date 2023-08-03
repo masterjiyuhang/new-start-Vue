@@ -26,5 +26,3 @@ const LayoutComponents: { [key: string]: Component } = {
 
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 </script>
-
-<style scoped></style>

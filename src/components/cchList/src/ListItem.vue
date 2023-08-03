@@ -36,7 +36,7 @@ const labelStyle: any = computed(() => {
   };
 });
 
-const itemStyle = computed(() => {
+const itemtype = computed(() => {
   const itemWidth = 100 / ListProps.col || 3;
   return `${itemWidth}%`;
 });
@@ -44,27 +44,27 @@ const itemStyle = computed(() => {
 
 <style lang="scss" scoped>
 .list-item {
-  width: v-bind(itemStyle);
-  min-height: 34px;
-  line-height: 34px;
-  float: left;
   display: flex;
+  width: v-bind(itemtype);
+  min-height: 34px;
+  float: left;
+  line-height: 34px;
 
   &__label {
     display: block;
+    margin-right: 8px;
     color: #333;
     font-size: 16px;
-    margin-right: 8px;
   }
 
   &__content {
-    float: left;
-    color: rgba(20, 3, 3, 0.65);
-    text-align: left;
-    font-size: 14px;
     flex: 1;
+    float: left;
+    color: rgb(20 3 3 / 65%);
+    font-size: 14px;
+    text-align: left;
 
-    v-deep::el-button {
+    /deep/.el-button {
       padding: 0;
       font-size: 14px;
     }

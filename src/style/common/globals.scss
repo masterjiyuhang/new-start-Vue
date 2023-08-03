@@ -4,46 +4,39 @@
 // 配色来自于 @see http://uiguide.shanyishanmei.com/
 
 // 字体
-$font-family-base: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-  "Hiragino Sans GB", "Microsoft YaHei","Helvetica Neue", Helvetica,Arial,sans-serif, "Apple Color Emoji",
+$font-family-base: "Chinese Quote", -apple-system, blinkmacsystemfont, "Segoe UI", "PingFang SC",
+  "Hiragino Sans GB", "Microsoft YaHei","Helvetica Neue", helvetica,arial,sans-serif, "Apple Color Emoji",
   "Segoe UI Emoji", "Segoe UI Symbol" !default;
 
 // 背景颜色
 $bg-color: #f8f8f8 !default;
+
 // 主题色
 $primary: #fd521d !default;
-
 $primary-light: #fb9919 !default;
+
 // 辅助色
 $danger: #fb9919 !default;
-
 $blue: #01a0ec !default;
-
 $green: #2ab26a !default;
-
 $black: #000 !default;
-
 $border-yellow: #f3aa88 !default;
 
 // border color
 $border-color: #d8d8d8 !default;
-
 $border-hover: #bbb !default;
-
 $border: #ddd !default;
-
 $border-box: #eee !default;
 
 // font color
 $font-color: #505050 !default;
+
 // 淡的color e2e2e2
 $light-border-color: #e2e2e2 !default;
-
 $cate-font-color: #b79310;
 
 // Global app direction
 $app-direction: ltr !default;
-
 $background-color-base: #f5f7fa;
 
 // The minimum dimensions at which your layout will change,
@@ -72,24 +65,20 @@ $nav-select-bg: #454545;
 -------------------------- */
 $color-white: #fff !default;
 $color-black: #000 !default;
-
 $color-primary: $primary !default;
-$color-primary-light-1: mix($color-white, $color-primary, 10%) !default;
-$color-primary-light-2: mix($color-white, $color-primary, 20%) !default;
-$color-primary-light-3: mix($color-white, $color-primary, 30%) !default;
-$color-primary-light-4: mix($color-white, $color-primary, 40%) !default;
-$color-primary-light-5: mix($color-white, $color-primary, 50%) !default;
-$color-primary-light-6: mix($color-white, $color-primary, 60%) !default;
-$color-primary-light-7: mix($color-white, $color-primary, 70%) !default;
-$color-primary-light-8: mix($color-white, $color-primary, 80%) !default;
-$color-primary-light-9: mix($color-white, $color-primary, 90%) !default;
-
+$color-primary-light-1: color.mix($color-white, $color-primary, 10%) !default;
+$color-primary-light-2: color.mix($color-white, $color-primary, 20%) !default;
+$color-primary-light-3: color.mix($color-white, $color-primary, 30%) !default;
+$color-primary-light-4: color.mix($color-white, $color-primary, 40%) !default;
+$color-primary-light-5: color.mix($color-white, $color-primary, 50%) !default;
+$color-primary-light-6: color.mix($color-white, $color-primary, 60%) !default;
+$color-primary-light-7: color.mix($color-white, $color-primary, 70%) !default;
+$color-primary-light-8: color.mix($color-white, $color-primary, 80%) !default;
+$color-primary-light-9: color.mix($color-white, $color-primary, 90%) !default;
 $select-hover-background: $bg-color;
 $menu-item-hover-fill: $color-primary-light-9;
-
 $border-color-lighter: #ebeef5 !default;
 $border-radius-base: 4px !default;
-
 $font-size-base: 14px !default;
 $color-text-regular: #606266 !default;
 $color-text-secondary: #909399 !default;
@@ -104,14 +93,13 @@ $page-border-radius: 2px !default;
 /* toolbar
 -------------------------- */
 $toolbar-padding: 10px !default;
-
 $table-row-hover-background: #f5f7fa !default;
 
 /* search
 -------------------------- */
 $search-link-color: #3d5266 !default;
-$search-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2) !default;
-$search-box-shadow-windows: 0 2px 12px 0 rgba(0, 0, 0, 0.5) !default;
+$search-box-shadow: 0 2px 12px 0 rgb(0 0 0 / 20%) !default;
+$search-box-shadow-windows: 0 2px 12px 0 rgb(0 0 0 / 50%) !default;
 $search-height: 400px !default;
 $search-tab-active: $nav-select-bg;
 $search-condition-item-hover-fill: $color-primary-light-9 !default;
@@ -123,7 +111,6 @@ $card-header-height: 34px !default;
 $card-header-color: $font-color !default;
 $card-radius: 0 !default;
 $card-footer-height: 50px !default;
-
 $container-border-radius: 6px;
 $container-background-color: #fff;
 $container-padding: 16px;

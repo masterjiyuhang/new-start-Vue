@@ -86,18 +86,18 @@ function toggle() {
 
 <style scoped>
 .track {
-  background: rgba(125, 125, 125, 0.3);
-  border-radius: 0.5rem;
-  max-width: 20rem;
   width: 100%;
+  max-width: 20rem;
+  border-radius: 0.5rem;
+  background: rgb(125 125 125 / 30%);
 }
 
 .sled {
-  background: red;
-  border-radius: 50%;
-  height: 1rem;
   position: absolute;
   width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: red;
 }
 
 .number.track {

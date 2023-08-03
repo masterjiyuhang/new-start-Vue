@@ -1,31 +1,28 @@
 .container {
-  width: 100%;
-  height: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 500px;
   background-image: linear-gradient(to right, #598dc2, #6795c1, #aac0d6);
 
   .auto-loading-content {
     $height: 80px;
     $gap: 15px;
-    display: flex;
-    align-items: center;
-    height: $height;
-    position: relative;
+    $span-width: 4px;
+    $span-num: 15;
 
-    $spanWidth: 4px;
-    $spanNum: 15;
-    @for $i from 0 to $spanNum {
+    @for $i from 0 to $span-num {
       .span#{$i} {
+        $delay: calc(floor(abs(calc($span-num / 2 - $i))));
+
         width: 4px;
         height: 20%;
+        animation: loading 2.5s infinite linear;
+        animation-delay: calc(0.2s * $delay);
         border-radius: calc($height * 0.2 * 0.5);
         background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
-        animation: loading 2.5s infinite linear;
-        $delay: calc(floor(abs(calc($spanNum / 2 - $i))));
-        animation-delay: calc(0.2s * $delay);
 
         &:not(:first-child) {
           margin-left: 4px;
@@ -35,131 +32,162 @@
 
     @keyframes loading {
       0% {
-        background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);
         height: 20%;
         border-radius: calc($height * 0.2 * 0.5);
+        background-image: linear-gradient(to right, #fa709a 0%, #fee140 100%);
       }
+
       25% {
-        background-image: linear-gradient(to top, #d2c199 0%, #2cd835 100%);
         height: 60%;
         border-radius: calc($height * 0.6 * 0.5);
+        background-image: linear-gradient(to top, #d2c199 0%, #2cd835 100%);
       }
+
       50% {
-        background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
         height: 100%;
         border-radius: calc($height * 1 * 0.5);
+        background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
       }
+
       75% {
-        background-image: linear-gradient(to top, #d2c199 0%, #2cd835 100%);
         height: 60%;
         border-radius: calc($height * 0.6 * 0.5);
+        background-image: linear-gradient(to top, #d2c199 0%, #2cd835 100%);
       }
+
       100% {
-        background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
         height: 20%;
         border-radius: calc($height * 0.2 * 0.5);
+        background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
       }
     }
+
+    display: flex;
+    position: relative;
+    align-items: center;
+    height: $height;
   }
 
   .annulus-content {
     $width: 200px;
     $height: 100px;
     $gap: 15px;
-    width: $width;
-    height: $height;
-    margin-top: -$height;
-    position: relative;
-    cursor: pointer;
-
-    .item {
-      border: 5px solid;
-      border-radius: 50% 50% 0 0/100% 100% 0 0;
-      border-bottom: none;
-      position: absolute;
-      bottom: 0;
-      animation: rotate 2s cubic-bezier(0.11, 0.85, 0.22, 1.3) infinite;
-      transform-origin: 50% 100%;
-      transition: all 0.5s;
-    }
-
-    .item1 {
-      @extend .item;
-      border-color: #e94545;
-      $width1: $width;
-      width: $width1;
-      height: calc($width1 / 2);
-      left: calc(50% - $width1 / 2);
-    }
-    .item2 {
-      @extend .item;
-      border-color: #eb8f34;
-      $width2: calc($width - $gap * 2);
-      width: $width2;
-      height: calc($width2 / 2);
-      left: calc(50% - $width2 / 2);
-      animation-delay: -60ms;
-    }
-    .item3 {
-      @extend .item;
-      border-color: #eecf69;
-      $width3: calc($width - $gap * 2 * 2);
-      width: $width3;
-      height: calc($width3 / 2);
-      left: calc(50% - $width3 / 2);
-      animation-delay: calc(-60ms * 2);
-    }
-    .item4 {
-      @extend .item;
-      border-color: #215221;
-      $width4: calc($width - $gap * 2 * 3);
-      width: $width4;
-      height: calc($width4 / 2);
-      left: calc(50% - $width4 / 2);
-      animation-delay: calc(-60ms * 3);
-    }
-    .item5 {
-      @extend .item;
-      border-color: #87bb80;
-      $width5: calc($width - $gap * 2 * 4);
-      width: $width5;
-      height: calc($width5 / 2);
-      left: calc(50% - $width5 / 2);
-      animation-delay: calc(-60ms * 4);
-    }
-    .item6 {
-      @extend .item;
-      border-color: #87ceeb;
-      $width6: calc($width - $gap * 2 * 5);
-      width: $width6;
-      height: calc($width6 / 2);
-      left: calc(50% - $width6 / 2);
-      animation-delay: calc(-60ms * 5);
-    }
-    .item7 {
-      @extend .item;
-      border-color: #c393eb;
-      $width7: calc($width - $gap * 2 * 6);
-      width: $width7;
-      height: calc($width7 / 2);
-      left: calc(50% - $width7 / 2);
-      animation-delay: calc(-60ms * 6);
-    }
-
-    &:hover {
-      .item {
-        filter: brightness(1.5);
-        animation-play-state: paused;
-      }
-    }
 
     @keyframes rotate {
       0%,
       25% {
         transform: rotate(0deg);
       }
+
       100% {
         transform: rotate(360deg);
+      }
+    }
+
+    position: relative;
+    width: $width;
+    height: $height;
+    margin-top: -$height;
+    cursor: pointer;
+
+    .item {
+      position: absolute;
+      bottom: 0;
+      transform-origin: 50% 100%;
+      transition: all 0.5s;
+      animation: rotate 2s cubic-bezier(0.11, 0.85, 0.22, 1.3) infinite;
+      border: 5px solid;
+      border-bottom: none;
+      border-radius: 50% 50% 0 0/100% 100% 0 0;
+    }
+
+    .item1 {
+      $width1: $width;
+
+      @extend .item;
+
+      left: calc(50% - $width1 / 2);
+      width: $width1;
+      height: calc($width1 / 2);
+      border-color: #e94545;
+    }
+
+    .item2 {
+      $width2: calc($width - $gap * 2);
+
+      @extend .item;
+
+      left: calc(50% - $width2 / 2);
+      width: $width2;
+      height: calc($width2 / 2);
+      animation-delay: -60ms;
+      border-color: #eb8f34;
+    }
+
+    .item3 {
+      $width3: calc($width - $gap * 2 * 2);
+
+      @extend .item;
+
+      left: calc(50% - $width3 / 2);
+      width: $width3;
+      height: calc($width3 / 2);
+      animation-delay: calc(-60ms * 2);
+      border-color: #eecf69;
+    }
+
+    .item4 {
+      $width4: calc($width - $gap * 2 * 3);
+
+      @extend .item;
+
+      left: calc(50% - $width4 / 2);
+      width: $width4;
+      height: calc($width4 / 2);
+      animation-delay: calc(-60ms * 3);
+      border-color: #215221;
+    }
+
+    .item5 {
+      $width5: calc($width - $gap * 2 * 4);
+
+      @extend .item;
+
+      left: calc(50% - $width5 / 2);
+      width: $width5;
+      height: calc($width5 / 2);
+      animation-delay: calc(-60ms * 4);
+      border-color: #87bb80;
+    }
+
+    .item6 {
+      $width6: calc($width - $gap * 2 * 5);
+
+      @extend .item;
+
+      left: calc(50% - $width6 / 2);
+      width: $width6;
+      height: calc($width6 / 2);
+      animation-delay: calc(-60ms * 5);
+      border-color: #87ceeb;
+    }
+
+    .item7 {
+      $width7: calc($width - $gap * 2 * 6);
+
+      @extend .item;
+
+      left: calc(50% - $width7 / 2);
+      width: $width7;
+      height: calc($width7 / 2);
+      animation-delay: calc(-60ms * 6);
+      border-color: #c393eb;
+    }
+
+    &:hover {
+      .item {
+        filter: brightness(1.5);
+        animation-play-state: paused;
       }
     }
   }

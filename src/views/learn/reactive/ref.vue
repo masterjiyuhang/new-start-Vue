@@ -114,14 +114,13 @@ $base-font-size: 28px;
 
 @mixin base-title($height: 48px) {
   height: $height;
-  font-size: $base-font-size;
-  font-family: Poppins-Bold, Poppins;
-  font-weight: bold;
   color: #000c31;
+  font-size: $base-font-size;
+  font-weight: bold;
   line-height: 38px;
 }
 
 .title {
-  @include base-title();
+  @include base-title;
 }
 </style>

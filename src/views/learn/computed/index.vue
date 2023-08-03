@@ -80,8 +80,8 @@ const totalPrice = computed({
 .test-computed {
   .base-table > * > * > * {
     border-width: 1px;
-    border-color: #333;
     border-style: solid;
+    border-color: #333;
   }
 }
 </style>

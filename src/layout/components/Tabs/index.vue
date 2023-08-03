@@ -345,37 +345,37 @@ $height-nav-scroll: 40px;
 
 @include cch.b(tabs) {
   background-color: #fff;
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 15%);
   color: aliceblue;
-  box-shadow: 0px 2px 8px 0px rgb(0 0 0 / 15%);
 
   .router-history {
-    // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-    background: rgb(255, 255, 255);
     padding: 0 6px;
-    border-top: 1px solid $border-color;
     padding: 0;
+    border-top: 1px solid $border-color;
+
+    // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    background: rgb(255 255 255);
 
     .el-tabs {
       background-color: #fff;
 
       .el-tabs__header {
-        margin: 0px 0 0 0;
+        margin: 0;
         border: none;
 
         .el-tabs__item {
-          background-color: rgba(64, 158, 255, 0.08);
-          box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
+          height: $height-nav-scroll;
           border-radius: 5px;
-          height: $height-nav-scroll;
-          height: $height-nav-scroll;
+          background-color: rgb(64 158 255 / 8%);
+          box-shadow: 0 2px 8px 0 rgb(0 0 0 / 15%);
 
           + .el-tabs__item {
-            border-left: 0px solid $border-color;
+            border-left: 0 solid $border-color;
           }
         }
 
         .el-tabs__item.is-active {
-          background-color: rgba(136, 216, 185, 0.39);
+          background-color: rgb(136 216 185 / 39%);
         }
 
         .el-tabs__nav {
@@ -386,18 +386,18 @@ $height-nav-scroll: 40px;
   }
 
   .contextmenu {
+    position: absolute;
+    z-index: 3000;
     width: 100px;
     margin: 0;
-    border: 1px solid #ccc;
-    background: #fff;
-    z-index: 3000;
-    position: absolute;
-    list-style-type: none;
     padding: 5px 0;
+    list-style-type: none;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
+    background: #fff;
+    box-shadow: 2px 2px 3px 0 rgb(0 0 0 / 20%);
     color: #333;
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.2);
+    font-size: 14px;
   }
 
   .el-tabs__item .el-icon-close {
@@ -406,12 +406,12 @@ $height-nav-scroll: 40px;
 
   .el-tabs__item .dot {
     content: "";
+    display: inline-block;
     width: 9px;
     height: 9px;
     margin-right: 8px;
-    display: inline-block;
-    border-radius: 50%;
     transition: background-color 0.2s;
+    border-radius: 50%;
   }
 
   .contextmenu li {

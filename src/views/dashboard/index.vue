@@ -156,36 +156,36 @@ onMounted(() => {
 
   .top {
     box-sizing: border-box;
-    padding: 20px;
     margin-bottom: 20px;
+    padding: 20px;
 
     .top-content {
       // height: 200px;
       .dashboard-card-left {
-        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.15);
         box-sizing: border-box;
         height: 100%;
         padding: 40px 0 30px 30px;
         overflow: hidden;
-        color: #ffffff;
+        border-radius: 20px;
         background: url("../../assets/system/HalloweenIllustrations5.png");
         background-position: 50%;
         background-size: cover;
-        border-radius: 20px;
+        box-shadow: 0 2px 8px 0 rgb(0 0 0 / 15%);
+        color: #fff;
 
         .left-title {
-          font-size: 24px;
           color: antiquewhite;
+          font-size: 24px;
         }
 
         .left-number {
+          width: 100%;
           overflow: hidden;
+          color: antiquewhite;
+          font-size: 58px;
+          text-align: center;
           text-overflow: ellipsis;
           white-space: nowrap;
-          width: 100%;
-          font-size: 58px;
-          color: antiquewhite;
-          text-align: center;
         }
       }
 
@@ -197,13 +197,14 @@ onMounted(() => {
         height: 100%;
 
         .traffic-box {
-          box-sizing: border-box;
           display: flex;
+          box-sizing: border-box;
           flex-direction: column;
           width: 47%;
           height: 48%;
           padding: 25px;
           border-radius: 30px;
+
           .traffic-img {
             display: flex;
             align-items: center;
@@ -211,43 +212,48 @@ onMounted(() => {
             width: 70px;
             height: 70px;
             margin-bottom: 10px;
-            background-color: #ffffff;
             border-radius: 19px;
+            background-color: #fff;
           }
         }
+
         img {
           width: 33px;
           height: 33px;
         }
+
         .item-value {
           margin-bottom: 4px;
-          font-family: DIN;
+          color: #1a1a37;
           font-size: 28px;
           font-weight: bold;
-          color: #1a1a37;
         }
+
         .traffic-name {
           overflow: hidden;
-          font-family: DIN;
-          font-size: 15px;
           color: #1a1a37;
+          font-size: 15px;
           white-space: nowrap;
         }
+
         .gitee-traffic {
           background: url("../../assets/system/HalloweenIllustrations11.png");
           background-color: #e8faea;
           background-size: 100% 100%;
         }
+
         .gitHub-traffic {
           background: url("../../assets/system/HalloweenIllustrations10.png");
           background-color: #e7e1fb;
           background-size: 100% 100%;
         }
+
         .today-traffic {
           background: url("../../assets/system/HalloweenIllustrations3.png");
           background-color: #fdf3e9;
           background-size: 100% 100%;
         }
+
         .yesterday-traffic {
           background: url("../../assets/system/HalloweenIllustrations9.png");
           background-color: #f0f5fb;
@@ -256,20 +262,21 @@ onMounted(() => {
       }
 
       .dashboard-card-right {
-        box-sizing: border-box;
         display: flex;
+        box-sizing: border-box;
         flex-direction: column;
         width: 100%;
         height: 430px;
         border: 1px solid #e5e7eb;
         border-radius: 25px;
+
         .echarts-title {
           padding: 15px 20px;
-          font-family: DIN;
+          border-bottom: 1px solid #e5e7eb;
           font-size: 18px;
           font-weight: bold;
-          border-bottom: 1px solid #e5e7eb;
         }
+
         .book-echarts {
           flex: 1;
           width: 100%;
@@ -281,6 +288,7 @@ onMounted(() => {
   .bottom {
     position: relative;
   }
+
   // .top {
 
   // }

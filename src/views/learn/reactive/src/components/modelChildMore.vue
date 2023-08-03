@@ -108,14 +108,15 @@ watch(
   display: flex;
   flex-wrap: wrap;
   width: calc(25px * 10 + 9px);
+
   .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 25px;
     height: 25px;
-    border: 1px solid #ccc;
     list-style-type: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 1px solid #ccc;
     cursor: pointer;
   }
 }

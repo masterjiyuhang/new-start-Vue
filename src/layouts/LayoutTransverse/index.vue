@@ -77,7 +77,7 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
 </script>
 
 <style scoped lang="scss">
-@import "./index.scss";
+@import "./index";
 </style>
 
 <style lang="scss">
@@ -87,27 +87,31 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
     .el-menu-item,
     .el-sub-menu {
       height: 54px !important;
+
       .el-sub-menu__title {
         height: 100%;
       }
     }
+
     .el-sub-menu__hide-arrow {
       width: 54px !important;
     }
   }
+
   .el-menu,
   .el-menu--popup {
     .el-menu-item {
       &.is-active {
-        color: #ffffff;
         background: #060708;
+        color: #fff;
+
         &::before {
+          content: "";
           position: absolute;
           top: 0;
           bottom: 0;
           left: 0;
           width: 4px;
-          content: "";
           background: var(--el-color-primary);
         }
       }

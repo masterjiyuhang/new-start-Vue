@@ -283,11 +283,11 @@ onMounted(() => {
 
 .cch-login-page {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100%;
   min-height: 550px;
-  background-color: #eeeeee;
+  background-color: #eee;
   background-image: url("@/assets/images/login_bg.svg");
   background-size: 100% 100%;
   background-size: cover;
@@ -296,60 +296,68 @@ onMounted(() => {
     position: relative;
     box-sizing: border-box;
     padding: 0 50px;
-    background-color: hsl(0deg 0% 100% / 80%);
     border-radius: 10px;
+    background-color: hsl(0deg 0% 100% / 80%);
+
     .dark {
       position: absolute;
       top: 13px;
       right: 18px;
     }
+
     .login-left {
       width: 800px;
       margin: 0 10px 0 0;
+
       img {
         width: 100%;
         height: 100%;
       }
     }
+
     .login-form {
+      position: relative;
       width: 450px;
       padding: 50px 40px 25px;
-      background-color: #ffffff;
-      box-shadow: inset 20px 20px 20px rgba(0, 0, 0, 0.05),
-        25px 35px 20px rgba(0, 0, 0, 0.05), 25px 30px 30px rgba(0, 0, 0, 0.05),
-        inset -20px -20px 25px rgba(255, 255, 255, 0.9);
       transition: 0.5s;
       border-radius: 66% 48% 33% 67% / 22% 95% 55% 62%;
-      position: relative;
+      background-color: #fff;
+      box-shadow: inset 20px 20px 20px rgb(0 0 0 / 5%),
+        25px 35px 20px rgb(0 0 0 / 5%), 25px 30px 30px rgb(0 0 0 / 5%),
+        inset -20px -20px 25px rgb(255 255 255 / 90%);
 
       .login-logo {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 45px;
+
         .login-icon {
           width: 60px;
           height: 52px;
         }
+
         .logo-text {
-          padding: 0 0 0 25px;
           margin: 0;
+          padding: 0 0 0 25px;
+          color: #34495e;
           font-size: 42px;
           font-weight: bold;
-          color: #34495e;
           white-space: nowrap;
         }
       }
+
       .el-form-item {
         margin-bottom: 20px;
       }
+
       .login-btn {
         display: flex;
         justify-content: center;
         width: 80%;
         margin: 40px auto 0;
-        white-space: nowrap;
         transition: 0.6s;
+        white-space: nowrap;
 
         &:hover {
           width: 100%;
@@ -358,18 +366,19 @@ onMounted(() => {
 
       .form-btn {
         width: 33%;
-        color: #fee;
         overflow: hidden;
+        color: #fee;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+
       :deep(.el-button > span) {
         display: inline-block;
         align-items: center;
         overflow: hidden;
+        line-height: 1.5;
         text-overflow: ellipsis;
         white-space: nowrap;
-        line-height: 1.5;
       }
 
       // .login-btn-box {
@@ -389,8 +398,8 @@ onMounted(() => {
       width: 35px;
       height: 35px;
       border-radius: 50%;
-      background-color: #f00;
       opacity: 0.9;
+      background-color: #f00;
     }
 
     &::after {
@@ -401,13 +410,13 @@ onMounted(() => {
       width: 15px;
       height: 15px;
       border-radius: 50%;
-      background-color: #f80;
       opacity: 0.9;
+      background-color: #f80;
     }
   }
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (width <= 1250px) {
   .login-left {
     display: none;
   }
@@ -415,39 +424,42 @@ onMounted(() => {
   .login-form {
     .form-btn {
       width: 33%;
-      color: #fee;
       overflow: hidden;
+      color: #fee;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
     :deep(.el-button > span) {
       display: inline-block;
       align-items: center;
       overflow: hidden;
+      line-height: 1.5;
       text-overflow: ellipsis;
       white-space: nowrap;
-      line-height: 1.5;
     }
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
   .login-form {
     width: 97% !important;
+
     .form-btn {
       width: 33%;
-      color: #f80;
       overflow: hidden;
+      color: #f80;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
     :deep(.el-button > span) {
       display: inline-block;
       align-items: center;
       overflow: hidden;
+      line-height: 1.5;
       text-overflow: ellipsis;
       white-space: nowrap;
-      line-height: 1.5;
     }
   }
 }

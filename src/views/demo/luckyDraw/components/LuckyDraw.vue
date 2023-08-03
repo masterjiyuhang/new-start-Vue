@@ -156,27 +156,27 @@ const startRun = () => {
 
   &__bg {
     position: relative;
+    z-index: 2;
     width: 420px;
     height: 550px;
-    z-index: 2;
-    background: url("@/assets/luckyDraw/turntable-bg.png") no-repeat 100% 100%;
-    background-size: contain;
-    background-position: center;
     margin: auto;
+    background: url("@/assets/luckyDraw/turntable-bg.png") no-repeat 100% 100%;
+    background-position: center;
+    background-size: contain;
 
     .light {
       width: 411px;
       height: 415px;
+      animation: rotate 15s linear infinite;
       background: url("@/assets/luckyDraw/light.png") no-repeat 100% 100%;
       background-size: contain;
-      animation: rotate 15s linear infinite;
     }
 
     .pointer {
       position: absolute;
+      z-index: 1;
       top: 122px;
       left: 38%;
-      z-index: 1;
       width: 103px;
       height: 134px;
       background: url("@/assets/luckyDraw/turntable-pointer.png") no-repeat 100%
@@ -199,47 +199,55 @@ const startRun = () => {
       .prize {
         position: absolute;
         top: 65px;
-        left: 0;
         right: 0;
-        margin: 0 auto;
+        left: 0;
         width: 250px;
         height: 250px;
+        margin: 0 auto;
         transform: rotate(-15deg);
+
         li {
           position: absolute;
           top: 0;
           left: 0;
           width: 125px;
           height: 125px;
+          transform-origin: right bottom;
           border-radius: 50%;
           color: #000;
-          text-align: center;
           line-height: 125px;
-          transform-origin: right bottom;
+          text-align: center;
+
           &:nth-child(1) {
             transform: rotate(60deg);
           }
+
           &:nth-child(2) {
             transform: rotate(120deg);
           }
+
           &:nth-child(3) {
             transform: rotate(180deg);
           }
+
           &:nth-child(4) {
             transform: rotate(240deg);
           }
+
           &:nth-child(5) {
             transform: rotate(300deg);
           }
+
           &:nth-child(6) {
             transform: rotate(360deg);
           }
+
           .img {
             display: block;
             width: 75px;
             height: 75px;
-            border: 0;
             transform: rotate(-45deg);
+            border: 0;
           }
         }
       }
@@ -251,9 +259,11 @@ const startRun = () => {
   0% {
     transform: rotate(0deg);
   }
+
   50% {
     transform: rotate(180deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

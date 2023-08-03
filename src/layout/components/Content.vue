@@ -24,16 +24,13 @@ import Tab from "./Tabs/tabs.vue";
 <style scoped lang="scss">
 .cch-content {
   position: absolute;
+
+  // top: 65px;
+  inset: 125px 0 0 cch-variables.$side-bar-width;
   width: auto;
   min-width: 500px;
-  position: absolute;
-  left: cch-variables.$side-bar-width;
-  right: 0;
-  // top: 65px;
-  top: 125px;
-  bottom: 0;
+  padding: 20px;
   overflow: auto;
   transition: left cch-variables.$side-bar-animate;
-  padding: 20px;
 }
 </style>

@@ -191,8 +191,8 @@ const listData = ref([
   overflow: hidden;
 
   ul {
-    padding: 0;
     margin: 0 auto;
+    padding: 0;
     list-style: none;
 
     li,

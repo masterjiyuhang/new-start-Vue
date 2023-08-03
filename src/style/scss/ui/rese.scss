@@ -2,12 +2,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 100%;
 	font-size:12px;
+	vertical-align: baseline;
 }
+
 img {
 	border: none;
 }
@@ -16,36 +17,45 @@ img {
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
-blockquote:before, blockquote:after, q:before, q:after {
+
+blockquote::before, blockquote::after, q::before, q::after {
 	content: '';
 	content: none;
 }
+
 table {
-	border-collapse: collapse;
 	border-spacing: 0;
+	border-collapse: collapse;
 }
+
 .clearfix {
 	*zoom: 1; /* for IE6-7 */
 }
-.clearfix:before, .clearfix:after {
+
+.clearfix::before, .clearfix::after {
+	content: "";
 	display: table;
 	line-height: 0;
-	content: "";
 }
-.clearfix:after {
+
+.clearfix::after {
 	clear: both;
 }
+
 a {
-	text-decoration: none;
 	border: none;
 	outline: none;
+	text-decoration: none;
 }

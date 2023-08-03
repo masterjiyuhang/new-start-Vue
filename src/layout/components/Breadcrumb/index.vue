@@ -74,8 +74,8 @@ watchEffect(() => {
 
 .breadcrumb-enter,
 .breadcrumb-leave-active {
-  opacity: 0;
   transform: translateX(20px);
+  opacity: 0;
 }
 
 .breadcrumb-move {

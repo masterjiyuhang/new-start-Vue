@@ -60,7 +60,7 @@ const activeMenu = computed(() =>
 </script>
 
 <style scoped lang="scss">
-@import "./index.scss";
+@import "./index";
 </style>
 
 <style lang="scss">
@@ -72,18 +72,20 @@ const activeMenu = computed(() =>
       flex-direction: column;
     }
   }
+
   .el-menu,
   .el-menu--popup {
     .el-menu-item {
       &.is-active {
         background: var(--el-color-primary-light-9);
+
         &::before {
+          content: "";
           position: absolute;
           top: 0;
           bottom: 0;
           left: 0;
           width: 4px;
-          content: "";
           background: var(--el-color-primary);
         }
       }

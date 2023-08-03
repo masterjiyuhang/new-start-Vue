@@ -20,15 +20,16 @@ import styles from "./home.module.scss";
   $s: 30%; /* image size */
   $b: 55px; /* border thickness */
   $c: #d8bfc3; /* border color */
-  --f: 1; /* initial scale */
 
   $g: 50% / calc(100% / var(--f)) 100% no-repeat content-box;
   $o: calc((1 / var(--f) - 1) * $s / 2 - $b);
 
+  --f: 1; /* initial scale */
+
   width: $s;
-  aspect-ratio: 1;
   padding-top: calc($s / 5);
-  cursor: pointer;
+  transform: scale(var(--f));
+  transition: 0.5s;
   border-radius: 0 0 calc($s / 2) calc($s / 2);
   outline: $b solid $c;
   outline-offset: $o;
@@ -39,11 +40,11 @@ import styles from "./home.module.scss";
       #0000
     )
     $g;
+  cursor: pointer;
+  aspect-ratio: 1;
   mask: linear-gradient(#000 0 0) no-repeat 50% calc(-1 * $o) /
       calc(100% / var(--f) - 2 * $b) 50%,
     radial-gradient(circle closest-side, #000 99%, #0000) $g;
-  transform: scale(var(--f));
-  transition: 0.5s;
 
   &:hover {
     --f: 1.6; /* hover scale */

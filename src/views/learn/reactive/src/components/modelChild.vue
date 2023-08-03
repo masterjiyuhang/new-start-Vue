@@ -58,18 +58,18 @@ const value = computed({
 
 <style lang="scss" scoped>
 .cch-dialog {
+  display: flex;
+  flex-direction: column;
   width: 300px;
   height: 300px;
   border: 1px solid #ccc;
-  display: flex;
-  flex-direction: column;
 
   .header,
   .footer {
-    border-bottom: 1px solid #f80;
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    border-bottom: 1px solid #f80;
   }
 
   .footer {
@@ -77,8 +77,8 @@ const value = computed({
   }
 
   .content {
-    padding: 10px;
     flex: 1;
+    padding: 10px;
   }
 }
 </style>

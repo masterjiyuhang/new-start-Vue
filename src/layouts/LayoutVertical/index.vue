@@ -55,7 +55,7 @@ const { showMenuListGet: menuList } = storeToRefs(AuthStore());
 </script>
 
 <style scoped lang="scss">
-@import "./index.scss";
+@import "./index";
 </style>
 
 <style lang="scss">
@@ -65,13 +65,14 @@ const { showMenuListGet: menuList } = storeToRefs(AuthStore());
     .el-menu-item {
       &.is-active {
         background: #060708;
+
         &::before {
+          content: "";
           position: absolute;
           top: 0;
           bottom: 0;
           left: 0;
           width: 4px;
-          content: "";
           background: var(--el-color-primary);
         }
       }

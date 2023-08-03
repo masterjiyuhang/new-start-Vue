@@ -19,8 +19,8 @@ const goBackHome = () => {
 <style lang="scss" scoped>
 .not_found_page {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>

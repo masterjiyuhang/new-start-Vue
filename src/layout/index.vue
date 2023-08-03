@@ -24,14 +24,15 @@ import Body from "./components/Body.vue";
 
 <style lang="scss">
 @include cch.b(layout) {
-  position: relative;
-  height: 100%;
-  width: 100%;
 
   @include cch.pseudo(after) {
     content: "";
     display: table;
     clear: both;
   }
+
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 </style>

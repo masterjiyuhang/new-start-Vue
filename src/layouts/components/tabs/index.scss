@@ -1,5 +1,5 @@
 .tabs-box {
-  background-color: #ffffff;
+  background-color: #fff;
 
   :deep(.tabs-menu) {
     position: relative;
@@ -25,8 +25,8 @@
     .el-tabs--card > .el-tabs__header {
       box-sizing: border-box;
       height: 40px;
-      padding: 0 10px;
       margin: 0;
+      padding: 0 10px;
     }
 
     .el-tabs--card > .el-tabs__header .el-tabs__nav {
@@ -34,13 +34,13 @@
     }
 
     .el-tabs--card > .el-tabs__header .el-tabs__item {
-      color: #cccccc;
       border: none;
+      color: #ccc;
     }
 
     .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
-      color: var(--el-color-primary);
       border-bottom: 2px solid var(--el-color-primary);
+      color: var(--el-color-primary);
     }
 
     .el-tabs__item .is-icon-close svg {

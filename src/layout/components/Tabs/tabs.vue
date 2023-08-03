@@ -122,21 +122,21 @@ onMounted(() => {
 $base-tabs-height: 60px;
 
 @include cch.b(base-tabs) {
-  height: $base-tabs-height;
-  box-shadow: 0px 2px 8px 0px rgba(92, 105, 167, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
 
   @include cch.e(tabItem) {
+    width: 120px;
     border: 1px solid #333;
     border-radius: 4px;
     color: #333;
-    width: 120px;
     text-align: center;
-
     cursor: pointer;
   }
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: $base-tabs-height;
+  box-shadow: 0 2px 8px 0 rgb(92 105 167 / 15%);
 
   .isActive {
     background-color: #f80;

@@ -13,10 +13,6 @@ const { isCollapse } = storeToRefs(useGlobalSettingStore());
 
 <style lang="scss">
 @include cch.b(body) {
-  min-height: 100vh;
-  transition: margin-left cch-variables.$side-bar-animate;
-  margin-left: cch-variables.$side-bar-width;
-  background-color: cch-variables.$bg-color;
 
   @include cch.m(collapse) {
     margin-left: cch-variables.$side-bar-width-mini !important;
@@ -25,6 +21,11 @@ const { isCollapse } = storeToRefs(useGlobalSettingStore());
       left: cch-variables.$side-bar-width-mini !important;
     }
   }
+
+  min-height: 100vh;
+  margin-left: cch-variables.$side-bar-width;
+  transition: margin-left cch-variables.$side-bar-animate;
+  background-color: cch-variables.$bg-color;
 }
 
 @include cch.is-windows {
