@@ -62,9 +62,8 @@ const itemtype = computed(() => {
     float: left;
     color: rgb(20 3 3 / 65%);
     font-size: 14px;
-    text-align: left;
 
-    /deep/.el-button {
+    ::v-deep(.el-button) {
       padding: 0;
       font-size: 14px;
     }

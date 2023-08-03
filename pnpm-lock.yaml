@@ -183,21 +183,24 @@ devDependencies:
   postcss:
     specifier: ^8.4.21
     version: 8.4.21
+  postcss-html:
+    specifier: ^1.5.0
+    version: 1.5.0
   postcss-nesting:
     specifier: ^11.2.2
     version: 11.2.2(postcss@8.4.21)
   postcss-pxtorem:
     specifier: ^6.0.0
     version: 6.0.0(postcss@8.4.21)
+  postcss-scss:
+    specifier: ^4.0.6
+    version: 4.0.6(postcss@8.4.21)
   prettier:
     specifier: ^2.8.7
     version: 2.8.7
   sass:
     specifier: ^1.61.0
     version: 1.61.0
-  scss:
-    specifier: ^0.2.4
-    version: 0.2.4
   stylelint:
     specifier: ^15.10.2
     version: 15.10.2
@@ -5169,11 +5172,6 @@ packages:
       isobject: 3.0.1
     dev: true
 
-  /ometa@0.2.2:
-    resolution: {integrity: sha512-LZuoK/yjU3FvrxPjUXUlZ1bavCfBPqauA7fsNdwi+AVhRdyk2IzgP3JRnevvjzQ6fKHdUw8YISshf53FmpHrng==}
-    engines: {node: '>= 0.2.0'}
-    dev: true
-
   /on-finished@2.3.0:
     resolution: {integrity: sha512-ikqdkGAAyf/X/gPhXGvfgAytDZtDbr+bkNUJ0N9h5MI/dmdgCs3l6hoHrcUv41sRKew3jIwrp4qQDXiK99Utww==}
     engines: {node: '>= 0.8'}
@@ -5890,13 +5888,6 @@ packages:
     engines: {node: '>=v12.22.7'}
     dependencies:
       xmlchars: 2.2.0
-    dev: true
-
-  /scss@0.2.4:
-    resolution: {integrity: sha512-4u8V87F+Q/upVhUmhPnB4C1R11xojkRkWjExL2v0CX2EXTg18VrKd+9JWoeyCp2VEMdSpJsyAvVU+rVjogh51A==}
-    engines: {node: '>= 0.2.0'}
-    dependencies:
-      ometa: 0.2.2
     dev: true
 
   /scule@1.0.0:

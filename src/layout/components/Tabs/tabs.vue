@@ -122,7 +122,6 @@ onMounted(() => {
 $base-tabs-height: 60px;
 
 @include cch.b(base-tabs) {
-
   @include cch.e(tabItem) {
     width: 120px;
     border: 1px solid #333;

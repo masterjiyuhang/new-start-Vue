@@ -24,7 +24,6 @@ import Body from "./components/Body.vue";
 
 <style lang="scss">
 @include cch.b(layout) {
-
   @include cch.pseudo(after) {
     content: "";
     display: table;

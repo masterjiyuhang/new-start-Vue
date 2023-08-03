@@ -29,6 +29,7 @@ import { LoadingEffect } from "../LoadingEffect/index";
       margin-left: 0;
     }
   }
+
   @keyframes move-to-left {
     50% {
       margin-right: 0;

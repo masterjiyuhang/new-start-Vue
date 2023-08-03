@@ -13,7 +13,6 @@ const { isCollapse } = storeToRefs(useGlobalSettingStore());
 
 <style lang="scss">
 @include cch.b(body) {
-
   @include cch.m(collapse) {
     margin-left: cch-variables.$side-bar-width-mini !important;
 

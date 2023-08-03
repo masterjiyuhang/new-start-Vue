@@ -59,16 +59,27 @@ module.exports = {
         ignorePseudoClasses: ["global", "v-deep", "deep"], // 忽略属性，修改
       },
     ],
-
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        ignorePseudoElements: ["v-deep", "@tailwind"],
+      },
+    ],
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        ignoreAtRules: ["tailwind"],
+      },
+    ],
     "scss/operator-no-newline-after": null, // 关闭 禁止在 Sass 运算符之后换行
     "scss/operator-no-newline-before": null,
-
     "scss/no-global-function-names": null, // 关闭 禁止使用全局函数名称
     "scss/at-function-pattern": null, // 关闭 指定类似 Sass/SCSS 的 mixin 名称的模式
     "scss/at-mixin-pattern": null,
     "scss/operator-no-unspaced": null,
     "scss/at-extend-no-missing-placeholder": null,
-    "scss/dollar-variable-pattern": null, //
+    "scss/dollar-variable-pattern": null,
   },
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts"],
 };

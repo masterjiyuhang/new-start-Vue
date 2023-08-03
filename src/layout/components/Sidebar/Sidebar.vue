@@ -78,7 +78,6 @@ watch(
 $select-bg: cch-variables.$nav-select-bg;
 
 @include cch.b(sidebar) {
-
   @include cch.m(collapse) {
     width: cch-variables.$side-bar-width-mini !important;
 
@@ -117,7 +116,6 @@ $select-bg: cch-variables.$nav-select-bg;
     text-align: center;
 
     .site-name {
-
       @include cch.text-overflow-1;
 
       margin-left: 10px;
@@ -166,7 +164,6 @@ $select-bg: cch-variables.$nav-select-bg;
     .el-sub-menu__title {
       // 选中状态
       @include cch.when(active) {
-
         @extend %icon;
 
         position: relative;

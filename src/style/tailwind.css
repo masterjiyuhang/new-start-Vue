@@ -37,11 +37,13 @@
 
   .ts-demo-card {
     @apply p-2 text-base shadow-cyan-600 text-cyan-700;
+
     box-shadow: 0 0 2px;
   }
 
   .ts-demo-card-child {
     @apply p-2 text-base shadow-yellow-400 text-cyan-400;
+
     box-shadow: 0 0 2px;
   }
 }
