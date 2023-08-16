@@ -32,7 +32,7 @@ export default {
       component: "/tsLearn/lesson2",
       meta: {
         icon: "Menu",
-        title: "第二节-基础类型",
+        title: "第二节-类型工具",
         isLink: "",
         isHide: false,
         isFull: false,
