@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div class="wrapper-page">lesson 2</div>
 </template>
 
 <script setup lang="ts">

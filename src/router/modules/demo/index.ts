@@ -57,50 +57,7 @@ export default {
         isKeepAlive: true,
       },
     },
-    {
-      path: "/demo/learnTS",
-      name: "lesson1",
-      redirect: "/demo/learnTS/lesson1",
-      meta: {
-        icon: "Menu",
-        title: "TypeScript学习",
-        isLink: "",
-        isHide: false,
-        isFull: false,
-        isAffix: false,
-        isKeepAlive: true,
-      },
-      children: [
-        {
-          path: "/demo/learnTS/lesson1",
-          name: "leson1",
-          component: "/demo/tsLearn/lesson1",
-          meta: {
-            icon: "Menu",
-            title: "第一节-基础类型",
-            isLink: "",
-            isHide: false,
-            isFull: false,
-            isAffix: false,
-            isKeepAlive: true,
-          },
-        },
-        {
-          path: "/demo/learnTS/lesson2",
-          name: "leson2",
-          component: "/demo/tsLearn/lesson2",
-          meta: {
-            icon: "Menu",
-            title: "第二节-基础类型",
-            isLink: "",
-            isHide: false,
-            isFull: false,
-            isAffix: false,
-            isKeepAlive: true,
-          },
-        },
-      ],
-    },
+
     {
       path: "/demo/loading",
       name: "loading",
