@@ -1,7 +1,5 @@
 <template>
   <div class="wrapper-page">
-    <div>asdas</div>
-
     <el-collapse accordion>
       <el-collapse-item name="1">
         <template #title>
@@ -232,7 +230,7 @@
           {{ `type T = Record<'a'|'b', number>; // { a: number, b: number }` }}
         </div>
         <div>
-          具体实现 {{ `type Record<K extends string|number|symbol, T>  = { [P in K]: T; }` }}
+          具体实现 {{ `type Record<K extends string|number|symbol, T> = { [P in K]: T; }` }}
         </div>
       </el-collapse-item>
       <el-collapse-item name="14">
@@ -253,7 +251,7 @@
         </div>
         <div>
           符号-?表示去除可选属性的“问号”，使其变成必选属性。
-            符号+?表示增加可选属性的“问号”，等同于?
+          符号+?表示增加可选属性的“问号”，等同于?
         </div>
       </el-collapse-item>
       <el-collapse-item name="15">
@@ -264,19 +262,19 @@
           {{ `ReadonlyArray<Type>用来生成一个只读数组类型，类型参数Type表示数组成员的类型。` }}
         </div>
         <div class="text-cyan-500">
-          {{ `const values: ReadonlyArray<string>  = ['a', 'b', 'c'];` }}
+          {{ `const values: ReadonlyArray<string> = ['a', 'b', 'c'];` }}
         </div>
         <div>
           {{ ` values[0] = 'x'; // 报错` }}
         </div>
         <div>
           具体实现 {{ `interface ReadonlyArray<T> {
-  readonly length: number;
+            readonly length: number;
 
-  readonly [n: number]: T;
+            readonly [n: number]: T;
 
-  // ...
-}` }}
+            // ...
+            }` }}
         </div>
       </el-collapse-item>
       <el-collapse-item name="16">
@@ -287,16 +285,15 @@
           {{ `ReturnType<Type>提取函数类型Type的返回值类型，作为一个新类型返回。` }}
         </div>
         <div class="text-cyan-500">
-          {{ `type T1 = ReturnType<() => string>; // string` }}
+          {{ `type T1 = ReturnType<()=> string>; // string` }}
         </div>
         <div>
           {{ ` type T5 = ReturnType<typeof Math.random>; // number` }}
         </div>
         <div>
-          具体实现 {{ `type ReturnType<
-  T extends (...args: any) => any
-> =
-  T extends (...args: any) => infer R ? R : any;` }}
+          具体实现 {{ `type ReturnType< T extends (...args: any)=> any
+            > =
+            T extends (...args: any) => infer R ? R : any;` }}
         </div>
       </el-collapse-item>
       <el-collapse-item name="17">
@@ -314,10 +311,10 @@
         </div>
         <div>
           具体实现 {{ `type ThisParameterType<T> =
-  T extends (
-    this: infer U,
-    ...args: never
-  ) => any ? U : unknown；` }}
+            T extends (
+            this: infer U,
+            ...args: never
+            ) => any ? U : unknown；` }}
         </div>
       </el-collapse-item>
       <el-collapse-item name="18">
@@ -343,10 +340,10 @@
           {{ `Lowercase<StringType>` }}将字符串的每个字符转为小写。
         </div>
         <div>
-          {{ `Capitalize<StringType>` }}将字符串的第一个字符转为大写。
+          {{ `Capitalize<StringType>` }} 将字符串的第一个字符转为大写。
         </div>
         <div>
-          {{ `Uncapitalize<StringType>` }}将字符串的第一个字符转为小写。
+          {{ `Uncapitalize<StringType>` }} 将字符串的第一个字符转为小写。
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -355,17 +352,6 @@
 
 <script setup lang="ts">
 import { InfoFilled } from "@element-plus/icons-vue";
-// type GreetFunction = (a: string, b?: string) => void;
-// // function greeter(fn: (a: string) => void) {
-// function greeter(fn: GreetFunction) {
-//   fn("Hello, World");
-// }
-
-// function printToConsole(s: string) {
-//   console.log(s);
-// }
-
-// greeter(printToConsole);
 </script>
 
 <style scoped></style>
