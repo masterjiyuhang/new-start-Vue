@@ -14,7 +14,7 @@ export default {
   children: [
     {
       path: "/ts/learnTS/lesson1",
-      name: "leson1",
+      name: "lesson1",
       component: "/tsLearn/lesson1",
       meta: {
         icon: "Menu",
@@ -28,11 +28,25 @@ export default {
     },
     {
       path: "/ts/learnTS/lesson2",
-      name: "leson2",
+      name: "lesson2",
       component: "/tsLearn/lesson2",
       meta: {
         icon: "Menu",
         title: "第二节-类型工具",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    {
+      path: "/ts/learnTS/lesson3",
+      name: "lesson3",
+      component: "/tsLearn/lesson3",
+      meta: {
+        icon: "Menu",
+        title: "第三节-常用运算符",
         isLink: "",
         isHide: false,
         isFull: false,
