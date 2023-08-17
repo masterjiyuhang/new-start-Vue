@@ -158,6 +158,20 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/demo/bgfusion",
+      name: "bgfusion",
+      component: "/demo/BgFusion/index",
+      meta: {
+        title: "水滴融合",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",
