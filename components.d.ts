@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    CchList: typeof import('./src/components/cchList/index.vue')['default']
     CountTo: typeof import('./src/components/CountTo/src/CountTo.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBadge: typeof import('element-plus/es')['ElBadge']

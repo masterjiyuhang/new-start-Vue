@@ -3,7 +3,6 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 import svgLoader from "vite-svg-loader";
 import Inspect from "vite-plugin-inspect";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-import DefineOptions from "unplugin-vue-define-options/vite";
 
 import { viteBuildInfo } from "./viteBuildInfo";
 import { GvaPositionServer } from "./viteCodeServer";
@@ -15,12 +14,11 @@ import { configCopyPlugin } from "./copyPlugin";
 import { configComponentPlugin } from "./componentPlugin";
 import { configCompressPlugin } from "./compressPlugin";
 
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import path from "path";
 
 export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
   return [
-    DefineOptions(),
     viteBuildInfo(),
     GvaPositionServer(),
     GvaPosition(),
@@ -36,25 +34,25 @@ export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
     configCopyPlugin({ url: "build/config.js" }),
 
     createSvgIconsPlugin({
-        // Specify the icon folder to be cached
-        iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
-        // Specify symbolId format
-        symbolId: 'icon-[dir]-[name]',
+      // Specify the icon folder to be cached
+      iconDirs: [path.resolve(process.cwd(), "src/assets/icons")],
+      // Specify symbolId format
+      symbolId: "icon-[dir]-[name]",
 
-        /**
-         * custom insert position
-         * @default: body-last
-         */
-        inject: 'body-last',
+      /**
+       * custom insert position
+       * @default: body-last
+       */
+      inject: "body-last",
 
-        /**
-         * custom dom id
-         * @default: __svg__icons__dom__
-         */
-        customDomId: '__svg__icons__dom__',
-      }),
+      /**
+       * custom dom id
+       * @default: __svg__icons__dom__
+       */
+      customDomId: "__svg__icons__dom__",
+    }),
     Inspect(),
     ...configComponentPlugin(),
-    isBuild ? configCompressPlugin(compress) : null,
+    isBuild ? configCompressPlugin({ compress }) : null,
   ];
 }
