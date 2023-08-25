@@ -32,20 +32,29 @@
 # # 查看 文件是否拷贝成功
 # RUN ls -al /usr/share/nginx/html
 
-FROM node:16
+FROM node:16-alpine as build-stage
 
-WORKDIR /cch_web/
-COPY . .
-RUN npm install -g pnpm --registry=https://registry.npm.taobao.org
-RUN pnpm config set registry https://registry.npm.taobao.org
-RUN pnpm install && pnpm run build-only
+WORKDIR /cch_web
+COPY . ./
 
-FROM nginx:alpine
-# LABEL MAINTAINER="SliverHorn@sliver_horn@qq.com"
+# 设置 node 镜像
+RUN npm config set registry https://registry.npm.taobao.org
+# 设置--max-old-space-size
+ENV NODE_OPTIONS=--max-old-space-size=16384
 
-COPY .docker-compose/my.conf /etc/nginx/conf.d/my.conf
-COPY --from=0 /cch_web/dist /usr/share/nginx/html
+RUN npm install pnpm -g \
+    pnpm install --frozen-lockfile && \
+    pnpm build-only
+
+# node部分结束
+RUN echo "🎉 编 🎉 译 🎉 成 🎉 功 🎉"
+
+FROM nginx:1.23.3-alpine as production-stage
+
+COPY --from=build-stage .docker-compose/my.conf /etc/nginx/conf.d/my.conf
+COPY --from=build-stage /cch_web/dist /usr/share/nginx/html
 EXPOSE 8080
+
 RUN cat /etc/nginx/nginx.conf
 RUN cat /etc/nginx/conf.d/my.conf
 RUN ls -al /usr/share/nginx/html

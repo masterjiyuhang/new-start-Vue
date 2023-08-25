@@ -9,7 +9,7 @@ import { GvaPositionServer } from "./viteCodeServer";
 import { GvaPosition } from "./viteGvaPosition";
 import { configCdnPlugin } from "./cdnPlugin";
 import { configMockPlugin } from "./mockPlugin";
-import { configSingleFile } from "./singleFilePlugin";
+// import { configSingleFile } from "./singleFilePlugin";
 import { configCopyPlugin } from "./copyPlugin";
 import { configComponentPlugin } from "./componentPlugin";
 import { configCompressPlugin } from "./compressPlugin";
@@ -26,7 +26,7 @@ export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
     vueJsx(),
     VITE_CDN ? configCdnPlugin() : null,
     configMockPlugin({ isBuild }),
-    configSingleFile(),
+    // configSingleFile(),
     svgLoader(),
     VueI18nPlugin({
       // include: [path.resolve(__dirname, '../../../src/locales/lang/**/*.ts')],
