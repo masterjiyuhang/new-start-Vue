@@ -13,17 +13,16 @@ import directives from "@/directives/index";
 // customer component
 import { setupComp } from "@/components";
 
-import FloatingVue from 'floating-vue'
+import FloatingVue from "floating-vue";
 
-import 'floating-vue/dist/style.css'
-
+import "floating-vue/dist/style.css";
 
 import "@/style/erHangBaseStyle/index.scss";
 // element dark(内置暗黑模式)
 import "element-plus/theme-chalk/dark/css-vars.css";
 import "@/style/element/theme-dark.scss";
 
-import 'virtual:svg-icons-register'; // 自定义icon
+import "virtual:svg-icons-register"; // 自定义icon
 
 // 用于开发模式 shift 定位 编译器中的代码
 initDom();
@@ -42,11 +41,11 @@ async function bootstrap() {
   await setupI18n(app);
   setupStore(app);
 
-  app.use(FloatingVue)
+  app.use(FloatingVue);
 
   app.use(router);
 
-  app.config.unwrapInjectedRef = true;
+  // app.config.unwrapInjectedRef = true; // vue3.3开始已经默认打开
 
   app.mount("#app");
 
