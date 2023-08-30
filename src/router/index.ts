@@ -106,4 +106,8 @@ router.onError((error) => {
   NProgress.done();
   console.warn("路由错误", error.message);
 });
+
+router.isReady().then(() => {
+  console.log("路由准备好了 🤔");
+});
 export default router;

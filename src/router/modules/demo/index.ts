@@ -172,6 +172,20 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/demo/cssdemo",
+      name: "cssdemo",
+      component: "/demo/cssdemo/index",
+      meta: {
+        title: "常见样式",
+        icon: "Star",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
     // {
     //   path: "/car/detail",
     //   name: "carDetail",
