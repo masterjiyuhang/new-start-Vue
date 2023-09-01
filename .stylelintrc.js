@@ -1,86 +1,118 @@
 module.exports = {
   extends: ["@erhang/stylelint-config"],
-  // plugins: ["stylelint-order", "stylelint-prettier", "stylelint-scss"],
-  // extends: [
-  //   "stylelint-config-standard", // 配置stylelint拓展插件
-  //   "stylelint-config-standard-scss", // 配置stylelint scss插件
-  //   "stylelint-config-recommended",
-  //   "stylelint-config-recommended-scss",
-  //   "stylelint-config-recommended-vue/scss", // 配置 vue 中 scss 样式格式化
-  //   "stylelint-config-recess-order", // 配置stylelint css属性书写顺序插件,
-  //   "stylelint-config-prettier", // 配置stylelint和prettier兼容
-  //   "stylelint-config-property-sort-order-smacss",
-  // ],
-  // overrides: [
-  //   {
-  //     files: ["**/*.(scss|css|vue|html)"],
-  //     customSyntax: "postcss-scss",
-  //   },
-  //   {
-  //     files: ["**/*.(html|vue)"],
-  //     customSyntax: "postcss-html",
-  //   },
-  //   {
-  //     files: ["*.scss", "**/*.scss"],
-  //     customSyntax: "postcss-scss",
-  //     extends: [
-  //       "stylelint-config-standard-scss",
-  //       "stylelint-config-recommended",
-  //       "stylelint-config-recommended-scss",
-  //       "stylelint-config-recommended-vue/scss",
-  //     ],
-  //     rule: {
-  //       "scss/percent-placeholder-pattern": null,
-  //     },
-  //   },
-  // ],
-  // ignoreFiles: [
-  //   "**/*.js",
-  //   "**/*.jsx",
-  //   "**/*.tsx",
-  //   "**/*.ts",
-  //   "**/*.json",
-  //   "**/*.md",
-  //   "**/*.yaml",
-  // ],
-  // rules: {
-  //   "value-keyword-case": null, // 在css中使用v-bind，不报错
-  //   "no-descending-specificity": null, // 禁止在具有较高优先级的选择器后出现被其覆盖
-  //   "function-url-quotes": "always", // 要求或禁止URL的引号" always（必须加上引号）
-  //   "no-empty-source": null, // 关闭禁止空源码
-  //   "selector-class-pattern": null, // 关闭强制选择器类名的格式
-  //   "property-no-unknown": null, // 禁止未知的属性（true为不允许）
-  //   // "block-opening-brace-space-before": "always", // 大括号之前必须有一个空格
-  //   "value-no-vendor-prefix": null, // 关闭 属性值前缀 --webkit-box
-  //   "property-no-vendor-prefix": null, // 关闭 属性前缀 -webkit-mask
-  //   "selector-pseudo-class-no-unknown": [
-  //     // 不允许未知的选择器
-  //     true,
-  //     {
-  //       ignorePseudoClasses: ["global", "v-deep", "deep"], // 忽略属性，修改
-  //     },
-  //   ],
-  //   "selector-pseudo-element-no-unknown": [
-  //     true,
-  //     {
-  //       ignorePseudoElements: ["v-deep", "@tailwind"],
-  //     },
-  //   ],
-  //   "at-rule-no-unknown": null,
-  //   "scss/at-rule-no-unknown": [
-  //     true,
-  //     {
-  //       ignoreAtRules: ["tailwind"],
-  //     },
-  //   ],
-  //   "scss/operator-no-newline-after": null, // 关闭 禁止在 Sass 运算符之后换行
-  //   "scss/operator-no-newline-before": null,
-  //   "scss/no-global-function-names": null, // 关闭 禁止使用全局函数名称
-  //   "scss/at-function-pattern": null, // 关闭 指定类似 Sass/SCSS 的 mixin 名称的模式
-  //   "scss/at-mixin-pattern": null,
-  //   "scss/operator-no-unspaced": null,
-  //   "scss/at-extend-no-missing-placeholder": null,
-  //   "scss/dollar-variable-pattern": null,
-  // },
   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts"],
 };
+
+// module.exports = {
+//   extends: [
+//     "stylelint-config-standard",
+//     // 配置stylelint拓展插件
+//     "stylelint-config-standard-scss",
+//     // 配置stylelint scss插件
+//     "stylelint-config-recommended",
+//     "stylelint-config-recommended-scss",
+//     "stylelint-config-recommended-vue",
+//     "stylelint-config-prettier",
+//     // 配置stylelint和prettier兼容
+//     "stylelint-config-recess-order",
+//     // 配置stylelint css属性书写顺序插件,
+//     "stylelint-config-property-sort-order-smacss",
+//   ],
+//   plugins: ["stylelint-order", "stylelint-prettier"],
+//   // customSyntax: 'postcss-html',
+//   overrides: [
+//     {
+//       files: ["**/*.(css|html|vue)"],
+//       customSyntax: "postcss-html",
+//     },
+//     {
+//       files: ["*.less", "**/*.less"],
+//       customSyntax: "postcss-less",
+//       extends: [
+//         "stylelint-config-standard",
+//         "stylelint-config-recommended-vue",
+//       ],
+//     },
+//     {
+//       files: ["*.scss", "**/*.scss"],
+//       customSyntax: "postcss-scss",
+//       extends: [
+//         "stylelint-config-standard-scss",
+//         "stylelint-config-recommended-vue/scss",
+//       ],
+//       rule: {
+//         "scss/percent-placeholder-pattern": null,
+//       },
+//     },
+//   ],
+//   rules: {
+//     "media-feature-range-notation": null,
+//     "selector-not-notation": null,
+//     "import-notation": null,
+//     "function-no-unknown": null,
+//     "selector-class-pattern": null,
+//     "selector-pseudo-class-no-unknown": [
+//       true,
+//       {
+//         ignorePseudoClasses: ["global", "deep"],
+//       },
+//     ],
+//     "selector-pseudo-element-no-unknown": [
+//       true,
+//       {
+//         ignorePseudoElements: ["v-deep"],
+//       },
+//     ],
+//     "at-rule-no-unknown": [
+//       true,
+//       {
+//         ignoreAtRules: [
+//           "tailwind",
+//           "apply",
+//           "variants",
+//           "responsive",
+//           "screen",
+//           "function",
+//           "if",
+//           "each",
+//           "include",
+//           "mixin",
+//           "extend",
+//           "return",
+//           "for",
+//         ],
+//       },
+//     ],
+//     "no-empty-source": null,
+//     "string-quotes": null,
+//     "named-grid-areas-no-invalid": null,
+//     "no-descending-specificity": null,
+//     "font-family-no-missing-generic-family-keyword": null,
+//     "rule-empty-line-before": [
+//       "always",
+//       {
+//         ignore: ["after-comment", "first-nested"],
+//       },
+//     ],
+//     "unit-no-unknown": [true, { ignoreUnits: ["rpx"] }],
+//     "order/order": [
+//       [
+//         "dollar-variables",
+//         "custom-properties",
+//         "at-rules",
+//         "declarations",
+//         {
+//           type: "at-rule",
+//           name: "supports",
+//         },
+//         {
+//           type: "at-rule",
+//           name: "media",
+//         },
+//         "rules",
+//       ],
+//       { severity: "error" },
+//     ],
+//   },
+//   ignoreFiles: ["**/*.js", "**/*.jsx", "**/*.tsx", "**/*.ts"],
+// };
