@@ -1,15 +1,19 @@
 <template>
   <div class="wrapper-page">
-    css demo
-    <Demo1 />
+    <div>
+      css demo
+      <Demo1 />
 
-    <GridDemo1 />
-    <GridDemo2 />
+      <GridDemo1 />
+      <GridDemo2 />
 
-    <BoxShadowDemo />
+      <BoxShadowDemo />
 
-    <ShadowDemo2 />
-    <ShadowDemo3 />
+      <ShadowDemo2 />
+      <ShadowDemo3 />
+
+      <BoxShadowDemo1 />
+    </div>
   </div>
 </template>
 
@@ -20,6 +24,7 @@ import GridDemo2 from "./src/GridLayoutDemo/GridDemo2.vue";
 import BoxShadowDemo from "./src/BoxShadowDemo/index.vue";
 import ShadowDemo2 from "./src/BoxShadowDemo/ShadowDemo2.vue";
 import ShadowDemo3 from "./src/BoxShadowDemo/ShadowDemo3.vue";
+import BoxShadowDemo1 from "./src/BoxShadowDemo/BoxShadowDemo1.vue";
 </script>
 
 <style scoped></style>
