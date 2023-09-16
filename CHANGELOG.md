@@ -46,3 +46,8 @@ npx tailwindcss init -p
 ## upload
 自定义table组件
 20230408-0409 摸鱼两天
+
+
+最近准备重新更新一套模板。
+细化引入权限部分
+Http封装 支持缓存
