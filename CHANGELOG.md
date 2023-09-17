@@ -51,3 +51,5 @@ npx tailwindcss init -p
 最近准备重新更新一套模板。
 细化引入权限部分
 Http封装 支持缓存
+Pinia Vue3 TypeScript 
+I18n Router
