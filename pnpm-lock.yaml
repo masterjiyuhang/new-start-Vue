@@ -68,6 +68,9 @@ importers:
         specifier: ^4.2.4
         version: 4.2.4(vue@3.3.4)
     devDependencies:
+      '@erhang/eslint-config':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@erhang/stylelint-config':
         specifier: ^1.0.2
         version: 1.0.2
@@ -185,63 +188,12 @@ importers:
       pathe:
         specifier: ^1.1.1
         version: 1.1.1
-      postcss:
-        specifier: ^8.4.28
-        version: 8.4.28
-      postcss-html:
-        specifier: ^1.5.0
-        version: 1.5.0
-      postcss-nesting:
-        specifier: ^11.3.0
-        version: 11.3.0(postcss@8.4.28)
-      postcss-pxtorem:
-        specifier: ^6.0.0
-        version: 6.0.0(postcss@8.4.28)
-      postcss-scss:
-        specifier: ^4.0.7
-        version: 4.0.7(postcss@8.4.28)
       prettier:
         specifier: ^2.8.8
         version: 2.8.8
       sass:
         specifier: ^1.66.1
         version: 1.66.1
-      stylelint:
-        specifier: ^15.10.3
-        version: 15.10.3
-      stylelint-config-prettier:
-        specifier: ^9.0.5
-        version: 9.0.5(stylelint@15.10.3)
-      stylelint-config-property-sort-order-smacss:
-        specifier: ^9.1.0
-        version: 9.1.0(stylelint@15.10.3)
-      stylelint-config-recess-order:
-        specifier: ^4.3.0
-        version: 4.3.0(stylelint@15.10.3)
-      stylelint-config-recommended:
-        specifier: ^13.0.0
-        version: 13.0.0(stylelint@15.10.3)
-      stylelint-config-recommended-scss:
-        specifier: ^12.0.0
-        version: 12.0.0(postcss@8.4.28)(stylelint@15.10.3)
-      stylelint-config-recommended-vue:
-        specifier: ^1.5.0
-        version: 1.5.0(postcss-html@1.5.0)(stylelint@15.10.3)
-      stylelint-config-standard:
-        specifier: ^34.0.0
-        version: 34.0.0(stylelint@15.10.3)
-      stylelint-config-standard-scss:
-        specifier: ^10.0.0
-        version: 10.0.0(postcss@8.4.28)(stylelint@15.10.3)
-      stylelint-order:
-        specifier: ^6.0.3
-        version: 6.0.3(stylelint@15.10.3)
-      stylelint-prettier:
-        specifier: ^4.0.2
-        version: 4.0.2(prettier@2.8.8)(stylelint@15.10.3)
-      stylelint-scss:
-        specifier: ^5.1.0
-        version: 5.1.0(stylelint@15.10.3)
       svg-baker:
         specifier: ^1.7.0
         version: 1.7.0
@@ -645,15 +597,6 @@ packages:
       '@csstools/css-tokenizer': 2.2.0
     dev: true
 
-  /@csstools/selector-specificity@2.2.0(postcss-selector-parser@6.0.13):
-    resolution: {integrity: sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==}
-    engines: {node: ^14 || ^16 || >=18}
-    peerDependencies:
-      postcss-selector-parser: ^6.0.10
-    dependencies:
-      postcss-selector-parser: 6.0.13
-    dev: true
-
   /@csstools/selector-specificity@3.0.0(postcss-selector-parser@6.0.13):
     resolution: {integrity: sha512-hBI9tfBtuPIi885ZsZ32IMEU/5nlZH/KOVYJCOh7gyMxaVLGmLedYqFN6Ui1LXkI8JlC8IsuC0rF0btcRZKd5g==}
     engines: {node: ^14 || ^16 || >=18}
@@ -675,6 +618,10 @@ packages:
     dependencies:
       vue: 3.3.4
     dev: false
+
+  /@erhang/eslint-config@1.0.1:
+    resolution: {integrity: sha512-LNOaCklu+yECAswniUGvXf5M6zK6sw/pqQ+XParc1BB+ZFyc9csAVx/NJPPgaOuxAahqG81KLAiT8NxKp9UKkg==}
+    dev: true
 
   /@erhang/stylelint-config@1.0.2:
     resolution: {integrity: sha512-wH6MosE2XLtsq39r0AJvKyNLUwOOtKca0IF7N7LzaHrQTFVPUhOBWOgzeKA0PJvJPeqes3t3DQTb27AamNdZag==}
@@ -5794,31 +5741,12 @@ packages:
       postcss-selector-parser: 6.0.13
     dev: true
 
-  /postcss-nesting@11.3.0(postcss@8.4.28):
-    resolution: {integrity: sha512-JlS10AQm/RzyrUGgl5irVkAlZYTJ99mNueUl+Qab+TcHhVedLiylWVkKBhRale+rS9yWIJK48JVzQlq3LcSdeA==}
-    engines: {node: ^14 || ^16 || >=18}
-    peerDependencies:
-      postcss: ^8.4
-    dependencies:
-      '@csstools/selector-specificity': 2.2.0(postcss-selector-parser@6.0.13)
-      postcss: 8.4.28
-      postcss-selector-parser: 6.0.13
-    dev: true
-
   /postcss-prefix-selector@1.16.0(postcss@5.2.18):
     resolution: {integrity: sha512-rdVMIi7Q4B0XbXqNUEI+Z4E+pueiu/CS5E6vRCQommzdQ/sgsS4dK42U7GX8oJR+TJOtT+Qv3GkNo6iijUMp3Q==}
     peerDependencies:
       postcss: '>4 <9'
     dependencies:
       postcss: 5.2.18
-    dev: true
-
-  /postcss-pxtorem@6.0.0(postcss@8.4.28):
-    resolution: {integrity: sha512-ZRXrD7MLLjLk2RNGV6UA4f5Y7gy+a/j1EqjAfp9NdcNYVjUMvg5HTYduTjSkKBkRkfqbg/iKrjMO70V4g1LZeg==}
-    peerDependencies:
-      postcss: ^8.0.0
-    dependencies:
-      postcss: 8.4.28
     dev: true
 
   /postcss-resolve-nested-selector@0.1.1:
@@ -6694,18 +6622,6 @@ packages:
     peerDependencies:
       prettier: '>=2.0.0'
       stylelint: '>=14.0.0'
-    dependencies:
-      prettier: 2.8.8
-      prettier-linter-helpers: 1.0.0
-      stylelint: 15.10.3
-    dev: true
-
-  /stylelint-prettier@4.0.2(prettier@2.8.8)(stylelint@15.10.3):
-    resolution: {integrity: sha512-EoHnR2PiaWgpGtoI4VW7AzneMfwmwQsNwQ+3/E2k/a+ju5yO6rfPfop4vzPQKcJN4ZM1YbspEOPu88D8538sbg==}
-    engines: {node: ^14.17.0 || >=16.0.0}
-    peerDependencies:
-      prettier: '>=3.0.0'
-      stylelint: '>=15.8.0'
     dependencies:
       prettier: 2.8.8
       prettier-linter-helpers: 1.0.0
