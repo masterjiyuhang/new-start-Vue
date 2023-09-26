@@ -1,3 +1,4 @@
+/* stylelint-disable-next-line scss/dollar-variable-pattern */
 $--colors: (
   "white": #fff,
   "black": #000,
@@ -33,30 +34,9 @@ $--colors: (
   $date-editor: (
     "daterange-width": 260px,
   ),
-  // $button-padding-horizontal: (
-  //   "default": 80px,
-  // )
-  $button-font-size:
-    (
-      "default": 16px,
-    ),
-  // $fill-color: (
-  //   "": #b07d62,
-  //   "light": #c38e70,
-  //   "lighter": #cd9777,
-  //   "extra-light": #d69f7e,
-  //   "dark": #deab90,
-  //   "darker": #e6b8a2,
-  //   "blank": #edc4b3,
-  // ),
-  // $border-color: (
-  //   "": #fff,
-  //   "light": #e4e7ed,
-  //   "lighter": #ebeef5,
-  //   "extra-light": #f2f6fc,
-  //   "dark": #d4d7de,
-  //   "darker": #cdd0d6,
-  // )
+  $button-font-size: (
+    "default": 16px,
+  )
 );
 
 // * card 卡片样式
