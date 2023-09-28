@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper-page">
     <div>
-      css demo
       <Demo1 />
 
       <GridDemo1 />
@@ -12,7 +11,7 @@
       <ShadowDemo2 />
       <ShadowDemo3 />
 
-      <BoxShadowDemo1 />
+      <FlowerShadow />
     </div>
   </div>
 </template>
@@ -24,7 +23,7 @@ import GridDemo2 from "./src/GridLayoutDemo/GridDemo2.vue";
 import BoxShadowDemo from "./src/BoxShadowDemo/index.vue";
 import ShadowDemo2 from "./src/BoxShadowDemo/ShadowDemo2.vue";
 import ShadowDemo3 from "./src/BoxShadowDemo/ShadowDemo3.vue";
-import BoxShadowDemo1 from "./src/BoxShadowDemo/BoxShadowDemo1.vue";
+import FlowerShadow from "@/components/FlowerShadow/index.vue";
 </script>
 
 <style scoped></style>

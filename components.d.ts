@@ -48,6 +48,7 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    FlowerShadow: typeof import('./src/components/FlowerShadow/index.vue')['default']
     FooterPage: typeof import('./src/components/WrapperPage/src/footerPage.vue')['default']
     Heart: typeof import('./src/components/Heart/index.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
