@@ -1,6 +1,8 @@
 <template>
   <el-dialog v-model="dialogVisible" title="个人信息" width="500px" draggable>
     <span>This is userInfo</span>
+    <br />
+    <el-button type="primary">查看更多详细信息</el-button>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
