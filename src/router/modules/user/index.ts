@@ -15,8 +15,7 @@ export default {
     {
       path: "/user/list",
       name: "userList",
-      component: "/user/index",
-      // component: () => import("@/views/car/index.vue"),
+      component: "/user/list",
       meta: {
         title: "用户列表",
         icon: "Apple",
@@ -31,8 +30,7 @@ export default {
     {
       path: "/user/detail/:id",
       name: "userDetail",
-      component: "/user/CarDetail",
-      // component: () => import("@/views/car/CarDetail.vue"),
+      component: "/user/UserDetail",
       meta: {
         title: "个人详情",
         icon: "Apple",
