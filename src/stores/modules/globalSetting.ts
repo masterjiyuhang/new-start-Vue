@@ -14,6 +14,9 @@ export const useGlobalSettingStore = defineStore(
 
     const token = ref<string>("");
 
+    // 用户id
+    const userId = ref<string | number>("");
+
     const assemblySize = ref<string>("default");
 
     const keepAliveName = ref<string[]>([]);
@@ -102,6 +105,11 @@ export const useGlobalSettingStore = defineStore(
       language.value = newLang;
     };
 
+    // 设置用户ID
+    const setUserId = (id: string | number) => {
+      userId.value = id;
+    };
+
     const someState = ref("你好 pinia");
 
     return {
@@ -112,6 +120,7 @@ export const useGlobalSettingStore = defineStore(
       assemblySize,
       ThemeConfig,
       language,
+      setUserId,
       changeIsCollapse,
       initIsCollapse,
       setToken,

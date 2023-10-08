@@ -67,7 +67,10 @@ export default [
     timeout: 200,
     method: "post",
     response: () => {
-      return resultSuccess({ access_token: "@id" });
+      return resultSuccess({
+        access_token: "@uuid",
+        user_id: "@id",
+      });
     },
   },
   {

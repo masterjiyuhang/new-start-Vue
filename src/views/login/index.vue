@@ -140,7 +140,7 @@ import ChangeLanguage from "@/layouts/components/header/components/ChangeLanguag
 // 系统名称
 const systemTile = import.meta.env.VITE_GLOB_APP_TITLE;
 const { switchDark } = useTheme();
-const { setToken, setKeepAliveName, token, changeLanguage } =
+const { setToken, setUserId, setKeepAliveName, token, changeLanguage } =
   useGlobalSettingStore();
 const { closeMultipleTab } = useTabsStore();
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
@@ -241,6 +241,7 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
       // 1.执行登录接口
       const { data } = await loginApi();
       setToken(data.access_token);
+      setUserId(data.user_id);
       console.log("login 登录", data, token);
 
       // 2.添加动态路由

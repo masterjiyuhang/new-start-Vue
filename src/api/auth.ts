@@ -11,10 +11,12 @@ export const getAuthButtonListApi = (params: any = { userId: "asd" }) => {
   return http.request<any>("get", "/authButtonList", { params });
 };
 
+// 登录系统接口
 export const loginApi = (params: any = {}) => {
   return http.request<any>("post", "/login", { data: params });
 };
 
+// 登出系统接口
 export const logoutApi = (params: any = {}) => {
   return http.request<any>("post", "/logout", { data: params });
 };
