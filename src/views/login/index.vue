@@ -58,7 +58,10 @@
             >
               <!-- <template #prepend>Http://</template> -->
               <template #append>
-                <GenerateImageCode v-model:code="imgCode" />
+                <GenerateImageCode
+                  v-model:code="imgCode"
+                  ref="GenerateImageCodeRef"
+                />
               </template>
             </el-input>
           </el-form-item>
@@ -151,6 +154,8 @@ const i18n = useI18n();
 const { renderIcon_v2, renderIcon_v3 } = useRenderElementIcon();
 
 const ruleFormRef = ref<FormInstance>();
+// 验证码组件
+const GenerateImageCodeRef = ref();
 // 表单对象
 const ruleForm = reactive<LoginFormData>({
   userName: "cchzuishuai",
@@ -219,6 +224,8 @@ const loginFormRules = reactive<FormRules>({
         if (value === "") {
           callback(new Error("请输入验证码"));
         } else if (loginState.verifyCode !== value) {
+          console.log(GenerateImageCodeRef.value.re);
+          GenerateImageCodeRef.value.re();
           callback(new Error("请输入正确的验证码"));
         } else {
           callback();

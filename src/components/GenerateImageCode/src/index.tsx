@@ -1,15 +1,10 @@
-import { defineComponent, watch, h } from "vue";
-// import { defineComponent, watch, defineEmits, defineExpose, h } from "vue";
-
+import { defineComponent, watch, h, onMounted } from "vue";
 import { useImageVerify } from "./useImageVerify";
 
 interface Props {
   code?: string;
 }
-
-// interface Emits {
-//   (e: "update:code", code: string): void;
-// }
+const { setImgCode, getImgCode, imgCode, domRef } = useImageVerify();
 
 // 生成图片验证码
 export default defineComponent({
@@ -24,11 +19,12 @@ export default defineComponent({
       default: true,
     },
   },
-  emits: ["update:code", "genCode"],
-  expose: ["getImgCode"],
+  emits: ["update:code", "reGenCode"],
+  expose: ["re"],
+  methods: {
+    re: getImgCode,
+  },
   setup(props: Props, { emit }) {
-    const { setImgCode, getImgCode, imgCode, domRef } = useImageVerify();
-
     watch(
       () => props.code,
       (newVal: string) => {
@@ -36,11 +32,13 @@ export default defineComponent({
       }
     );
 
+    onMounted(() => {
+      getImgCode();
+    });
+
     watch(imgCode, (newVal) => {
       emit("update:code", newVal);
     });
-
-    // defineExpose({ getImgCode });
 
     return () =>
       h("canvas", {
@@ -53,17 +51,6 @@ export default defineComponent({
           width: "120px",
           height: "40px",
         },
-        // style: {
-        //   width: 120,
-        //   height: 40,
-        // },
       });
-    // <canvas
-    //   ref={domRef}
-    //   width={120}
-    //   height={40}
-    //   class={"cursor-pointer"}
-    //   onClick={getImgCode}
-    // ></canvas>
   },
 });
