@@ -12,7 +12,7 @@
           :inactive-icon="Moon"
         />
         <!-- 切换语言 -->
-        <ChangeLanguage class="ml-2" />
+        <ChangeLanguage class="ml-2 mr-2" />
       </div>
       <div class="login-left">
         <img src="@/assets/system/HalloweenIllustrations1.png" alt="login" />
