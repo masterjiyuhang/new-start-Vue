@@ -2,16 +2,16 @@
   <div class="wrapper-page">
     <div class="relative w-full h-full flex-c bg-slate-400">
       <div :class="styles.container">
-        <img :src="welcome" class="z-10 home-img" />
-        <SvgIcon name="Box" color="#f80" class="z-10" />
+        <!-- <img :src="welcome" class="z-10 home-img" /> -->
+        <!-- <SvgIcon name="Box" color="#f80" class="z-10" /> -->
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import welcome from "@/assets/system/HalloweenIllustrations11.png";
-import SvgIcon from "@/components/SvgIcon.vue";
+// import welcome from "@/assets/system/HalloweenIllustrations11.png";
+// import SvgIcon from "@/components/SvgIcon.vue";3
 import styles from "./home.module.scss";
 </script>
 
@@ -42,6 +42,7 @@ import styles from "./home.module.scss";
     $g;
   cursor: pointer;
   aspect-ratio: 1;
+  /* stylelint-disable-next-line scss/operator-no-newline-after */
   mask: linear-gradient(#000 0 0) no-repeat 50% calc(-1 * $o) /
       calc(100% / var(--f) - 2 * $b) 50%,
     radial-gradient(circle closest-side, #000 99%, #0000) $g;

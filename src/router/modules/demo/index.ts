@@ -13,6 +13,20 @@ export default {
   redirect: "/demo/ripple",
   children: [
     {
+      path: "/demo/button",
+      name: "button",
+      component: "/demo/Button/index",
+      meta: {
+        title: "按钮",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    {
       path: "/demo/ripple",
       name: "ripple",
       component: "/demo/ripple/index",
