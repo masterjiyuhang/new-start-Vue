@@ -1,0 +1,71 @@
+.shake-btn {
+  @keyframes show {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    80% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    10% {
+      transform: translate3d(-3%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    }
+
+    20% {
+      transform: translate3d(2%, 0, 0) rotate3d(0, 0, 1, 3deg);
+    }
+
+    30% {
+      transform: translate3d(-1%, 0, 0) rotate3d(0, 0, 1, -3deg);
+    }
+
+    40% {
+      transform: translate3d(1%, 0, 0) rotate3d(0, 0, 1, 2deg);
+    }
+
+    50% {
+      transform: translate3d(-1%, 0, 0) rotate3d(0, 0, 1, -1deg);
+    }
+
+    60% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
+  padding: 0 10px;
+  animation: 0.2s ease 0s 1 normal none running show,
+    1.2s ease 1s infinite normal none running shake;
+  border-radius: 6px;
+  background-color: #000c17dd;
+  box-shadow: 0 10px 20px -10px #000c17dd;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    transform: scale(1.1);
+    color: bisque;
+  }
+}
