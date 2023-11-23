@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import { defineStore } from "pinia";
 import { store } from "../index";
 import { emitter } from "@/utils/mitt";
@@ -49,6 +49,8 @@ export const useGlobalSettingStore = defineStore(
       // 页脚
       footer: true,
     });
+
+    const someState = ref("你好 pinia");
 
     const setToken = (str: string) => {
       token.value = str;
@@ -110,7 +112,21 @@ export const useGlobalSettingStore = defineStore(
       userId.value = id;
     };
 
-    const someState = ref("你好 pinia");
+    /**
+     * 刷新当前页面
+     * @param routeName 路由名称
+     */
+    const refreshPage = (routeName: string) => {
+      setTimeout(() => {
+        removeKeepAliveName(routeName);
+        emitter.emit("refreshCurrentPage", false);
+
+        nextTick(() => {
+          addKeepAliveName(routeName);
+          emitter.emit("refreshCurrentPage", true);
+        });
+      }, 0);
+    };
 
     return {
       someState,
@@ -130,6 +146,7 @@ export const useGlobalSettingStore = defineStore(
       setThemeConfig,
       setAssemblySizeSize,
       changeLanguage,
+      refreshPage,
     };
   },
 
