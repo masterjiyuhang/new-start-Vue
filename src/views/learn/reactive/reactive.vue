@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper-page">
     reactive
     <!-- 响应式原理 -->
     <hr />

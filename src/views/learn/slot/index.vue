@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper-page">
     <testSlot>
       <!-- 具名插槽 -->
       <template #header> 上面的插槽 </template>

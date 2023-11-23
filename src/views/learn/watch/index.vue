@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper-page">
     <h1>watch {{ state.count }}</h1>
     <el-input v-model="state.count" class="!w-[210px]"></el-input>
     <hr />

@@ -1,5 +1,5 @@
 <template>
-  <div class="test-computed">
+  <div class="test-computed wrapper-page">
     {{ name }}
     <table style="width: 800px" class="base-table">
       <thead>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper-page">
     <h1>生命周期</h1>
     <TestLife v-if="isShow" />
     <el-button @click="isShow = !isShow">change visible</el-button>

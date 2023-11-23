@@ -1,5 +1,5 @@
 <template>
-  <div>to</div>
+  <div class="wrapper-page">to</div>
 </template>
 
 <script setup lang="ts"></script>
