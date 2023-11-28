@@ -6,6 +6,7 @@ export const routerList = {
       path: "/home/index",
       name: "home",
       component: "/home/index",
+      weight: 999,
       meta: {
         icon: "HomeFilled",
         title: "首页",
@@ -838,7 +839,7 @@ export const routerList = {
                 isKeepAlive: false,
               },
             },
-          ]
+          ],
         },
         {
           path: "/learn/reactive",

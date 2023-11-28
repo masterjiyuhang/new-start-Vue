@@ -38,7 +38,13 @@ export const AuthStore = defineStore({
     // getAuthMenuList
     async getAuthMenuList() {
       const { data } = await getRouterListApi();
-      this.authMenuList = data.concat(moduleRouteList);
+      this.authMenuList = data
+        .concat(moduleRouteList)
+        .sort((a: any, b: any) => {
+          const weightA = a.weight || 0;
+          const weightB = b.weight || 0;
+          return weightB - weightA;
+        });
     },
     // setRouteName
     async setRouteName(name: string) {

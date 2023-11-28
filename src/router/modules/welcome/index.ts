@@ -1,6 +1,7 @@
 export default {
   path: "/welcome",
   name: "welcome",
+  weight: 10,
   // component: () => import("@/views/welcome/index.vue"),
   component: "/welcome/index",
   meta: {
