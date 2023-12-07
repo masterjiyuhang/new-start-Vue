@@ -129,7 +129,7 @@ import { getTimeState } from "@/utils/system";
 import { storeToRefs } from "pinia";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { useTheme } from "@/hooks/useTheme";
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
 
 import { REGEXP_PWD } from "./utils/rule";
 
@@ -278,9 +278,19 @@ watch(imgCode, (newVal) => {
   loginState.verifyCode = newVal;
 });
 
+const handlePress = (e: KeyboardEvent) => {
+  e.key === "Enter" && handleLogin(ruleFormRef.value);
+};
+
 onMounted(() => {
   i18n.locale.value = language.value;
   changeLanguage(language.value);
+
+  document.addEventListener("keydown", handlePress, false);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("keydown", handlePress, false);
 });
 </script>
 
