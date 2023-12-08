@@ -1,0 +1,58 @@
+.container {
+  $itemWidth: 50px;
+  $margin: 4px;
+  $perHeight: calc(1.732 * $itemWidth + 4 * $margin - 1px);
+
+  @keyframes change {
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
+
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  // font-size必须
+  font-size: 0;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    width: calc(($itemWidth / 2) + calc($margin / 2));
+    height: 100%;
+    float: left;
+    shape-outside: repeating-linear-gradient(
+      transparent 0,
+      transparent 80px,
+      #000 80px,
+      #000 $perHeight
+    );
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+
+    // mix-blend-mode: darken;
+    animation: change 8s infinite ease-in-out;
+    background: linear-gradient(
+      45deg,
+      #f44336,
+      #ff9800,
+      #ffe607,
+      #09d7c4,
+      #1cbed3,
+      #1d8ae2,
+      #bc24d6
+    );
+
+    // pointer-events必须
+    pointer-events: none;
+    inset: 0;
+  }
+}
