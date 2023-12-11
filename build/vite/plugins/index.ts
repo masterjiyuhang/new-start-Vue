@@ -18,6 +18,7 @@ import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import path from "path";
 
 export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
+  console.log(configComponentPlugin());
   return [
     viteBuildInfo(),
     GvaPositionServer(),

@@ -58,7 +58,7 @@ export const configComponentPlugin = () => {
       // Filepath to generate corresponding .d.ts file.
       // Defaults to './auto-imports.d.ts' when `typescript` is installed locally.
       // Set `false` to disable.
-      dts: "./auto-imports.d.ts",
+      dts: "src/types/auto-imports.d.ts",
 
       // Auto import inside Vue template
       // see https://github.com/unjs/unimport/pull/15 and https://github.com/unjs/unimport/pull/72
@@ -76,8 +76,8 @@ export const configComponentPlugin = () => {
       // Generate corresponding .eslintrc-auto-import.json file.
       // eslint globals Docs - https://eslint.org/docs/user-guide/configuring/language-options#specifying-globals
       eslintrc: {
-        enabled: false, // Default `false`
-        filepath: "./.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
+        enabled: true, // Default `false`
+        filepath: "./src/types/.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
         globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
       },
     }),

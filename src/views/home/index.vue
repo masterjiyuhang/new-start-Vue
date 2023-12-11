@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper-page">
+  <div class="flex-1 wrapper-page">
     <div class="relative w-full h-full flex-c bg-slate-400">
       <div :class="styles.container">
         <img :src="welcome" class="z-10 home-img" />

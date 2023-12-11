@@ -60,6 +60,9 @@ importers:
       '@erhang/stylelint-config':
         specifier: ^1.0.6
         version: 1.0.6(typescript@4.7.4)
+      '@faker-js/faker':
+        specifier: ^8.3.1
+        version: 8.3.1
       '@intlify/unplugin-vue-i18n':
         specifier: ^0.10.1
         version: 0.10.1(rollup@2.79.1)(vue-i18n@9.8.0)
@@ -882,6 +885,11 @@ packages:
   /@eslint/js@8.55.0:
     resolution: {integrity: sha512-qQfo2mxH5yVom1kacMtZZJFVdW+E70mqHMJvVg6WTLo+VBuQJ4TojZlfWBjK0ve5BdEeNAVxOsl/nvNMpJOaJA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@faker-js/faker@8.3.1:
+    resolution: {integrity: sha512-FdgpFxY6V6rLZE9mmIBb9hM0xpfvQOSNOLnzolzKwsE1DH+gC7lEKV1p1IbR0lAYyvYd5a4u3qWJzowUkw1bIw==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
     dev: true
 
   /@humanwhocodes/config-array@0.11.13:

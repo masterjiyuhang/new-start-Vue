@@ -1,7 +1,16 @@
 <template>
-  <div>login page</div>
+  <div>
+    login page
+    {{ name }}
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const name = ref("");
+
+name.value = "qw";
+
+name = "";
+</script>
 
 <style scoped></style>
