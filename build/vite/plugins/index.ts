@@ -11,7 +11,7 @@ import { configCdnPlugin } from "./cdnPlugin";
 import { configMockPlugin } from "./mockPlugin";
 // import { configSingleFile } from "./singleFilePlugin";
 import { configCopyPlugin } from "./copyPlugin";
-// import { configComponentPlugin } from "./componentPlugin";
+import { configComponentPlugin } from "./componentPlugin";
 import { configCompressPlugin } from "./compressPlugin";
 
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
@@ -52,7 +52,7 @@ export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
       customDomId: "__svg__icons__dom__",
     }),
     Inspect(),
-    // ...configComponentPlugin(),
+    ...configComponentPlugin(),
     isBuild && configCompressPlugin({ compress }),
   ];
 }
