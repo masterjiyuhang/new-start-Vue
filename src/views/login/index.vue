@@ -1,16 +1,15 @@
 <template>
-  <div>
-    login page
-    {{ name }}
-  </div>
+  <div>login page</div>
 </template>
 
 <script setup lang="ts">
-const name = ref("");
+const ii = ref("asd");
 
-name.value = "qw";
+ii.value = "qwe";
 
-name = "";
+let sdw = "qwe";
+
+console.log(sdw);
 </script>
 
 <style scoped></style>

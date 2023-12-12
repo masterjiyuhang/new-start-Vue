@@ -21,20 +21,14 @@ module.exports = {
   plugins: ["vue", "@typescript-eslint"],
   // 可以扩展现有的配置规则（可选）
   extends: [
-    "eslint:recommended",
     "plugin:vue/vue3-essential",
-    "plugin:@typescript-eslint/recommended",
     "plugin:vue/vue3-recommended",
-    "plugin:import/recommended",
+    "eslint:recommended",
+    // "plugin:import/recommended",
     "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
     "./src/types/.eslintrc-auto-import.json",
-
-    // "eslint:recommended",
-    // "plugin:vue/essential",
-    // "plugin:vue/recommended",
-    // "plugin:vue/vue3-essential",
-    // "plugin:vue/vue3-recommended",
-    // "plugin:prettier/recommended",
+    "@erhang",
   ],
   // 配置规则
   rules: {
