@@ -18,7 +18,6 @@ import { autoMessageAdapter } from "./src/utils";
  * 自定义请求配置
  */
 type SelfRequestConfig = {
-  
   /**
    * 是否开启缓存
    */

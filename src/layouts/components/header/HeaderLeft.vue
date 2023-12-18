@@ -1,7 +1,7 @@
 <template>
   <div class="header-left">
     <CollapseIcon />
-    <Breadcrumb v-if="ThemeConfig.breadcrumb"/>
+    <Breadcrumb v-if="ThemeConfig.breadcrumb" />
   </div>
 </template>
 

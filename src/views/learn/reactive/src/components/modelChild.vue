@@ -14,7 +14,9 @@
       <div class="header">
         标题 <span class="text-red-300 cursor-pointer" @click="close">X</span>
       </div>
-      <div class="content text-cyan-400" @click="sendMsg">内容 {{ contentMsg }}</div>
+      <div class="content text-cyan-400" @click="sendMsg">
+        内容 {{ contentMsg }}
+      </div>
       <div class="text-orange-800 footer">底部</div>
     </div>
   </div>

@@ -148,7 +148,8 @@ console.log("测试方括号运算符的使用", age);
 
 type ETC<T> = 1 extends number ? T : number;
 
-const ETC: ETC<string> = " this is a string ";
+const myETC: ETC<string> = " this is a string ";
+console.log(myETC);
 
 /**
  * infer 关键字

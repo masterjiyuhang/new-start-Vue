@@ -13,6 +13,11 @@ export const configComponentPlugin = () => {
           importStyle: "sass",
         }),
       ],
+      eslintrc: {
+        enabled: true, // Default `false`
+        filepath: "./src/types/.eslintrc-auto-import.json", // Default `./.eslintrc-auto-import.json`
+        globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+      },
     }),
     Components({
       resolvers: [ElementPlusResolver({ importStyle: "sass" })],

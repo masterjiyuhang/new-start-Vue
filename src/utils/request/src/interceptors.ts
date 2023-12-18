@@ -63,7 +63,7 @@ export const [responseResolve, responseReject]: [
         : value;
       const isAutoMessage = $autoMessageAdapter(response);
       if (!isAutoMessage) {
-        console.log('正常处理 返回数据')
+        console.log("正常处理 返回数据");
         return transformResponse(response.data);
       }
       // 是否自动提示消息

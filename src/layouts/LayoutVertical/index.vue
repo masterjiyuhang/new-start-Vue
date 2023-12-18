@@ -2,7 +2,10 @@
 <template>
   <el-container class="layout">
     <el-aside>
-      <div class="menu" :style="{ width: ThemeConfig.isCollapse ? '65px' : '210px' }">
+      <div
+        class="menu"
+        :style="{ width: ThemeConfig.isCollapse ? '65px' : '210px' }"
+      >
         <div class="logo flex-c">
           <img src="@/assets/logo.png" alt="logo" />
           <span v-show="!ThemeConfig.isCollapse">Vertical Admin</span>
@@ -50,7 +53,9 @@ const activeMenu = computed(() =>
 );
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 
-const isCollapse = computed(() => useGlobalSettingStore().ThemeConfig.isCollapse);
+const isCollapse = computed(
+  () => useGlobalSettingStore().ThemeConfig.isCollapse
+);
 const { showMenuListGet: menuList } = storeToRefs(AuthStore());
 </script>
 

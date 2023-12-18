@@ -19,7 +19,7 @@
               class="tabs-icon"
               v-show="item.icon && ThemeConfig.tabsIcon"
             >
-              <component :is="item.icon"></component>
+              <component :is="item.icon" />
             </el-icon>
             {{ item.title }}
           </template>

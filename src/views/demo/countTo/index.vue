@@ -40,9 +40,8 @@ function toggle() {
 
 <template>
   <div class="wrapper-page">
-
     <CountTo prefix="$" :startVal="1" :endVal="9999" class="text-2xl" />
-    
+
     <el-button type="primary" @click="toggle">Transition</el-button>
 
     <p class="mt-2">
@@ -51,7 +50,7 @@ function toggle() {
 
     <div class="track number">
       <div class="relative">
-        <div class="sled" :style="{ left: `${cubicBezierNumber}%` }" />
+        <div class="sled" :style="{ left: `${cubicBezierNumber}%` }"></div>
       </div>
     </div>
 
@@ -61,7 +60,7 @@ function toggle() {
 
     <div class="track number">
       <div class="relative">
-        <div class="sled" :style="{ left: `${customFnNumber}%` }" />
+        <div class="sled" :style="{ left: `${customFnNumber}%` }"></div>
       </div>
     </div>
 
@@ -74,12 +73,12 @@ function toggle() {
         <div
           class="sled"
           :style="{ left: `${vector[0]}%`, top: `${vector[1]}%` }"
-        />
+        ></div>
       </div>
     </div>
 
     <p class="mt-2">
-      Test  function: <b>{{ customFnNumber.toFixed(8) }}</b>
+      Test function: <b>{{ customFnNumber.toFixed(8) }}</b>
     </p>
   </div>
 </template>

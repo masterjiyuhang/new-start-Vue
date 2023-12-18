@@ -7,7 +7,7 @@ import { ElMessage } from "element-plus";
  */
 export function hexToRgb(str: any) {
   let hexs: any = "";
-  const reg = /^\#?[0-9A-Fa-f]{6}$/;
+  const reg = /^\\#?[0-9A-Fa-f]{6}$/;
   if (!reg.test(str)) return ElMessage.warning("输入错误的hex");
   str = str.replace("#", "");
   hexs = str.match(/../g);
@@ -37,7 +37,7 @@ export function rgbToHex(r: any, g: any, b: any) {
  * @returns 返回处理后的颜色值
  */
 export function getLightColor(color: string, level: number) {
-  const reg = /^\#?[0-9A-Fa-f]{6}$/;
+  const reg = /^\\#?[0-9A-Fa-f]{6}$/;
   if (!reg.test(color)) return ElMessage.warning("输入错误的hex颜色值");
   const rgb = hexToRgb(color);
   for (let i = 0; i < 3; i++)
@@ -52,7 +52,7 @@ export function getLightColor(color: string, level: number) {
  * @returns 返回处理后的颜色值
  */
 export function getDarkColor(color: string, level: number) {
-  const reg = /^\#?[0-9A-Fa-f]{6}$/;
+  const reg = /^\\#?[0-9A-Fa-f]{6}$/;
   if (!reg.test(color)) return ElMessage.warning("输入错误的hex颜色值");
   const rgb = hexToRgb(color);
   for (let i = 0; i < 3; i++)

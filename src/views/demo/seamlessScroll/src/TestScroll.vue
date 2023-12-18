@@ -1,3 +1,40 @@
+<!-- eslint-disable vue/no-v-html -->
+<template>
+  <div :ref="'wrap' + classOption['key']">
+    <div
+      :style="leftSwitch"
+      v-if="navigation"
+      :class="leftSwitchClass"
+      @click="leftSwitchClick"
+    >
+      <slot name="left-switch"></slot>
+    </div>
+    <div
+      :style="rightSwitch"
+      v-if="navigation"
+      :class="rightSwitchClass"
+      @click="rightSwitchClick"
+    >
+      <slot name="right-switch"></slot>
+    </div>
+    <div
+      :ref="'realBox' + classOption['key']"
+      :style="pos"
+      @mouseenter="enter"
+      @mouseleave="leave"
+      @touchstart.passive="touchStart"
+      @touchmove.passive="touchMove"
+      @touchend="touchEnd"
+      @mousewheel.passive="wheel"
+    >
+      <div :ref="'slotList' + classOption['key']" :style="float">
+        <slot></slot>
+      </div>
+      <div v-html="copyHtml" :style="float"></div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { computed, ref, unref, nextTick } from "vue";
 import type { CSSProperties, PropType } from "vue";
@@ -103,7 +140,6 @@ const defaultOption = computed(() => {
 
 const options = computed(() => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   return copyObj({}, unref(defaultOption), classOption);
 });
 
@@ -490,39 +526,3 @@ defineExpose({
   reset,
 });
 </script>
-
-<template>
-  <div :ref="'wrap' + classOption['key']">
-    <div
-      :style="leftSwitch"
-      v-if="navigation"
-      :class="leftSwitchClass"
-      @click="leftSwitchClick"
-    >
-      <slot name="left-switch" />
-    </div>
-    <div
-      :style="rightSwitch"
-      v-if="navigation"
-      :class="rightSwitchClass"
-      @click="rightSwitchClick"
-    >
-      <slot name="right-switch" />
-    </div>
-    <div
-      :ref="'realBox' + classOption['key']"
-      :style="pos"
-      @mouseenter="enter"
-      @mouseleave="leave"
-      @touchstart.passive="touchStart"
-      @touchmove.passive="touchMove"
-      @touchend="touchEnd"
-      @mousewheel.passive="wheel"
-    >
-      <div :ref="'slotList' + classOption['key']" :style="float">
-        <slot />
-      </div>
-      <div v-html="copyHtml" :style="float" />
-    </div>
-  </div>
-</template>

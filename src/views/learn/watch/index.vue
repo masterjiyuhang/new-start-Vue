@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper-page">
     <h1>watch {{ state.count }}</h1>
-    <el-input v-model="state.count" class="!w-[210px]"></el-input>
+    <el-input v-model="state.count" class="!w-[210px]" />
     <hr />
     <h1>watchEffect {{ msg1 }}</h1>
-    <el-input v-model="msg1" class="!w-[210px]"></el-input>
+    <el-input v-model="msg1" class="!w-[210px]" />
     <el-button @click="stopWatch" type="primary">stop watch effect</el-button>
   </div>
 </template>

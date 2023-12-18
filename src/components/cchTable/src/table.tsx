@@ -9,12 +9,12 @@ export default defineComponent({
     },
     showTooltip: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showFooter: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props) {
     const count = ref(1);

@@ -1,6 +1,6 @@
 <template>
   <div class="theme-setting">
-    <IconTheme @click="openDrawer" class="cursor-pointer toolBar-icon"/>
+    <IconTheme @click="openDrawer" class="cursor-pointer toolBar-icon" />
   </div>
 </template>
 

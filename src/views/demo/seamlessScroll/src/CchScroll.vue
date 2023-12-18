@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div :ref="`wrap${classOption['key']}`">
     <div
@@ -10,10 +11,14 @@
       @touchend="touchEnd"
       @mousewheel.passive="wheel"
     >
-      <div :ref="'slotList' + classOption['key']" :style="float" class="slot-list">
-        <slot />
+      <div
+        :ref="'slotList' + classOption['key']"
+        :style="float"
+        class="slot-list"
+      >
+        <slot></slot>
       </div>
-      <div v-html="copyHtml" :style="float" />
+      <div v-html="copyHtml" :style="float"></div>
     </div>
   </div>
 </template>

@@ -71,6 +71,6 @@ export const useTheme = () => {
     changePrimary,
     initTheme,
     switchDark,
-    changeGreyOrWeak
+    changeGreyOrWeak,
   };
 };

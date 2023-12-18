@@ -125,7 +125,7 @@
         inline-prompt
         :active-icon="Sunny"
         :inactive-icon="Moon"
-      ></el-switch>
+      />
     </div>
 
     <div class="theme-item">

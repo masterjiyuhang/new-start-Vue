@@ -55,7 +55,7 @@ export function useRenderElementIcon() {
           "span",
           {
             class: "cch-self-icon",
-            ...attrs
+            ...attrs,
           },
           {
             default: () => [h(IconComp)],

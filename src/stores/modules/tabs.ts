@@ -53,7 +53,7 @@ export const useTabsStore = defineStore({
     },
   },
 
-  persist: piniaPersistConfig("multiTags")
+  persist: piniaPersistConfig("multiTags"),
 });
 
 export function useTabsStoreWithOut() {

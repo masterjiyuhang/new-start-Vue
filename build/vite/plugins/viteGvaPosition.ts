@@ -61,7 +61,7 @@ const addLineAttr = (lineStr: any, line: any, id: any) => {
   return lineStr;
 };
 
-const compileSDFTemplate = async (code: string, id: string) => {
+export const compileSDFTemplate = async (code: string, id: string) => {
   const s = new MagicString(code);
 
   // SFC => AST

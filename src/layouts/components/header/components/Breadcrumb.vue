@@ -14,7 +14,7 @@
               class="breadcrumb-icon"
               v-show="item.meta.icon && ThemeConfig.breadcrumbIcon"
             >
-              <component :is="item.meta.icon"></component>
+              <component :is="item.meta.icon" />
             </el-icon>
             <span class="breadcrumb-title">{{ item.meta.title }}</span>
           </div>

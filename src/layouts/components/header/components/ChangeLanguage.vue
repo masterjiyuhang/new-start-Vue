@@ -1,6 +1,6 @@
 <template>
   <el-dropdown trigger="click" @command="handleSetLanguage">
-    <IconChangeLanguage class="toolBar-icon" :style="{'--color': 'red'}" />
+    <IconChangeLanguage class="toolBar-icon" :style="{ '--color': 'red' }" />
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item

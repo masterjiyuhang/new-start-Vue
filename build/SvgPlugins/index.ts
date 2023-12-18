@@ -8,7 +8,7 @@ import path from "pathe";
 import Debug from "debug";
 import SVGCompiler from "svg-baker";
 import { optimize } from "svgo";
-import type { OptimizedSvg, OptimizeOptions } from 'svgo'
+import type { OptimizedSvg, OptimizeOptions } from "svgo";
 
 import { normalizePath } from "vite";
 import {

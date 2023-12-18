@@ -6,7 +6,7 @@
     <modelChild
       :model-value="modelValue"
       @update:model-value="update"
-      @getMsg="getMsg"
+      @get-msg="getMsg"
     />
 
     {{ cellNumber }}

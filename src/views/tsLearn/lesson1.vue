@@ -174,6 +174,7 @@ interface Bear extends Animal {
   honey: boolean;
 }
 // 对一个已经存在的接口添加新的字段
+// eslint-disable-next-line no-redeclare
 interface Animal {
   hobby?: string;
 }
@@ -198,7 +199,7 @@ const bear: Bear = getBear({ name: "小蜜蜂", honey: true, hobby: "采蜜" });
  * 因为类型断言会在编译的时候被移除，所以运行时并不会有类型断言的检查，即使类型断言是错误的，也不会有异常或者 null 产生。
  */
 const myCanvas = document.getElementById("main-canvas") as HTMLCanvasElement;
-const myCanvas1 = <HTMLCanvasElement>document.getElementById("main_canvas");
+const myCanvas1: any = document.getElementById("main_canvas");
 
 /**
  * 字面量类型 Literal Types
@@ -216,7 +217,7 @@ let y = "asd" as const;
  * TypeScript 提供了一个特殊的语法，可以在不做任何检查的情况下，从类型中移除 null 和 undefined，
  * 这就是在任意表达式后面写上 ! ，这是一个有效的类型断言，表示它的值不可能是 null 或者 undefined。
  */
-function liveDangerously(x?: number | null) {
+function liveDangerously(x: number | null) {
   // No error
   // 只有当你明确的知道这个值不可能是 null 或者 undefined 时才使用 ! 。
   console.log(x!.toFixed());

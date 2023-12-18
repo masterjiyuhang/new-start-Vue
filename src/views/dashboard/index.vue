@@ -9,7 +9,7 @@
           :key="item.name"
           :label="item.label"
           :name="item.name"
-        ></el-tab-pane>
+        />
       </el-tabs>
 
       <div class="top-content">
@@ -80,7 +80,7 @@
           :key="item.name"
           :label="item.label"
           :name="item.name"
-        ></el-tab-pane>
+        />
       </el-tabs>
       <div v-for="item in accountList" :key="item.id">
         <span>account: {{ item.account }}</span>

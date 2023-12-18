@@ -24,7 +24,7 @@ const debounce: Directive = {
 
       timer = setTimeout(() => {
         func();
-        timer = null
+        timer = null;
       }, delay);
     };
     el.addEventListener("click", el.__handleClick__);

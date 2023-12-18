@@ -21,9 +21,6 @@ export default defineComponent({
   },
   emits: ["update:code", "reGenCode"],
   expose: ["re"],
-  methods: {
-    re: getImgCode,
-  },
   setup(props: Props, { emit }) {
     watch(
       () => props.code,
@@ -52,5 +49,8 @@ export default defineComponent({
           height: "40px",
         },
       });
+  },
+  methods: {
+    re: getImgCode,
   },
 });

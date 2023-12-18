@@ -4,7 +4,7 @@
       {{ label }}{{ isShowColon ? "：" : "" }}
     </label>
     <div class="list-item__content" :class="[isOverFlow && 'truncate block']">
-      <slot />
+      <slot></slot>
     </div>
   </div>
 </template>

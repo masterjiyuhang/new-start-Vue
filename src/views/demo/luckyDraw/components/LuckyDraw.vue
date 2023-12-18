@@ -91,7 +91,7 @@ const startRun = () => {
     )[0];
   }
 
-  console.log(randomRes, 'sadasda')
+  console.log(randomRes, "sadasda");
   clearInterval(interval);
 
   // 3.计算转动角度
@@ -121,7 +121,7 @@ const startRun = () => {
     deg = parseInt(deg);
     deg = deg % 360;
 
-    console.log('最后转动的角度', deg);
+    console.log("最后转动的角度", deg);
     turntableRef.value.style[transformJs] = `rotate(${deg}deg)`;
 
     // // 5. 显示中奖结果

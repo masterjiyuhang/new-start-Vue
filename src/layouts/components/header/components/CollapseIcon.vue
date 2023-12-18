@@ -1,6 +1,6 @@
 <template>
   <el-icon class="collapse-icon" @click="changeCollapse">
-    <component :is="ThemeConfig.isCollapse ? 'expand' : 'fold'"></component>
+    <component :is="ThemeConfig.isCollapse ? 'expand' : 'fold'" />
   </el-icon>
 </template>
 

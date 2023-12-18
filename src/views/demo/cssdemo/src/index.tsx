@@ -2,7 +2,7 @@ import { defineComponent, ref } from "vue";
 import styles from "./index.module.scss";
 
 export default defineComponent({
-  name: "demo1",
+  name: "Demo1",
   props: {
     codeLocation: {
       type: String,

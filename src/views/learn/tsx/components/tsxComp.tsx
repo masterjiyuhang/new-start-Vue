@@ -6,13 +6,12 @@ export function tsxComp1() {
 }
 
 export const tsxComp2 = defineComponent({
+  components: { ElButton },
   props: {
     message: String,
   },
-  components: { ElButton },
   setup(props) {
     const flag = ref(true);
-    const str = "假设有一个字符串";
     return () => (
       <div>
         <el-button onClick={() => (flag.value = !flag.value)}>

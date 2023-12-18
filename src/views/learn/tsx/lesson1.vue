@@ -6,7 +6,7 @@
 
     <tsxComp2 :message="'父组件传递给tsx组件的信息'" />
 
-    <cch :name="'传递进去的name'" @onClick="fooClick" />
+    <cch :name="'传递进去的name'" @on-click="fooClick" />
   </div>
 </template>
 

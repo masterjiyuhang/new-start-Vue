@@ -72,7 +72,7 @@
         >
           <ul class="item">
             <li v-for="(item, index) in listData" :key="index">
-              <span class="title" v-text="item.title" />
+              <span class="title" v-text="item.title"></span>
             </li>
           </ul>
         </TestScroll>
@@ -87,7 +87,7 @@
         >
           <ul class="item">
             <li v-for="(item, index) in listData" :key="index">
-              <span class="title" v-text="item.title" />
+              <span class="title" v-text="item.title"></span>
             </li>
           </ul>
         </CchScroll>
