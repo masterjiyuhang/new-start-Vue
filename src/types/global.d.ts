@@ -30,7 +30,7 @@ declare namespace Menu {
   }
   interface MetaProps {
     icon: string;
-    title: string | function;
+    title: string | Function;
     activeMenu?: string;
     isLink?: string;
     isHide: boolean;
@@ -38,9 +38,20 @@ declare namespace Menu {
     isAffix: boolean;
     isKeepAlive: boolean;
     isDetail: boolean;
-    selfTitle?: function;
+    selfTitle?: Function;
   }
 }
+
+// declare namespace Menu {
+//   interface MenuOptions {
+//     path: string;
+//     title: string;
+//     icon?: string;
+//     isLink?: string;
+//     close?: boolean;
+//     children?: MenuOptions[];
+//   }
+// }
 
 // * FileType
 declare namespace File {
@@ -68,4 +79,4 @@ declare module "*.jpeg";
 declare module "*.gif";
 declare module "*.bmp";
 declare module "*.tiff";
-declare module '*.module.scss';
+declare module "*.module.scss";
