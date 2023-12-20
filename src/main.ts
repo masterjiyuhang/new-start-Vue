@@ -38,8 +38,9 @@ async function bootstrap() {
   // 初始化自定义组件
   setupComp(app);
 
-  await setupI18n(app);
   setupStore(app);
+
+  await setupI18n(app);
 
   app.use(FloatingVue);
 
