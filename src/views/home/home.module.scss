@@ -1,7 +1,7 @@
 .container {
-  $itemWidth: 50px;
+  $item-width: 50px;
   $margin: 4px;
-  $perHeight: calc(1.732 * $itemWidth + 4 * $margin - 1px);
+  $per-height: calc(1.732 * $item-width + 4 * $margin - 1px);
 
   @keyframes change {
     100% {
@@ -23,14 +23,14 @@
 
   &::before {
     content: "";
-    width: calc(($itemWidth / 2) + calc($margin / 2));
+    width: calc(($item-width / 2) + calc($margin / 2));
     height: 100%;
     float: left;
     shape-outside: repeating-linear-gradient(
       transparent 0,
       transparent 80px,
       #000 80px,
-      #000 $perHeight
+      #000 $per-height
     );
   }
 
