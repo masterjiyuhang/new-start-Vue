@@ -48,9 +48,9 @@ async function bootstrap() {
 
   // app.config.unwrapInjectedRef = true; // vue3.3开始已经默认打开
 
-  app.mount("#app");
-
   app.use(directives);
+
+  app.mount("#app");
 }
 
 bootstrap();
