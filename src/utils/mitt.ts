@@ -13,3 +13,8 @@ type Events = {
 };
 
 export const emitter: Emitter<Events> = mitt<Events>();
+
+export const setRefreshCurrentPage = () =>
+  emitter.emit("refreshCurrentPage", true);
+export const removeRefreshCurrentPage = () =>
+  emitter.emit("refreshCurrentPage", false);
