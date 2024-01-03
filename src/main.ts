@@ -3,7 +3,7 @@ import { createApp } from "vue";
 // import { createPinia } from "pinia";
 import { setupStore } from "@/stores";
 import App from "./App.vue";
-import router from "./router";
+import { setupRouter } from "./router";
 import { initDom } from "./utils/positionToCode";
 import { setupI18n } from "./locales/setupI18n";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
@@ -44,7 +44,8 @@ async function bootstrap() {
 
   app.use(FloatingVue);
 
-  app.use(router);
+  // app.use(router);
+  setupRouter(app);
 
   // app.config.unwrapInjectedRef = true; // vue3.3开始已经默认打开
 

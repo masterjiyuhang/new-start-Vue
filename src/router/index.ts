@@ -11,7 +11,7 @@ import type { RouteRecordRaw } from "vue-router";
 
 import { staticRouter, errorRouter } from "./basic";
 import { initDynamicRouter } from "./dynamicRouter";
-import { isProxy, toRaw } from "vue";
+import { App, isProxy, toRaw } from "vue";
 
 export const findCurrentRouteByPath = (
   path: string,
@@ -120,3 +120,8 @@ router.isReady().then(() => {
 });
 
 export default router;
+// config router
+// 配置路由器
+export function setupRouter(app: App<Element>) {
+  app.use(router);
+}
