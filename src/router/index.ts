@@ -37,10 +37,14 @@ export const findCurrentRouteByPath = (
   return null;
 };
 
+// app router
+// 创建一个可以被 Vue 应用程序使用的路由实例
 const router = createRouter({
   // history: createWebHashHistory(import.meta.env.BASE_URL),
   history: createWebHistory(import.meta.env.BASE_URL),
+  // 应该添加到路由的初始路由列表。
   routes: [...staticRouter, ...errorRouter],
+  // 是否应该禁止尾部斜杠。默认为假
   strict: false,
   scrollBehavior: () => ({ left: 0, top: 0 }),
 });
@@ -114,4 +118,5 @@ router.onError((error) => {
 router.isReady().then(() => {
   console.log("路由准备好了 🤔");
 });
+
 export default router;
