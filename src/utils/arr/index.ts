@@ -1,3 +1,6 @@
+import type { MaybeComputedRefArgs } from "@/hooks/math/useMin";
+import { toValue } from "vue";
+
 /**
  * 数组去重
  */
@@ -20,4 +23,12 @@ export function getFlatArr(menuList: Menu.MenuOptions[]) {
     },
     []
   );
+}
+
+export function toValueArgsFlat<T>(args: MaybeComputedRefArgs<T>): T[] {
+  return args.flatMap((i: any) => {
+    const v = toValue(i);
+    if (Array.isArray(v)) return v.map((i) => toValue(i));
+    return [v];
+  });
 }
