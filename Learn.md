@@ -28,3 +28,7 @@ pnpm i @types/svgo svgo cors debug etag fs-extra svg-baker pathe @types/cors @ty
 pnpm i @erhang/stylelint-config --save-dev
 
 extends: ['@erhang/stylelint-config']
+
+## 不能重复造轮子啦
+
+写 Java 去啦
