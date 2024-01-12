@@ -4,5 +4,7 @@
 }
 
 .base-container {
+  padding: 24px;
   background: linear-gradient(90deg, #d8e1ff 0%, rgb(255 255 255 / 37%) 100%);
+  backdrop-filter: blur(80px);
 }
