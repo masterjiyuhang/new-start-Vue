@@ -6,10 +6,16 @@
     <h1>watchEffect {{ msg1 }}</h1>
     <el-input v-model="msg1" class="!w-[210px]" />
     <el-button @click="stopWatch" type="primary">stop watch effect</el-button>
+    <hr />
+    <el-button type="primary" @click="handleAddCounter">{{
+      counter
+    }}</el-button>
   </div>
 </template>
 
 <script setup lang="ts">
+import { effectScope } from "vue";
+import { computed } from "vue";
 import { reactive, ref, watch, watchEffect } from "vue";
 import type { DebuggerEvent } from "vue";
 
@@ -50,6 +56,22 @@ const stopWatch = watchEffect(
  * 更加明确是应该由哪个状态触发侦听器重新执行；
  * 可以访问所侦听状态的前一个值和当前值。
  */
+
+const scope = effectScope();
+const counter = ref(1);
+scope.run(() => {
+  const double = computed(() => counter.value * 2);
+
+  watch(double, () => console.log(double.value));
+
+  watchEffect(() => console.log("Count:", double.value));
+});
+
+// scope.stop();
+
+const handleAddCounter = () => {
+  counter.value++;
+};
 </script>
 
 <style scoped></style>
