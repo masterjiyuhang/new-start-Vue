@@ -23,6 +23,7 @@ export function useScript(opts: any) {
 
       // 创建 script 函数
       script = document.createElement("script");
+      script.id = "json_script";
 
       // 设置回调函数名和 URL
       const jsonpUrl = `${opts.url}?callback=${callBackName}`;
@@ -37,6 +38,7 @@ export function useScript(opts: any) {
         JsonpError.value = new Error(
           `Failed to load JSONP from ${jsonpUrl} ${err}`
         );
+        console.log(err, "err,,,");
         cleanup();
         reject(JsonpError.value);
       };
@@ -47,7 +49,10 @@ export function useScript(opts: any) {
       // 清理函数，移除 script 元素和全局回调函数
       function cleanup() {
         delete window[callBackName];
-        document.body.removeChild(script);
+        if (script) {
+          console.log(1111);
+          document.body.removeChild(script);
+        }
       }
     });
   };
@@ -57,7 +62,13 @@ export function useScript(opts: any) {
   });
 
   onUnmounted(() => {
-    if (script) {
+    console.log(
+      "卸载了呗？",
+      script,
+      document.body,
+      document.getElementById("json_script")
+    );
+    if (script && document.getElementById("json_script")) {
       document.body.removeChild(script);
     }
   });
