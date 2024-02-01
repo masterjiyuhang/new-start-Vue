@@ -22,6 +22,7 @@ export default {
 
   dashboard: {
     title: "Dashboard Page",
+    viewCount: "View Count",
   },
   tabs: {
     more: "More.",

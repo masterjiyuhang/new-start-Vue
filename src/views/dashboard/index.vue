@@ -16,7 +16,9 @@
         <el-row :gutter="40">
           <el-col :xs="24" :sm="12" :md="12" :lg="6" :xl="6">
             <div class="dashboard-card-left flex-c flex-col min-h-[550px]">
-              <div class="flex-1 left-title">访问总数</div>
+              <div class="flex-1 left-title">
+                {{ $t("dashboard.viewCount") }}
+              </div>
               <div class="left-number">666.666w</div>
             </div>
           </el-col>

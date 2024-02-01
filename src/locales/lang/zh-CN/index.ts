@@ -25,6 +25,7 @@ export default {
   },
   dashboard: {
     title: "统计分析页",
+    viewCount: "访问总数",
   },
 
   registration: {
