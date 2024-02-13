@@ -10,7 +10,7 @@ export default {
     isAffix: false,
     isKeepAlive: true,
   },
-  redirect: "/demo/ripple",
+  redirect: "/demo/button",
   children: [
     {
       path: "/demo/button",
@@ -18,21 +18,6 @@ export default {
       component: "/demo/Button/index",
       meta: {
         title: "按钮",
-        icon: "Apple",
-        isLink: "",
-        isHide: false,
-        isFull: false,
-        isAffix: false,
-        isKeepAlive: true,
-      },
-    },
-    {
-      path: "/demo/ripple",
-      name: "ripple",
-      component: "/demo/ripple/index",
-      // component: () => import("@/views/car/index.vue"),
-      meta: {
-        title: "水波纹",
         icon: "Apple",
         isLink: "",
         isHide: false,
@@ -64,22 +49,6 @@ export default {
       meta: {
         title: "获取位置信息",
         icon: "Aim",
-        isLink: "",
-        isHide: false,
-        isFull: false,
-        isAffix: false,
-        isKeepAlive: true,
-      },
-    },
-
-    {
-      path: "/demo/loading",
-      name: "loading",
-      component: "/demo/loading/index",
-      // component: () => import("@/views/car/index.vue"),
-      meta: {
-        title: "加载中",
-        icon: "Apple",
         isLink: "",
         isHide: false,
         isFull: false,
@@ -145,20 +114,6 @@ export default {
       },
     },
     {
-      path: "/demo/stitchMonster",
-      name: "stitchMonster",
-      component: "/demo/stitchMonster/index",
-      meta: {
-        title: "究极缝合怪",
-        icon: "Bicycle",
-        isLink: "",
-        isHide: false,
-        isFull: false,
-        isAffix: false,
-        isKeepAlive: true,
-      },
-    },
-    {
       path: "/demo/floatingVue ",
       name: "floating-vue",
       component: "/demo/floatingVue/index",
@@ -172,48 +127,5 @@ export default {
         isKeepAlive: true,
       },
     },
-    {
-      path: "/demo/bgfusion",
-      name: "bgfusion",
-      component: "/demo/BgFusion/index",
-      meta: {
-        title: "水滴融合",
-        icon: "Apple",
-        isLink: "",
-        isHide: false,
-        isFull: false,
-        isAffix: false,
-        isKeepAlive: true,
-      },
-    },
-    {
-      path: "/demo/cssdemo",
-      name: "cssdemo",
-      component: "/demo/cssdemo/index",
-      meta: {
-        title: "常见样式",
-        icon: "Star",
-        isLink: "",
-        isHide: false,
-        isFull: false,
-        isAffix: false,
-        isKeepAlive: true,
-      },
-    },
-    // {
-    //   path: "/car/detail",
-    //   name: "carDetail",
-    //   component: "/car/CarDetail",
-    //   // component: () => import("@/views/car/CarDetail.vue"),
-    //   meta: {
-    //     title: "车辆管理-详情",
-    //     icon: "Apple",
-    //     isLink: "",
-    //     isHide: false,
-    //     isFull: false,
-    //     isAffix: false,
-    //     isKeepAlive: true,
-    //   },
-    // },
   ],
 };
