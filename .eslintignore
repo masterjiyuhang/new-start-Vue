@@ -16,3 +16,5 @@ build
 config
 index.html
 src/assets
+auto-import.d.ts
+auto-imports.d.ts
