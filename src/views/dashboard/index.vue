@@ -1,8 +1,9 @@
 <template>
   <div class="cch-dashboard">
     <div class="base-card top">
-      <h1>{{ $t("dashboard.title") }}</h1>
-
+      <h1 class="my-2 font-bold text-yellow-500">
+        {{ $t("dashboard.title") }}
+      </h1>
       <el-tabs v-model="tabActive1" @tab-change="changeTabs">
         <el-tab-pane
           v-for="item in tabList"
@@ -19,7 +20,10 @@
               <div class="flex-1 left-title">
                 {{ $t("dashboard.viewCount") }}
               </div>
-              <div class="left-number">666.666w</div>
+              <div class="relative left-number">
+                {{ `${formatNum(state.dashboardData.totalNumbers)}k` }}
+                <span class="absolute -top-5">+</span>
+              </div>
             </div>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="8" :xl="8">
@@ -105,6 +109,7 @@ const state = reactive({
     yesterdayVisits: 0,
     newUsers: 0,
     activeUsers: 0,
+    totalNumbers: 0,
     pieData: [],
   },
 });
@@ -183,10 +188,12 @@ onMounted(() => {
         .left-number {
           width: 100%;
           overflow: hidden;
-          color: antiquewhite;
+          color: rgb(38, 162, 83);
           font-size: 58px;
+          line-height: 58px;
           text-align: center;
           text-overflow: ellipsis;
+          margin: auto;
           white-space: nowrap;
         }
       }

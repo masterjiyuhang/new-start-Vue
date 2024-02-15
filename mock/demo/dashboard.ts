@@ -12,6 +12,7 @@ export default [
         "yesterdayVisits|1000-5000": 0,
         "newUsers|10-100": 0,
         "activeUsers|100-10000": 0,
+        "totalNumbers|1-20": 1,
         pieData: [
           { "value|5000-10000": 0, name: "Gitee 访问量" },
           { "value|5000-10000": 0, name: "GitHub 访问量" },
