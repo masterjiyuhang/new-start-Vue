@@ -79,7 +79,7 @@
     </div>
 
     <div class="base-card bottom">
-      <div class="bottom-title">数据来源</div>
+      <div class="bottom-title">{{ $t("dashboard.dataSource") }}</div>
       <el-tabs v-model="tabActive2" @tab-change="changeTabs">
         <el-tab-pane
           v-for="item in tabList"
@@ -89,7 +89,7 @@
         />
       </el-tabs>
       <div v-for="item in accountList" :key="item.id">
-        <span>account: {{ item.account }}</span>
+        <span>{{ $t("dashboard.account") }}: {{ item.account }}</span>
       </div>
     </div>
   </div>
