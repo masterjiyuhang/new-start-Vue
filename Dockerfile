@@ -47,7 +47,7 @@ RUN npm install pnpm -g \
     pnpm build-only
 
 # node部分结束
-RUN echo "🎉 编 🎉 译 🎉 成 🎉 功 🎉"
+RUN echo "🎉 编 🎉 译 🎉 成 🎉 功 🎉!"
 
 FROM nginx:1.23.3-alpine as production-stage
 
