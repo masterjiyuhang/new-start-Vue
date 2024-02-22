@@ -114,56 +114,57 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .time-clock {
-  border: 1px dashed sandybrown;
-  height: 314px;
 
   $borderWidth: 6px;
 
+  height: 314px;
+  border: 1px dashed sandybrown;
+
   .circle {
+    display: flex;
+    position: relative;
     box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
     width: 150px;
     height: 150px;
-    font-size: 40px;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-right: 30px;
     border: $borderWidth solid #191919;
     border-radius: 50%;
-    margin-right: 30px;
+    font-size: 40px;
+    font-weight: 500;
     user-select: none;
-    position: relative;
 
     svg {
       position: absolute;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
       top: -$borderWidth;
       left: -$borderWidth;
+      width: 150px;
+      height: 150px;
       transform: rotate(-90deg);
+      border-radius: 50%;
 
       circle {
         width: 100%;
         height: 100%;
-        fill: transparent;
         stroke-width: $borderWidth;
         stroke-dasharray: 471;
+        fill: transparent;
       }
     }
   }
 
   .text {
     position: absolute;
-    font-size: 12px;
-    font-weight: 400;
-    width: 66px;
-    text-align: center;
-    color: #cccccc;
-    left: 0;
     right: 0;
     bottom: 22px;
+    left: 0;
+    width: 66px;
     margin: 0 auto;
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
   }
 }
 </style>

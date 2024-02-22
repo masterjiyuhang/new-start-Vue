@@ -187,13 +187,13 @@ onMounted(() => {
 
         .left-number {
           width: 100%;
+          margin: auto;
           overflow: hidden;
-          color: rgb(38, 162, 83);
+          color: rgb(38 162 83);
           font-size: 58px;
           line-height: 58px;
           text-align: center;
           text-overflow: ellipsis;
-          margin: auto;
           white-space: nowrap;
         }
       }
@@ -201,8 +201,7 @@ onMounted(() => {
       .dashboard-card-center {
         display: flex;
         flex-wrap: wrap;
-        align-content: space-between;
-        justify-content: space-between;
+        place-content: space-between space-between;
         height: 100%;
 
         .traffic-box {
