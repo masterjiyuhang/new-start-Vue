@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: "20.x"
       - name: Install
-        run: pnpm install
+        run: yarn
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
