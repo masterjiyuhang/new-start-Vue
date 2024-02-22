@@ -23,4 +23,8 @@ node_modules
 mixin.scss
 mixins.scss
 
-/style/scss/mixins/*.scss
+src/style/scss/mixins/*.scss
+src/views/demo/stitchMonster/Stitch/stitch.module.scss
+src/views/demo/BgFusion/MobiusBand/MobiusBand.module.scss
+src/views/demo/BgFusion/LoadingEffect/LoadingEffect.module.scss
+src/style/common/globals.scss

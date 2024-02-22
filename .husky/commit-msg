@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "====== start run commitlint ========="
+npx --no-install commitlint --edit "$1"
+echo "====== end run commitlint ========="
