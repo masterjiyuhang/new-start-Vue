@@ -2,17 +2,16 @@
 import { RouterView } from "vue-router";
 
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
-import { storeToRefs } from "pinia";
 import { useTheme } from "@/hooks/useTheme";
 
 const { initTheme } = useTheme();
-const { assemblySize } = storeToRefs(useGlobalSettingStore());
+const globalSetting = useGlobalSettingStore();
 
 initTheme();
 </script>
 
 <template>
-  <el-config-provider :size="assemblySize">
+  <el-config-provider :size="globalSetting.assemblySize">
     <RouterView />
   </el-config-provider>
 </template>
