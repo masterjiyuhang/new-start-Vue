@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.0.0...v1.0.1) (2024-02-23)
+
+
+### Bug Fixes
+
+* 取消解构pinia，测试响应式 ([f219520](https://github.com/masterjiyuhang/new-start-Vue/commit/f21952093136facd269d4a9716de01ef29ca8b72))
+
 # 1.0.0 (2024-02-22)
 
 
