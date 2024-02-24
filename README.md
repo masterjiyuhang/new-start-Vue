@@ -1,7 +1,5 @@
 # new-start-vue
 
-没事回家多看看家里老人吧，他们真的不知不觉就老了。
-
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Git Contribution submission specification
