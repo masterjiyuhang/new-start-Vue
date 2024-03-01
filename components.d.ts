@@ -8,15 +8,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     CountTo: typeof import('./src/components/CountTo/src/CountTo.vue')['default']
-    ElButton: typeof import('element-plus/es')['ElButton']
-    ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
-    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    ElDivider: typeof import('element-plus/es')['ElDivider']
-    ElForm: typeof import('element-plus/es')['ElForm']
-    ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
-    ElInput: typeof import('element-plus/es')['ElInput']
-    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     FlowerShadow: typeof import('./src/components/FlowerShadow/index.vue')['default']
     FooterPage: typeof import('./src/components/WrapperPage/src/footerPage.vue')['default']
     Heart: typeof import('./src/components/Heart/index.vue')['default']

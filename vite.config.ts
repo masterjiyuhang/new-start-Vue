@@ -12,8 +12,11 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
     mode,
     root
   );
-  console.log(loadEnv(mode, root), process.env);
+  // console.log(loadEnv(mode, root), process.env);
 
+  const isVercel = mode === "vercel";
+  const BaseUrl = isVercel ? "/" : VITE_BASE_URL || "";
+  console.log(BaseUrl);
   // vite 插件
   const plugins = setupVitePlugins({
     isBuild,
@@ -23,11 +26,9 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
 
   const esbuild = {};
   const optimizeDeps = {};
-  console.log({
-    base: VITE_BASE_URL || "/",
-  });
+
   return {
-    base: VITE_BASE_URL || "/",
+    base: BaseUrl,
 
     define: {
       "process.env": {},
