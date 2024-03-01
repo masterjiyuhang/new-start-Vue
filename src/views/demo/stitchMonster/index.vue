@@ -13,4 +13,3 @@ import TimeClock from "./TimeClock/index.vue";
 </script>
 
 <style scoped></style>
-./Stitch/Stitch
