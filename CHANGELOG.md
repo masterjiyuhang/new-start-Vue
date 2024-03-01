@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.1.1...v1.1.2) (2024-03-01)
+
+
+### Bug Fixes
+
+* update config ([40d4107](https://github.com/masterjiyuhang/new-start-Vue/commit/40d4107f1d234501f7b6acd05bef56c05a846fb4))
+
 ## [1.1.1](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.1.0...v1.1.1) (2024-03-01)
 
 
