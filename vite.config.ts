@@ -13,6 +13,14 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
     root
   );
 
+  console.log(
+    VITE_PORT,
+    VITE_CDN,
+    VITE_BUILD_COMPRESS,
+    "BASE_URL",
+    process.env.BASE_URL
+  );
+
   // vite 插件
   const plugins = setupVitePlugins({
     isBuild,
