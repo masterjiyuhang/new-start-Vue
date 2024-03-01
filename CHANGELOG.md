@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.0.2...v1.1.0) (2024-03-01)
+
+
+### Features
+
+* 更新stitch组件 ([f99c518](https://github.com/masterjiyuhang/new-start-Vue/commit/f99c518e0bb2ce33319d48b89a7547ff1cf1a207))
+
 ## [1.0.2](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.0.1...v1.0.2) (2024-03-01)
 
 
