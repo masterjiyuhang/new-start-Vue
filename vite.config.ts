@@ -8,18 +8,11 @@ import { setupVitePlugins } from "./build/vite/plugins";
 export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const isBuild = command === "build";
-  const { VITE_PORT, VITE_CDN, VITE_BUILD_COMPRESS, BASE_URL } = loadEnv(
+  const { VITE_PORT, VITE_CDN, VITE_BUILD_COMPRESS, VITE_BASE_URL } = loadEnv(
     mode,
     root
   );
-
-  console.log(
-    VITE_PORT,
-    VITE_CDN,
-    VITE_BUILD_COMPRESS,
-    "BASE_URL",
-    process.env.BASE_URL
-  );
+  console.log(loadEnv(mode, root), process.env);
 
   // vite 插件
   const plugins = setupVitePlugins({
@@ -30,9 +23,11 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
 
   const esbuild = {};
   const optimizeDeps = {};
-
+  console.log({
+    base: VITE_BASE_URL || "/",
+  });
   return {
-    base: BASE_URL || "/",
+    base: VITE_BASE_URL || "/",
 
     define: {
       "process.env": {},
