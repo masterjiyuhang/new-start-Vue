@@ -21,7 +21,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const optimizeDeps = {};
 
   return {
-    base: "/",
+    base: "/new-start-Vue/",
 
     define: {
       "process.env": {},
