@@ -8,7 +8,10 @@ import { setupVitePlugins } from "./build/vite/plugins";
 export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const isBuild = command === "build";
-  const { VITE_PORT, VITE_CDN, VITE_BUILD_COMPRESS } = loadEnv(mode, root);
+  const { VITE_PORT, VITE_CDN, VITE_BUILD_COMPRESS, BASE_URL } = loadEnv(
+    mode,
+    root
+  );
 
   // vite 插件
   const plugins = setupVitePlugins({
@@ -21,7 +24,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const optimizeDeps = {};
 
   return {
-    base: "/new-start-Vue/",
+    base: BASE_URL || "/",
 
     define: {
       "process.env": {},

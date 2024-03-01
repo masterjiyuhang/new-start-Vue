@@ -4,8 +4,8 @@ import { AuthStore } from "@/stores/modules/auth";
 import NProgress from "@/utils/progress";
 import {
   createRouter,
-  // createWebHashHistory,
-  createWebHistory,
+  createWebHashHistory,
+  // createWebHistory,
 } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
@@ -40,8 +40,8 @@ export const findCurrentRouteByPath = (
 // app router
 // 创建一个可以被 Vue 应用程序使用的路由实例
 const router = createRouter({
-  // history: createWebHashHistory(import.meta.env.BASE_URL),
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  // history: createWebHistory(import.meta.env.BASE_URL),
   // 应该添加到路由的初始路由列表。
   routes: [...staticRouter, ...errorRouter],
   // 是否应该禁止尾部斜杠。默认为假
