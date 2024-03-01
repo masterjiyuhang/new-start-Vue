@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.1.0...v1.1.1) (2024-03-01)
+
+
+### Bug Fixes
+
+* update router type, vite config ([2fa42cf](https://github.com/masterjiyuhang/new-start-Vue/commit/2fa42cfe129cba83ffdb5b70b17a7887909567c1))
+
 # [1.1.0](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.0.2...v1.1.0) (2024-03-01)
 
 
