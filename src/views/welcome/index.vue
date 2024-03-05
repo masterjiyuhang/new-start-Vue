@@ -1,7 +1,7 @@
 <template>
-  <div class="welcome wrapper-page">
-    <h1>welcome {{ count }} times</h1>
-    <el-button @click="increment">count++</el-button>
+  <div class="h-full wrapper-page">
+    <h1>welcome {{ counterStore.count }} times</h1>
+    <el-button @click="counterStore.increment">count++</el-button>
 
     <el-button type="danger" @click="refresh">刷新当前页面</el-button>
 
@@ -13,7 +13,7 @@
       border
       style="width: 100%"
       height="450"
-      class="mt-[30px]"
+      class="mt-7"
     >
       <el-table-column type="index" />
       <el-table-column prop="hot" label="Hot" width="180" />
@@ -21,11 +21,8 @@
       <el-table-column label="Address Info">
         <el-table-column prop="url" label="Address">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-link
-                type="primary"
-                style="margin-left: 10px"
-                :href="scope.row.url"
+            <div class="flex items-center">
+              <el-link type="primary" class="ml-3" :href="scope.row.url"
                 >Link</el-link
               >
             </div>
@@ -33,7 +30,7 @@
         </el-table-column>
         <el-table-column label="Edit">
           <template #default="scope">
-            <div style="display: flex; align-items: center"></div>
+            <div class="flex items-center"></div>
 
             <el-button type="primary" @click="editRow(scope.row)">
               <el-icon><View /></el-icon>Detail
@@ -64,71 +61,86 @@
 
 <script setup lang="ts">
 import { useCounterStore } from "@/stores/modules/count";
-import { storeToRefs } from "pinia";
 import { useScript } from "@/hooks/useScript";
 import { onMounted, ref } from "vue";
 
 import { getWeiboApi } from "@/api/car";
 import { ElNotification } from "element-plus";
 import { useRefreshPage } from "@/hooks/useRefreshPage";
+import { WEIBO_HOT } from "./src/constant";
 
-const BAI_DU_MAP_URL = "https://tenapi.cn/v2/weibohot";
-// "https://api.map.baidu.com/getscript?v=3.0&ak=OaBvYmKX3pjF7YFUFeeBCeGdy9Zp7xB2&services=&t=20210201100830&s=1";
+const counterStore = useCounterStore();
 
 const { refresh } = useRefreshPage();
-const { getJsonpData } = useScript({
-  url: BAI_DU_MAP_URL ?? "basic-api/system/getAccountList",
-});
-
-// 表格加载中
-const loading = ref(false);
 
 // 表格数据
-const tableData = ref([]);
-const testWeibo = async () => {
-  loading.value = true;
-  const res = await getWeiboApi();
-  console.log(res);
-  tableData.value = res.data;
+function initTable() {
+  // 表格加载中
+  const loading = ref(false);
 
-  loading.value = false;
-};
+  const tableData = ref([]);
 
-const init = async () => {
-  const res = getJsonpData();
-  res
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  console.log("welcome page start initializing..");
-};
+  const dialogVisible = ref(false);
+  const currentIframeSrc = ref("");
 
-const editRow = (row) => {
-  console.log(row);
-  ElNotification.success(row.name);
-  currentIframeSrc.value = row.url;
-  dialogVisible.value = true;
-};
-onMounted(async () => {
-  testWeibo();
-  init();
-});
-const { increment } = useCounterStore();
-const { count } = storeToRefs(useCounterStore());
+  const testWeibo = async () => {
+    loading.value = true;
+    const res = await getWeiboApi();
+    tableData.value = res.data;
+    loading.value = false;
+  };
 
-const dialogVisible = ref(false);
-const currentIframeSrc = ref("");
-const handleClose = (done: () => void) => {
-  currentIframeSrc.value = "";
-  done();
-};
+  const handleClose = (done: () => void) => {
+    currentIframeSrc.value = "";
+    done();
+  };
+
+  const editRow = (row) => {
+    ElNotification.success(row.name);
+    currentIframeSrc.value = row.url;
+    dialogVisible.value = true;
+  };
+
+  onMounted(() => {
+    // testWeibo();
+  });
+  return {
+    loading,
+    tableData,
+    dialogVisible,
+    currentIframeSrc,
+    handleClose,
+    testWeibo,
+    editRow,
+  };
+}
+
+function initPage() {
+  console.log(WEIBO_HOT);
+  const { fetchDataByScript } = useScript("basic-api/system/testJSONP");
+
+  const init = async () => {
+    console.log("welcome page start initializing..");
+    fetchDataByScript()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  onMounted(async () => {
+    init();
+  });
+}
+
+const {
+  loading,
+  tableData,
+  dialogVisible,
+  currentIframeSrc,
+  handleClose,
+  editRow,
+  testWeibo,
+} = initTable();
+initPage();
 </script>
 
-<style scoped>
-.welcome {
-  height: 100%;
-}
-</style>
+<style scoped></style>

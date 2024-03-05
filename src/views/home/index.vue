@@ -3,7 +3,6 @@
     <div class="relative w-full h-full flex-c bg-slate-400">
       <div :class="styles.container">
         <img :src="welcome" class="z-10 home-img" />
-        <!-- <SvgIcon name="Box" color="#f80" class="z-10" /> -->
       </div>
     </div>
   </div>
@@ -11,7 +10,6 @@
 
 <script setup lang="ts">
 import welcome from "@/assets/system/ProjectManager1.png";
-// import SvgIcon from "@/components/SvgIcon.vue";3
 import styles from "./home.module.scss";
 </script>
 
