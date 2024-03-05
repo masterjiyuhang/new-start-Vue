@@ -1,6 +1,7 @@
 import { MockMethod } from "vite-plugin-mock";
 import { routerList, authButtonList } from "../_constant";
 import { resultPageSuccess, resultSuccess } from "../_utils";
+import { ServerResponse } from "http";
 
 const accountList = (() => {
   const result: any[] = [];
@@ -36,6 +37,34 @@ export default [
     response: ({ query }) => {
       const { page = 1, pageSize = 20 } = query;
       return resultPageSuccess(page, pageSize, accountList);
+    },
+  },
+  {
+    url: "/basic-api/system/testJSONP",
+    timeout: 100,
+    method: "get",
+    rawResponse: (req, res) => {
+      console.log(req.url);
+      // const callbackName = req.query?.callback;
+      const responseData = {
+        code: 200,
+        message: "Success",
+        data: [{ name: "erhang" }],
+      };
+      // // return `${callbackName}(${JSON.stringify(responseData)})`;
+      // // 设置响应头，指定返回的内容类型为 JavaScript
+      // res.setHeader("Content-Type", "application/javascript");
+      // // 返回 JSONP 格式的数据
+      // res.end(`${callbackName}(${JSON.stringify(responseData)})`);
+
+      // const body = "hello world";
+      const callbackName = "jsonp_callback";
+      res
+        .writeHead(200, {
+          // "Content-Length": Buffer.byteLength(body),
+          "Content-Type": "application/javascript",
+        })
+        .end(`${callbackName}(${JSON.stringify(responseData)})`);
     },
   },
   {
