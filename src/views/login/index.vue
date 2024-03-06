@@ -5,7 +5,7 @@
       <div class="dark flex-c">
         <!-- 切换模式 -->
         <el-switch
-          v-model="ThemeConfig.isDark"
+          v-model="globalStore.ThemeConfig.isDark"
           @change="switchDark"
           inline-prompt
           :active-icon="Sunny"
@@ -36,7 +36,7 @@
             <el-input
               clearable
               v-model="ruleForm.userName"
-              :placeholder="'请输入账号'"
+              :placeholder="$t('login.enterUsername')"
               :prefix-icon="renderIcon_v2('User')"
             />
           </el-form-item>
@@ -45,7 +45,7 @@
               type="password"
               clearable
               v-model="ruleForm.password"
-              :placeholder="'请输入密码'"
+              :placeholder="$t('login.enterPassword')"
               :prefix-icon="renderIcon_v2('Lock')"
             />
           </el-form-item>
@@ -53,7 +53,7 @@
             <el-input
               clearable
               v-model="ruleForm.verifyCode"
-              :placeholder="'请输入验证码'"
+              :placeholder="$t('login.enterCode')"
               :prefix-icon="renderIcon_v2('Star')"
             >
               <!-- <template #prepend>Http://</template> -->
@@ -67,8 +67,12 @@
           </el-form-item>
           <el-form-item class="login-btn-box">
             <div class="w-full h-[20px] flex-bc">
-              <el-checkbox v-model="checked"> 记住密码 </el-checkbox>
-              <el-button link type="primary"> 忘记密码? </el-button>
+              <el-checkbox v-model="checked">
+                {{ $t("login.rememberPassword") }}
+              </el-checkbox>
+              <el-button link type="primary">
+                {{ $t("login.forgetPassword") }}
+              </el-button>
             </div>
             <el-button
               class="mt-4 login-btn"
@@ -126,10 +130,9 @@ import { useRouter } from "vue-router";
 import { ElNotification } from "element-plus";
 import type { FormInstance, FormRules } from "element-plus";
 import { getTimeState } from "@/utils/system";
-import { storeToRefs } from "pinia";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { useTheme } from "@/hooks/useTheme";
-import { onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 
 import { REGEXP_PWD } from "./utils/rule";
 
@@ -139,16 +142,16 @@ import { useI18n } from "vue-i18n";
 
 import renderIcon from "./components/renderIcon.vue";
 import ChangeLanguage from "@/layouts/components/header/components/ChangeLanguage.vue";
+import { useEventListener } from "@vueuse/core";
 
 // 系统名称
 const systemTile = import.meta.env.VITE_GLOB_APP_TITLE;
 const { switchDark } = useTheme();
-const { setToken, setUserId, setKeepAliveName, token, changeLanguage } =
+const { setToken, setUserId, setKeepAliveName, changeLanguage } =
   useGlobalSettingStore();
 const { closeMultipleTab } = useTabsStore();
-const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
+const globalStore = useGlobalSettingStore();
 const router = useRouter();
-const { language } = storeToRefs(useGlobalSettingStore());
 const i18n = useI18n();
 
 const { renderIcon_v2, renderIcon_v3 } = useRenderElementIcon();
@@ -196,21 +199,18 @@ const loginState = reactive({
   ],
 });
 
-// 图片验证码
-const imgCode = ref<string>("");
-
 // 表单校验规则
 const loginFormRules = reactive<FormRules>({
-  userName: [{ required: true, message: "请输入账号", trigger: "blur" }],
+  userName: [
+    { required: true, message: i18n.t("login.enterUsername"), trigger: "blur" },
+  ],
   password: [
     {
       validator: (_rule, value, callback) => {
         if (value === "") {
-          callback(new Error("请输入密码"));
+          callback(new Error(i18n.t("login.enterPassword")));
         } else if (!REGEXP_PWD.test(value)) {
-          callback(
-            new Error("密码格式应为8-18位数字、字母、符号的任意两种组合")
-          );
+          callback(new Error(i18n.t("login.passwordVerify")));
         } else {
           callback();
         }
@@ -222,11 +222,11 @@ const loginFormRules = reactive<FormRules>({
     {
       validator: (_rule, value, callback) => {
         if (value === "") {
-          callback(new Error("请输入验证码"));
+          callback(new Error(i18n.t("login.enterCode")));
         } else if (loginState.verifyCode !== value) {
           console.log(GenerateImageCodeRef.value.re);
           GenerateImageCodeRef.value.re();
-          callback(new Error("请输入正确的验证码"));
+          callback(new Error(i18n.t("login.verifyCode")));
         } else {
           callback();
         }
@@ -239,17 +239,18 @@ const loginFormRules = reactive<FormRules>({
 // 记住密码
 const checked = ref<boolean>(false);
 
+// 图片验证码
+const imgCode = ref<string>("");
+
 // 登录事件
 const handleLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      console.log("submit!");
       // 1.执行登录接口
       const { data } = await loginApi();
       setToken(data.access_token);
       setUserId(data.user_id);
-      console.log("login 登录", data, token);
 
       // 2.添加动态路由
       await initDynamicRouter();
@@ -262,7 +263,7 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
       router.push(HOME_URL);
       ElNotification({
         title: getTimeState(),
-        message: "欢迎登录 Cch-Admin",
+        message: `${i18n.t("login.welcome")} ${systemTile}"`,
         type: "success",
         duration: 3000,
       });
@@ -270,28 +271,28 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
       console.log("error submit!", fields);
     }
   });
-  // console.log(someState, "11111111", token);
 };
 
-// 给验证码赋值
-watch(imgCode, (newVal) => {
-  loginState.verifyCode = newVal;
-});
+function initLoginForm() {
+  onMounted(() => {
+    i18n.locale.value = globalStore.language;
+    changeLanguage(globalStore.language);
+  });
+  // 给验证码赋值
+  watch(imgCode, (newVal) => {
+    loginState.verifyCode = newVal;
+  });
+}
 
-const handlePress = (e: KeyboardEvent) => {
-  e.key === "Enter" && handleLogin(ruleFormRef.value);
-};
+function initHandlePress() {
+  const handlePress = (e: KeyboardEvent) => {
+    e.key === "Enter" && handleLogin(ruleFormRef.value);
+  };
+  useEventListener(document, "keydown", handlePress);
+}
 
-onMounted(() => {
-  i18n.locale.value = language.value;
-  changeLanguage(language.value);
-
-  document.addEventListener("keydown", handlePress, false);
-});
-
-onUnmounted(() => {
-  document.removeEventListener("keydown", handlePress, false);
-});
+initLoginForm();
+initHandlePress();
 </script>
 
 <style lang="scss" scoped>

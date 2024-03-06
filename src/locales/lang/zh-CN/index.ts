@@ -6,6 +6,7 @@ export default {
   },
 
   login: {
+    welcome: "欢迎",
     loginBtn: "登录",
     thirdLogin: "第三方登录",
     phoneLogin: "手机登录",
@@ -18,6 +19,15 @@ export default {
     weiboLogin: "微博登录",
     phone: "手机号码",
     smsVerifyCode: "短信验证码",
+
+    enterUsername: "请输入账号",
+    enterPassword: "请输入密码",
+    passwordVerify: "密码格式应为8-18位数字、字母、符号的任意两种组合",
+
+    enterCode: "请输入验证码",
+    verifyCode: "请输入正确的验证码",
+    rememberPassword: "记住密码",
+    forgetPassword: "忘记密码",
   },
 
   tabs: {

@@ -6,10 +6,11 @@ export default {
   },
 
   login: {
+    welcome: "Welcome to",
     loginBtn: "Login",
-    thirdLogin: "Third Login",
-    phoneLogin: "Phone Login",
-    qRCodeLogin: "QRCode Login",
+    thirdLogin: "Third",
+    phoneLogin: "Phone",
+    qRCodeLogin: "QRCode",
     register: "Register",
 
     weChatLogin: "WeChat Login",
@@ -18,6 +19,16 @@ export default {
     weiboLogin: "Weibo Login",
     phone: "Phone",
     smsVerifyCode: "SMS VerifyCode",
+
+    enterUsername: "Please enter username",
+    enterPassword: "Please enter password",
+    passwordVerify:
+      "The password format should be any two combinations of 8-18 digits, letters, and symbols.",
+
+    enterCode: "Please enter verification code",
+    verifyCode: "Please enter correct verify code",
+    rememberPassword: "Remember password",
+    forgetPassword: "Forget the password",
   },
 
   dashboard: {

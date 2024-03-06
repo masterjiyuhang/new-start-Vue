@@ -32,7 +32,7 @@ export function useRenderElementIcon() {
       return null;
     }
     const IconComp = (
-      ElementPlusIconsVue as { [key: string]: DefineComponent }
+      ElementPlusIconsVue as unknown as { [key: string]: DefineComponent }
     )[icon];
 
     return (
@@ -44,7 +44,7 @@ export function useRenderElementIcon() {
 
   const renderIcon_v2 = (icon: any, attrs?: iconType): Component => {
     const IconComp = (
-      ElementPlusIconsVue as { [key: string]: DefineComponent }
+      ElementPlusIconsVue as unknown as { [key: string]: DefineComponent }
     )[icon];
 
     // console.log(IconComp, "v2........");
@@ -67,7 +67,7 @@ export function useRenderElementIcon() {
 
   const renderIcon_v3 = (icon): Component => {
     const IconComp = (
-      ElementPlusIconsVue as { [key: string]: DefineComponent }
+      ElementPlusIconsVue as unknown as { [key: string]: DefineComponent }
     )[icon];
 
     console.log(IconComp);
