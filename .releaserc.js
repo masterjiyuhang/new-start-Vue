@@ -4,15 +4,10 @@ module.exports = {
     [
       "@semantic-release/commit-analyzer",
       {
-        preset: "angular",
-        releaseRules: [
-          { type: "docs", scope: "README", release: "patch" },
-          { type: "refactor", release: "patch" },
-          { type: "style", release: "patch" },
-          { type: "fix", release: false },
-          { scope: "no-release", release: false },
-        ],
+        releaseRules: [{ type: "release", release: "patch" }],
         parserOpts: {
+          headerPattern: /^release:(\s)?(\w+)?/,
+          headerCorrespondence: ["type", "scope"],
           noteKeywords: ["BREAKING CHANGE", "BREAKING CHANGES"],
         },
       },
