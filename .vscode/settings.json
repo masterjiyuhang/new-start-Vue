@@ -1,0 +1,39 @@
+{
+  "editor.tabSize": 2,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "unocss.root": "packages/client",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+  "eslint.validate": ["javascript", "javascriptvue", "vue"],
+  "stylelint.enable": true,
+  "stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass"],
+  // "stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass", "html"],
+  "cSpell.words": ["stylelint", "pinia", "commitlint", "unplugin"],
+  "i18n-ally.localesPaths": ["src/locales/lang"],
+  "i18n-ally.languageTagSystem": "legacy",
+  "i18n-ally.sourceLanguage": "zh-CN",
+  "i18n-ally.displayLanguage": "zh-CN",
+  // "i18n-ally.namespace": true,
+  "i18n-ally.enabledParsers": ["ts", "js", "json"],
+  // "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
+  "i18n-ally.annotationInPlace": false, // 在路径原位显示翻译文案，而不是附加在末尾
+
+  // 将两个字母的区域设置代码映射到国家
+  "i18n-ally.localeCountryMap": {
+    "CHINA": "zh-CN",
+    "ENGLISH": "en-US"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
