@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.1.4...v1.2.0) (2024-03-15)
+
+
+### Bug Fixes
+
+* update release config ([60ef636](https://github.com/masterjiyuhang/new-start-Vue/commit/60ef63699c679283af61f26c9a6f8dde042e01be))
+
+
+### Features
+
+* 完善登录页面，国际化 ([6841edc](https://github.com/masterjiyuhang/new-start-Vue/commit/6841edc85272c253d2ca7dbf20f7b2a431bb0050))
+
 ## [1.1.4](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.1.3...v1.1.4) (2024-03-05)
 
 
