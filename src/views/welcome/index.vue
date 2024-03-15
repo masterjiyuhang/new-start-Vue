@@ -33,7 +33,7 @@
             <div class="flex items-center"></div>
 
             <el-button type="primary" @click="editRow(scope.row)">
-              <el-icon><View /></el-icon>Detail
+              <el-icon> <View /> </el-icon>Detail
             </el-button>
           </template>
         </el-table-column>
@@ -143,4 +143,9 @@ const {
 initPage();
 </script>
 
-<style scoped></style>
+<style scoped>
+.welcome {
+  width: 100%;
+  height: 100%;
+}
+</style>
