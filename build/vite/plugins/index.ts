@@ -16,9 +16,33 @@ import { configCompressPlugin } from "./compressPlugin";
 
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import path from "path";
+import { insertScriptPlugin } from "./viteInsertScript";
 
 export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
   return [
+    insertScriptPlugin(),
+    // {
+    //   name: "insert-script",
+    //   transformIndexHtml(html) {
+    //     console.log(html);
+    //   },
+    //   generateBundle(_, bundle) {
+    //     console.log(process.env.NODE_ENV);
+    //     const isProduction = process.env.NODE_ENV === "production";
+    //     if (!isProduction) {
+    //       const scriptPath = `https://cdn.cchang.fun/track.js`;
+
+    //       // Inject script tag into index.html bundle
+    //       const indexHtml = bundle["index.html"];
+    //       if (indexHtml) {
+    //         indexHtml.code = indexHtml.code.replace(
+    //           "</head>",
+    //           `<script src="${scriptPath}" defer></script></head>`
+    //         );
+    //       }
+    //     }
+    //   },
+    // },
     viteBuildInfo(),
     GvaPositionServer(),
     GvaPosition(),
