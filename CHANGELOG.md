@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.2.0...v1.3.0) (2024-03-28)
+
+
+### Features
+
+* 添加埋点文件 ([e377674](https://github.com/masterjiyuhang/new-start-Vue/commit/e3776746f514b4798a628c3175cbe7b3b9c05149))
+
 # [1.2.0](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.1.4...v1.2.0) (2024-03-15)
 
 
