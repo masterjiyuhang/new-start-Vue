@@ -28,3 +28,7 @@ export const withInstall = <T extends CustomComponent>(
   };
   return component as WithInstall<T>;
 };
+
+export const isDev = () => {
+  return import.meta.env.MODE === "development";
+};
