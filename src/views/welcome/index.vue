@@ -140,6 +140,7 @@ const {
   editRow,
   testWeibo,
 } = initTable();
+
 initPage();
 </script>
 
