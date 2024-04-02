@@ -3,9 +3,9 @@
   "editor.formatOnType": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
   "unocss.root": "packages/client",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
