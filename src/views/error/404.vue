@@ -1,7 +1,7 @@
 <template>
-  <div class="not_found_page">
-    <img :src="img_404" alt="" class="w-full h-full" />
-    <el-button @click="goBackHome">返回首页</el-button>
+  <div class="h-full not_found_page">
+    <img :src="img_404" alt="" class="m-auto" />
+    <el-button @click="goBackHome" class="m-auto">返回首页</el-button>
   </div>
 </template>
 
