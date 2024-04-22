@@ -10,13 +10,12 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const isBuild = command === "build";
   const { VITE_PORT, VITE_CDN, VITE_BUILD_COMPRESS, VITE_BASE_URL } = loadEnv(
     mode,
-    root
+    root,
   );
   // console.log(loadEnv(mode, root), process.env);
 
   const isVercel = mode === "vercel";
   const BaseUrl = isVercel ? "/" : VITE_BASE_URL || "";
-  console.log(BaseUrl);
   // vite 插件
   const plugins = setupVitePlugins({
     isBuild,

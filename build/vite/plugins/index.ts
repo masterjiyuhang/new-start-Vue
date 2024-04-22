@@ -7,10 +7,8 @@ import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import { viteBuildInfo } from "./viteBuildInfo";
 import { GvaPositionServer } from "./viteCodeServer";
 import { GvaPosition } from "./viteGvaPosition";
-import { configCdnPlugin } from "./cdnPlugin";
 import { configMockPlugin } from "./mockPlugin";
 // import { configSingleFile } from "./singleFilePlugin";
-import { configCopyPlugin } from "./copyPlugin";
 import { configComponentPlugin } from "./componentPlugin";
 import { configCompressPlugin } from "./compressPlugin";
 
@@ -48,14 +46,10 @@ export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
     GvaPosition(),
     vuePlugin(),
     vueJsx(),
-    VITE_CDN ? configCdnPlugin() : null,
     configMockPlugin({ isBuild }),
     // configSingleFile(),
     svgLoader(),
-    VueI18nPlugin({
-      // include: [path.resolve(__dirname, '../../../src/locales/lang/**/*.ts')],
-    }),
-    configCopyPlugin({ url: "build/config.js" }),
+    VueI18nPlugin({}),
 
     createSvgIconsPlugin({
       // Specify the icon folder to be cached

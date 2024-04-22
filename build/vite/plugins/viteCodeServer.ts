@@ -1,4 +1,4 @@
-const child_process = require("child_process");
+import child_process from "child_process";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 
@@ -27,11 +27,11 @@ export function GvaPositionServer() {
               const platform = os();
               if (platform === "Windows") {
                 child_process.exec(
-                  `webstorm64.exe  --line ${linePath} ${filePath}`
+                  `webstorm64.exe  --line ${linePath} ${filePath}`,
                 );
               } else {
                 child_process.exec(
-                  `webstorm64  --line ${linePath} ${filePath}`
+                  `webstorm64  --line ${linePath} ${filePath}`,
                 );
               }
             } else {
