@@ -23,7 +23,7 @@ const codeLineTrack = (code: any, id: any) => {
   const lineList: string[] = code.split("\n");
   const newList: string[] = [];
   lineList.forEach((item: string, index: number) =>
-    newList.push(addLineAttr(item, index + 1, id) as string)
+    newList.push(addLineAttr(item, index + 1, id) as string),
   );
   return newList.join("\n");
 };
@@ -82,7 +82,7 @@ export const compileSDFTemplate = async (code: string, id: string) => {
               !node.loc.source.includes("data-v-inspecotr-file") &&
                 s.prependLeft(
                   node.loc.start.offset + node.tag.length + 1,
-                  ` data-v-inspecotr-file="${id}" data-v-inspecotr-line=${node.loc.start.line} data-v-inspecotr-column=${node.loc.start.column} data-v-inspecotr-title="${base}"`
+                  ` data-v-inspecotr-file="${id}" data-v-inspecotr-line=${node.loc.start.line} data-v-inspecotr-column=${node.loc.start.column} data-v-inspecotr-title="${base}"`,
                 );
             }
           }

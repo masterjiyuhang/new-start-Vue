@@ -9,7 +9,7 @@ export const insertScriptPlugin = (): Plugin => {
         const scriptPath = `https://cdn.cchang.fun/track.js`;
         return html.replace(
           "</head>",
-          `<script src="${scriptPath}" defer></script></head>`
+          `<script src="${scriptPath}" defer></script></head>`,
         );
       }
     },
