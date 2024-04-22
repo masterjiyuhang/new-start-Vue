@@ -4,12 +4,12 @@ export const configMockPlugin = ({ isBuild }: { isBuild: boolean }) => {
   return viteMockServe({
     ignore: /^_/,
     mockPath: "mock",
-    // localEnabled: !isBuild,
-    // prodEnabled: isBuild,
-    // injectCode: `
-    //   import { setupProdMockServer } from '../mock/_createProductionServer';
+    localEnabled: !isBuild,
+    prodEnabled: isBuild,
+    injectCode: `
+      import { setupProdMockServer } from '../mock/_createProductionServer';
 
-    //   setupProdMockServer();
-    //   `,
+      setupProdMockServer();
+      `,
   });
 };
