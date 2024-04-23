@@ -2,6 +2,7 @@
   <div class="wrapper-page">
     <TimeClock />
     <HoneyComb />
+    <Pendulum />
     <!-- <Stitch /> -->
   </div>
 </template>
@@ -10,6 +11,8 @@
 import { HoneyComb } from "./HoneyComb/HoneyComb";
 // import { Stitch } from "./Stitch/Stitch";
 import TimeClock from "./TimeClock/index.vue";
+
+import { Pendulum } from "./Pendulum/Index";
 </script>
 
 <style scoped></style>
