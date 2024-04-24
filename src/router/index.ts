@@ -15,7 +15,7 @@ import { App, isProxy, toRaw } from "vue";
 
 export const findCurrentRouteByPath = (
   path: string,
-  routes: RouteRecordRaw[]
+  routes: RouteRecordRaw[],
 ): any => {
   let res = routes.find((item) => item.path === path);
 
