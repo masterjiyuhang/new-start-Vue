@@ -26,5 +26,19 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/fifty/day02",
+      name: "FiftyDay02",
+      component: "/fifty/day02/index",
+      meta: {
+        icon: "Step",
+        title: "第二天 进度展示",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
   ],
 };
