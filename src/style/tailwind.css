@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+.wrapper-page {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 20px;
+  overflow-x: hidden;
+  border: 1px solid var(--el-border-color-light);
+  border-radius: 4px;
+  background-color: var(--el-fill-color-blank);
+  box-shadow: 0 0 12px rgb(0 0 0 / 5%);
+}
+
 @layer components {
   .flex-c {
     @apply flex items-center justify-center;

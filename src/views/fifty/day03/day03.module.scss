@@ -1,0 +1,155 @@
+.container {
+  position: relative;
+  min-height: 50vh;
+  padding: 50px;
+  transform-origin: top left;
+  transition: transform 0.5s linear;
+  background-color: #fafafa;
+
+  &.show-nav {
+    transform: rotate(-20deg);
+  }
+
+  &.show-nav + nav li {
+    /*
+     translateX() 函数表示在二维平面上水平方向移动元素
+    */
+    @media (min-width: 1024px) {
+      transform: translateX(200px);
+      transition-duration: 3s;
+
+      // transition-delay: 1.3s;
+    }
+
+    @media (max-width: 1024px) and (min-width: 600px) {
+      transform: translateX(110px);
+      transition-duration: 1.5s;
+      transition-delay: 0.3s;
+    }
+
+    @media (max-width: 600px) {
+      transform: translateX(80px);
+      transition-delay: 0.3s;
+    }
+  }
+
+  .circle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: -100px;
+    margin-left: -100px;
+
+    .circle {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      transition: transform 0.5s linear;
+      border-radius: 50%;
+      background-color: #ff7979;
+
+      .btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100px;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font-size: 26px;
+        cursor: pointer;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .open {
+        left: 60%;
+      }
+
+      .close {
+        top: 70%;
+        left: 55%;
+        transform: rotate(90deg);
+        transform-origin: top left;
+      }
+    }
+  }
+}
+
+.show-nav {
+  .circle {
+    transform: rotate(-70deg);
+  }
+}
+
+.content {
+  max-width: 1000px;
+  margin: 50px auto;
+
+  img {
+    width: 500px;
+    height: 500px;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  small {
+    color: #555;
+    font-style: italic;
+  }
+
+  p {
+    color: #333;
+    line-height: 1.5;
+  }
+}
+
+nav {
+  position: fixed;
+  z-index: 100;
+  bottom: 40px;
+  left: 0;
+
+  ul {
+    padding-left: 30px;
+    list-style-type: none;
+
+    li {
+      margin: 40px 0;
+      transform: translateX(-100%);
+      transition: transform 0.4s ease-in;
+      color: #fff;
+      text-transform: uppercase;
+
+      & + li {
+        margin-left: 15px;
+        transform: translateX(-150%);
+      }
+
+      & + li + li {
+        margin-left: 30px;
+        transform: translateX(-200%);
+      }
+
+      i {
+        margin-right: 10px;
+        font-size: 20px;
+      }
+
+      a {
+        transition: all 0.5s;
+        color: #fafafa;
+        text-decoration: none;
+
+        &:hover {
+          color: #ff7979;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

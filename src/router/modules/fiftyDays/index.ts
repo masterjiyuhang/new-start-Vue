@@ -31,8 +31,22 @@ export default {
       name: "FiftyDay02",
       component: "/fifty/day02/index",
       meta: {
-        icon: "Step",
+        icon: "Pear",
         title: "第二天 进度展示",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    {
+      path: "/fifty/day03",
+      name: "FiftyDay03",
+      component: "/fifty/day03/index",
+      meta: {
+        icon: "Mug",
+        title: "第三天 滑动展示",
         isLink: "",
         isHide: false,
         isFull: false,
