@@ -54,5 +54,19 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/fifty/day04",
+      name: "FiftyDay04",
+      component: "/fifty/day04/index",
+      meta: {
+        icon: "Mug",
+        title: "第四天 搜索展示",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
   ],
 };
