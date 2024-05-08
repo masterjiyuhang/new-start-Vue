@@ -1,40 +1,49 @@
 <template>
   <div class="relative flex items-center justify-center w-full h-full">
-    <section
-      class="bg"
-      :style="{
-        filter: `blur(${scale(percent, 0, 100, 30, 0)}px)`,
-      }"
-    ></section>
-    <div
-      class="loading-text"
-      :style="{
-        opacity: scale(percent, 0, 100, 1, 0),
-      }"
-    >
-      {{ percent }}%
-    </div>
+    <section class="bg" :style="bgStyle"></section>
+    <div class="loading-text" :style="textStyle">{{ percent }}%</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, ref } from "vue";
+import { computed, onUnmounted, ref } from "vue";
 
-let timer = setInterval(() => {
-  if (percent.value > 99) {
-    clearInterval(timer);
-  }
-
-  percent.value += 1;
-}, 30);
 const percent = ref(0);
+const imageUrl = "https://cdn.cchang.fun/assets/1.jpg";
 
-const scale = (num, in_min, in_max, out_min, out_max) => {
+const scale = (
+  num: number,
+  in_min: number,
+  in_max: number,
+  out_min: number,
+  out_max: number,
+) => {
   return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
 };
 
+const bgStyle = computed(() => ({
+  background: `url(${imageUrl}) no-repeat center center/cover`,
+  filter: `blur(${scale(percent.value, 0, 100, 30, 0)}px)`,
+}));
+
+const textStyle = computed(() => ({
+  color: "#fff",
+  opacity: scale(percent.value, 0, 100, 1, 0),
+}));
+
+let animationFrameId;
+
+function animate() {
+  if (percent.value < 100) {
+    percent.value += 1;
+    animationFrameId = requestAnimationFrame(animate);
+  }
+}
+
+animate();
+
 onUnmounted(() => {
-  clearInterval(timer);
+  cancelAnimationFrame(animationFrameId);
 });
 </script>
 
