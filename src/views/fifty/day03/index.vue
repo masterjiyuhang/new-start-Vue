@@ -50,14 +50,22 @@
         similique laborum odio, magnam esse. Aperiam?
       </p>
     </div>
+    <nav :class="styles.tag">
+      <ul :class="styles['tag-list']">
+        <li :class="styles['tag-list-item']">
+          <i class="fas fa-home"></i><a href="#" class="text-red-400"> Home</a>
+        </li>
+        <li class="tag-list-item">
+          <i class="fas fa-user-alt"></i
+          ><a href="#" class="text-red-400"> About</a>
+        </li>
+        <li class="tag-list-item">
+          <i class="fas fa-envelope"></i
+          ><a href="#" class="text-red-400"> Contact</a>
+        </li>
+      </ul>
+    </nav>
   </div>
-  <nav>
-    <ul>
-      <li><i class="fas fa-home"></i><a href="#"> Home</a></li>
-      <li><i class="fas fa-user-alt"></i><a href="#"> About</a></li>
-      <li><i class="fas fa-envelope"></i><a href="#"> Contact</a></li>
-    </ul>
-  </nav>
 </template>
 
 <script setup lang="ts">
