@@ -45,6 +45,7 @@ import {
   useDebounceFn,
 } from "@vueuse/core";
 import * as utilsMethods from "./utils";
+
 const { animationFrame, copyObj } = utilsMethods;
 animationFrame();
 
@@ -94,11 +95,11 @@ if (classOption["key"] === undefined) {
 const wrap = templateRef<HTMLElement | null>(`wrap${classOption["key"]}`, null);
 const slotList = templateRef<HTMLElement | null>(
   `slotList${classOption["key"]}`,
-  null
+  null,
 );
 const realBox = templateRef<HTMLElement | null>(
   `realBox${classOption["key"]}`,
-  null
+  null,
 );
 
 const leftSwitchState = computed(() => {
