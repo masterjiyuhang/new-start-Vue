@@ -9,7 +9,8 @@
 import { computed, onUnmounted, ref } from "vue";
 
 const percent = ref(0);
-const imageUrl = "https://cdn.cchang.fun/assets/1.jpg";
+const imageUrl =
+  "https://images.unsplash.com/photo-1507146426996-ef05306b995a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80";
 
 const scale = (
   num: number,
