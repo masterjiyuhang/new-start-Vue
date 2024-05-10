@@ -4,8 +4,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "tailwind": "tailwind-config-viewer -p 3000 -o",
-    "dev": "vite --mode development && tailwind",
+    "tailwind": "tailwind-config-viewer -p 3000 -o -c tailwind.config.cjs",
+    "start": "run-p dev tailwind",
+    "dev": "vite --mode development",
     "build": "run-p type-check build-only",
     "preview": "vite build && vite preview --port 8082",
     "test:unit": "vitest --environment jsdom --root src/",
@@ -90,7 +91,7 @@
     "sass": "^1.75.0",
     "semantic-release": "^23.0.8",
     "svg-baker": "^1.7.0",
-    "svgo": "^3.2.0",
+    "svgo": "^2.8.0",
     "tailwind-config-viewer": "^2.0.1",
     "tailwindcss": "^3.4.3",
     "terser": "^5.30.3",
@@ -111,5 +112,6 @@
   },
   "engines": {
     "node": ">=16.15.1"
-  }
+  },
+  "packageManager": "pnpm@8.15.6+sha256.01c01eeb990e379b31ef19c03e9d06a14afa5250b82e81303f88721c99ff2e6f"
 }

@@ -74,7 +74,7 @@ export function createSvgIconsPlugin(opt: ViteSvgIconsPlugin): Plugin {
       const { code, idSet } = await createModuleCode(
         cache,
         svgoOptions as OptimizeOptions,
-        options
+        options,
       );
       if (isRegister) {
         return code;
@@ -96,7 +96,7 @@ export function createSvgIconsPlugin(opt: ViteSvgIconsPlugin): Plugin {
           const { code, idSet } = await createModuleCode(
             cache,
             svgoOptions as OptimizeOptions,
-            options
+            options,
           );
           const content = url.endsWith(registerId) ? code : idSet;
 
@@ -114,12 +114,12 @@ export function createSvgIconsPlugin(opt: ViteSvgIconsPlugin): Plugin {
 export async function createModuleCode(
   cache: Map<string, FileStats>,
   svgoOptions: OptimizeOptions,
-  options: ViteSvgIconsPlugin
+  options: ViteSvgIconsPlugin,
 ) {
   const { insertHtml, idSet } = await compilerIcons(
     cache,
     svgoOptions,
-    options
+    options,
   );
 
   const xmlns = `xmlns="${XMLNS}"`;
@@ -175,7 +175,7 @@ function domInject(inject: DomInject = "body-last") {
 export async function compilerIcons(
   cache: Map<string, FileStats>,
   svgOptions: OptimizeOptions,
-  options: ViteSvgIconsPlugin
+  options: ViteSvgIconsPlugin,
 ) {
   const { iconDirs } = options;
 
@@ -199,7 +199,7 @@ export async function compilerIcons(
       const getSymbol = async () => {
         relativeName = normalizePath(path).replace(
           normalizePath(dir + "/"),
-          ""
+          "",
         );
         symbolId = createSymbolId(relativeName, options);
         svgSymbol = await compilerIcon(path, symbolId, svgOptions);
@@ -234,7 +234,7 @@ export async function compilerIcons(
 export async function compilerIcon(
   file: string,
   symbolId: string,
-  svgOptions: OptimizeOptions
+  svgOptions: OptimizeOptions,
 ): Promise<string | null> {
   if (!file) {
     return null;
