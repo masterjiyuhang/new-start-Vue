@@ -14,7 +14,7 @@ const props = withDefaults(
   }>(),
   {
     col: 3,
-  }
+  },
 );
 provide(ListKey, props);
 </script>
