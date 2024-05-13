@@ -41,7 +41,8 @@ import styles from "./home.module.scss";
   cursor: pointer;
   aspect-ratio: 1;
   /* stylelint-disable-next-line scss/operator-no-newline-after */
-  mask: linear-gradient(#000 0 0) no-repeat 50% calc(-1 * $o) /
+  mask:
+    linear-gradient(#000 0 0) no-repeat 50% calc(-1 * $o) /
       calc(100% / var(--f) - 2 * $b) 50%,
     radial-gradient(circle closest-side, #000 99%, #0000) $g;
 

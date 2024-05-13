@@ -7,6 +7,7 @@ import {
   Pausable,
 } from "@vueuse/core";
 import { getCurrentScope, isRef, onScopeDispose, ref, unref, watch } from "vue";
+
 interface UseIntervalFnOptions {
   /**
    * Start the timer immediately
@@ -38,7 +39,7 @@ export function useState() {
   function useIntervalCchFn(
     cb: Fn,
     interval: MaybeComputedRef<number> = 1000,
-    options: UseIntervalFnOptions = {}
+    options: UseIntervalFnOptions = {},
   ): Pausable {
     const { immediate = true, immediateCallback = false } = options;
 

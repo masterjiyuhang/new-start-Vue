@@ -1,4 +1,4 @@
-const form = Array.from({ length: 8 }).map((_, index) => {
+const form = Array.from({ length: 9 }).map((_, index) => {
   return {
     path: `/fifty/day${index + 1}`,
     name: `FiftyDay${index + 1}`,
