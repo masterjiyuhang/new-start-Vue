@@ -1,8 +1,8 @@
-const form = Array.from({ length: 9 }).map((_, index) => {
+const form = Array.from({ length: 10 }).map((_item, index) => {
   return {
     path: `/fifty/day${index + 1}`,
     name: `FiftyDay${index + 1}`,
-    component: `/fifty/day${index > 10 ? index : "0" + (index + 1)}/index`,
+    component: `/fifty/day${index < 9 ? "0" + (index + 1) : index + 1}/index`,
     meta: {
       icon: "Stamp",
       title: `第${index + 1}天`,
