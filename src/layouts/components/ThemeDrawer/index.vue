@@ -218,7 +218,7 @@ watch(
     const body = document.body as HTMLElement;
     body.setAttribute("class", ThemeConfig.value.layout);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 切换布局方式

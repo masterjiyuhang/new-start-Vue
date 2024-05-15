@@ -341,8 +341,10 @@ initHandlePress();
       transition: 0.5s;
       border-radius: 66% 48% 33% 67% / 22% 95% 55% 62%;
       background-color: #fff;
-      box-shadow: inset 20px 20px 20px rgb(0 0 0 / 5%),
-        25px 35px 20px rgb(0 0 0 / 5%), 25px 30px 30px rgb(0 0 0 / 5%),
+      box-shadow:
+        inset 20px 20px 20px rgb(0 0 0 / 5%),
+        25px 35px 20px rgb(0 0 0 / 5%),
+        25px 30px 30px rgb(0 0 0 / 5%),
         inset -20px -20px 25px rgb(255 255 255 / 90%);
 
       .login-logo {
