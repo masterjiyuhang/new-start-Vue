@@ -4,9 +4,9 @@
       <div class="key">Press any key to get the keyCode</div>
     </div>
     <div class="flex">
-      <div class="item">{{ key }}</div>
-      <div class="item">{{ code }}</div>
-      <div class="item">{{ keyCode }}</div>
+      <div class="item">key:{{ key }}</div>
+      <div class="item">code:{{ code }}</div>
+      <div class="item">keyCode:{{ keyCode }}</div>
     </div>
   </div>
 </template>
@@ -32,12 +32,13 @@ useEventListener(document, "keydown", (e) => {
 
 <style lang="scss" scoped>
 .item {
-  width: 80px;
-  height: 50px;
+  width: 120px;
+  height: 60px;
   margin: auto;
   border: 1px solid snow;
   box-shadow: 0 1px 6px 0 rgb(0 0 0 / 10%);
   color: sandybrown;
-  line-height: 50px;
+  font-weight: 700;
+  line-height: 60px;
 }
 </style>
