@@ -47,6 +47,7 @@ declare module 'vue' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     FlowerShadow: typeof import('./src/components/FlowerShadow/index.vue')['default']
     FooterPage: typeof import('./src/components/WrapperPage/src/footerPage.vue')['default']
