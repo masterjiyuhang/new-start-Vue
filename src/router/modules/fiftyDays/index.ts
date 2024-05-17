@@ -1,10 +1,13 @@
-const form = Array.from({ length: 13 }).map((_item, index) => {
+const iconList = ["Sunrise", "Sunny", "Cloudy", "Ship", "Moon"];
+
+const form = Array.from({ length: 14 }).map((_item, index) => {
+  const iconIndex = Math.floor(Math.random() * iconList.length);
   return {
     path: `/fifty/day${index + 1}`,
     name: `FiftyDay${index + 1}`,
     component: `/fifty/day${index < 9 ? "0" + (index + 1) : index + 1}/index`,
     meta: {
-      icon: "Stamp",
+      icon: iconList[iconIndex],
       title: `第${index + 1}天`,
       isLink: "",
       isHide: false,
@@ -14,6 +17,7 @@ const form = Array.from({ length: 13 }).map((_item, index) => {
     },
   };
 });
+
 export default {
   path: "/fifty",
   name: "FiftyDays",
