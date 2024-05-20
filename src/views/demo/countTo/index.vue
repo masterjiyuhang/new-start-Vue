@@ -13,8 +13,8 @@ function easeOutElastic(n: number) {
   return n === 0
     ? 0
     : n === 1
-    ? 1
-    : 2 ** (-10 * n) * Math.sin((n * 10 - 0.75) * ((2 * Math.PI) / 3)) + 1;
+      ? 1
+      : 2 ** (-10 * n) * Math.sin((n * 10 - 0.75) * ((2 * Math.PI) / 3)) + 1;
 }
 
 const cubicBezierNumber = useTransition(baseNumber, {
@@ -40,9 +40,16 @@ function toggle() {
 
 <template>
   <div class="wrapper-page">
-    <CountTo prefix="$" :startVal="1" :endVal="9999" class="text-2xl" />
+    <CountTo
+      prefix="$"
+      :startVal="1"
+      :endVal="9999.1999"
+      class="w-full text-2xl"
+    />
 
-    <el-button type="primary" @click="toggle">Transition</el-button>
+    <el-button class="w-full" type="primary" @click="toggle"
+      >Transition</el-button
+    >
 
     <p class="mt-2">
       Cubic bezier curve: <b>{{ cubicBezierNumber.toFixed(2) }}</b>

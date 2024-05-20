@@ -1,7 +1,15 @@
 <template>
-  <span :style="{ color }">
-    {{ value }}
-  </span>
+  <div class="flex flex-col items-center justify-center m-5">
+    <div>
+      <span :style="{ color }">
+        {{ value }}
+      </span>
+    </div>
+    <div>
+      <button class="mr-3 btn base-shadow" @click="start">Start</button>
+      <button class="btn" @click="reset">Reset</button>
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import {
@@ -23,7 +31,7 @@ const props = {
   autoplay: { type: Boolean, default: true },
   decimals: {
     type: Number,
-    default: 0,
+    default: 2,
     validator(value: number) {
       return value >= 0;
     },
@@ -35,7 +43,7 @@ const props = {
   /**
    * font color
    */
-  color: { type: String },
+  color: { type: String, default: "#f00" },
   /**
    * Turn on digital animation
    */
@@ -118,3 +126,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.btn {
+  padding: 20px 50px;
+  border-radius: 4px;
+  background: #f80;
+  color: aliceblue;
+}
+</style>

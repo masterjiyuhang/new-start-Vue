@@ -13,13 +13,21 @@ $shadow-width-desc: -25px;
 
 @keyframes border {
   0% {
-    box-shadow: 20px -20px 0 2px $color, -20px -20px 0 2px $color,
-      -20px 20px 0 2px $color, 20px 20px 0 2px $color, 0 0 0 2px transparent;
+    box-shadow:
+      20px -20px 0 2px $color,
+      -20px -20px 0 2px $color,
+      -20px 20px 0 2px $color,
+      20px 20px 0 2px $color,
+      0 0 0 2px transparent;
   }
 
   100% {
-    box-shadow: 0 -25px 0 2px $color, -25px 0 0 2px $color, 0 25px 0 2px $color,
-      25px 0 0 2px $color, 0 0 0 2px #fff;
+    box-shadow:
+      0 -25px 0 2px $color,
+      -25px 0 0 2px $color,
+      0 25px 0 2px $color,
+      25px 0 0 2px $color,
+      0 0 0 2px #fff;
   }
 }
 
@@ -39,8 +47,11 @@ $shadow-width-desc: -25px;
   height: 100%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  box-shadow: 0 0 2px 10px rgb(0 0 0 / 50%), 0 0 2px 10px rgb(0 0 0 / 50%),
-    0 0 2px 10px rgb(0 0 0 / 50%), 0 0 2px 10px rgb(0 0 0 / 50%); /* 添加阴影效果 */
+  box-shadow:
+    0 0 2px 10px rgb(0 0 0 / 50%),
+    0 0 2px 10px rgb(0 0 0 / 50%),
+    0 0 2px 10px rgb(0 0 0 / 50%),
+    0 0 2px 10px rgb(0 0 0 / 50%); /* 添加阴影效果 */
 
   cursor: pointer;
 
