@@ -1,6 +1,6 @@
 const iconList = ["Sunrise", "Sunny", "Cloudy", "Ship", "Moon"];
 
-const form = Array.from({ length: 15 }).map((_item, index) => {
+const form = Array.from({ length: 16 }).map((_item, index) => {
   const iconIndex = Math.floor(Math.random() * iconList.length);
   return {
     path: `/fifty/day${index + 1}`,

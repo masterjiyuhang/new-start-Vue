@@ -57,7 +57,7 @@ import { LoadingEffect } from "./LoadingEffect/index";
     margin-left: -150px;
     animation: move-to-right 5s linear infinite;
     border-radius: 50%;
-    background-color: yellow;
+    background-color: rgb(104 187 232 / 99%);
     filter: blur(5px);
   }
 
@@ -72,7 +72,7 @@ import { LoadingEffect } from "./LoadingEffect/index";
     margin-right: -110px;
     animation: move-to-left 5s linear infinite;
     border-radius: 50%;
-    background-color: red;
+    background-color: #0ebeff;
     filter: blur(5px);
   }
 }
@@ -99,7 +99,9 @@ import { LoadingEffect } from "./LoadingEffect/index";
       linear-gradient(transparent, rgb(0 0 0 / 40%));
 
     &:hover {
-      box-shadow: 0 0 5px $color, 0 0 25px $color;
+      box-shadow:
+        0 0 5px $color,
+        0 0 25px $color;
       color: #fff;
 
       &::after,
