@@ -1,5 +1,6 @@
 import type { Directive } from "vue";
 import "./index.scss";
+
 export interface RippleOptions {
   event: string;
   transition: number;
@@ -53,7 +54,7 @@ function rippler({
   background,
 }: { event: EventType; el: HTMLElement } & RippleProto) {
   const targetBorder = parseInt(
-    getComputedStyle(el).borderWidth.replace("px", "")
+    getComputedStyle(el).borderWidth.replace("px", ""),
   );
   const clientX = event.clientX || event.touches[0].clientX;
   const clientY = event.clientY || event.touches[0].clientY;
