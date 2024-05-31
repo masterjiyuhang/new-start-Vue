@@ -18,6 +18,35 @@ const form = Array.from({ length: 23 }).map((_item, index) => {
   };
 });
 
+const mapLL = new Map();
+
+form.map((item, index) => {
+  const group = `group${Math.ceil((index + 1) / 10)}`;
+  const foo: any = {
+    path: `/fifty/${group}`,
+    name: `${group.toUpperCase()}`,
+    redirect: `/fifty/${group}/day${Math.ceil((index + 1) / 10) - 1}1`,
+    meta: {
+      icon: "Stamp",
+      title: `第${Math.ceil((index + 1) / 10)}组`,
+      isLink: "",
+      isHide: false,
+      isFull: false,
+      isAffix: false,
+      isKeepAlive: true,
+    },
+    children: [],
+  };
+
+  if (mapLL.get(group)) {
+    foo.children = [...mapLL.get(group).children, item];
+    mapLL.set(group, foo);
+  } else {
+    foo.children = [item];
+    mapLL.set(group, foo);
+  }
+});
+
 export default {
   path: "/fifty",
   name: "FiftyDays",
@@ -31,7 +60,8 @@ export default {
     isAffix: false,
     isKeepAlive: true,
   },
-  children: form,
+  children: [...mapLL.values()],
+  // children: form,
   // children: [
   //   {
   //     path: "/fifty/day01",
