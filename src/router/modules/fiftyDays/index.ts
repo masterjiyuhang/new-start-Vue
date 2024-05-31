@@ -1,9 +1,11 @@
 const iconList = ["Sunrise", "Sunny", "Cloudy", "Ship", "Moon"];
 
-const form = Array.from({ length: 23 }).map((_item, index) => {
+const form = Array.from({ length: 24 }).map((_item, index) => {
   const iconIndex = Math.floor(Math.random() * iconList.length);
+  const groupNumber = Math.ceil((index + 1) / 10);
+  const group = `group${groupNumber}`;
   return {
-    path: `/fifty/day${index + 1}`,
+    path: `/fifty/${group}/day${index + 1}`,
     name: `FiftyDay${index + 1}`,
     component: `/fifty/day${index < 9 ? "0" + (index + 1) : index + 1}/index`,
     meta: {
@@ -18,34 +20,35 @@ const form = Array.from({ length: 23 }).map((_item, index) => {
   };
 });
 
-const mapLL = new Map();
+const mapLL = form.reduce((map, item, index) => {
+  const groupNumber = Math.ceil((index + 1) / 10);
+  const group = `group${groupNumber}`;
 
-form.map((item, index) => {
-  const group = `group${Math.ceil((index + 1) / 10)}`;
-  const foo: any = {
-    path: `/fifty/${group}`,
-    name: `${group.toUpperCase()}`,
-    redirect: `/fifty/${group}/day${Math.ceil((index + 1) / 10) - 1}1`,
-    meta: {
-      icon: "Stamp",
-      title: `第${Math.ceil((index + 1) / 10)}组`,
-      isLink: "",
-      isHide: false,
-      isFull: false,
-      isAffix: false,
-      isKeepAlive: true,
-    },
-    children: [],
-  };
-
-  if (mapLL.get(group)) {
-    foo.children = [...mapLL.get(group).children, item];
-    mapLL.set(group, foo);
-  } else {
-    foo.children = [item];
-    mapLL.set(group, foo);
+  if (!map.has(group)) {
+    map.set(group, {
+      path: `/fifty/${group}`,
+      name: `${group.toUpperCase()}`,
+      redirect: `/fifty/${group}/day${(groupNumber - 1) * 10 + 1}`,
+      meta: {
+        icon: "Stamp",
+        title: `第${groupNumber}组`,
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+      children: [],
+    });
   }
-});
+
+  map.get(group).children.push(item);
+
+  return map;
+}, new Map());
+
+// 将 Map 转换为数组形式
+const groupedRoutes = Array.from(mapLL.values());
 
 export default {
   path: "/fifty",
@@ -60,7 +63,7 @@ export default {
     isAffix: false,
     isKeepAlive: true,
   },
-  children: [...mapLL.values()],
+  children: groupedRoutes,
   // children: form,
   // children: [
   //   {
