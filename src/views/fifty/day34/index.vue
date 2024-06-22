@@ -37,7 +37,7 @@ const numList = ref(
     })
     .reverse(),
 );
-const isCounterHidden = ref(false);
+const isCounterHidden = ref(true);
 const isFinalMessageShown = ref(false);
 const activeIndex = ref(0);
 
@@ -45,7 +45,11 @@ onMounted(() => {
   runAnimation();
 });
 
-function resetDOM() {}
+function resetDOM() {
+  activeIndex.value = 0;
+  isCounterHidden.value = true;
+  isFinalMessageShown.value = false;
+}
 function runAnimation() {
   console.log(numList.value);
   numList.value.forEach((_, index) => {
