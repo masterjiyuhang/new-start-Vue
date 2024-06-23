@@ -1,15 +1,19 @@
 <template>
   <div class="wrapper-page">
     {{ activeIndex }}
+
+    <div class="my-counter">
+      <div class="relative w-32 mx-auto mt-10">
+        <!-- v-show="item.id === activeIndex" -->
+        <!-- :class="activeIndex === item.id ? 'my-in' : ''" -->
+        <span v-show="item.id === activeIndex" class="absolute" :class="activeIndex === item.id ? 'my-in' : 'my-out'"
+          v-for="item in numList" :key="item.id">{{ item }} {{ item.id === activeIndex }}</span>
+      </div>
+    </div>
     <div class="counter" v-show="isCounterHidden">
       <div class="nums">
-        <span
-          class="num"
-          v-for="(item, index) in numList"
-          :class="activeIndex === index ? 'in' : 'out'"
-          :key="item.id"
-          ref="numsRef"
-        >
+        <span class="num" v-for="(item, index) in numList" :class="activeIndex === index ? 'in' : 'out'" :key="item.id"
+          ref="numsRef">
           {{ item.id }}
         </span>
       </div>
@@ -27,43 +31,48 @@
 
 <script setup lang="ts">
 const numList = ref(
-  Array.from({ length: 5 })
-    .map((_item, index) => {
+  Array.from( { length: 5 } )
+    .map( ( _item, index ) =>
+    {
       return {
-        id: index + 1,
+        id: index,
         in: index === 0,
         out: false,
       };
-    })
-    .reverse(),
+    } )
+    .reverse()
 );
-const isCounterHidden = ref(true);
-const isFinalMessageShown = ref(false);
-const activeIndex = ref(0);
+const isCounterHidden = ref( true );
+const isFinalMessageShown = ref( false );
+const activeIndex = ref( 0 );
 
-onMounted(() => {
+onMounted( () =>
+{
   runAnimation();
-});
+} );
 
-function resetDOM() {
+function resetDOM ()
+{
   activeIndex.value = 0;
   isCounterHidden.value = true;
   isFinalMessageShown.value = false;
 }
-function runAnimation() {
-  console.log(numList.value);
-  numList.value.forEach((_, index) => {
-    setTimeout(
-      () => {
-        activeIndex.value++;
-        if (activeIndex.value === numList.value.length) {
-          isCounterHidden.value = false;
-          isFinalMessageShown.value = true;
-        }
-      },
-      (index + 1) * 1000,
-    );
-  });
+function runAnimation ()
+{
+  console.log( numList.value );
+  numList.value.forEach( ( _, index ) =>
+  {
+    setTimeout( () =>
+    {
+      activeIndex.value++;
+      if ( activeIndex.value === numList.value.length )
+      {
+        activeIndex.value = 0;
+        isCounterHidden.value = false;
+        isFinalMessageShown.value = true;
+      }
+    }, ( index + 1 ) * 1000 );
+  } );
 }
 
 // function runAnimation() {
@@ -104,7 +113,8 @@ function runAnimation() {
 //   numsRef.value[0].classList.add("in");
 //   console.log(numsRef.value[0].classList);
 // }
-function handleReplay() {
+function handleReplay ()
+{
   resetDOM();
   runAnimation();
 }
@@ -161,6 +171,15 @@ function handleReplay() {
   .out {
     animation: go-out 0.5s ease-in-out;
   }
+}
+
+.my-in {
+  transform: translate(-50%, -50%) rotate(120deg);
+  animation: go-in 0.5s ease-in-out;
+}
+
+.my-out {
+  animation: go-out 0.5s ease-in-out;
 }
 
 @keyframes hide {
