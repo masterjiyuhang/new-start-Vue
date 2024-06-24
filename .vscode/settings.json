@@ -33,7 +33,7 @@
     "ENGLISH": "en-US"
   },
   "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
+    "editor.defaultFormatter": "Wscats.vue"
   },
   "vue-i18n.i18nPaths": "src/locales,src/locales/lang"
 }
