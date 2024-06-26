@@ -64,6 +64,11 @@
     "VNode": true,
     "WritableComputedRef": true,
     "toValue": true,
-    "ElMessage": true
+    "ElMessage": true,
+    "onBeforeRouteLeave": true,
+    "onBeforeRouteUpdate": true,
+    "useLink": true,
+    "useRoute": true,
+    "useRouter": true
   }
 }
