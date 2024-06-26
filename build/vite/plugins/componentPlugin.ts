@@ -6,7 +6,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 export const configComponentPlugin = () => {
   const plugins = [
     AutoImport({
-      imports: ["vue"],
+      imports: ["vue", "vue-router"],
       dts: "auto-import.d.ts", // 生成的类型文件
       resolvers: [
         ElementPlusResolver({
@@ -21,6 +21,7 @@ export const configComponentPlugin = () => {
     }),
     Components({
       resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+      dts: "components.d.ts",
     }),
     ElementPlus({
       useSource: true,

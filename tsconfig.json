@@ -20,7 +20,7 @@
     "lib": ["dom", "esnext"],
     "noImplicitAny": false,
     "skipLibCheck": true,
-    "types": ["vite/client"],
+    "types": ["vite/client", "vue"],
     "removeComments": true,
     "paths": {
       "@/*": ["src/*"],
@@ -42,6 +42,7 @@
     "build/**/*.ts",
     "build/**/*.d.ts",
     "mock/**/*.ts",
+    "*.d.ts",
     "vite.config.ts"
   ],
   "exclude": [
