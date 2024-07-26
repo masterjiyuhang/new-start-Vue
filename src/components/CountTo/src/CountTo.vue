@@ -12,15 +12,6 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  watchEffect,
-  unref,
-  onMounted,
-  watch,
-} from "vue";
 import { useTransition, TransitionPresets } from "@vueuse/core";
 import { isNumber } from "lodash";
 
