@@ -15,12 +15,10 @@ import { ref } from "vue";
 
 const bindText = ref("哈哈 我是二航");
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const images: Record<string, { default: string }> = import.meta.globEager(
-  "@/assets/shopping/*.png"
+const images: Record<string, { default: string }> = import.meta.glob(
+  "@/assets/shopping/*.png",
 );
-let arr = Object.values(images).map((v) => v.default);
+let arr = Object.keys(images).map((v) => v);
 
 setTimeout(() => {
   bindText.value = "二航跑路了";
@@ -82,7 +80,7 @@ const vFocus = {
       binding.value,
       el,
       vnode,
-      prevVnode
+      prevVnode,
     );
   },
 
