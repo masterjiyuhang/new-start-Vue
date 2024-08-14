@@ -1,7 +1,6 @@
 import { MockMethod } from "vite-plugin-mock";
 import { routerList, authButtonList } from "../_constant";
 import { resultPageSuccess, resultSuccess } from "../_utils";
-import { ServerResponse } from "http";
 
 const accountList = (() => {
   const result: any[] = [];

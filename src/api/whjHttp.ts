@@ -40,6 +40,12 @@ class HttpClient {
     this.axiosInstance = axios.create(defaultConfig);
     this.cache = new LRU<string, CacheEntry<any>>({ max: 100 });
 
+    // 防抖函数初始化，只创建一次
+    this.debounceRequest = debounce(
+      this.handleDebouncedRequest.bind(this),
+      800,
+    );
+
     this.httpInterceptorsRequestHandler();
     this.httpInterceptorsResponseHandler();
   }
@@ -48,13 +54,12 @@ class HttpClient {
   private httpInterceptorsRequestHandler(): void {
     this.axiosInstance.interceptors.request.use(
       async (config: AxiosRequestConfig & RequestConfig): Promise<any> => {
-        // 开启进度条动画
         NProgress.start();
         return config;
       },
       (error) => {
         return Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -62,14 +67,13 @@ class HttpClient {
   private httpInterceptorsResponseHandler(): void {
     this.axiosInstance.interceptors.response.use(
       async (response: any): Promise<any> => {
-        // 开启进度条动画
         NProgress.done();
         return response;
       },
       (error) => {
         NProgress.done();
         return Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -82,29 +86,22 @@ class HttpClient {
   public request<T>(
     method: string,
     url: string,
-    config?: AxiosRequestConfig & RequestConfig
+    config?: AxiosRequestConfig & RequestConfig,
   ): Promise<T | any> {
     const {
       cacheEnabled = false,
       cacheMaxAge = 0,
-      // retryEnabled = false,
-      // retryCount = 0,
       debounceEnabled = true,
       debounceWait = 800,
     } = config || {};
 
     // 检查是否开启了缓存
     if (cacheEnabled) {
-      const cacheKey = `${method}:${url}`;
+      const cacheKey = this.generateCacheKey(method, url, config);
       const cacheEntry = this.cache.get(cacheKey);
-      let cacheHit = false; // 标志变量，用于判断是否已经返回过缓存结果
-      // 如果缓存存在并且缓存没有过期 命中缓存 直接返回缓存数据
       if (cacheEntry && Date.now() - cacheEntry.timestamp <= cacheMaxAge) {
         console.log("命中缓存 直接走缓存");
-        if (!cacheHit) {
-          cacheHit = true;
-          return Promise.resolve(cacheEntry.data);
-        }
+        return Promise.resolve(cacheEntry.data);
       }
     }
 
@@ -113,8 +110,23 @@ class HttpClient {
       return this.sendDebouncedRequest<T>(method, url, config, debounceWait);
     }
 
-    // 不使用取消重复请求和防抖时立即发起请求
+    // 不使用防抖时立即发起请求
     return this.makeRequest<T>(method, url, config);
+  }
+
+  /**
+   * 生成缓存键
+   * @param method 方法
+   * @param url 请求地址
+   * @param config 请求配置
+   */
+  private generateCacheKey(
+    method: string,
+    url: string,
+    config?: AxiosRequestConfig & RequestConfig,
+  ): string {
+    const params = config?.params ? JSON.stringify(config.params) : "";
+    return `${method}:${url}:${params}`;
   }
 
   /**
@@ -124,16 +136,22 @@ class HttpClient {
    * @param url 请求地址
    * @param response 返回数据
    */
-  private saveCache = (flag, method, url, response) => {
+  private saveCache(
+    flag: boolean = false,
+    method: string,
+    url: string,
+    config: AxiosRequestConfig & RequestConfig = {},
+    response: any,
+  ): void {
     if (flag) {
-      const cacheKey = `${method}:${url}`;
+      const cacheKey = this.generateCacheKey(method, url, config);
       const cacheEntry: CacheEntry<any> = {
         data: response,
         timestamp: Date.now(),
       };
       this.cache.set(cacheKey, cacheEntry);
     }
-  };
+  }
 
   /**
    * 发起防抖请求
@@ -146,40 +164,53 @@ class HttpClient {
     method: string,
     url: string,
     config?: AxiosRequestConfig & RequestConfig,
-    debounceWait?: number
+    debounceWait?: number,
   ): Promise<T | any> {
+    // 取消上一次防抖请求
     if (this.debounceRequest) {
-      // 取消上一次防抖请求
+      console.log(
+        "🚀 ~ file: whjHttp.ts:171 ~ HttpClient ~ debounceRequest:",
+        "取消上一次",
+      );
       this.debounceRequest.cancel();
     }
 
-    // 创建 CancelTokenSource
+    // 发起防抖请求
+    return new Promise<T>((resolve, reject) => {
+      this.debounceRequest(
+        {
+          method,
+          url,
+          config,
+          resolve,
+          reject,
+        },
+        debounceWait,
+      );
+    });
+  }
+
+  private handleDebouncedRequest<T>(requestParams: {
+    method: string;
+    url: string;
+    config: AxiosRequestConfig & RequestConfig;
+    resolve: (value: T | PromiseLike<T>) => void;
+    reject: (reason?: any) => void;
+  }): void {
+    const { method, url, config, resolve, reject } = requestParams;
     const source = axios.CancelToken.source();
 
-    return new Promise<T>((resolve, reject) => {
-      // 创建防抖请求函数，并将防抖等待时间作为参数传递
-      this.debounceRequest = debounce(() => {
-        // 发起请求
-        this.makeRequest<T>(method, url, {
-          ...config,
-          cancelToken: source.token,
-        })
-          .then((response) => {
-            // Cache the response if cacheEnabled is true
-            this.saveCache(config?.cacheEnabled, method, url, response);
-            resolve(response);
-          })
-          .catch((error) => {
-            reject(error);
-          })
-          .finally(() => {
-            this.debounceRequest = null; // 请求完成后重置防抖请求函数
-          });
-      }, debounceWait);
-
-      // 调用防抖请求函数
-      this.debounceRequest();
-    });
+    this.makeRequest<T>(method, url, {
+      ...config,
+      cancelToken: source.token,
+    })
+      .then((response) => {
+        this.saveCache(config?.cacheEnabled, method, url, config, response);
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   }
 
   /**
@@ -191,9 +222,8 @@ class HttpClient {
   private makeRequest<T>(
     method: string,
     url: string,
-    config?: AxiosRequestConfig & RequestConfig
+    config?: AxiosRequestConfig & RequestConfig,
   ): Promise<T | any> {
-    console.log("普通请求开始");
     return new Promise<T>((resolve, reject) => {
       this.axiosInstance
         .request<T>({
@@ -202,17 +232,15 @@ class HttpClient {
           ...config,
         })
         .then((response) => {
-          // Cache the response if cacheEnabled is true
-          this.saveCache(config?.cacheEnabled, method, url, response);
+          this.saveCache(config?.cacheEnabled, method, url, config, response);
           resolve(response as any);
         })
         .catch((error) => {
           const wrapperError = new Error(`Request failed for ${url}`);
           wrapperError.name = "HttpRequestError";
-          wrapperError.message = error;
+          wrapperError.message = error.message || error.toString();
           reject(wrapperError);
-        })
-        .finally(() => {});
+        });
     });
   }
 }

@@ -112,7 +112,7 @@ class HttpRequest {
       },
       (error) => {
         return requestReject({ options, value: error });
-      }
+      },
     );
 
     // 响应拦截器
@@ -122,7 +122,7 @@ class HttpRequest {
       },
       (error) => {
         return responseReject({ options, value: error });
-      }
+      },
     );
   }
 
@@ -135,7 +135,7 @@ class HttpRequest {
   private makeRequest<T>(
     method: string,
     url: string,
-    config?: AxiosRequestConfig & SelfRequestConfig
+    config?: AxiosRequestConfig & SelfRequestConfig,
   ): Promise<T | any> {
     return new Promise<T>((resolve, reject) => {
       this.axiosInstance
@@ -173,7 +173,7 @@ class HttpRequest {
   public request<T>(
     method: string,
     url: string,
-    config: AxiosRequestConfig & SelfRequestConfig
+    config: AxiosRequestConfig & SelfRequestConfig,
   ): Promise<T | any> {
     const { cacheConfig } = config;
     const requestConfig = this.options.requestConfig || {};
@@ -207,7 +207,7 @@ class HttpRequest {
         })
         .catch((error) => {
           const wrapperError = new Error(
-            `Request failed for ${url}, error is ${error}`
+            `Request failed for ${url}, error is ${error}`,
           );
           reject(wrapperError);
         })
@@ -251,4 +251,5 @@ class HttpRequest {
   // }
 }
 
-export default HttpRequest;
+const request = new HttpRequest({});
+export default request;
