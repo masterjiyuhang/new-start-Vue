@@ -1,10 +1,12 @@
 <template>
   <div class="wrapper-page">
-    car list
-    <el-button @click="handleSayHi" type="primary">sayHi</el-button>
-    <el-button @click="handleSayHi" type="danger">sayHi</el-button>
-    <el-button @click="handleSayHi">sayHi</el-button>
+    <h1>car list</h1>
+    <el-button @click="handleSayHi(0)" type="primary">sayHi</el-button>
+    <el-button @click="handleSayHi(500)" type="danger">sayHi</el-button>
+    <el-button @click="handleSayHi(800)" type="success">sayHi</el-button>
     <el-button @click="getList">get company list</el-button>
+    <el-button @click="getCarList">get car list</el-button>
+    <el-button @click="getCarByName">get car by name</el-button>
     <el-button @click="testGetWeiboHostListApi">get weibo list</el-button>
 
     <div v-for="(item, index) in rr" :key="index">
@@ -42,7 +44,12 @@
 import { ElNotification } from "element-plus";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { getWeiboHostListApi, getTestListApi } from "@/api/baseTest";
+import {
+  getWeiboHostListApi,
+  getTestListApi,
+  getCarListApi,
+  getCarByNameApi,
+} from "@/api/baseTest";
 
 onMounted(async () => {});
 
@@ -58,11 +65,11 @@ const getList = async () => {
   }
 };
 const router = useRouter();
-const handleSayHi = () => {
+const handleSayHi = (duration: number) => {
   ElNotification({
     title: "Notification Title",
     message: "Hi~ ",
-    duration: 0,
+    duration,
   });
 };
 
@@ -74,6 +81,16 @@ const handleClick = (e) => {
     },
   });
 };
+
+async function getCarList() {
+  const res = await getCarListApi();
+  console.log("🚀 ~ file: index.vue:85 ~ getCarList ~ res:", res);
+}
+
+async function getCarByName() {
+  const res = await getCarByNameApi({ name: "坦克" });
+  console.log("🚀 ~ file: index.vue:92 ~ getCarByName ~ res:", res);
+}
 
 const tableData = [
   {

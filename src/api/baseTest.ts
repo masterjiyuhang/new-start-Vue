@@ -15,3 +15,15 @@ export const getTestListApi = (params: any = {}) => {
     ...params,
   });
 };
+
+const carPrefix = "car-base";
+
+export const getCarListApi = () => {
+  return http.request("get", `${carPrefix}/v1/api/car/list`);
+};
+
+export const getCarByNameApi = (params: any = {}) => {
+  return http.request("post", `${carPrefix}/v1/api/car/getListByName`, {
+    data: params,
+  });
+};
