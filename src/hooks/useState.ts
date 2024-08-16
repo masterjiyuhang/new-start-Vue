@@ -1,11 +1,5 @@
-import {
-  AnyFn,
-  Fn,
-  isClient,
-  isFunction,
-  MaybeComputedRef,
-  Pausable,
-} from "@vueuse/core";
+import { isFunction } from "@/utils/is";
+import { AnyFn, Fn, isClient, MaybeRefOrGetter, Pausable } from "@vueuse/core";
 import { getCurrentScope, isRef, onScopeDispose, ref, unref, watch } from "vue";
 
 interface UseIntervalFnOptions {
@@ -23,7 +17,7 @@ interface UseIntervalFnOptions {
    */
   immediateCallback?: boolean;
 }
-export function resolveUnref<T>(r: MaybeComputedRef<T>): T {
+export function resolveUnref<T>(r: MaybeRefOrGetter<T>): T {
   return typeof r === "function" ? (r as AnyFn)() : unref(r);
 }
 
@@ -38,7 +32,7 @@ export function tryOnScopeDispose(fn: Fn) {
 export function useState() {
   function useIntervalCchFn(
     cb: Fn,
-    interval: MaybeComputedRef<number> = 1000,
+    interval: MaybeRefOrGetter<number> = 1000,
     options: UseIntervalFnOptions = {},
   ): Pausable {
     const { immediate = true, immediateCallback = false } = options;
