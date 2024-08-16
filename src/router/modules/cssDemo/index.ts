@@ -71,6 +71,20 @@ export default {
       },
     },
     {
+      path: "/demo/elementVisible",
+      name: "ElementVisible",
+      component: "/demo/elementVisible/index",
+      meta: {
+        title: "元素是否可见",
+        icon: "Star",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    {
       path: "/demo/cssdemo",
       name: "cssdemo",
       component: "/demo/cssdemo/index",

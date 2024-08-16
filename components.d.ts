@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BooleanDisplay: typeof import('./src/components/BooleanDisplay.vue')['default']
     CountTo: typeof import('./src/components/CountTo/src/CountTo.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElBadge: typeof import('element-plus/es')['ElBadge']
