@@ -12,15 +12,17 @@
       Drop file here or <em>click to upload</em>
     </div>
     <template #tip>
-      <div class="el-upload__tip">
+      <div class="text-center el-upload__tip">
         jpg/png files with a size less than 500kb
       </div>
-      <div>
-        <h1>工作模式： {{ parallel ? "多线程 Worker" : "单线程 Queue" }}</h1>
+      <div class="text-center">
+        <h1 class="text-[#f80]">
+          工作模式： {{ parallel ? "多线程 Worker" : "单线程 Queue" }}
+        </h1>
         <el-tooltip effect="dark" placement="top-start">
           <div slot="content">
             将此工具部署在HTTPS环境下，可以启用Web Worker特性，<br />
-            从而更快的利用并行处理完成解锁
+            从而更快的利用并行处理完成解锁。
           </div>
           <i class="el-icon-info" style="font-size: 12px" />
         </el-tooltip>

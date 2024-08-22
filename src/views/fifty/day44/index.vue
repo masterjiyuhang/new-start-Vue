@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-page">
-    <h1>上传文件</h1>
+    <h1 class="font-semibold">上传文件</h1>
     <FileSelector @error="showFail" @success="showSuccess" />
 
     <el-table :data="tableData" class="w-full">
