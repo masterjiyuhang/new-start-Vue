@@ -1,6 +1,6 @@
 const iconList = ["Sunrise", "Sunny", "Cloudy", "Ship", "Moon"];
 
-const form = Array.from({ length: 44 }).map((_item, index) => {
+const form = Array.from({ length: 45 }).map((_item, index) => {
   const iconIndex = Math.floor(Math.random() * iconList.length);
   const groupNumber = Math.ceil((index + 1) / 10);
   const group = `group${groupNumber}`;
