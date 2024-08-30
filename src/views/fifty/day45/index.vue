@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-page">
-    <div class="reverseRotate">
+    <div class="reverseRotate day-45-container">
       <div class="rotate">
         <div class="content">正负旋转相消3D动画</div>
       </div>
@@ -11,7 +11,7 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-div {
+.day-45-container {
   transform-style: preserve-3d;
   perspective: 500px;
 }
