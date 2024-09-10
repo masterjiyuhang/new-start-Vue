@@ -76,12 +76,6 @@ const customerOpacity = useTransition(contentChildrenOpacity, {
   // transition: easeOutElastic,
 });
 function onMouseenter(item, index) {
-  // console.log(
-  // "🚀 ~ file: index.vue:47 ~ onMouseenter ~ box:",
-  // box.value[index],
-  // box.value,
-  // );
-
   if (index === 0) {
     contentHeight.value = 622;
   } else if (index === 1) {
@@ -94,11 +88,6 @@ function onMouseenter(item, index) {
 }
 function onMouseleave(item, index) {
   contentChildrenOpacity.value = contentChildrenOpacity.value === 1 ? 0 : 1;
-  console.log(
-    "🚀 ~ file: index.vue:98 ~ onMouseleave ~ contentChildrenOpacity.value:",
-    contentChildrenOpacity.value,
-  );
-  // console.log("🚀 ~ file: index.vue:96 ~ onMouseleave ~ item:", item);
   currentIndex.value = -1;
   contentHeight.value = 300;
 }
