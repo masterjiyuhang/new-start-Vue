@@ -316,14 +316,34 @@ export function GetDownloadFilename(
   }
 }
 
+export function sanitizeFilename(filename: string): string {
+  return filename.replace(/[^\w.-]+/g, "_");
+}
 export function DownloadBlobMusic(
   data: DecryptResult,
   policy: FilenamePolicy = FilenamePolicy.TitleAndArtist,
-) {
-  const a = document.createElement("a");
-  a.href = data.file;
-  a.download = GetDownloadFilename(data, policy);
-  document.body.append(a);
-  a.click();
-  a.remove();
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const a = document.createElement("a");
+    a.href = data.file;
+    a.download = GetDownloadFilename(data, policy);
+
+    try {
+      document.body.append(a);
+      a.click();
+      resolve();
+    } catch (error) {
+      console.error("下载失败:", error);
+      ElMessage.error("下载失败");
+      reject(error);
+    } finally {
+      a.remove();
+    }
+  });
+  // const a = document.createElement("a");
+  // a.href = data.file;
+  // a.download = GetDownloadFilename(data, policy);
+  // document.body.append(a);
+  // a.click();
+  // a.remove();
 }
