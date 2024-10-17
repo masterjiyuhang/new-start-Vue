@@ -2,7 +2,7 @@
   <div class="wrapper-page">
     <h1 class="font-semibold">上传文件</h1>
     <FileSelector @error="showFail" @success="showSuccess" />
-    <el-button icon="el-icon-download" plain @click="handleDownloadAll"
+    <el-button @click="handleDownloadAll" type="primary" class="my-3"
       >下载全部</el-button
     >
     <el-table :data="tableData" class="w-full">
@@ -13,6 +13,7 @@
           <el-button icon="el-icon-download" @click="handleDownload(scope.row)"
             >下载</el-button
           >
+          <el-button @click="handleDel(scope)" type="danger">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -24,7 +25,6 @@ import { DownloadBlobMusic } from "@/utils/decrypt/utils";
 import FileSelector from "./src/components/FileSelector.vue";
 const tableData = ref<any[]>([]);
 function showSuccess(data) {
-  console.log("🚀 ~ file: index.vue:12 ~ showSuccess ~ data:", data);
   tableData.value.push(data);
   ElMessage.success("解锁成功");
 }
@@ -40,10 +40,6 @@ function handleDownloadAll() {
     downloadNextFile(0);
     // let c = setInterval(() => {
     //   if (index < tableData.value.length) {
-    //     console.log(
-    //       "🚀 ~ file: index.vue:39 ~ tableData.value.forEach ~ item:",
-    //       item,
-    //     );
     //     // DownloadBlobMusic(item);
     //   } else {
     //     clearInterval(c);
@@ -55,15 +51,14 @@ function handleDownloadAll() {
   }
 }
 
+function handleDel(e) {
+  tableData.value.splice(e.$index, 1);
+}
+
 function downloadNextFile(index: number) {
   // throw new Error("Function not implemented.");
   if (index < tableData.value.length) {
     const item = tableData.value[index];
-    console.log(
-      "🚀 ~ file: index.vue:40 ~ downloadNextFile ~ item, index:",
-      item,
-      index,
-    );
     // 实现下载逻辑
     DownloadBlobMusic(item)
       .then(() => {

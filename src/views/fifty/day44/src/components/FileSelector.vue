@@ -19,7 +19,11 @@
         <h1 class="text-[#f80]">
           工作模式： {{ parallel ? "多线程 Worker" : "单线程 Queue" }}
         </h1>
-        <el-tooltip effect="dark" placement="top-start">
+        <el-tooltip
+          content="将此工具部署在HTTPS环境下，可以启用Web Worker特性"
+          effect="dark"
+          placement="top-start"
+        >
           <div slot="content">
             将此工具部署在HTTPS环境下，可以启用Web Worker特性，<br />
             从而更快的利用并行处理完成解锁。
@@ -34,8 +38,8 @@
         :format="progressString"
         :percentage="progressValue"
         :text-inside="true"
+        :stroke-width="26"
         class="m-3"
-        :stroke-width="16"
       ></el-progress>
     </transition>
   </el-upload>
@@ -56,7 +60,7 @@ const progressShow = computed(() => task_all.value !== task_finished.value);
 const progressValue = computed(() =>
   task_all.value ? (task_finished.value / task_all.value) * 100 : 0,
 );
-const progressString = () => task_finished + "/" + task_all.value;
+const progressString = () => task_finished.value + "/" + task_all.value;
 
 const emit = defineEmits(["success", "error"]);
 async function addFile(file) {
