@@ -36,16 +36,7 @@ function handleDownload(data) {
 
 function handleDownloadAll() {
   if (tableData.value.length > 0) {
-    // tableData.value.forEach((item, index) => {
     downloadNextFile(0);
-    // let c = setInterval(() => {
-    //   if (index < tableData.value.length) {
-    //     // DownloadBlobMusic(item);
-    //   } else {
-    //     clearInterval(c);
-    //   }
-    // }, 300);
-    // });
   } else {
     ElMessage.warning("请先上传文件");
   }
@@ -56,7 +47,6 @@ function handleDel(e) {
 }
 
 function downloadNextFile(index: number) {
-  // throw new Error("Function not implemented.");
   if (index < tableData.value.length) {
     const item = tableData.value[index];
     // 实现下载逻辑
