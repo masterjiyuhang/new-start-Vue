@@ -36,7 +36,7 @@ export default {
   dashboard: {
     title: "统计分析页",
     viewCount: "访问总数",
-    account: "用户数",
+    account: "用户",
     dataSource: "数据来源",
   },
 

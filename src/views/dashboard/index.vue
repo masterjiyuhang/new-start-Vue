@@ -78,8 +78,8 @@
       </div>
     </div>
 
-    <div class="base-card bottom">
-      <div class="bottom-title">{{ $t("dashboard.dataSource") }}</div>
+    <div class="base-card">
+      <div class="text-purple-400">{{ $t("dashboard.dataSource") }}</div>
       <el-tabs v-model="tabActive2" @tab-change="changeTabs">
         <el-tab-pane
           v-for="item in tabList"
@@ -88,8 +88,16 @@
           :name="item.name"
         />
       </el-tabs>
-      <div v-for="item in accountList" :key="item.id">
-        <span>{{ $t("dashboard.account") }}: {{ item.account }}</span>
+      <div class="grid grid-cols-5 gap-2">
+        <div v-for="item in accountList" :key="item.id" class="text-left">
+          <div class="cursor-pointer">
+            <span class="text-purple-200">{{ $t("dashboard.account") }}: </span>
+            <span class="text-purple-300">{{ item.account }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="text-xl text-right text-orange-300">
+        total : {{ accountList.length }}
       </div>
     </div>
   </div>
@@ -158,16 +166,12 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 @include cch.b(dashboard) {
-  // background-color: #ffa;
-  // min-height: 80vh;
-
   .top {
     box-sizing: border-box;
     margin-bottom: 20px;
     padding: 20px;
 
     .top-content {
-      // height: 200px;
       .dashboard-card-left {
         box-sizing: border-box;
         height: 100%;
@@ -292,13 +296,5 @@ onMounted(() => {
       }
     }
   }
-
-  .bottom {
-    position: relative;
-  }
-
-  // .top {
-
-  // }
 }
 </style>
