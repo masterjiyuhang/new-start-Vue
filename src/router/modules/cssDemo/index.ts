@@ -10,10 +10,10 @@ export default {
     isAffix: false,
     isKeepAlive: true,
   },
-  redirect: "/demo/ripple",
+  redirect: "/cssDemo/ripple",
   children: [
     {
-      path: "/demo/ripple",
+      path: "/cssDemo/ripple",
       name: "ripple",
       component: "/demo/ripple/index",
       // component: () => import("@/views/car/index.vue"),
@@ -28,7 +28,7 @@ export default {
       },
     },
     {
-      path: "/demo/loading",
+      path: "/cssDemo/loading",
       name: "loading",
       component: "/demo/loading/index",
       // component: () => import("@/views/car/index.vue"),
@@ -43,7 +43,7 @@ export default {
       },
     },
     {
-      path: "/demo/stitchMonster",
+      path: "/cssDemo/stitchMonster",
       name: "stitchMonster",
       component: "/demo/stitchMonster/index",
       meta: {
@@ -57,7 +57,7 @@ export default {
       },
     },
     {
-      path: "/demo/bgfusion",
+      path: "/cssDemo/bgfusion",
       name: "bgfusion",
       component: "/demo/BgFusion/index",
       meta: {
@@ -71,7 +71,7 @@ export default {
       },
     },
     {
-      path: "/demo/elementVisible",
+      path: "/cssDemo/elementVisible",
       name: "ElementVisible",
       component: "/demo/elementVisible/index",
       meta: {
@@ -85,7 +85,7 @@ export default {
       },
     },
     {
-      path: "/demo/cssdemo",
+      path: "/cssDemo/cssdemo",
       name: "cssdemo",
       component: "/demo/cssdemo/index",
       meta: {
