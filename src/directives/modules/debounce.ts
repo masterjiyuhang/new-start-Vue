@@ -20,7 +20,9 @@ const debounce: Directive = {
       }
 
       // 对于第一次点击，直接执行绑定的函数
-      if (!timer && immediate) func();
+      if (!timer && immediate) {
+        func();
+      }
 
       timer = setTimeout(() => {
         func();
