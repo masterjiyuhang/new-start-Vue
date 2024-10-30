@@ -98,6 +98,25 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { bridgeProduct } from "@/utils/designPattern/Structural/Bridge";
+import { factoryFly } from "@/utils/designPattern/Structural/Flyweight";
+
+import DecoratorObj from "@/utils/designPattern/Structural/Decorator";
+import Adapter from "@/utils/designPattern/Structural/Adapter";
+
+const f1 = factoryFly.getFlyweight({
+  color: "green",
+  model: "BMW",
+  type: "sedan",
+});
+f1.operation({ type: "qnmd" });
+
+bridgeProduct.togglePower();
+
+// DecoratorObj.obj.eat();
+DecoratorObj.calculator.add(3, 4);
+
+Adapter.newPaymentSystem.makePayment(200);
 
 const activeNames = ref(["1"]);
 const handleChange = (val: string[]) => {
