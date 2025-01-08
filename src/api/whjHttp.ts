@@ -233,7 +233,7 @@ class HttpClient {
         })
         .then((response) => {
           this.saveCache(config?.cacheEnabled, method, url, config, response);
-          resolve(response as any);
+          resolve(response.data as any);
         })
         .catch((error) => {
           const wrapperError = new Error(`Request failed for ${url}`);

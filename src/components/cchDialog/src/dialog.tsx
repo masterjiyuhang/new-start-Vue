@@ -12,14 +12,18 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    title: {
+      type: String,
+      default: "Tips",
+    },
   },
   components: {
     ElDialog,
   },
-  emits: ["update:visible"],
+  emits: ["update:visible", "refresh"],
 
   setup(props, { slots, emit }) {
-    const count = ref(1);
+    // const count = ref(1);
     const currentVisible = ref(props.visible);
     // 同步 props 和内部状态
     watch(
@@ -37,21 +41,22 @@ export default defineComponent({
 
     const close = () => {
       currentVisible.value = false;
+      emit("refresh");
     };
 
     return () => (
       <div code-location={props.codeLocation} v-show={props.visible}>
         <el-dialog
           v-model={currentVisible.value}
-          title="Tips"
+          title={props.title}
           width="500"
           onOpen={() => {
             console.log("open");
           }}
           onClose={close}
         >
-          <span>This is a message</span>
-          cch dialog {props.codeLocation} {count.value}
+          {/* <span>This is a message</span>
+          cch dialog {props.codeLocation} {count.value} */}
           {slots.default && slots.default()}
         </el-dialog>
       </div>

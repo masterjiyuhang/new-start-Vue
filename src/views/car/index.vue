@@ -55,7 +55,11 @@
 
     <cch-table />
 
-    <cch-dialog v-model:visible="createVisible">
+    <cch-dialog
+      v-model:visible="createVisible"
+      title="创建车辆"
+      @refresh="getCarList"
+    >
       <el-form
         ref="ruleFormRef"
         style="max-width: 600px"
@@ -162,7 +166,6 @@ const handleSayHi = (duration: number) => {
 };
 
 const handleClick = (e) => {
-  console.log("🍉 ~ file: index.vue:147 ~ handleClick ~ e:", e);
   // router.push({
   //   name: "carDetail",
   //   params: {
@@ -173,13 +176,11 @@ const handleClick = (e) => {
 
 async function getCarList() {
   const res = await getCarListApi();
-  console.log("🚀 ~ file: index.vue:85 ~ getCarList ~ res:", res);
-  tableData.value = res.data.data.list;
+  tableData.value = res.data.list;
 }
 
 async function getCarByName() {
   const res = await getCarByNameApi({ name: "小电动" });
-  console.log("🚀 ~ file: index.vue:92 ~ getCarByName ~ res:", res);
 }
 
 const tableData = ref([]);
@@ -274,16 +275,27 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         fuel_type: ruleForm.fuelType,
         registration_date: ruleForm.date,
       };
-      console.log(
-        "🍉 ~ file: index.vue:268 ~ awaitformEl.validate ~ params:",
-        params,
-      );
-
-      const res = await createCarApi(params);
-      console.log(
-        "🍉 ~ file: index.vue:249 ~ awaitformEl.validate ~ res:",
-        res,
-      );
+      try {
+        const res = await createCarApi(params);
+        console.log(
+          "🍉 ~ file: index.vue:276 ~ awaitformEl.validate ~ res:",
+          res,
+        );
+        if (res.code === 200) {
+          ElNotification({
+            title: "Notification Title",
+            message: "创建成功",
+            duration: 1000,
+          });
+          createVisible.value = false;
+        } else {
+          ElNotification({
+            title: "Notification Title",
+            message: "创建失败",
+            duration: 1000,
+          });
+        }
+      } catch (error) {}
     } else {
       console.log("error submit!", fields);
     }
