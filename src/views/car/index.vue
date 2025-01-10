@@ -9,7 +9,7 @@
     <el-button @click="getList">get company list</el-button>
     <el-button @click="getCarList">get car list</el-button>
     <el-button @click="getCarByName">get car by name</el-button>
-    <el-button @click="testGetWeiboHostListApi">get weibo list</el-button>
+    <!-- <el-button @click="testGetWeiboHostListApi">get weibo list</el-button> -->
 
     <el-table :data="tableData" style="width: 100%">
       <el-table-column fixed prop="title" label="车辆名称" width="150" />
@@ -39,7 +39,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="Operations" width="120">
+      <el-table-column fixed="right" label="Operations" min-width="120">
         <template #default="scope">
           <el-button
             link
@@ -156,7 +156,7 @@ import type { ComponentSize, FormInstance, FormRules } from "element-plus";
 
 const createVisible = ref(false);
 
-const testGetWeiboHostListApi = async () => await getWeiboHostListApi();
+// const testGetWeiboHostListApi = async () => await getWeiboHostListApi();
 
 const rr = ref([]);
 const getList = async () => {
@@ -200,8 +200,18 @@ const handleDel = async (e) => {
 };
 
 async function getCarList() {
-  const res = await getCarListApi();
-  tableData.value = res.data.list;
+  try {
+    const res = await getCarListApi();
+    tableData.value = res.data.list;
+  } catch (error) {
+    console.log("🍉 ~ file: index.vue:207 ~ getCarList ~ error:", error);
+    ElNotification({
+      title: "",
+      type: "error",
+      message: "获取列表失败" + error,
+      duration: 1000,
+    });
+  }
 }
 
 async function getCarByName() {

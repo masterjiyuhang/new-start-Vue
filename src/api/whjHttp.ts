@@ -168,10 +168,6 @@ class HttpClient {
   ): Promise<T | any> {
     // 取消上一次防抖请求
     if (this.debounceRequest) {
-      console.log(
-        "🚀 ~ file: whjHttp.ts:171 ~ HttpClient ~ debounceRequest:",
-        "取消上一次",
-      );
       this.debounceRequest.cancel();
     }
 
@@ -236,6 +232,7 @@ class HttpClient {
           resolve(response.data as any);
         })
         .catch((error) => {
+          console.log("🍉 ~ file: whjHttp.ts:235 ~ HttpClient ~ error:", error);
           const wrapperError = new Error(`Request failed for ${url}`);
           wrapperError.name = "HttpRequestError";
           wrapperError.message = error.message || error.toString();
