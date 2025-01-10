@@ -49,11 +49,21 @@
             >Detail</el-button
           >
           <el-button link type="primary" size="small">Edit</el-button>
+
+          <el-popconfirm title="Are you sure to delete this?">
+            <template #reference>
+              <el-button
+                link
+                type="danger"
+                size="small"
+                @click="handleDel(scope.row)"
+                >Del</el-button
+              >
+            </template>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
-
-    <cch-table />
 
     <cch-dialog
       v-model:visible="createVisible"
@@ -131,7 +141,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElNotification } from "element-plus";
+import { ElNotification, ElPopconfirm } from "element-plus";
 import { ref, reactive } from "vue";
 // import { useRouter } from "vue-router";
 import {
@@ -139,6 +149,7 @@ import {
   getTestListApi,
   getCarListApi,
   createCarApi,
+  delCarApi,
   getCarByNameApi,
 } from "@/api/baseTest";
 import type { ComponentSize, FormInstance, FormRules } from "element-plus";
@@ -166,12 +177,26 @@ const handleSayHi = (duration: number) => {
 };
 
 const handleClick = (e) => {
-  // router.push({
-  //   name: "carDetail",
-  //   params: {
-  //     ...e,
-  //   },
-  // });
+  console.log("🍉 ~ file: index.vue:180 ~ handleClick ~ e:", e);
+};
+
+const handleDel = async (e) => {
+  try {
+    const res = await delCarApi({
+      vin: e.vin,
+    });
+
+    if (res.code == 200) {
+      ElNotification({
+        title: "",
+        message: "删除成功",
+        duration: 1000,
+      });
+      getCarList();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 async function getCarList() {
@@ -181,6 +206,7 @@ async function getCarList() {
 
 async function getCarByName() {
   const res = await getCarByNameApi({ name: "小电动" });
+  console.log("🍉 ~ file: index.vue:213 ~ getCarByName ~ res:", res);
 }
 
 const tableData = ref([]);

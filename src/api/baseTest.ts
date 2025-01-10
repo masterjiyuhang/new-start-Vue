@@ -27,6 +27,12 @@ export const createCarApi = (params) => {
   });
 };
 
+export const delCarApi = (params) => {
+  return http.request("post", `${carPrefix}/v1/api/car/del`, {
+    data: params,
+  });
+};
+
 export const getCarByNameApi = (params: any = {}) => {
   return http.request("post", `${carPrefix}/v1/api/car/getListByName`, {
     data: params,
