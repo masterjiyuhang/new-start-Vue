@@ -48,22 +48,36 @@
             @click="handleClick(scope.row)"
             >Detail</el-button
           >
-          <el-button link type="primary" size="small">Edit</el-button>
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="handleEdit(scope.row)"
+            >Edit</el-button
+          >
 
-          <el-popconfirm title="Are you sure to delete this?">
+          <el-popconfirm
+            title="Are you sure to delete this?"
+            @confirm="handleDel(scope.row)"
+          >
             <template #reference>
-              <el-button
-                link
-                type="danger"
-                size="small"
-                @click="handleDel(scope.row)"
-                >Del</el-button
-              >
+              <el-button link type="danger" size="small">Del</el-button>
             </template>
           </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-pagination
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
+      :page-sizes="[100, 200, 300, 400]"
+      :size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
 
     <cch-dialog
       v-model:visible="createVisible"
@@ -151,10 +165,15 @@ import {
   createCarApi,
   delCarApi,
   getCarByNameApi,
+  getCarDetailApi,
 } from "@/api/baseTest";
 import type { ComponentSize, FormInstance, FormRules } from "element-plus";
 
 const createVisible = ref(false);
+
+const currentPage = ref(1);
+const pageSize = ref(10);
+const total = ref(0);
 
 // const testGetWeiboHostListApi = async () => await getWeiboHostListApi();
 
@@ -180,6 +199,20 @@ const handleClick = (e) => {
   console.log("🍉 ~ file: index.vue:180 ~ handleClick ~ e:", e);
 };
 
+/**
+ * 编辑车辆
+ * @param e 车辆信息
+ */
+const handleEdit = async (e) => {
+  try {
+    // 根据id获取车辆详情
+    const res = await getCarDetailApi(e.id);
+    console.log("🍉 ~ file: index.vue:197 ~ handleEdit ~ res:", res.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const handleDel = async (e) => {
   try {
     const res = await delCarApi({
@@ -199,10 +232,24 @@ const handleDel = async (e) => {
   }
 };
 
+const handleSizeChange = (val: number) => {
+  console.log(`${val} items per page`);
+  pageSize.value = val;
+  getCarList();
+};
+const handleCurrentChange = (val: number) => {
+  console.log(`current page: ${val}`);
+  currentPage.value = val;
+  getCarList();
+};
 async function getCarList() {
   try {
-    const res = await getCarListApi();
+    const res = await getCarListApi({
+      page: currentPage.value - 1,
+      size: pageSize.value,
+    });
     tableData.value = res.data.list;
+    total.value = res.data.total;
   } catch (error) {
     console.log("🍉 ~ file: index.vue:207 ~ getCarList ~ error:", error);
     ElNotification({
