@@ -1,10 +1,10 @@
-import Req from "@/utils/request";
+import http from "@/utils/request";
 
-const http = new Req({
-  requestConfig: {
-    isLoading: true,
-  },
-});
+// const http = new Req({
+//   requestConfig: {
+//     isLoading: true,
+//   },
+// });
 
 // ten-api/v2/bilihot
 export const getWeeklyDataApi = () => {
