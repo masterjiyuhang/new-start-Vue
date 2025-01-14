@@ -2,6 +2,8 @@ import NProgress from "@/utils/progress";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import qs from "qs";
 import LRU from "lru-cache";
+import { ElNotification } from "element-plus";
+import { useGlobalSettingStoreWithOut } from "@/stores/modules/globalSetting";
 
 type RequestConfig = {
   cacheEnabled?: boolean; // 是否启用缓存，默认为 false
@@ -43,11 +45,19 @@ class HttpClient {
       async (config: AxiosRequestConfig & RequestConfig): Promise<any> => {
         // 开启进度条动画
         NProgress.start();
+
+        if (!config.headers) {
+          config.headers = {};
+        }
+        const globalStore = useGlobalSettingStoreWithOut();
+        if (globalStore.token) {
+          config.headers.Authorization = `Bearer ${globalStore.token}`;
+        }
         return config;
       },
       (error) => {
         return Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -62,7 +72,7 @@ class HttpClient {
       (error) => {
         NProgress.done();
         return Promise.reject(error);
-      }
+      },
     );
   }
 
@@ -76,7 +86,7 @@ class HttpClient {
     method: string,
     url: string,
     params?: AxiosRequestConfig,
-    baseConfig?: RequestConfig
+    baseConfig?: RequestConfig,
   ): Promise<T | any> {
     const { cacheEnabled = true, cacheMaxAge = 8000 } = baseConfig || {};
 
@@ -111,6 +121,11 @@ class HttpClient {
           resolve(response.data);
         })
         .catch((error) => {
+          ElNotification({
+            title: "请求失败",
+            message: error.message,
+            type: "error",
+          });
           reject(error);
         });
     });

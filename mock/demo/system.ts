@@ -96,8 +96,8 @@ export default [
     method: "post",
     response: () => {
       return resultSuccess({
-        access_token: "@uuid",
-        user_id: "@id",
+        accessToken: "@uuid",
+        userId: "@id",
       });
     },
   },

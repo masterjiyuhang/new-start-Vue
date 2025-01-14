@@ -1,3 +1,4 @@
+import { isDev } from "@/utils";
 import { http } from "@/utils/http";
 
 // 获取公司列表
@@ -11,9 +12,16 @@ export const getAuthButtonListApi = (params: any = { userId: "asd" }) => {
   return http.request<any>("get", "/authButtonList", { params });
 };
 
+const carPrefix = "car-base";
 // 登录系统接口
 export const loginApi = (params: any = {}) => {
-  return http.request<any>("post", "/login", { data: params });
+  if (isDev()) {
+    return http.request<any>("post", `${carPrefix}/v1/api/auth/login`, {
+      data: params,
+    });
+  } else {
+    return http.request<any>("post", "/login", { data: params });
+  }
 };
 
 // 登出系统接口
