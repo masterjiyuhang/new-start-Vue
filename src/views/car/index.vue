@@ -45,7 +45,7 @@
             link
             type="primary"
             size="small"
-            @click="handleClick(scope.row)"
+            @click="handleDetail(scope.row)"
             >Detail</el-button
           >
           <el-button
@@ -159,7 +159,7 @@ import { ElNotification, ElPopconfirm } from "element-plus";
 import { ref, reactive } from "vue";
 // import { useRouter } from "vue-router";
 import {
-  getWeiboHostListApi,
+  // getWeiboHostListApi,
   getTestListApi,
   getCarListApi,
   createCarApi,
@@ -195,7 +195,7 @@ const handleSayHi = (duration: number) => {
   });
 };
 
-const handleClick = (e) => {
+const handleDetail = (e) => {
   console.log("🍉 ~ file: index.vue:180 ~ handleClick ~ e:", e);
 };
 

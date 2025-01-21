@@ -42,6 +42,20 @@ export default {
       },
     },
     {
+      path: "/car/type",
+      name: "carType",
+      component: "/car/CarType",
+      meta: {
+        title: "车辆类型",
+        icon: "Apple",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
+    {
       path: "/car/detail/:id",
       name: "carDetail",
       component: "/car/CarDetail",
