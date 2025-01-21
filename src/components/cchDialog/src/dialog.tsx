@@ -41,7 +41,7 @@ export default defineComponent({
 
     const close = () => {
       currentVisible.value = false;
-      emit("refresh");
+      // emit("refresh");
     };
 
     return () => (

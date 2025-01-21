@@ -161,8 +161,8 @@ const ruleFormRef = ref<FormInstance>();
 const GenerateImageCodeRef = ref();
 // 表单对象
 const ruleForm = reactive<LoginFormData>({
-  userName: "cchzuishuai",
-  password: "cch123456",
+  userName: "erhang",
+  password: "a121233..",
   verifyCode: "",
 });
 
@@ -248,9 +248,18 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       // 1.执行登录接口
-      const { data } = await loginApi();
-      setToken(data.access_token);
-      setUserId(data.user_id);
+      const { data } = await loginApi({
+        username: ruleForm.userName,
+        password: ruleForm.password,
+      });
+
+      console.log(
+        "🍉 ~ file: index.vue:252 ~ awaitformEl.validate ~ data:",
+        data,
+      );
+
+      setToken(data.accessToken);
+      setUserId(data.userId);
 
       // 2.添加动态路由
       await initDynamicRouter();

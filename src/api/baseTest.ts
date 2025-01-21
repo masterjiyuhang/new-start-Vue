@@ -29,6 +29,11 @@ export const createCarApi = (params) => {
     data: params,
   });
 };
+export const updateCarApi = (params) => {
+  return http.request("post", `${carPrefix}/v1/api/car/update`, {
+    data: params,
+  });
+};
 
 export const delCarApi = (params) => {
   return http.request("post", `${carPrefix}/v1/api/car/del`, {
