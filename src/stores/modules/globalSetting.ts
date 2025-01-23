@@ -5,6 +5,7 @@ import { emitter } from "@/utils/mitt";
 import { DEFAULT_PRIMARY } from "@/config";
 import { AssemblySizeType, ThemeConfigProps } from "../interface";
 import { piniaPersistConfig } from "../storePlugin";
+
 // import { piniaPersistConfig } from "./../storePlugin";
 
 export const useGlobalSettingStore = defineStore(
@@ -12,7 +13,11 @@ export const useGlobalSettingStore = defineStore(
   () => {
     const isCollapse = initIsCollapse();
 
-    const token = ref<string>("");
+    const token = ref<string | null>("");
+
+    const refreshToken = ref<string | null>(
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhNWRkNTM1NC04OTEzLTRjODMtOWMzOC1jNWJmMzJkNGU1M2MiLCJpYXQiOjE3Mzc2MTI1MDgsImV4cCI6MTczODIxNzMwOH0.npkpdiHHX60ghiJDkAb56Aj8Ee2SaqZ8Ur_iCnd7AW4",
+    );
 
     // 用户id
     const userId = ref<string | number>("");
@@ -131,6 +136,7 @@ export const useGlobalSettingStore = defineStore(
     return {
       someState,
       token,
+      refreshToken,
       isCollapse,
       keepAliveName,
       assemblySize,
@@ -153,7 +159,7 @@ export const useGlobalSettingStore = defineStore(
   {
     // persist: true,
     persist: piniaPersistConfig("globalSetting"),
-  }
+  },
 );
 
 export function useGlobalSettingStoreWithOut() {

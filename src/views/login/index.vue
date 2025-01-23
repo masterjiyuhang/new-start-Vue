@@ -259,6 +259,7 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
       );
 
       setToken(data.accessToken);
+      globalStore.refreshToken = data.refreshToken;
       setUserId(data.userId);
 
       // 2.添加动态路由

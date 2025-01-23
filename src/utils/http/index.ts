@@ -6,8 +6,8 @@ import { ElNotification } from "element-plus";
 import { useGlobalSettingStoreWithOut } from "@/stores/modules/globalSetting";
 
 type RequestConfig = {
-  cacheEnabled?: boolean; // 是否启用缓存，默认为 false
-  cacheMaxAge?: number; // 缓存的最大时间，默认为 0，表示不过期
+  cacheEnabled?: boolean; // 是否启用缓存
+  cacheMaxAge?: number; // 缓存的最大时间
 };
 
 type CacheEntry<T> = {
@@ -16,24 +16,29 @@ type CacheEntry<T> = {
 };
 
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: import.meta.env.VITE_BASE_API ?? "/",
-  // 请求超时时间
+  baseURL: import.meta.env.VITE_BASE_API + "/v1/api",
   timeout: 10000,
   headers: {
     Accept: "application/json, text/plain, */*",
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest",
   },
-  // 数组格式参数序列化（https://github.com/axios/axios/issues/5142）
   paramsSerializer: (params) => qs.stringify(params),
 };
 
 class HttpClient {
   private axiosInstance: AxiosInstance;
-  private defaultCache!: LRU<string, CacheEntry<any>>; // 缓存
+  private defaultCache: LRU<string, CacheEntry<any>>; // 缓存
+  private isRefreshing = false; // 是否正在刷新 Token
+  private requests: ((token: string) => void)[] = []; // 存储因 401 中断的请求
 
   constructor() {
     this.axiosInstance = axios.create(defaultConfig);
+
+    this.defaultCache = new LRU<string, CacheEntry<any>>({
+      ttl: 8000, // 默认缓存时间
+      max: 100, // 缓存大小
+    });
 
     this.httpInterceptorsRequestHandler();
     this.httpInterceptorsResponseHandler();
@@ -43,19 +48,20 @@ class HttpClient {
   private httpInterceptorsRequestHandler(): void {
     this.axiosInstance.interceptors.request.use(
       async (config: AxiosRequestConfig & RequestConfig): Promise<any> => {
-        // 开启进度条动画
         NProgress.start();
-
-        if (!config.headers) {
-          config.headers = {};
-        }
         const globalStore = useGlobalSettingStoreWithOut();
         if (globalStore.token) {
-          config.headers.Authorization = `Bearer ${globalStore.token}`;
+          config.headers = {
+            ...config.headers,
+            Authorization: `Bearer ${globalStore.token}`,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          };
         }
         return config;
       },
       (error) => {
+        NProgress.done();
         return Promise.reject(error);
       },
     );
@@ -65,22 +71,94 @@ class HttpClient {
   private httpInterceptorsResponseHandler(): void {
     this.axiosInstance.interceptors.response.use(
       async (response: any): Promise<any> => {
-        // 开启进度条动画
         NProgress.done();
         return response;
       },
-      (error) => {
+      async (error) => {
         NProgress.done();
+        const { config, response } = error;
+        if (response && response.status === 401) {
+          return this.handleTokenRefresh(config);
+        }
         return Promise.reject(error);
       },
     );
   }
 
   /**
+   * 处理 Token 刷新逻辑
+   * @param config 原请求配置
+   */
+  private async handleTokenRefresh(config: AxiosRequestConfig) {
+    const globalStore = useGlobalSettingStoreWithOut();
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      try {
+        const { data } = await this.axiosInstance.post(
+          "/car-base/v1/api/auth/refresh",
+          {
+            refreshToken: `${globalStore.refreshToken}`,
+          }, // 如果不需要请求体，则传入 null
+          {
+            headers: {
+              "terminal-type": "PC",
+              Authorization: `Bearer ${globalStore.refreshToken}`,
+            },
+          },
+        );
+        console.log(
+          "🍉 ~ file: index.ts:104 ~ HttpClient ~ handleTokenRefresh ~ data:",
+          data,
+        );
+        globalStore.token = data.data.accessToken;
+        // 更新 Refresh Token（如果后端返回新的）
+        globalStore.refreshToken = data.data.refreshToken;
+
+        // 重新发起所有中断的请求
+        this.requests.forEach((cb) => cb(data.data.accessToken));
+        this.requests = [];
+
+        // 重新发送当前请求
+        config.headers = {
+          ...config.headers,
+          Authorization: `Bearer ${data.data.accessToken}`,
+        };
+        return this.axiosInstance(config);
+      } catch (error) {
+        // 刷新失败，清除 Token 并通知用户重新登录
+        console.error("刷新 Token 失败", error);
+        globalStore.token = null;
+        globalStore.refreshToken = null;
+        ElNotification({
+          title: "登录过期",
+          message: "请重新登录",
+          type: "error",
+        });
+        // 此处可以添加跳转到登录页面的逻辑
+        return Promise.reject(error);
+      } finally {
+        this.isRefreshing = false;
+      }
+    } else {
+      // 当前已在刷新 Token，队列等待
+      return new Promise((resolve) => {
+        this.requests.push((token: string) => {
+          config.headers = {
+            ...config.headers,
+            Authorization: `Bearer ${token}`,
+          };
+          resolve(this.axiosInstance(config));
+        });
+      });
+    }
+  }
+
+  /**
    * 发起请求
    * @param method 请求方法
    * @param url 请求 URL
-   * @param config 请求配置
+   * @param params 请求参数
+   * @param baseConfig 请求配置
    */
   public request<T>(
     method: string,
@@ -88,36 +166,25 @@ class HttpClient {
     params?: AxiosRequestConfig,
     baseConfig?: RequestConfig,
   ): Promise<T | any> {
-    const { cacheEnabled = true, cacheMaxAge = 8000 } = baseConfig || {};
+    const { cacheEnabled = false, cacheMaxAge = 8000 } = baseConfig || {};
 
-    this.defaultCache = new LRU<string, CacheEntry<any>>({
-      ttl: cacheMaxAge,
-      max: 100,
-    });
-
-    // 检查是否开启了缓存
+    // 如果启用缓存，检查缓存是否命中
     if (cacheEnabled) {
       const cacheKey = `${method}:${url}`;
       const cacheEntry = this.defaultCache.get(cacheKey);
 
-      // 如果缓存存在 命中缓存 直接返回缓存数据
       if (cacheEntry) {
-        console.log("命中缓存 直接走缓存");
-        return Promise.resolve(cacheEntry);
+        console.log("命中缓存，直接返回缓存数据");
+        return Promise.resolve(cacheEntry.data);
       }
     }
 
     return new Promise((resolve, reject) => {
-      const config = {
-        method,
-        url,
-        ...params,
-        ...baseConfig,
-      };
+      const config = { method, url, ...params };
       this.axiosInstance
         .request(config)
         .then((response: any) => {
-          this.saveCache(baseConfig?.cacheEnabled, method, url, response);
+          this.saveCache(cacheEnabled, method, url, response);
           resolve(response.data);
         })
         .catch((error) => {
@@ -132,22 +199,23 @@ class HttpClient {
   }
 
   /**
-   * 存储缓存
-   * @param flag 是否开启存储缓存
-   * @param method 方法
+   * 保存缓存
+   * @param flag 是否启用缓存
+   * @param method 请求方法
    * @param url 请求地址
-   * @param response 返回数据
+   * @param response 请求响应
    */
-  private saveCache = (flag, method, url, response) => {
+  private saveCache(flag: boolean, method: string, url: string, response: any) {
     if (flag) {
       const cacheKey = `${method}:${url}`;
       const cacheEntry: CacheEntry<any> = {
-        data: response,
+        data: response.data,
         timestamp: Date.now(),
       };
       this.defaultCache.set(cacheKey, cacheEntry);
     }
-  };
+  }
 }
+
 export const http = new HttpClient();
 export default HttpClient;
