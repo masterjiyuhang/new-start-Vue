@@ -21,7 +21,7 @@ export const loginApi = (params: any = {}) => {
       data: params,
     });
   } else {
-    return http.request<any>("post", "/auth/login", { data: params });
+    return http.request<any>("post", "/v1/api/auth/login", { data: params });
   }
 };
 
