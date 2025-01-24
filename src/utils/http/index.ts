@@ -165,7 +165,7 @@ class HttpClient {
     params?: AxiosRequestConfig,
     baseConfig?: RequestConfig,
   ): Promise<T | any> {
-    const { cacheEnabled = false, cacheMaxAge = 8000 } = baseConfig || {};
+    const { cacheEnabled = false } = baseConfig || {};
 
     // 如果启用缓存，检查缓存是否命中
     if (cacheEnabled) {

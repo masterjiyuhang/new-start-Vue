@@ -33,11 +33,17 @@ export const AuthStore = defineStore({
     // getAuthButtonList
     async getAuthButtonList() {
       const { data } = await getAuthButtonListApi();
+      console.log("🍉 ~ file: auth.ts:36 ~ getAuthButtonList ~ data:", data);
       this.authButtonList = data;
     },
     // getAuthMenuList
     async getAuthMenuList() {
       const { data } = await getRouterListApi();
+      console.log(
+        "🍉 ~ file: auth.ts:41 ~ getAuthMenuList ~ data:",
+        data,
+        moduleRouteList,
+      );
       this.authMenuList = data
         .concat(moduleRouteList)
         .sort((a: any, b: any) => {

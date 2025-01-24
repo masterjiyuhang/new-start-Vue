@@ -87,7 +87,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
       target: "es2017",
       terserOptions: {
         compress: {
-          drop_console: true,
+          drop_console: false,
         },
       },
       minify: "terser",
