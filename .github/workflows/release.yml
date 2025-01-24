@@ -10,18 +10,65 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # 拉取所有历史记录，确保能正常创建分支
+          fetch-depth: 0
+
       - name: use node
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
+
       - uses: pnpm/action-setup@v3
         name: Install pnpm
         with:
           version: 8
           run_install: false
+
       - name: Install
         run: pnpm install
-      - name: Release
+
+      - name: Create new release branch
+        id: create-branch
+        run: |
+          # 生成一个唯一的分支名，例如 release-时间戳
+          NEW_BRANCH_NAME="release-$(date +%Y%m%d%H%M%S)"
+          git checkout -b $NEW_BRANCH_NAME
+          echo "new_branch_name=$NEW_BRANCH_NAME" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Release on new branch
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
+        run: pnpm exec semantic-release
+        working-directory: .
+
+      - name: Push new branch
+        run: |
+          git push origin ${{ steps.create-branch.outputs.new_branch_name }}
+
+      - name: Create Pull Request
+        if: ${{ success() }}
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const head = '${{ steps.create-branch.outputs.new_branch_name }}';
+            const base = 'master';
+            const title = 'Automated Release PR';
+            const body = 'This PR is created by semantic-release';
+
+            try {
+              const response = await github.rest.pulls.create({
+                owner,
+                repo,
+                head,
+                base,
+                title,
+                body
+              });
+              console.log('Pull request created:', response.data.html_url);
+            } catch (error) {
+              console.error('Failed to create pull request:', error);
+            }

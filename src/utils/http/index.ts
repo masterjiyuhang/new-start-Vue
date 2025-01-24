@@ -4,6 +4,7 @@ import qs from "qs";
 import LRU from "lru-cache";
 import { ElNotification } from "element-plus";
 import { useGlobalSettingStoreWithOut } from "@/stores/modules/globalSetting";
+import { API_PREFIX } from "@/config";
 
 type RequestConfig = {
   cacheEnabled?: boolean; // 是否启用缓存
@@ -16,7 +17,7 @@ type CacheEntry<T> = {
 };
 
 const defaultConfig: AxiosRequestConfig = {
-  baseURL: import.meta.env.VITE_BASE_API + "/v1/api",
+  baseURL: import.meta.env.VITE_BASE_API,
   timeout: 10000,
   headers: {
     Accept: "application/json, text/plain, */*",
@@ -95,7 +96,7 @@ class HttpClient {
       this.isRefreshing = true;
       try {
         const { data } = await this.axiosInstance.post(
-          "/car-base/v1/api/auth/refresh",
+          API_PREFIX + "/v1/api/auth/refresh",
           {
             refreshToken: `${globalStore.refreshToken}`,
           }, // 如果不需要请求体，则传入 null
