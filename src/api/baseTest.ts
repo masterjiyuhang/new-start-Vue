@@ -1,13 +1,11 @@
 import { API_PREFIX } from "@/config";
-import Http from "./whjHttp";
+import { http } from "@/utils/http";
+// import Http from "./whjHttp";
 
-const http = new Http();
+// const http = new Http();
 
 export const getWeiboHostListApi = () => {
-  return http.request("get", "ten-api/v2/weibohot", {
-    cacheEnabled: true,
-    cacheMaxAge: 5 * 60 * 1000,
-  });
+  return http.request("get", "ten-api/v2/weibohot");
 };
 
 // 获取公司列表
