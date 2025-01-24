@@ -167,7 +167,6 @@
 import { ElNotification, ElPopconfirm } from "element-plus";
 import { ref, reactive } from "vue";
 import {
-  getTestListApi,
   getCarListApi,
   createCarApi,
   delCarApi,
@@ -176,6 +175,7 @@ import {
   updateCarApi,
 } from "@/api/baseTest";
 import type { ComponentSize, FormInstance, FormRules } from "element-plus";
+import { getTestListApi } from "@/api/mock";
 
 const createVisible = ref(false);
 const editType = ref<"edit" | "create">("edit");

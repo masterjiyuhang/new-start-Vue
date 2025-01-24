@@ -5,13 +5,13 @@ export const insertScriptPlugin = (): Plugin => {
     name: "insert-script",
     transformIndexHtml(html) {
       const isProduction = process.env.NODE_ENV === "production";
-      if (!isProduction) {
-        const scriptPath = `https://cdn.erhang.fun/track.js`;
-        return html.replace(
-          "</head>",
-          `<script src="${scriptPath}" defer></script></head>`,
-        );
-      }
+      // if (!isProduction) {
+      //   const scriptPath = `https://cdn.erhang.fun/track.js`;
+      //   return html.replace(
+      //     "</head>",
+      //     `<script src="${scriptPath}" defer></script></head>`,
+      //   );
+      // }
     },
   };
 };

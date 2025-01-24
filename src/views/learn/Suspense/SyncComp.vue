@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCompanyListApi } from "@/api/index";
+import { getCompanyListApi } from "@/api/mock";
 import { reactive, ref } from "vue";
 
 const state = reactive<any>({

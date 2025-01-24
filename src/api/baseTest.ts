@@ -8,13 +8,6 @@ export const getWeiboHostListApi = () => {
   return http.request("get", "ten-api/v2/weibohot");
 };
 
-// 获取公司列表
-export const getTestListApi = (params: any = {}) => {
-  return http.request("get", "/getCompanyList", {
-    ...params,
-  });
-};
-
 export const getCarListApi = (data) => {
   return http.request(
     "get",

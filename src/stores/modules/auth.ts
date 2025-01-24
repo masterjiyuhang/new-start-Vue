@@ -1,4 +1,4 @@
-import { getRouterListApi, getAuthButtonListApi } from "./../../api/auth";
+import { getRouterListApi, getAuthButtonListApi } from "./../../api/mock";
 import { getAllBreadcrumbList, getShowMenuList } from "@/utils/system";
 import { getFlatArr } from "@/utils/arr";
 import { defineStore } from "pinia";

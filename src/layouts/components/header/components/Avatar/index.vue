@@ -27,7 +27,7 @@
 import { ElMessageBox, ElMessage } from "element-plus";
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 import { useRouter } from "vue-router";
-import { logoutApi } from "@/api/auth";
+import { logoutApi } from "@/api/mock";
 import { LOGIN_URL } from "@/config";
 import { ref } from "vue";
 import InfoDialog from "./components/InfoDialog.vue";
