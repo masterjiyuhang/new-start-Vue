@@ -55,8 +55,6 @@ class HttpClient {
           config.headers = {
             ...config.headers,
             Authorization: `Bearer ${globalStore.token}`,
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
           };
         }
         return config;

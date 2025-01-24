@@ -10,7 +10,7 @@ export const getRouterListApi = (params: any = {}) => {
   // return DynamicRouter;
 };
 // 获取公司列表
-export const getAuthButtonListApi = (params: any) => {
+export const getAuthButtonListApi = (params: any = {}) => {
   return request.request<any>("get", "/authButtonList", { params });
 };
 
