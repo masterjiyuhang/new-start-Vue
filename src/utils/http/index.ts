@@ -105,10 +105,6 @@ class HttpClient {
             },
           },
         );
-        console.log(
-          "🍉 ~ file: index.ts:104 ~ HttpClient ~ handleTokenRefresh ~ data:",
-          data,
-        );
         globalStore.token = data.data.accessToken;
         // 更新 Refresh Token（如果后端返回新的）
         globalStore.refreshToken = data.data.refreshToken;
@@ -197,6 +193,78 @@ class HttpClient {
     });
   }
 
+  public post<T>(
+    url: string,
+    data?: Record<string, any>,
+    baseConfig?: RequestConfig,
+  ): Promise<T | any> {
+    const { cacheEnabled = false } = baseConfig || {};
+
+    // 如果启用缓存，检查缓存是否命中
+    if (cacheEnabled) {
+      const cacheKey = `post:${url}`;
+      const cacheEntry = this.defaultCache.get(cacheKey);
+
+      if (cacheEntry) {
+        console.log("命中缓存，直接返回缓存数据");
+        return Promise.resolve(cacheEntry.data);
+      }
+    }
+
+    return new Promise((resolve, reject) => {
+      this.axiosInstance
+        .post(url, data)
+        .then((response: any) => {
+          this.saveCache(cacheEnabled, "post", url, response);
+          resolve(response.data);
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "请求失败",
+            message: error.response.data.describe,
+            type: "error",
+          });
+          reject(error);
+        });
+    });
+  }
+
+  public get<T>(
+    url: string,
+    params?: AxiosRequestConfig,
+    baseConfig?: RequestConfig,
+  ): Promise<T | any> {
+    const { cacheEnabled = false } = baseConfig || {};
+
+    // 如果启用缓存，检查缓存是否命中
+    if (cacheEnabled) {
+      const cacheKey = `post:${url}`;
+      const cacheEntry = this.defaultCache.get(cacheKey);
+
+      if (cacheEntry) {
+        console.log("命中缓存，直接返回缓存数据");
+        return Promise.resolve(cacheEntry.data);
+      }
+    }
+
+    return new Promise((resolve, reject) => {
+      this.axiosInstance
+        .get(url, params)
+        .then((response: any) => {
+          this.saveCache(cacheEnabled, "get", url, response);
+          resolve(response.data);
+        })
+        .catch((error) => {
+          ElNotification({
+            title: "请求失败",
+            message: error.message,
+            type: "error",
+          });
+          reject(error);
+        });
+    });
+  }
+
   /**
    * 保存缓存
    * @param flag 是否启用缓存
@@ -217,4 +285,7 @@ class HttpClient {
 }
 
 export const http = new HttpClient();
+export const post = http.post.bind(http);
+export const get = http.get.bind(http);
+
 export default HttpClient;

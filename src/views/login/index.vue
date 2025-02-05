@@ -248,19 +248,26 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async (valid, fields) => {
     if (valid) {
       // 1.执行登录接口
-      const { data } = await loginApi({
-        username: ruleForm.userName,
-        password: ruleForm.password,
-      });
+      try {
+        const { data } = await loginApi({
+          username: ruleForm.userName,
+          password: ruleForm.password,
+        });
 
-      console.log(
-        "🍉 ~ file: index.vue:252 ~ awaitformEl.validate ~ data:",
-        data,
-      );
+        console.log(
+          "🍉 ~ file: index.vue:252 ~ awaitformEl.validate ~ data:",
+          data,
+        );
 
-      setToken(data.accessToken);
-      globalStore.refreshToken = data.refreshToken;
-      setUserId(data.userId);
+        setToken(data.accessToken);
+        globalStore.refreshToken = data.refreshToken;
+        setUserId(data.userId);
+      } catch (error) {
+        console.log("🍉 ~ awaitformEl.validate ~ error:", error);
+        ruleForm.verifyCode = "";
+        GenerateImageCodeRef.value.re();
+        return;
+      }
 
       // 2.添加动态路由
       await initDynamicRouter();
