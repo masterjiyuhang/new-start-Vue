@@ -123,6 +123,7 @@
 <script setup lang="ts">
 import { loginApi } from "@/api/auth";
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
+import { AuthStore } from "@/stores/modules/auth";
 import { useTabsStore } from "@/stores/modules/tabs";
 import { initDynamicRouter } from "@/router/dynamicRouter";
 import { HOME_URL } from "@/config";
@@ -151,6 +152,7 @@ const { setToken, setUserId, setKeepAliveName, changeLanguage } =
   useGlobalSettingStore();
 const { closeMultipleTab } = useTabsStore();
 const globalStore = useGlobalSettingStore();
+const authStore = AuthStore();
 const router = useRouter();
 const i18n = useI18n();
 
@@ -247,36 +249,36 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      // 1.执行登录接口
+      // 1.获取公钥
+      await authStore.getPublicKey();
+
+      const pwd = await authStore.encrypt(ruleForm.password);
+      console.log("🍉 ~ index.vue:256 ~ awaitformEl.validate ~ pwd:", pwd);
+      // 2.执行登录接口
       try {
         const { data } = await loginApi({
           username: ruleForm.userName,
-          password: ruleForm.password,
+          password: pwd,
         });
-
-        console.log(
-          "🍉 ~ file: index.vue:252 ~ awaitformEl.validate ~ data:",
-          data,
-        );
 
         setToken(data.accessToken);
         globalStore.refreshToken = data.refreshToken;
         setUserId(data.userId);
       } catch (error) {
-        console.log("🍉 ~ awaitformEl.validate ~ error:", error);
+        // 登录失败后刷新验证码
         ruleForm.verifyCode = "";
         GenerateImageCodeRef.value.re();
         return;
       }
 
-      // 2.添加动态路由
+      // 3.添加动态路由
       await initDynamicRouter();
 
-      // 3.清空 tabs、keepAlive 保留的数据
+      // 4.清空 tabs、keepAlive 保留的数据
       closeMultipleTab();
       setKeepAliveName();
 
-      // 4.跳转到首页
+      // 5.跳转到首页
       router.push(HOME_URL);
       ElNotification({
         title: getTimeState(),

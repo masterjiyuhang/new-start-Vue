@@ -5,6 +5,8 @@ import { defineStore } from "pinia";
 import { AuthState } from "@/stores/interface";
 import { store } from "../index";
 import { moduleRouteList } from "@/router/basic";
+import { getPublicKey } from "@/api/auth";
+// import JSEncrypt from "jsencrypt";
 // import { piniaPersistConfig } from "./../storePlugin";
 
 export const AuthStore = defineStore({
@@ -16,6 +18,7 @@ export const AuthStore = defineStore({
     authButtonList: {},
     // 菜单权限列表
     authMenuList: [],
+    publicKey: "",
   }),
   getters: {
     // 按钮权限列表
@@ -28,8 +31,55 @@ export const AuthStore = defineStore({
     flatMenuListGet: (state) => getFlatArr(state.authMenuList),
     // 所有面包屑导航列表
     breadcrumbListGet: (state) => getAllBreadcrumbList(state.authMenuList),
+    publicKeyGet: (state) => state.publicKey,
   },
   actions: {
+    // 获取公钥
+    async getPublicKey() {
+      const { data } = await getPublicKey();
+      this.publicKey = data;
+    },
+    // 根据公钥加密
+    async encrypt(pwd) {
+      if (!this.publicKey) {
+        throw new Error("公钥未加载");
+      }
+
+      const encoder = new TextEncoder();
+      const encodedData = encoder.encode(pwd);
+
+      const publicKey = await window.crypto.subtle.importKey(
+        "spki",
+        this.pemToArrayBuffer(this.publicKey), // 转换 PEM 格式
+        {
+          name: "RSA-OAEP",
+          hash: { name: "SHA-256" }, // 确保与后端匹配
+        },
+        true,
+        ["encrypt"],
+      );
+
+      const encryptedBuffer = await window.crypto.subtle.encrypt(
+        { name: "RSA-OAEP" },
+        publicKey,
+        encodedData,
+      );
+
+      return btoa(String.fromCharCode(...new Uint8Array(encryptedBuffer))); // Base64 编码
+    }, // PEM 转换为 ArrayBuffer
+    pemToArrayBuffer(pem) {
+      const b64 = pem.replace(
+        /-----BEGIN PUBLIC KEY-----|-----END PUBLIC KEY-----|\n/g,
+        "",
+      );
+      const binary = atob(b64);
+      const buffer = new ArrayBuffer(binary.length);
+      const view = new Uint8Array(buffer);
+      for (let i = 0; i < binary.length; i++) {
+        view[i] = binary.charCodeAt(i);
+      }
+      return buffer;
+    },
     // getAuthButtonList
     async getAuthButtonList() {
       const { data } = await getAuthButtonListApi();

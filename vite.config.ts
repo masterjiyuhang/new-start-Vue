@@ -45,7 +45,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
         "/basic-api/car-base": {
-          target: "https://server.erhang.fun",
+          target: "http://localhost:3000",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/basic-api\/car-base/, ""),
         },
