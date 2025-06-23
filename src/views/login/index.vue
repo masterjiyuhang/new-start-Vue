@@ -163,8 +163,8 @@ const ruleFormRef = ref<FormInstance>();
 const GenerateImageCodeRef = ref();
 // 表单对象
 const ruleForm = reactive<LoginFormData>({
-  userName: "erhang",
-  password: "a121233..",
+  userName: import.meta.env.VITE_SUPER_ADMIN || "superAdmin",
+  password: import.meta.env.VITE_SUPER_ADMIN_PWD || "admin@12",
   verifyCode: "",
 });
 
