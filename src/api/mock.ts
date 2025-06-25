@@ -40,3 +40,9 @@ export const getDashboardListApi = (
     data: params,
   });
 };
+
+export const mockLoginApi = (params) => {
+  return http.request<any>("post", "/system/login", {
+    data: params,
+  });
+};

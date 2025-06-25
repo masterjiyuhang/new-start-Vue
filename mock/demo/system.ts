@@ -91,12 +91,13 @@ export default [
     },
   },
   {
-    url: "/basic-api/login",
+    url: "/basic-api/system/login",
     timeout: 200,
     method: "post",
     response: () => {
       return resultSuccess({
         accessToken: "@uuid",
+        refreshToken: "@token",
         userId: "@id",
       });
     },
