@@ -1,6 +1,6 @@
 export default {
   path: "/ts/learnTS",
-  name: "lesson1",
+  name: "ts-lesson1",
   redirect: "/ts/learnTS/lesson1",
   meta: {
     icon: "Menu",

@@ -4,6 +4,18 @@ import { defineConfig, loadEnv } from "vite";
 import type { UserConfig, ConfigEnv } from "vite";
 import { setupVitePlugins } from "./build/vite/plugins";
 
+// COEP/COOP header plugin
+const coepPlugin = {
+  name: "vite-coep-headers",
+  configureServer(server: any) {
+    server.middlewares.use((req: any, res: any, next: any) => {
+      res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+      res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+      next();
+    });
+  },
+};
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -24,7 +36,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   });
 
   const esbuild = {};
-  const optimizeDeps = {};
+  const optimizeDeps = { exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"] };
 
   return {
     base: BaseUrl,
@@ -33,6 +45,15 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
       "process.env": {},
     },
     server: {
+      // headers: {
+      //   "Cross-Origin-Opener-Policy": "same-origin",
+      //   "Cross-Origin-Embedder-Policy": "require-corp",
+      //   // "Cross-Origin-Embedder-Policy": "credentialless", // Fixed typo (was credentialles)
+      // },
+      headers: {
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+      },
       host: "0.0.0.0",
       port: Number(VITE_PORT),
       proxy: {
