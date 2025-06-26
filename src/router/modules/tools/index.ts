@@ -18,7 +18,7 @@ export default {
       component: "/system/toolsManage/n1/index",
       meta: {
         icon: "Operation",
-        title: "音乐转换1",
+        title: "音乐转换flac2mp3",
         isLink: "",
         isHide: false,
         isFull: false,
