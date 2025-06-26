@@ -101,7 +101,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
       target: "es2020",
       terserOptions: {
         compress: {
-          drop_console: true,
+          // drop_console: true,
         },
       },
       rollupOptions: {
