@@ -16,6 +16,8 @@ import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import path from "path";
 import { insertScriptPlugin } from "./viteInsertScript";
 
+import vercel from "vite-plugin-vercel";
+
 export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
   return [
     insertScriptPlugin(),
@@ -72,5 +74,19 @@ export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
     Inspect(),
     ...configComponentPlugin(),
     isBuild ? configCompressPlugin({ compress }) : null,
+    vercel({
+      // 你可以指定 vercel.json 的内容
+      config: {
+        headers: [
+          {
+            source: "/(.*)",
+            headers: [
+              { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+              { key: "Cross-Origin-Embedder-Policy", value: "require-corp" },
+            ],
+          },
+        ],
+      },
+    }),
   ];
 }
