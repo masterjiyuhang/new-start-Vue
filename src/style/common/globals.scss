@@ -1,13 +1,25 @@
 // Global Mixins fork ionic mixins
-@import "./mixins";
+@use "./mixins";
+@use "sass:color";
 
 // 配色来自于 @see http://uiguide.shanyishanmei.com/
 
 // 字体
-$font-family-base: "Chinese Quote", -apple-system, blinkmacsystemfont,
-  "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-  "Helvetica Neue", helvetica, arial, sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-base:
+  "Chinese Quote",
+  -apple-system,
+  blinkmacsystemfont,
+  "Segoe UI",
+  "PingFang SC",
+  "Hiragino Sans GB",
+  "Microsoft YaHei",
+  "Helvetica Neue",
+  helvetica,
+  arial,
+  sans-serif,
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Segoe UI Symbol" !default;
 
 // 背景颜色
 $bg-color: #f8f8f8 !default;
@@ -67,15 +79,15 @@ $nav-select-bg: #454545;
 $color-white: #fff !default;
 $color-black: #000 !default;
 $color-primary: $primary !default;
-$color-primary-light-1: mix($color-white, $color-primary, 10%) !default;
-$color-primary-light-2: mix($color-white, $color-primary, 20%) !default;
-$color-primary-light-3: mix($color-white, $color-primary, 30%) !default;
-$color-primary-light-4: mix($color-white, $color-primary, 40%) !default;
-$color-primary-light-5: mix($color-white, $color-primary, 50%) !default;
-$color-primary-light-6: mix($color-white, $color-primary, 60%) !default;
-$color-primary-light-7: mix($color-white, $color-primary, 70%) !default;
-$color-primary-light-8: mix($color-white, $color-primary, 80%) !default;
-$color-primary-light-9: mix($color-white, $color-primary, 90%) !default;
+$color-primary-light-1: color.mix($color-white, $color-primary, 10%) !default;
+$color-primary-light-2: color.mix($color-white, $color-primary, 20%) !default;
+$color-primary-light-3: color.mix($color-white, $color-primary, 30%) !default;
+$color-primary-light-4: color.mix($color-white, $color-primary, 40%) !default;
+$color-primary-light-5: color.mix($color-white, $color-primary, 50%) !default;
+$color-primary-light-6: color.mix($color-white, $color-primary, 60%) !default;
+$color-primary-light-7: color.mix($color-white, $color-primary, 70%) !default;
+$color-primary-light-8: color.mix($color-white, $color-primary, 80%) !default;
+$color-primary-light-9: color.mix($color-white, $color-primary, 90%) !default;
 $select-hover-background: $bg-color;
 $menu-item-hover-fill: $color-primary-light-9;
 $border-color-lighter: #ebeef5 !default;

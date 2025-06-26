@@ -4,18 +4,6 @@ import { defineConfig, loadEnv } from "vite";
 import type { UserConfig, ConfigEnv } from "vite";
 import { setupVitePlugins } from "./build/vite/plugins";
 
-// COEP/COOP header plugin
-const coepPlugin = {
-  name: "vite-coep-headers",
-  configureServer(server: any) {
-    server.middlewares.use((req: any, res: any, next: any) => {
-      res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-      res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-      next();
-    });
-  },
-};
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -87,10 +75,15 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         scss: {
-          // additionalData: `@import "~/style/element/index.scss"; @import "~/style/scss/mixins/mixin.scss";  @import "~/style/common/globals.scss";  @import "~/style/var.scss";`,
+          api: "modern-compiler",
+          // additionalData: `@use "~/style/element/index.scss"; @use "~/style/scss/mixins/mixin.scss";  @use "~/style/common/globals.scss";  @use "~/style/var.scss";`,
           additionalData: `@use "~/style/element/index.scss" as *; @use "~/style/scss/mixins/mixin.scss" as cch; @use "~/style/var.scss" as cch-variables;`,
           // additionalData: `@use "~/style/element/index.scss" as *; @use "~/style/scss/mixins/mixin.scss" as *; @use "~/style/common/globals.scss" as *;  @use "~/style/var.scss" as *;`,
-          // additionalData: `@use "~/style/element/index.scss" as *; @import "~/style/scss/mixins/mixin.scss"; @import "~/style/common/globals.scss";  @import "~/style/var.scss";`,
+          // additionalData: `@use "~/style/element/index.scss" as *; @use "~/style/scss/mixins/mixin.scss"; @use "~/style/common/globals.scss";  @use "~/style/var.scss";`,
+          sassOptions: {
+            quietDeps: true,
+          },
+          silenceDeprecations: ["legacy-js-api"],
         },
       },
     },
@@ -105,10 +98,17 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
     esbuild,
     optimizeDeps,
     build: {
-      target: "es2017",
+      target: "es2020",
       terserOptions: {
         compress: {
           drop_console: true,
+        },
+      },
+      rollupOptions: {
+        onwarn(warning, warn) {
+          // 忽略 eval 使用警告
+          if (warning.code === "EVAL") return;
+          warn(warning);
         },
       },
       minify: "terser",
