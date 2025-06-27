@@ -77,8 +77,8 @@
 import { ref, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import type { UploadUserFile, UploadProps } from "element-plus";
-import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { toBlobURL, fetchFile } from "@ffmpeg/util";
+import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
+// import { toBlobURL, fetchFile } from "@ffmpeg/util";
 
 interface Task {
   uid: string;
@@ -96,7 +96,7 @@ const converting = ref(false);
 // 上传回调
 const handleRemove: UploadProps["onRemove"] = (file, uploadFiles) => {
   // 同步任务列表
-  const idx = tasks.findIndex((t) => t.uid === file.uid);
+  const idx = tasks.findIndex((t) => t.uid + "" === file.uid + "");
   if (idx !== -1) tasks.splice(idx, 1);
 };
 const beforeRemove: UploadProps["beforeRemove"] = (file) => {
@@ -112,7 +112,7 @@ const handleExceed: UploadProps["onExceed"] = (files, uploadFiles) => {
 const handleChangeFile: UploadProps["onChange"] = (file, uploadFiles) => {
   // 新增 task
   tasks.push({
-    uid: file.uid,
+    uid: file.uid + "",
     name: file.name,
     status: "ready",
     progress: 0,
@@ -127,6 +127,11 @@ const sanitizeFilename = (name: string) => {
   return name.replace(/[^\w.-]/g, "_");
 };
 
+// 准备 ffmpeg
+const ffmpeg = createFFmpeg({
+  log: true,
+});
+
 // 修改startConvert函数中的核心部分
 async function startConvert() {
   if (!fileList.value.length) {
@@ -135,32 +140,22 @@ async function startConvert() {
   }
 
   converting.value = true;
-  const baseURL =
-    "https://cdn.jsdelivr.net/npm/@ffmpeg/core-mt@0.12.9/dist/esm";
-  // 准备 ffmpeg
-  const ffmpeg = new FFmpeg();
+
   message.value = "Loading ffmpeg-core.js";
-  ffmpeg.on("log", ({ message: msg }: LogEvent) => {
+  ffmpeg.setLogger(({ message: msg }) => {
     message.value = msg;
   });
 
-  await ffmpeg.load({
-    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),
-    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, "application/wasm"),
-    workerURL: await toBlobURL(
-      `${baseURL}/ffmpeg-core.worker.js`,
-      "text/javascript",
-    ),
-  });
+  await ffmpeg.load();
   message.value = "Start transcoding";
   // 注册进度回调
-  ffmpeg.on("progress", ({ ratio }: { ratio: number }) => {
+  ffmpeg.setProgress(({ ratio }: { ratio: number }) => {
     const t = tasks.find((t) => t.status === "processing");
     if (t) t.progress = Math.floor(ratio * 100);
   });
 
   for (const file of fileList.value) {
-    const task = tasks.find((t) => t.uid === file.uid)!;
+    const task = tasks.find((t) => t.uid + "" === file.uid + "")!;
     task.status = "processing";
     task.progress = 0;
 
@@ -179,22 +174,22 @@ async function startConvert() {
 
       // 2. 写入清理后的文件名
       const data = await fetchFile(file.raw as Blob);
-      await ffmpeg.writeFile(outputName, data);
+      await ffmpeg.FS("writeFile", outputName, data);
 
       // 3. 修正FFmpeg命令（使用数组参数更可靠）
-      await ffmpeg.exec(["-i", cleanInputName, "-b:a", "192k", outputName]);
+      await ffmpeg.run("-i", cleanInputName, "-b:a", "192k", outputName);
 
       // 4. 确认文件存在再读取
-      const files = await ffmpeg.listDir("/");
+      const files = ffmpeg.FS("readdir", "/");
       console.log("🍉 ~ index.vue:186 ~ startConvert ~ files:", files);
-      if (!files.some((item) => item.name === outputName)) {
+      if (!files.some((item) => item === outputName)) {
         throw new Error(`输出文件未生成: ${outputName}`);
       }
 
       // 5. 使用正确的输出名读取
-      const output = await ffmpeg.readFile(outputName);
+      const output = ffmpeg.FS("readFile", outputName);
       console.log("🍉 ~ index.vue:193 ~ startConvert ~ output:", output);
-      const blob = new Blob([output.buffer], { type: "audio/mpeg" });
+      const blob = new Blob([output], { type: "audio/mpeg" });
       task.blobUrl = URL.createObjectURL(blob);
       task.status = "done";
       task.progress = 100;

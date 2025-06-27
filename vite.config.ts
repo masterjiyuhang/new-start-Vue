@@ -24,7 +24,11 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   });
 
   const esbuild = {};
-  const optimizeDeps = { exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"] };
+  const optimizeDeps = {
+    exclude: [
+      // "@ffmpeg/ffmpeg", "@ffmpeg/util"
+    ],
+  };
 
   return {
     base: BaseUrl,
