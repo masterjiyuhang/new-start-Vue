@@ -26,5 +26,19 @@ export default {
         isKeepAlive: true,
       },
     },
+    {
+      path: "/tools/n2",
+      name: "tools-n2",
+      component: "/system/toolsManage/n2/index",
+      meta: {
+        icon: "Operation",
+        title: "音乐解密",
+        isLink: "",
+        isHide: false,
+        isFull: false,
+        isAffix: false,
+        isKeepAlive: true,
+      },
+    },
   ],
 };

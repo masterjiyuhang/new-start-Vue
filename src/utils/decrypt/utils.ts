@@ -347,3 +347,14 @@ export function DownloadBlobMusic(
   // a.click();
   // a.remove();
 }
+
+export function GetCoverFromFile(metadata: IAudioMetadata): string {
+  if (metadata.common?.picture && metadata.common.picture.length > 0) {
+    return URL.createObjectURL(
+      new Blob([metadata.common.picture[0].data], {
+        type: metadata.common.picture[0].format,
+      }),
+    );
+  }
+  return "";
+}
