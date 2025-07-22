@@ -39,7 +39,7 @@
       </div>
       <el-scrollbar>
         <el-menu
-          :default-active="activeMenu"
+          :default-active="activeMenu as string"
           :router="false"
           :collapse="ThemeConfig.isCollapse"
           :collapse-transition="false"

@@ -132,14 +132,14 @@
       <span>灰色模式</span>
       <el-switch
         v-model="ThemeConfig.isGrey"
-        @change="changeGreyOrWeak($event, 'grey')"
+        @change="changeGreyOrWeak($event as boolean, 'grey')"
       />
     </div>
     <div class="theme-item">
       <span>色弱模式</span>
       <el-switch
         v-model="ThemeConfig.isWeak"
-        @change="changeGreyOrWeak($event, 'weak')"
+        @change="changeGreyOrWeak($event as boolean, 'weak')"
       />
     </div>
 
@@ -184,7 +184,7 @@ const { setThemeConfig } = useGlobalSettingStore();
 const { changePrimary, switchDark, changeGreyOrWeak } = useTheme();
 
 // rtl / ltr / ttb / btt
-const direction = ref("rtl");
+const direction = ref<"rtl" | "ltr" | "ttb" | "btt">("rtl");
 const handleClose = () => {
   // console.log("关闭抽屉前的回调");
   drawer.value = false;
