@@ -12,7 +12,7 @@
         <div
           v-for="item in 3"
           :key="item"
-          class="flex items-center justify-center m-3 box-4"
+          class="flex justify-center items-center m-3 box-4"
         >
           <h2>{{ item }}</h2>
         </div>

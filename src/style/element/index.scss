@@ -27,18 +27,18 @@ $--colors: (
 );
 
 /* stylelint-disable-next-line at-rule-no-unknown */
-@forward "element-plus/theme-chalk/src/common/var.scss" with (
-  $colors: $--colors,
-  $button: (
-    "font-weight": 500,
-  ),
-  $date-editor: (
-    "daterange-width": 260px,
-  ),
-  $button-font-size: (
-    "default": 16px,
-  )
-);
+// @forward "element-plus/theme-chalk/src/common/var.scss" with (
+//   $colors: $--colors,
+//   $button: (
+//     "font-weight": 500,
+//   ),
+//   $date-editor: (
+//     "daterange-width": 260px,
+//   ),
+//   $button-font-size: (
+//     "default": 16px,
+//   )
+// );
 
 // * card 卡片样式
 .base-card {

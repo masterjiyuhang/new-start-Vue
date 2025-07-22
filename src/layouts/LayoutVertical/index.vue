@@ -49,18 +49,18 @@ import HeaderRight from "../components/header/HeaderRight.vue";
 
 const route = useRoute();
 const activeMenu = computed(() =>
-  route.meta.activeMenu ? route.meta.activeMenu : route.path
+  route.meta.activeMenu ? route.meta.activeMenu : route.path,
 );
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 
 const isCollapse = computed(
-  () => useGlobalSettingStore().ThemeConfig.isCollapse
+  () => useGlobalSettingStore().ThemeConfig.isCollapse,
 );
 const { showMenuListGet: menuList } = storeToRefs(AuthStore());
 </script>
 
 <style scoped lang="scss">
-@import "./index";
+@use "./index";
 </style>
 
 <style lang="scss">

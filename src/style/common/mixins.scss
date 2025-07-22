@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "sass:map";
+@use "sass:string";
 
 @mixin input-cover() {
   @include position(0, null, null, 0);
@@ -36,9 +39,9 @@
 
 // Get the key from a map based on the index
 @function index-to-key($map, $index) {
-  $keys: map-keys($map);
+  $keys: map.keys($map);
 
-  @return nth($keys, $index);
+  @return list.nth($keys, $index);
 }
 
 // Breakpoint Mixins
@@ -59,7 +62,7 @@
 //    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    576px
 @function breakpoint-min($name, $breakpoints: $screen-breakpoints) {
-  $min: map-get($breakpoints, $name);
+  $min: map.get($breakpoints, $name);
 
   @return if($name != index-to-key($breakpoints, 1), $min, null);
 }
@@ -97,10 +100,10 @@
 //    md
 //    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl))
 //    md
-@function breakpoint-next($name, $breakpoints: $screen-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
-  $n: index($breakpoint-names, $name);
+@function breakpoint-next($name, $breakpoints: $screen-breakpoints, $breakpoint-names: map.keys($breakpoints)) {
+  $n: list.index($breakpoint-names, $name);
 
-  @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+  @return if($n < list.length($breakpoint-names), list.nth($breakpoint-names, $n + 1), null);
 }
 
 // Maximum breakpoint width. Null for the largest (last) breakpoint.
@@ -192,7 +195,7 @@
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
   } @else {
-    $transform: "transform='translate(#{nth($viewBox, 3)}, 0) scale(-1, 1)'";
+    $transform: "transform='translate(#{list.nth($viewBox, 3)}, 0) scale(-1, 1)'";
     $flipped-url: $svg;
     $flipped-url: str-replace($flipped-url, "<path", "<path #{$transform}");
     $flipped-url: str-replace($flipped-url, "<line", "<line #{$transform}");
@@ -480,13 +483,13 @@
   $rtl-translate: null;
 
   @each $transform in $transforms {
-    @if  str-index($transform, translate3d) {
+    @if  string.index($transform, translate3d) {
       $transform: str-replace($transform, 'translate3d(');
       $transform: str-replace($transform, ')');
       $coordinates: str-split($transform, ',');
-      $x: nth($coordinates, 1);
-      $y: nth($coordinates, 2);
-      $z: nth($coordinates, 3);
+      $x: list.nth($coordinates, 1);
+      $y: list.nth($coordinates, 2);
+      $z: list.nth($coordinates, 3);
       $ltr-translate: translate3d($x, $y, $z);
       $rtl-translate: translate3d(calc(-1 * #{$x}), $y, $z);
     } @else {
@@ -532,23 +535,23 @@
   $safe-area-end-env: null;
 
   @if  $start {
-    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
-    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
+    $safe-area-start: string.unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: string.unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
 
   @if  $end {
-    $safe-area-end: unquote("calc(constant(safe-area-inset-right) + #{$end})");
-    $safe-area-end-env: unquote("calc(env(safe-area-inset-right) + #{$end})");
+    $safe-area-end: string.unquote("calc(constant(safe-area-inset-right) + #{$end})");
+    $safe-area-end-env: string.unquote("calc(env(safe-area-inset-right) + #{$end})");
   }
 
   @if  $top {
-    $safe-area-top: unquote("calc(constant(safe-area-inset-top) + #{$top})");
-    $safe-area-top-env: unquote("calc(env(safe-area-inset-top) + #{$top})");
+    $safe-area-top: string.unquote("calc(constant(safe-area-inset-top) + #{$top})");
+    $safe-area-top-env: string.unquote("calc(env(safe-area-inset-top) + #{$top})");
   }
 
   @if  $bottom {
-    $safe-area-bottom: unquote("calc(constant(safe-area-inset-bottom) + #{$bottom})");
-    $safe-area-bottom-env: unquote("calc(env(safe-area-inset-bottom) + #{$bottom})");
+    $safe-area-bottom: string.unquote("calc(constant(safe-area-inset-bottom) + #{$bottom})");
+    $safe-area-bottom-env: string.unquote("calc(env(safe-area-inset-bottom) + #{$bottom})");
   }
 
   @include padding($safe-area-top, $safe-area-end, $safe-area-bottom, $safe-area-start);
@@ -567,13 +570,13 @@
   $safe-area-end-env: null;
 
   @if  $end {
-    $safe-area-end: unquote("calc(constant(safe-area-inset-right) + #{$end})");
-    $safe-area-end-env: unquote("calc(env(safe-area-inset-right) + #{$end})");
+    $safe-area-end: string.unquote("calc(constant(safe-area-inset-right) + #{$end})");
+    $safe-area-end-env: string.unquote("calc(env(safe-area-inset-right) + #{$end})");
   }
 
   @if  $start {
-    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
-    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
+    $safe-area-start: string.unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: string.unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
 
   @include padding-horizontal($safe-area-start, $safe-area-end);
@@ -592,13 +595,13 @@
   $safe-area-end-env: null;
 
   @if  $start {
-    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
-    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
+    $safe-area-start: string.unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: string.unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
 
   @if  $end {
-    $safe-area-end: unquote("calc(constant(safe-area-inset-right) + #{$end})");
-    $safe-area-end-env: unquote("calc(env(safe-area-inset-right) + #{$end})");
+    $safe-area-end: string.unquote("calc(constant(safe-area-inset-right) + #{$end})");
+    $safe-area-end-env: string.unquote("calc(env(safe-area-inset-right) + #{$end})");
   }
 
   @if $safe-area-start == $safe-area-end {

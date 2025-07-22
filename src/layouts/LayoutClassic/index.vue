@@ -55,12 +55,12 @@ const authStore = AuthStore();
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 const menuList = computed(() => authStore.showMenuListGet);
 const activeMenu = computed(() =>
-  route.meta.activeMenu ? route.meta.activeMenu : route.path
+  route.meta.activeMenu ? route.meta.activeMenu : route.path,
 );
 </script>
 
 <style scoped lang="scss">
-@import "./index";
+@use "./index";
 </style>
 
 <style lang="scss">

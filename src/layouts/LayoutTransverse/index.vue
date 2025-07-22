@@ -67,7 +67,7 @@ const router = useRouter();
 const authStore = AuthStore();
 const menuList = computed(() => authStore.showMenuListGet);
 const activeMenu = computed(() =>
-  route.meta.activeMenu ? route.meta.activeMenu : route.path
+  route.meta.activeMenu ? route.meta.activeMenu : route.path,
 );
 
 const handleClickMenu = (subItem: Menu.MenuOptions) => {
@@ -77,7 +77,7 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
 </script>
 
 <style scoped lang="scss">
-@import "./index";
+@use "./index";
 </style>
 
 <style lang="scss">

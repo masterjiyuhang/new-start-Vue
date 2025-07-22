@@ -81,7 +81,7 @@ const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 
 const menuList = computed(() => authStore.showMenuListGet);
 const activeMenu = computed(() =>
-  route.meta.activeMenu ? route.meta.activeMenu : route.path
+  route.meta.activeMenu ? route.meta.activeMenu : route.path,
 );
 const splitActive = ref<string>("");
 const subMenu = ref<Menu.MenuOptions[]>([]);
@@ -94,7 +94,8 @@ watch(
     splitActive.value = route.path;
     const menuItem = menuList.value.filter(
       (item: Menu.MenuOptions) =>
-        route.path === item.path || `/${route.path.split("/")[1]}` === item.path
+        route.path === item.path ||
+        `/${route.path.split("/")[1]}` === item.path,
     );
     if (menuItem[0].children?.length)
       return (subMenu.value = menuItem[0].children);
@@ -103,7 +104,7 @@ watch(
   {
     deep: true,
     immediate: true,
-  }
+  },
 );
 
 // 切换 SubMenu
@@ -116,7 +117,7 @@ const changeSubMenu = (item: Menu.MenuOptions) => {
 </script>
 
 <style scoped lang="scss">
-@import "./index";
+@use "./index";
 </style>
 
 <style lang="scss">
