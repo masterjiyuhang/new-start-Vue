@@ -117,7 +117,7 @@ class NcmDecrypt {
     let j = 0;
     // RC4 Key-Scheduling Algorithm (KSA)
     for (let i = 0; i < 256; i++) {
-      j = (box[i] + j + keyData[i % keyDataLen]) & 0xff;
+      j = (box[i] + j + keyData[i % keyDataLen]) & 0xff; // 计算出来的数值“强制”限定到一个字节（0~255）的范围内
       [box[i], box[j]] = [box[j], box[i]];
     }
     // 按协议对 box 做额外一次处理生成最终流密钥表
