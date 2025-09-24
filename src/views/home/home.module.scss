@@ -1,13 +1,13 @@
+@keyframes change {
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
 .container {
   $item-width: 50px;
   $margin: 4px;
   $per-height: calc(1.732 * $item-width + 4 * $margin - 1px);
-
-  @keyframes change {
-    100% {
-      filter: hue-rotate(360deg);
-    }
-  }
 
   display: flex;
   position: relative;
