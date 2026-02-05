@@ -51,7 +51,7 @@ onMounted(() => {
   border-radius: 10px;
   text-align: center;
 
-  @media (max-width: 600px) {
+  @media (width <= 600px) {
     .code-container {
       flex-wrap: wrap;
     }

@@ -32,8 +32,10 @@
   &::before {
     content: "";
     position: absolute;
+
     // mask: linear-gradient(45deg, #000 50%, transparent 50%);
     mask: linear-gradient(32deg, #000 40%, transparent 60%);
+
     // animation: mask-rotate 11.2s ease-in-out;
     background: url("https://erhang-cdn.imgix.net/health.jpg?s=6300de21c98ed8dc58021875feabe2ec");
     background-size: cover;

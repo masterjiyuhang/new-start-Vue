@@ -2,7 +2,7 @@
   <div class="wrapper-page">
     <div class="flex flex-col gap-4 w-52">
       <div class="flex items-center gap-4">
-        <div class="w-16 h-16 rounded-full skeleton shrink-0"></div>
+        <div class="rounded-full size-16 skeleton shrink-0"></div>
         <div class="flex flex-col gap-4">
           <div class="w-20 h-4 skeleton"></div>
           <div class="h-4 skeleton w-28"></div>
@@ -13,7 +13,13 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const str = ref("seaways-routes");
+const reverseStr = computed(() => {
+  return str.value.split("").reverse().join("");
+});
+console.log("🍉 ~ index.vue:21 ~ reverseStr:", reverseStr);
+</script>
 
 <style scoped>
 .skeleton {

@@ -19,7 +19,7 @@
   grid-template: "A A A B E" 1fr "C C C B E" 1fr "F F D D D" 1fr / 1fr 1fr 1fr 1fr 1fr;
   width: 100%;
   height: 100%;
-  gap: 10px 10px;
+  gap: 10px;
 }
 
 .A {

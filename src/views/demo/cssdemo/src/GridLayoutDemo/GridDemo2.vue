@@ -19,8 +19,10 @@
 <style scoped lang="scss">
 $count: 8;
 
+@use "sass:math";
+
 @function random-num($max, $min: 0, $u: 1) {
-  @return ($min + random($max)) * $u;
+  @return ($min + math.random($max)) * $u;
 }
 
 @function random-color() {

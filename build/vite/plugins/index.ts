@@ -17,6 +17,7 @@ import path from "path";
 import { insertScriptPlugin } from "./viteInsertScript";
 
 import vercel from "vite-plugin-vercel";
+import { nodePolyfills } from "vite-plugin-node-polyfills"; // 引入插件
 
 export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
   return [
@@ -84,6 +85,12 @@ export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
     Inspect(),
     ...configComponentPlugin(),
     isBuild ? configCompressPlugin({ compress }) : null,
+    nodePolyfills({
+      // 显式包含你需要模拟的模块
+      include: ["fs", "path", "buffer", "process"],
+      // 或者设置为 true 开启所有默认 polyfills
+      // protocolImports: true,
+    }),
     vercel({
       // 你可以指定 vercel.json 的内容
       config: {

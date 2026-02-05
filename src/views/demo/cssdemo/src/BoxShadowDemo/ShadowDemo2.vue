@@ -45,6 +45,7 @@
     transform: translate(100%, 0) skewY(-30deg) scaleX(0.6);
   }
 }
+
 @keyframes shadow-move-x {
   to {
     transform: translate(20%, -100%) skewX(-30deg) scaleX(0.6);

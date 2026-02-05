@@ -97,7 +97,7 @@ function dragEnd(e) {
   background-color: #333;
 }
 
-@media (max-width: 800px) {
+@media (width <= 800px) {
   body {
     flex-direction: column;
   }

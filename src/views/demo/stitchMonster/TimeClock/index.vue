@@ -114,7 +114,6 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .time-clock {
-
   $borderWidth: 6px;
 
   height: 314px;

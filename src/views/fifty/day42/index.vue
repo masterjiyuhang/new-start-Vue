@@ -201,6 +201,7 @@
     border-bottom: 2px solid #fff;
     border-radius: 10px;
     background-color: #000;
+
     // filter: blur(5px);
     box-shadow: inset 0 10px 20px rgb(0 0 0 / 50%);
     color: #fff;

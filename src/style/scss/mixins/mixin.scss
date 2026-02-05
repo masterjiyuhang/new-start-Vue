@@ -1,29 +1,38 @@
 @use "function";
 @use "config";
+$b: null;
 
 /* Placeholder
  -------------------------- */
 @mixin placeholder {
-  &::input-placeholder {
-    @content;
-  }
-
+  // 现代浏览器统一使用 ::placeholder
   &::placeholder {
     @content;
   }
 
-  &:input-placeholder {
+  // 兼容旧版 Webkit/Blink
+  &::-webkit-input-placeholder {
+    @content;
+  }
+
+  // 兼容旧版 Firefox 19+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  // 兼容旧版 IE 10+
+  &:-ms-input-placeholder {
     @content;
   }
 }
 
 /* BEM
- *  -   中划线 ：仅作为连字符使用，表示某个块或者某个子元素的多单词之间的连接记号。
- *  __  双下划线：双下划线用来连接块和块的子元素
- *  --   双横线：双横线用来描述一个块或者块的子元素的一种状态
+ * -   中划线 ：仅作为连字符使用，表示某个块或者某个子元素的多单词之间的连接记号。
+ * __  双下划线：双下划线用来连接块和块的子元素
+ * --   双横线：双横线用来描述一个块或者块的子元素的一种状态
  -------------------------- */
 
-// 块（block
+// 块（block)
 @mixin b($block) {
   $b: config.$namespace + "-" + $block !global;
 
@@ -34,7 +43,6 @@
 
 // 元素（element)
 @mixin e($element) {
-  $e: $element !global;
   $selector: &;
   $current-selector: "";
 
@@ -66,7 +74,6 @@
 
 // 修饰符（modifier)
 @mixin m($modifier) {
-  $selector: &;
   $current-selector: "";
 
   @each $unit in $modifier {
@@ -103,9 +110,9 @@
 
 @mixin spec-selector(
   $specSelector: "",
-  $element: $E,
+  $element: null,
   $modifier: false,
-  $block: $B
+  $block: null
 ) {
   $modifier-combo: "";
 
@@ -123,7 +130,7 @@
   }
 }
 
-@mixin meb($modifier: false, $element: $E, $block: $B) {
+@mixin meb($modifier: false, $element: null, $block: null) {
   $selector: &;
   $modifier-combo: "";
 
@@ -176,8 +183,6 @@
   vertical-align: middle;
 
   &::before {
-    @content;
-
     position: absolute;
     top: 0;
     display: block;
@@ -186,6 +191,8 @@
     content: "";
     background: url("#{$icon-img-url}#{$img}") no-repeat;
     background-size: 100%;
+
+    @content;
   }
 }
 
@@ -195,8 +202,6 @@
   position: relative;
 
   &::after {
-    @content;
-
     position: absolute;
     top: 0;
     left: 0;
@@ -206,7 +211,7 @@
     height: 100%;
     pointer-events: none;
     content: "";
-    border: 1RPX $style $color;
+    border: 1px $style $color;
     border-radius: $radius;
     transform-origin: 0 0;
 
@@ -223,6 +228,8 @@
       border-radius: $radius * 3;
       transform: scale(0.333) translateZ(0);
     }
+
+    @content;
   }
 }
 
@@ -246,7 +253,7 @@
 
 // 解决 320 的 兼容性问题
 @mixin mini320 {
-  @media screen and (width >= 318px) and (width <= 360px) {
+  @media screen and (min-width: 318px) and (max-width: 360px) {
     @content;
   }
 }
