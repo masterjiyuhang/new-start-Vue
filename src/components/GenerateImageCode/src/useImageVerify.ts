@@ -1,8 +1,7 @@
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 function randomNumber(min: number, max: number) {
-  const num = Math.floor(Math.random() * (max - min) + min);
-  return num;
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
 const randomColor = (min: number, max: number) => {
@@ -74,10 +73,6 @@ export const useImageVerify = (width = 120, height = 40) => {
     if (!domRef.value) return;
     imgCode.value = draw(domRef.value, width, height);
   };
-
-  onMounted(() => {
-    getImgCode();
-  });
 
   return {
     domRef,

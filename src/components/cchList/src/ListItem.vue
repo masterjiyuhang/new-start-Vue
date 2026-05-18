@@ -9,18 +9,16 @@
   </div>
 </template>
 
-<script setup lang="ts" name="CchList">
-import { computed, inject } from "vue";
+<script setup lang="ts">
+import { computed, inject, type CSSProperties } from "vue";
 import { ListKey } from "./constants";
-
-const ListProps = inject(ListKey);
 
 interface Props {
   label: string;
   labelWidth?: number;
   isOverFlow?: boolean;
   isShowColon?: boolean;
-  labelPosition?: string;
+  labelPosition?: "left" | "center" | "right";
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -29,23 +27,20 @@ const props = withDefaults(defineProps<Props>(), {
   labelPosition: "left",
 });
 
-const labelStyle: any = computed(() => {
-  return {
-    width: props.labelWidth ? `${props.labelWidth}px` : "auto",
-    textAlign: props.labelPosition,
-  };
-});
+const listProps = inject(ListKey, { col: 3 });
 
-const itemtype = computed(() => {
-  const itemWidth = 100 / ListProps.col || 3;
-  return `${itemWidth}%`;
-});
+const labelStyle = computed<CSSProperties>(() => ({
+  width: props.labelWidth ? `${props.labelWidth}px` : "auto",
+  textAlign: props.labelPosition,
+}));
+
+const itemWidth = computed(() => `${100 / listProps.col}%`);
 </script>
 
 <style lang="scss" scoped>
 .list-item {
   display: flex;
-  width: v-bind(itemtype);
+  width: v-bind(itemWidth);
   min-height: 34px;
   float: left;
   line-height: 34px;

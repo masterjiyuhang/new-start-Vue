@@ -138,7 +138,7 @@ import { onMounted, reactive, ref, watch } from "vue";
 import { REGEXP_PWD } from "./utils/rule";
 
 import { useRenderElementIcon } from "@/hooks/useRenderElementIcon";
-import GenerateImageCode from "@/components/GenerateImageCode/src/index";
+import GenerateImageCode from "@/components/GenerateImageCode";
 import { useI18n } from "vue-i18n";
 
 import renderIcon from "./components/renderIcon.vue";

@@ -1,3 +1,37 @@
+# [1.4.0](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.3.0...v1.4.0) (2026-05-18)
+
+
+### Bug Fixes
+
+* **components:** CchDialog missing watch import causing runtime error
+* **components:** CchList ListItem name collision with parent (name="CchList" → name="CchListItem")
+* **components:** GenerateImageCode double onMounted call and incomplete Props interface
+* **components:** CchTypeCode TypeIt instance not destroyed on unmount (memory leak)
+* **components:** BooleanDisplay prop names shadowing JS reserved words (true/false → trueText/falseText)
+* **components:** CchList InjectionKey\<any\> → proper generic type, inject missing fallback
+* **deps:** add postcss-nested as explicit devDependency (was ghost dependency)
+* **deps:** add @vue/* to hoist-pattern for element-plus peer dep resolution
+* **style:** nprogress bar using hardcoded #f80 instead of $primary variable
+
+
+### Features
+
+* **style:** restructure style architecture (13 files/5 dirs → 7 files/2 dirs)
+* **style:** move element.scss from additionalData to main.ts to avoid per-component recompilation
+* **components:** unify all components to \<script setup lang="ts"\> + defineProps generic style
+* **components:** unify directory structure to ComponentName/index.ts + src/ pattern
+* **deps:** upgrade pnpm from 8.15.6 to 10.33.4
+
+
+### Reverts
+
+* Delete unused components: CchTable (globally registered stub), CchPage (duplicate), testComp
+* Delete unused WrapperPage/footerPage.vue
+* Remove dead props/emits: CchTable showTooltip/showFooter, CchDialog refresh, GenerateImageCode verifyCodeIsRight/reGenCode, WrapperPage dense/ghost/contentStyle/contentFullHeight/fixedHeight/upwardSpace/content
+* Remove debug console.log from CchDialog and CountTo
+* Remove lodash isNumber dependency from CountTo
+
+
 # [1.3.0](https://github.com/masterjiyuhang/new-start-Vue/compare/v1.2.0...v1.3.0) (2024-03-28)
 
 

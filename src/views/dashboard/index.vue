@@ -106,7 +106,7 @@
 <script lang="ts" setup name="Dashboard">
 import { getAccountListApi, getDashboardListApi } from "@/api/mock";
 import { onMounted, ref, reactive } from "vue";
-import Pie from "@/components/echartsComp/Pie.vue";
+import Pie from "@/components/EchartsPie";
 import { TabPaneName } from "element-plus";
 import { formatNum } from "@/utils/number";
 

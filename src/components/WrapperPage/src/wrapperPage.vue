@@ -1,5 +1,5 @@
 <template>
-  <div :class="getClass" ref="wrapperRef">
+  <div :class="getClass">
     <header v-if="getShowHeader">
       <slot name="header">
         <h1>{{ props.title }}</h1>
@@ -16,39 +16,20 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  CSSProperties,
-  PropType,
-  computed,
-  ref,
-  useAttrs,
-  useSlots,
-} from "vue";
+import { computed, useAttrs, useSlots } from "vue";
 
 defineOptions({
   inheritAttrs: false,
 });
 
-const props = withDefaults(
-  defineProps<{
-    title?: string;
-    content?: string;
+interface Props {
+  title?: string;
+  contentBackground?: boolean;
+  contentClass?: string;
+}
 
-    dense?: boolean;
-    ghost?: boolean;
-    contentStyle?: PropType<CSSProperties>;
+const props = withDefaults(defineProps<Props>(), {});
 
-    contentFullHeight?: boolean;
-    contentBackground?: boolean;
-    contentClass?: string;
-
-    fixedHeight?: boolean;
-    upwardSpace?: [number?, string?];
-  }>(),
-  {}
-);
-
-const wrapperRef = ref(null);
 const attrs = useAttrs();
 const slots = useSlots();
 
@@ -57,7 +38,7 @@ const getClass = computed(() => {
 });
 
 const getShowHeader = computed(() => {
-  return props.content || slots.headerContent || props.title;
+  return slots.headerContent || props.title;
 });
 
 const getContentClass = computed(() => {
@@ -65,7 +46,7 @@ const getContentClass = computed(() => {
   return [
     contentClass,
     {
-      [`content-bg`]: contentBackground,
+      ["content-bg"]: contentBackground,
     },
   ];
 });

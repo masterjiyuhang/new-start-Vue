@@ -13,8 +13,8 @@
       Element
       <BooleanDisplay
         :value="isVisible"
-        true="inside"
-        false="outside"
+        true-text="inside"
+        false-text="outside"
         class="font-bold"
       />
       the viewport

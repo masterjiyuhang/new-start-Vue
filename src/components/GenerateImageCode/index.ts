@@ -1,3 +1,3 @@
-import GenerateImageCode from "./src/index";
+import GenerateImageCode from "./src/GenerateImageCode.vue";
 
 export default GenerateImageCode;
