@@ -95,6 +95,7 @@
     "npm-run-all": "^4.1.5",
     "pathe": "^1.1.2",
     "postcss-html": "^1.8.1",
+    "postcss-nested": "^7.0.2",
     "postcss-nesting": "^12.1.5",
     "postcss-pxtorem": "^6.1.0",
     "prettier": "^3.6.2",
@@ -126,5 +127,13 @@
   "engines": {
     "node": ">=16.15.1"
   },
-  "packageManager": "pnpm@8.15.6+sha256.01c01eeb990e379b31ef19c03e9d06a14afa5250b82e81303f88721c99ff2e6f"
+  "packageManager": "pnpm@10.33.4",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@parcel/watcher",
+      "typeit",
+      "vue-demi"
+    ]
+  }
 }
