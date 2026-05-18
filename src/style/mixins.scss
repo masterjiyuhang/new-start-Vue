@@ -1,0 +1,191 @@
+@use "sass:meta";
+@use "sass:string";
+
+// BEM config
+$namespace: "cch" !default;
+$element-separator: "__" !default;
+$modifier-separator: "--" !default;
+$state-prefix: "is-" !default;
+
+// BEM helper functions
+@function selectorToString($selector) {
+  $selector: meta.inspect($selector);
+  $selector: string.slice($selector, 2, -2);
+
+  @return $selector;
+}
+
+@function containsModifier($selector) {
+  $selector: selectorToString($selector);
+
+  @if string.index($selector, $modifier-separator) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function containWhenFlag($selector) {
+  $selector: selectorToString($selector);
+
+  @if string.index($selector, "." + $state-prefix) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function containPseudoClass($selector) {
+  $selector: selectorToString($selector);
+
+  @if string.index($selector, ":") {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function hitAllSpecialNestRule($selector) {
+  @return containsModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
+}
+
+// BEM mixins
+$b: null;
+
+// 块（block)
+@mixin b($block) {
+  $b: $namespace + "-" + $block !global;
+
+  .#{$b} {
+    @content;
+  }
+}
+
+// 元素（element)
+@mixin e($element) {
+  $selector: &;
+  $current-selector: "";
+
+  @each $unit in $element {
+    $current-selector: #{$current-selector +
+      "." +
+      $b +
+      $element-separator +
+      $unit +
+      ","};
+  }
+
+  @if hitAllSpecialNestRule($selector) {
+    @at-root {
+      #{$selector} {
+        #{$current-selector} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    @at-root {
+      #{$current-selector} {
+        @content;
+      }
+    }
+  }
+}
+
+// 修饰符（modifier)
+@mixin m($modifier) {
+  $current-selector: "";
+
+  @each $unit in $modifier {
+    $current-selector: #{$current-selector +
+      & +
+      $modifier-separator +
+      $unit +
+      ","};
+  }
+
+  @at-root {
+    #{$current-selector} {
+      @content;
+    }
+  }
+}
+
+@mixin configurable-m($modifier, $E-flag: false) {
+  $selector: &;
+  $interpolation: "";
+
+  @if $E-flag {
+    $interpolation: $element-separator + $E-flag;
+  }
+
+  @at-root {
+    #{$selector} {
+      .#{$b + $interpolation + $modifier-separator + $modifier} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin spec-selector(
+  $specSelector: "",
+  $element: null,
+  $modifier: false,
+  $block: null
+) {
+  $modifier-combo: "";
+
+  @if $modifier {
+    $modifier-combo: $modifier-separator + $modifier;
+  }
+
+  @at-root {
+    #{&}#{$specSelector}.#{$block + $element-separator + $element + $modifier-combo} {
+      @content;
+    }
+  }
+}
+
+@mixin meb($modifier: false, $element: null, $block: null) {
+  $selector: &;
+  $modifier-combo: "";
+
+  @if $modifier {
+    $modifier-combo: $modifier-separator + $modifier;
+  }
+
+  @at-root {
+    #{$selector} {
+      .#{$block + $element-separator + $element + $modifier-combo} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+@mixin extend-rule($name) {
+  @extend #{"%shared-" + $name};
+}
+
+@mixin share-rule($name) {
+  $rule-name: "%shared-" + $name;
+
+  @at-root #{$rule-name} {
+    @content;
+  }
+}
+
+@mixin pseudo($pseudo) {
+  @at-root #{&}#{":#{$pseudo}"} {
+    @content;
+  }
+}

@@ -17,10 +17,12 @@ import FloatingVue from "floating-vue";
 
 import "floating-vue/dist/style.css";
 
-import "@/style/erHangBaseStyle/index.scss";
+import "@/style/base/reset.scss";
+import "@/style/base/transitions.scss";
+import "@/style/element.scss";
 // element dark(内置暗黑模式)
 import "element-plus/theme-chalk/dark/css-vars.css";
-import "@/style/element/theme-dark.scss";
+import "@/style/element-dark.scss";
 
 import "virtual:svg-icons-register"; // 自定义icon
 

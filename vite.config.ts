@@ -80,10 +80,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
       preprocessorOptions: {
         scss: {
           api: "modern-compiler",
-          // additionalData: `@use "~/style/element/index.scss"; @use "~/style/scss/mixins/mixin.scss";  @use "~/style/common/globals.scss";  @use "~/style/var.scss";`,
-          additionalData: `@use "~/style/element/index.scss" as *; @use "~/style/scss/mixins/mixin.scss" as cch; @use "~/style/var.scss" as cch-variables;`,
-          // additionalData: `@use "~/style/element/index.scss" as *; @use "~/style/scss/mixins/mixin.scss" as *; @use "~/style/common/globals.scss" as *;  @use "~/style/var.scss" as *;`,
-          // additionalData: `@use "~/style/element/index.scss" as *; @use "~/style/scss/mixins/mixin.scss"; @use "~/style/common/globals.scss";  @use "~/style/var.scss";`,
+          additionalData: `@use "~/style/variables.scss" as cch-variables; @use "~/style/mixins.scss" as cch;`,
           sassOptions: {
             quietDeps: true,
           },
