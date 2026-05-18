@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { getWeeklyDataApi } from "@/api/carManagement";
+import { getBilibiliHotApi } from "@/api/external";
 import { reactive } from "vue";
 
 interface WeeklyDataItem {
@@ -38,7 +38,7 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 async function getWeeklyData() {
-  const res: any = await getWeeklyDataApi();
+  const res: any = await getBilibiliHotApi();
   console.log(res, "获取结果");
   baseData.weeklyData = shuffleArray(res?.data);
 }

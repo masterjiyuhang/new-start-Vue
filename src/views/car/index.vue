@@ -173,9 +173,9 @@ import {
   getCarByNameApi,
   getCarDetailApi,
   updateCarApi,
-} from "@/api/baseTest";
+} from "@/api/car";
 import type { ComponentSize, FormInstance, FormRules } from "element-plus";
-import { getTestListApi } from "@/api/mock";
+import { getCompanyListApi } from "@/api/dashboard";
 
 const createVisible = ref(false);
 const editType = ref<"edit" | "create">("edit");
@@ -297,7 +297,7 @@ const dialogTitle = computed(() => {
 const rr = ref([]);
 const getList = async () => {
   try {
-    const res = await getTestListApi();
+    const res = await getCompanyListApi();
     rr.value = res;
   } catch (error) {
     console.log(error);

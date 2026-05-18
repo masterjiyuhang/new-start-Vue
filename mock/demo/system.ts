@@ -4,14 +4,12 @@ import { resultPageSuccess, resultSuccess } from "../_utils";
 
 const accountList = (() => {
   const result: any[] = [];
-
   for (let index = 0; index < 20; index++) {
     result.push({
       id: `${index}`,
-      account: "@first",
+      account: `user_${index}`,
     });
   }
-
   return result;
 })();
 
@@ -19,16 +17,31 @@ const companyList = (() => {
   const res: any[] = [];
   for (let index = 0; index < 30; index++) {
     res.push({
-      name: "@cname",
-      enName: "@name",
-      company: "@ctitle",
+      name: `公司_${index}`,
+      enName: `company_${index}`,
+      company: `企业${index}号`,
     });
   }
-
   return res;
 })();
 
 export default [
+  {
+    url: "/basic-api/system/getRouterList",
+    timeout: 200,
+    method: "get",
+    response: () => {
+      return resultSuccess(routerList.data);
+    },
+  },
+  {
+    url: "/basic-api/system/authButtonList",
+    timeout: 200,
+    method: "get",
+    response: () => {
+      return resultSuccess(authButtonList.data);
+    },
+  },
   {
     url: "/basic-api/system/getAccountList",
     timeout: 100,
@@ -39,35 +52,7 @@ export default [
     },
   },
   {
-    url: "/basic-api/system/testJSONP",
-    timeout: 100,
-    method: "get",
-    rawResponse: (req, res) => {
-      console.log(req.url);
-      // const callbackName = req.query?.callback;
-      const responseData = {
-        code: 200,
-        message: "Success",
-        data: [{ name: "erhang" }],
-      };
-      // // return `${callbackName}(${JSON.stringify(responseData)})`;
-      // // 设置响应头，指定返回的内容类型为 JavaScript
-      // res.setHeader("Content-Type", "application/javascript");
-      // // 返回 JSONP 格式的数据
-      // res.end(`${callbackName}(${JSON.stringify(responseData)})`);
-
-      // const body = "hello world";
-      const callbackName = "jsonp_callback";
-      res
-        .writeHead(200, {
-          // "Content-Length": Buffer.byteLength(body),
-          "Content-Type": "application/javascript",
-        })
-        .end(`${callbackName}(${JSON.stringify(responseData)})`);
-    },
-  },
-  {
-    url: "/basic-api/getCompanyList",
+    url: "/basic-api/system/getCompanyList",
     timeout: 2000,
     method: "get",
     response: () => {
@@ -75,39 +60,20 @@ export default [
     },
   },
   {
-    url: "/basic-api/getRouterList",
-    timeout: 200,
-    method: "get",
-    response: () => {
-      return resultSuccess(routerList.data);
-    },
-  },
-  {
-    url: "/basic-api/authButtonList",
-    timeout: 200,
-    method: "get",
-    response: () => {
-      return resultSuccess(authButtonList.data);
-    },
-  },
-  {
-    url: "/basic-api/system/login",
-    timeout: 200,
+    url: "/basic-api/system/getDashboardList",
     method: "post",
     response: () => {
       return resultSuccess({
-        accessToken: "@uuid",
-        refreshToken: "@token",
-        userId: "@id",
+        todayVisits: Math.floor(Math.random() * 90) + 10,
+        yesterdayVisits: Math.floor(Math.random() * 4000) + 1000,
+        newUsers: Math.floor(Math.random() * 90) + 10,
+        activeUsers: Math.floor(Math.random() * 9900) + 100,
+        totalNumbers: Math.floor(Math.random() * 19) + 1,
+        pieData: [
+          { value: Math.floor(Math.random() * 5000) + 5000, name: "Gitee 访问量" },
+          { value: Math.floor(Math.random() * 5000) + 5000, name: "GitHub 访问量" },
+        ],
       });
-    },
-  },
-  {
-    url: "/basic-api/logout",
-    timeout: 200,
-    method: "post",
-    response: () => {
-      return resultSuccess({ success: true });
     },
   },
 ] as MockMethod[];

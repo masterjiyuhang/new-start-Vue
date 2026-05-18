@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import { getCarTypeList } from "@/api/car";
+import { getCarTypeListApi } from "@/api/car";
 
 function getList() {
-  getCarTypeList().then((res) => {
+  getCarTypeListApi().then((res) => {
     console.log(res);
   });
 }

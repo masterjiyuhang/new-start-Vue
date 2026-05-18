@@ -145,7 +145,6 @@ import renderIcon from "./components/renderIcon.vue";
 import ChangeLanguage from "@/layouts/components/header/components/ChangeLanguage.vue";
 import { useEventListener } from "@vueuse/core";
 import { isDev } from "@/utils";
-import { mockLoginApi } from "@/api/mock";
 
 // 系统名称
 const systemTile = import.meta.env.VITE_GLOB_APP_TITLE;
@@ -251,37 +250,33 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
     if (valid) {
-      if (!isDev()) {
-        // 1.获取公钥
-        await authStore.getPublicKey();
-
-        const pwd = await authStore.encrypt(ruleForm.password);
-        console.log("🍉 ~ index.vue:256 ~ awaitformEl.validate ~ pwd:", pwd);
-        // 2.执行登录接口
-        try {
+      try {
+        if (!isDev()) {
+          // 1.获取公钥
+          await authStore.getPublicKey();
+          const pwd = await authStore.encrypt(ruleForm.password);
+          // 2.执行登录接口
           const { data } = await loginApi({
             username: ruleForm.userName,
             password: pwd,
           });
-
           setToken(data.accessToken);
           globalStore.refreshToken = data.refreshToken;
           setUserId(data.userId);
-        } catch (error) {
-          // 登录失败后刷新验证码
-          ruleForm.verifyCode = "";
-          GenerateImageCodeRef.value.re();
-          return;
+        } else {
+          const { data } = await loginApi({
+            username: ruleForm.userName,
+            password: ruleForm.password,
+          });
+          setToken(data.accessToken);
+          globalStore.refreshToken = data.refreshToken;
+          setUserId(data.userId);
         }
-      } else {
-        const { data } = await mockLoginApi({
-          username: ruleForm.userName,
-          password: ruleForm.password,
-        });
-        setToken(data.accessToken);
-        globalStore.refreshToken = data.refreshToken;
-        setUserId(data.userId);
-        console.log("🍉 ~ index.vue:274 ~ awaitformEl.validate ~ data:", data);
+      } catch (error) {
+        // 登录失败后刷新验证码
+        ruleForm.verifyCode = "";
+        GenerateImageCodeRef.value.re();
+        return;
       }
 
       // 3.添加动态路由

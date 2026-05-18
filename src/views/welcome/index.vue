@@ -64,7 +64,7 @@ import { useCounterStore } from "@/stores/modules/count";
 import { useScript } from "@/hooks/useScript";
 import { onMounted, ref } from "vue";
 
-import { getWeiboApi } from "@/api/car";
+import { getWeiboHotApi } from "@/api/external";
 import { ElNotification } from "element-plus";
 import { useRefreshPage } from "@/hooks/useRefreshPage";
 import { WEIBO_HOT } from "./src/constant";
@@ -85,7 +85,7 @@ function initTable() {
 
   const testWeibo = async () => {
     loading.value = true;
-    const res = await getWeiboApi();
+    const res = await getWeiboHotApi();
     tableData.value = res.data;
     loading.value = false;
   };

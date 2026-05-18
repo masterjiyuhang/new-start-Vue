@@ -1,10 +1,29 @@
-import { API_PREFIX } from "@/config";
-import { http } from "@/utils/http";
+import { get, http, post } from "@/utils/http";
 
-export const getWeiboApi = () => {
-  return http.request<any>("get", "ten-api/v2/weibohot");
+export const getCarListApi = (params: { page: number; size: number }) => {
+  return http.request("get", "/car/list", { params: { page: params.page, pageSize: params.size } });
 };
 
-export const getCarTypeList = () => {
-  return http.request("get", `${API_PREFIX}/v1/api/carType/all`);
+export const createCarApi = (data: any) => {
+  return post("/car/create", data);
+};
+
+export const updateCarApi = (data: any) => {
+  return post("/car/update", data);
+};
+
+export const delCarApi = (data: any) => {
+  return post("/car/del", data);
+};
+
+export const getCarByNameApi = (data: any) => {
+  return post("/car/getListByName", data);
+};
+
+export const getCarDetailApi = (id: string) => {
+  return get(`/car/detail/${id}`);
+};
+
+export const getCarTypeListApi = () => {
+  return get("/carType/all");
 };

@@ -4,7 +4,6 @@ import qs from "qs";
 import LRU from "lru-cache";
 import { ElNotification } from "element-plus";
 import { useGlobalSettingStoreWithOut } from "@/stores/modules/globalSetting";
-import { API_PREFIX } from "@/config";
 
 type RequestConfig = {
   cacheEnabled?: boolean; // 是否启用缓存
@@ -94,7 +93,7 @@ class HttpClient {
       this.isRefreshing = true;
       try {
         const { data } = await this.axiosInstance.post(
-          API_PREFIX + "/v1/api/auth/refresh",
+          "/auth/refresh",
           {
             refreshToken: `${globalStore.refreshToken}`,
           }, // 如果不需要请求体，则传入 null
@@ -238,7 +237,7 @@ class HttpClient {
 
     // 如果启用缓存，检查缓存是否命中
     if (cacheEnabled) {
-      const cacheKey = `post:${url}`;
+      const cacheKey = `get:${url}`;
       const cacheEntry = this.defaultCache.get(cacheKey);
 
       if (cacheEntry) {

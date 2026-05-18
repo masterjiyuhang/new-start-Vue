@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { getGithubUserApi, getGithubUserRepoApi } from "@/api/index";
+import { getGithubUserApi, getGithubUserRepoApi } from "@/api/external";
 import { ElMessage } from "element-plus";
 
 const formInline = ref({
