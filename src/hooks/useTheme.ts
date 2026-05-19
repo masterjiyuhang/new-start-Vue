@@ -29,16 +29,16 @@ export const useTheme = () => {
     document.documentElement.style.setProperty(
       "--el-color-primary-dark-2",
       ThemeConfig.value.isDark
-        ? `${getLightColor(ThemeConfig.value.primary, 0.2)}`
-        : `${getDarkColor(ThemeConfig.value.primary, 0.3)}`
+        ? (getLightColor(ThemeConfig.value.primary, 0.2) ?? "")
+        : (getDarkColor(ThemeConfig.value.primary, 0.3) ?? "")
     );
 
     for (let i = 1; i <= 9; i++) {
       document.documentElement.style.setProperty(
         `--el-color-primary-light-${i}`,
         ThemeConfig.value.isDark
-          ? `${getDarkColor(ThemeConfig.value.primary, i / 10)}`
-          : `${getLightColor(ThemeConfig.value.primary, i / 10)}`
+          ? (getDarkColor(ThemeConfig.value.primary, i / 10) ?? "")
+          : (getLightColor(ThemeConfig.value.primary, i / 10) ?? "")
       );
     }
   };

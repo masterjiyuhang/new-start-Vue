@@ -2,6 +2,7 @@ import { ID3Writer } from "browser-id3-writer";
 import { IAudioMetadata } from "music-metadata";
 import MetaFlac from "metaflac-js";
 
+
 export interface IMusicMeta {
   title: string;
   artists?: string[];
@@ -259,7 +260,7 @@ export function GetArrayBuffer(obj: Blob): Promise<ArrayBuffer> {
       const rs = e.target?.result;
       // 如果结果不存在，则拒绝Promise
       if (!rs) {
-        reject("read file failed");
+        reject(new Error("read file failed"));
       } else {
         // 否则，解析Promise并返回读取的结果
         resolve(rs as ArrayBuffer);
@@ -287,7 +288,7 @@ export class DecryptQueue {
     const fn = this.pending.shift();
     if (fn)
       fn()
-        .then(() => this.consume)
+        .then(() => this.consume())
         .catch(console.error);
   }
 }
@@ -333,19 +334,11 @@ export function DownloadBlobMusic(
       a.click();
       resolve();
     } catch (error) {
-      console.error("下载失败:", error);
-      ElMessage.error("下载失败");
       reject(error);
     } finally {
       a.remove();
     }
   });
-  // const a = document.createElement("a");
-  // a.href = data.file;
-  // a.download = GetDownloadFilename(data, policy);
-  // document.body.append(a);
-  // a.click();
-  // a.remove();
 }
 
 export function GetCoverFromFile(metadata: IAudioMetadata): string {

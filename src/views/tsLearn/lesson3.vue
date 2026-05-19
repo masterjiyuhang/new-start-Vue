@@ -98,11 +98,11 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { bridgeProduct } from "@/utils/designPattern/Structural/Bridge";
-import { factoryFly } from "@/utils/designPattern/Structural/Flyweight";
+import { bridgeProduct } from "./designPattern/Structural/Bridge";
+import { factoryFly } from "./designPattern/Structural/Flyweight";
 
-import DecoratorObj from "@/utils/designPattern/Structural/Decorator";
-import Adapter from "@/utils/designPattern/Structural/Adapter";
+import DecoratorObj from "./designPattern/Structural/Decorator";
+import Adapter from "./designPattern/Structural/Adapter";
 
 const f1 = factoryFly.getFlyweight({
   color: "green",

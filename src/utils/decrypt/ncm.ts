@@ -20,7 +20,7 @@ import EncHex from "crypto-js/enc-hex"; // Hex 编码解析
 import EncUTF8 from "crypto-js/enc-utf8"; // UTF-8 编码解析
 
 import { Buffer } from "buffer"; // Node.js Buffer
-import { parseBlob as metaParseBlob } from "music-metadata"; // 解析 Blob 中的音频元数据
+import { parseBlob as metaParseBlob } from "music-metadata-browser"; // 解析 Blob 中的音频元数据
 
 // ncm 文件解密用的核心密钥与元数据密钥（十六进制解析）
 const CORE_KEY = EncHex.parse("687a4852416d736f356b496e62617857"); // 解密 RC4 key 的 AES 密钥

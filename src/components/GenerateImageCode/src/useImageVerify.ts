@@ -1,16 +1,6 @@
 import { ref } from "vue";
-
-function randomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
-const randomColor = (min: number, max: number) => {
-  const r = randomNumber(min, max);
-  const g = randomNumber(min, max);
-  const b = randomNumber(min, max);
-
-  return `rgb(${r},${g},${b})`;
-};
+import { rand } from "@/utils/is";
+import { randomColor } from "@/utils/color";
 
 const draw = (dom: HTMLCanvasElement, width: number, height: number) => {
   const NUMBER_STRING = "0123456789";
@@ -25,11 +15,11 @@ const draw = (dom: HTMLCanvasElement, width: number, height: number) => {
   ctx.fillRect(0, 0, width, height);
 
   for (let index = 0; index < 4; index++) {
-    const text = NUMBER_STRING[randomNumber(0, NUMBER_STRING.length)];
+    const text = NUMBER_STRING[rand(0, NUMBER_STRING.length - 1)];
     imgCode += text;
 
-    const fontSize = randomNumber(18, 41);
-    const deg = randomNumber(-30, 30);
+    const fontSize = rand(18, 40);
+    const deg = rand(-30, 30);
 
     ctx.font = `${fontSize}px Simhei`;
     ctx.textBaseline = "top";
@@ -43,8 +33,8 @@ const draw = (dom: HTMLCanvasElement, width: number, height: number) => {
 
   for (let index = 0; index < 5; index++) {
     ctx.beginPath();
-    ctx.moveTo(randomNumber(0, width), randomNumber(0, height));
-    ctx.lineTo(randomNumber(0, width), randomNumber(0, height));
+    ctx.moveTo(rand(0, width), rand(0, height));
+    ctx.lineTo(rand(0, width), rand(0, height));
     ctx.strokeStyle = randomColor(180, 230);
     ctx.closePath();
     ctx.stroke();
@@ -52,7 +42,7 @@ const draw = (dom: HTMLCanvasElement, width: number, height: number) => {
 
   for (let index = 0; index < 41; index++) {
     ctx.beginPath();
-    ctx.arc(randomNumber(0, width), randomNumber(0, height), 1, 0, 2 * Math.PI);
+    ctx.arc(rand(0, width), rand(0, height), 1, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fillStyle = randomColor(150, 200);
     ctx.fill();

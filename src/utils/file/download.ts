@@ -1,12 +1,5 @@
-import type { Nullable } from "vitest";
+type Nullable<T> = T | null;
 
-/**
- * Download according to the background interface file stream
- * @param data
- * @param filename
- * @param mime
- * @param bom
- */
 export const downloadByData = (
   data: BlobPart,
   filename: string,
@@ -63,12 +56,9 @@ export const downloadByUrl = ({
         fileName || url.substring(url.lastIndexOf("/") + 1, url.length);
     }
 
-    if (document.createEvent) {
-      const event = document.createEvent("MouseEvents");
-      event.initEvent("click", true, true);
-      link.dispatchEvent(event);
-      return true;
-    }
+    const event = new MouseEvent("click", { bubbles: true, cancelable: true });
+    link.dispatchEvent(event);
+    return true;
   }
 
   if (url.indexOf("?") === -1) {
@@ -79,11 +69,6 @@ export const downloadByUrl = ({
   return true;
 };
 
-/**
- * 开启新的页签
- * @param url
- * @param opt
- */
 export const openWindow = (
   url: string,
   opt?: {
@@ -101,13 +86,11 @@ export const openWindow = (
   window.open(url, target, feature.join(","));
 };
 
-/**
- * @description: base64 to blob
- */
 export function dataURLtoBlob(base64Buf: string): Blob {
   const arr = base64Buf.split(",");
   const typeItem = arr[0];
-  const mime = typeItem.match(/:(.*?);/)![1];
+  const match = typeItem.match(/:(.*?);/);
+  const mime = match ? match[1] : "application/octet-stream";
   const bstr = window.atob(arr[1]);
   let n = bstr.length;
   const u8arr = new Uint8Array(n);
@@ -117,12 +100,6 @@ export function dataURLtoBlob(base64Buf: string): Blob {
   return new Blob([u8arr], { type: mime });
 }
 
-/**
- * img to base64 encode
- * @param url
- * @param mineType
- * @returns
- */
 export const urlToBase64 = (
   url: string,
   mineType?: string
@@ -137,7 +114,7 @@ export const urlToBase64 = (
     img.crossOrigin = "anonymous";
     img.onload = function () {
       if (!canvas || !ctx) {
-        return reject();
+        return reject(new Error("Canvas not supported"));
       }
       canvas.height = img.height;
       canvas.width = img.width;
@@ -146,17 +123,13 @@ export const urlToBase64 = (
       canvas = null;
       resolve(dataURL);
     };
+    img.onerror = function () {
+      reject(new Error(`Failed to load image: ${url}`));
+    };
     img.src = url;
   });
 };
 
-/**
- * Download online pictures
- * @param url
- * @param filename
- * @param mime
- * @param bom
- */
 export function downloadByOnlineUrl(
   url: string,
   filename: string,
@@ -168,13 +141,6 @@ export function downloadByOnlineUrl(
   });
 }
 
-/**
- * Download pictures based on base64
- * @param buf
- * @param filename
- * @param mime
- * @param bom
- */
 export function downloadByBase64(
   buf: string,
   filename: string,

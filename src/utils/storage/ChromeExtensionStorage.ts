@@ -17,9 +17,9 @@ export default class ChromeExtensionStorage extends BaseStorage {
     return new Promise((resolve, _reject) => {
       chrome.storage.local.get({ [name]: defaultValue }, (result: any) => {
         if (Object.prototype.hasOwnProperty.call(result, name)) {
-          resolve(defaultValue);
-        } else {
           resolve(result[name]);
+        } else {
+          resolve(defaultValue);
         }
       });
     });
@@ -29,7 +29,7 @@ export default class ChromeExtensionStorage extends BaseStorage {
       chrome.storage.local.get(null, (obj: Record<string, any>) => {
         const result: Record<string, any> = {};
         for (const [key, value] of Object.entries(obj)) {
-          if (key.startsWith[KEY_PREFIX]) {
+          if (key.startsWith(KEY_PREFIX)) {
             result[key] = value;
           }
         }

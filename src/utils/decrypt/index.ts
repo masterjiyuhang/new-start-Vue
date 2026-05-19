@@ -13,7 +13,6 @@ export async function Decrypt(
   }
 
   const raw = splitFilename(file.name);
-  console.log("🚀 ~ file: index.ts:15 ~ raw:", raw);
   let rt_data: DecryptResult;
   switch (raw.ext) {
     case "ncm":
@@ -23,7 +22,7 @@ export async function Decrypt(
       rt_data = await KwmDecrypt(file.raw, raw.name, raw.ext);
       break;
     default:
-      throw "不支持此文件格式";
+      throw new Error("不支持此文件格式");
   }
 
   if (!rt_data.rawExt) rt_data.rawExt = raw.ext;
