@@ -66,12 +66,15 @@ import { onMounted, ref } from "vue";
 
 import { getWeiboHotApi } from "@/api/external";
 import { ElNotification } from "element-plus";
-import { useRefreshPage } from "@/hooks/useRefreshPage";
+import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
+import { useRoute } from "vue-router";
 import { WEIBO_HOT } from "./src/constant";
 
 const counterStore = useCounterStore();
 
-const { refresh } = useRefreshPage();
+const globalSettingStore = useGlobalSettingStore();
+const route = useRoute();
+const refresh = () => globalSettingStore.refreshPage(route.name as string);
 
 // 表格数据
 function initTable() {

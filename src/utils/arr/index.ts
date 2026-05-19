@@ -1,5 +1,10 @@
-import type { MaybeComputedRefArgs } from "@/hooks/math/useMin";
-import { toValue } from "vue";
+import { toValue, type Ref } from "vue";
+
+type MayBeIsRef<T> = T | Ref<T>;
+type MaybeIsRefOrGetter<T> = MayBeIsRef<T> | (() => T);
+type MaybeComputedRefArgs<T> =
+  | MaybeIsRefOrGetter<T>[]
+  | [MaybeIsRefOrGetter<MaybeIsRefOrGetter<T>[]>];
 
 /**
  * 数组去重

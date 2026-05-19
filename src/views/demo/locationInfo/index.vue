@@ -13,37 +13,26 @@
 </template>
 
 <script setup lang="ts">
-import { useGeoLocation } from "@/hooks/useGeoLocation";
+import { useGeolocation } from "@vueuse/core";
 import { onMounted, reactive } from "vue";
-const { isSupported, useCchLocal } = useGeoLocation();
 
-console.log(isSupported.value, "支不支持呢");
-
-const { coords } = useCchLocal();
-console.log(coords.value);
+const { isSupported } = useGeolocation();
 
 const state = reactive<{ locationInfo: GeolocationPosition | null }>({
   locationInfo: null,
 });
 const getCurrentLocation = () => {
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        state.locationInfo = position;
-        console.log(position);
-        console.log(
-          `Latitude: ${position.coords.latitude} Longitude: ${position.coords.longitude}`
-        );
-      },
-      (error) => {
-        console.error(
-          `Error Code: ${error.code} Error Message: ${error.message}`
-        );
-      }
-    );
-  } else {
-    console.error("Geolocation is not supported by this browser.");
-  }
+  if (!isSupported.value) return;
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      state.locationInfo = position;
+    },
+    (error) => {
+      console.error(
+        `Error Code: ${error.code} Error Message: ${error.message}`
+      );
+    }
+  );
 };
 
 onMounted(() => {

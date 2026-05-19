@@ -1,62 +1,50 @@
-import { onUnmounted, ref } from "vue";
-// import { onUnmounted, ref } from "vue";
+import { onUnmounted } from "vue";
+
+let callbackCounter = 0;
 
 export function useScript(url: string) {
-  const JsonpData = ref(null);
-  const JsonpError = ref<any>(null);
-  const isLoading = ref(false);
-
-  let script;
+  let script: HTMLScriptElement | null = null;
+  let callbackName = "";
 
   const fetchDataByScript = () => {
-    console.log("jsonp executing");
-    isLoading.value = true;
+    callbackCounter++;
+    callbackName = `jsonp_callback_${callbackCounter}`;
 
     return new Promise((resolve, reject) => {
-      const callBackName = "jsonp_callback";
-
-      // 创建 script 函数
       script = document.createElement("script");
-      script.id = "json_script";
+      script.id = `json_script_${callbackCounter}`;
 
-      // 设置回调函数名和 URL
-      const jsonpUrl = `${url}?callback=${callBackName}`;
+      const jsonpUrl = `${url}?callback=${callbackName}`;
       script.src = jsonpUrl;
       script.type = "text/javascript";
       script.async = true;
 
-      script.onerror = (err) => {
-        isLoading.value = false;
-        JsonpError.value = new Error(
-          `Failed to load JSONP from ${jsonpUrl}: ${err.message}`
-        );
-        cleanup(callBackName);
-        reject(JsonpError.value);
+      script.onerror = () => {
+        cleanup();
+        reject(new Error(`Failed to load JSONP from ${jsonpUrl}`));
       };
 
-      // 创建全局回掉函数
-      window[callBackName] = (responseData) => {
-        console.log(responseData);
-        isLoading.value = false;
-        JsonpData.value = responseData;
-        // cleanup(callBackName);
+      (window as Record<string, any>)[callbackName] = (responseData: any) => {
+        cleanup();
         resolve(responseData);
       };
 
-      // 将 script 函数添加到页面中
       document.body.appendChild(script);
     });
   };
 
-  const cleanup = (callBackName: string) => {
-    delete window[callBackName];
+  const cleanup = () => {
+    if (callbackName && (window as any)[callbackName]) {
+      delete (window as any)[callbackName];
+    }
     if (script && script.parentNode) {
       script.parentNode.removeChild(script);
+      script = null;
     }
   };
 
   onUnmounted(() => {
-    cleanup("jsonp_callback");
+    cleanup();
   });
 
   return { fetchDataByScript };

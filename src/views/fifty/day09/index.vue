@@ -28,11 +28,9 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRandomColor } from "@/hooks/useRandomColor";
+import { randomColor } from "@/utils/color";
 
-const { randomColor, color } = useRandomColor();
-
-const bgColor = ref(color);
+const bgColor = ref(randomColor());
 
 const sounds = ["applause", "boo", "gasp", "tada", "victory", "wrong"];
 const audioRefs = ref<HTMLAudioElement[]>([]);

@@ -109,7 +109,7 @@
               >
                 <renderIcon :name="item.icon" />
                 <el-icon>
-                  <component :is="renderIcon_v3(item.icon)" />
+                  <component :is="getIconComp(item.icon)" />
                 </el-icon>
               </span>
             </div>
@@ -137,7 +137,9 @@ import { onMounted, reactive, ref, watch } from "vue";
 
 import { REGEXP_PWD } from "./utils/rule";
 
-import { useRenderElementIcon } from "@/hooks/useRenderElementIcon";
+import { renderElementIcon } from "@/hooks/useRenderElementIcon";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import type { DefineComponent } from "vue";
 import GenerateImageCode from "@/components/GenerateImageCode";
 import { useI18n } from "vue-i18n";
 
@@ -157,7 +159,9 @@ const authStore = AuthStore();
 const router = useRouter();
 const i18n = useI18n();
 
-const { renderIcon_v2, renderIcon_v3 } = useRenderElementIcon();
+const renderIcon_v2 = renderElementIcon;
+const getIconComp = (icon: string) =>
+  (ElementPlusIconsVue as unknown as { [key: string]: DefineComponent })[icon];
 
 const ruleFormRef = ref<FormInstance>();
 // 验证码组件
