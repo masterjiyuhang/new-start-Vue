@@ -8,7 +8,7 @@
       >
         <div class="logo flex-c">
           <img src="@/assets/logo.png" alt="logo" />
-          <span v-show="!ThemeConfig.isCollapse">Vertical Admin</span>
+          <span v-show="!ThemeConfig.isCollapse">{{ LAYOUT_CONFIG.appName }}</span>
         </div>
         <el-scrollbar>
           <el-menu
@@ -17,8 +17,8 @@
             :collapse="isCollapse"
             :collapse-transition="false"
             :unique-opened="true"
-            background-color="#191a20"
-            text-color="#bdbdc0"
+            :background-color="LAYOUT_CONFIG.sidebarColors.dark.bg"
+            :text-color="LAYOUT_CONFIG.sidebarColors.dark.text"
             active-text-color="#ffffff"
           >
             <SubMenu :menuList="menuList" />
@@ -39,24 +39,14 @@
 <script setup lang="ts">
 import SubMenu from "@/layouts/components/menu/SubMenu.vue";
 import Main from "@/layouts/components/main/index.vue";
-import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
-import { AuthStore } from "@/stores/modules/auth";
-import { computed } from "vue";
-import { useRoute } from "vue-router";
-import { storeToRefs } from "pinia";
 import HeaderLeft from "../components/header/HeaderLeft.vue";
 import HeaderRight from "../components/header/HeaderRight.vue";
+import { useLayoutState } from "../composables/useLayoutState";
+import { useActiveMenu } from "../composables/useActiveMenu";
+import { LAYOUT_CONFIG } from "../config";
 
-const route = useRoute();
-const activeMenu = computed(() =>
-  route.meta.activeMenu ? route.meta.activeMenu : route.path,
-);
-const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
-
-const isCollapse = computed(
-  () => useGlobalSettingStore().ThemeConfig.isCollapse,
-);
-const { showMenuListGet: menuList } = storeToRefs(AuthStore());
+const { ThemeConfig, isCollapse, menuList } = useLayoutState();
+const activeMenu = useActiveMenu();
 </script>
 
 <style scoped lang="scss">
@@ -64,24 +54,9 @@ const { showMenuListGet: menuList } = storeToRefs(AuthStore());
 </style>
 
 <style lang="scss">
-.vertical {
-  .el-menu,
-  .el-menu--popup {
-    .el-menu-item {
-      &.is-active {
-        background: #060708;
+@use "../styles/menu-active" as menu;
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          width: 4px;
-          background: var(--el-color-primary);
-        }
-      }
-    }
-  }
+.vertical {
+  @include menu.menu-active-indicator(#060708);
 }
 </style>

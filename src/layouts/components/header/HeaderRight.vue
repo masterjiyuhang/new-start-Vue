@@ -13,7 +13,7 @@
       <!-- 设置主题 -->
       <ThemeSetting />
     </div>
-    <span class="username">erhang</span>
+    <span class="username">{{ LAYOUT_CONFIG.defaultUserName }}</span>
     <Avatar />
   </div>
 </template>
@@ -24,6 +24,7 @@ import ChangeLanguage from "./components/ChangeLanguage.vue";
 import Message from "./components/Message.vue";
 import ThemeSetting from "./components/ThemeSetting.vue";
 import Avatar from "./components/Avatar/index.vue";
+import { LAYOUT_CONFIG } from "../../config";
 </script>
 
 <style lang="scss" scoped>

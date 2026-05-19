@@ -1,127 +1,128 @@
-@use "@/style/variables.scss" as cch-variables;
+@use "../styles/variables" as *;
+@use "@/style/variables" as cch-variables;
 
 .el-container {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 
-  .aside-split {
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-    width: 70px;
-    height: 100%;
-    border-right: 1px solid #fff;
-    background-color: #191a20;
+	.aside-split {
+		display: flex;
+		flex-direction: column;
+		flex-shrink: 0;
+		width: $split-width;
+		height: 100%;
+		border-right: 1px solid #fff;
+		background-color: $sidebar-dark-bg;
 
-    .logo {
-      box-sizing: border-box;
-      height: 55px;
-      border-bottom: 1px solid #282a35;
+		.logo {
+			box-sizing: border-box;
+			height: $header-height;
+			border-bottom: 1px solid $sidebar-dark-border;
 
-      img {
-        width: 32px;
-        object-fit: contain;
-      }
-    }
+			img {
+				width: 32px;
+				object-fit: contain;
+			}
+		}
 
-    .el-scrollbar {
-      height: calc(100% - 55px);
+		.el-scrollbar {
+			height: calc(100% - #{$header-height});
 
-      .split-list {
-        flex: 1;
+			.split-list {
+				flex: 1;
 
-        .split-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 70px;
-          transition: all 0.3s ease;
-          cursor: pointer;
+				.split-item {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					height: $split-item-height;
+					transition: all 0.3s ease;
+					cursor: pointer;
 
-          &:hover {
-            background-color: #292b35;
-          }
+					&:hover {
+						background-color: $split-hover-bg;
+					}
 
-          .el-icon {
-            font-size: 21px;
-          }
+					.el-icon {
+						font-size: 21px;
+					}
 
-          .title {
-            margin-top: 6px;
-            transform: scale(0.96);
-            font-size: 12px;
-          }
+					.title {
+						margin-top: 6px;
+						transform: scale(0.96);
+						font-size: 12px;
+					}
 
-          .el-icon,
-          .title {
-            color: #e5eaf3;
-          }
-        }
+					.el-icon,
+					.title {
+						color: $header-dark-subtext;
+					}
+				}
 
-        .split-active {
-          background-color: cch-variables.$primary !important;
+				.split-active {
+					background-color: cch-variables.$primary !important;
 
-          .el-icon,
-          .title {
-            color: #fff;
-          }
-        }
-      }
-    }
-  }
+					.el-icon,
+					.title {
+						color: #fff;
+					}
+				}
+			}
+		}
+	}
 
-  .el-aside {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border-right: 1px solid #f0eded;
-    background-color: #fff;
+	.el-aside {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		overflow: hidden;
+		transition: all 0.3s ease;
+		border-right: 1px solid $sidebar-light-border;
+		background-color: $sidebar-light-bg;
 
-    .el-scrollbar {
-      height: calc(100% - 55px);
+		.el-scrollbar {
+			height: calc(100% - #{$header-height});
 
-      .el-menu {
-        overflow-x: hidden;
-        border-right: none;
-      }
-    }
+			.el-menu {
+				overflow-x: hidden;
+				border-right: none;
+			}
+		}
 
-    .logo {
-      box-sizing: border-box;
-      height: 55px;
-      border-bottom: 1px solid #f0eded;
+		.logo {
+			box-sizing: border-box;
+			height: $header-height;
+			border-bottom: 1px solid $sidebar-light-border;
 
-      span {
-        color: var(--el-menu-text-color);
-        font-size: 24px;
-        font-weight: bold;
-        white-space: nowrap;
-      }
-    }
-  }
+			span {
+				color: var(--el-menu-text-color);
+				font-size: 24px;
+				font-weight: bold;
+				white-space: nowrap;
+			}
+		}
+	}
 
-  .not-aside {
-    width: 0 !important;
-  }
+	.not-aside {
+		width: 0 !important;
+	}
 
-  .el-header {
-    display: flex;
-    box-sizing: border-box;
-    align-items: center;
-    justify-content: space-between;
-    height: 55px;
-    padding: 0 15px;
-    border-bottom: 1px solid #f1f1f1;
-    background-color: #fff;
+	.el-header {
+		display: flex;
+		box-sizing: border-box;
+		align-items: center;
+		justify-content: space-between;
+		height: $header-height;
+		padding: 0 15px;
+		border-bottom: 1px solid $header-light-border;
+		background-color: $header-light-bg;
 
-    :deep(.tool-bar-ri) {
-      .toolBar-icon,
-      .username {
-        color: var(--el-text-color-primary);
-      }
-    }
-  }
+		:deep(.tool-bar-ri) {
+			.toolBar-icon,
+			.username {
+				color: var(--el-text-color-primary);
+			}
+		}
+	}
 }

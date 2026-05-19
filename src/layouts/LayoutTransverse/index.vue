@@ -4,7 +4,7 @@
     <el-header>
       <div class="logo flex-c">
         <img src="@/assets/logo.png" alt="logo" />
-        <span>Trans Admin</span>
+        <span>{{ LAYOUT_CONFIG.appName }}</span>
       </div>
 
       <el-menu
@@ -12,11 +12,10 @@
         :default-active="activeMenu"
         :router="false"
         :unique-opened="true"
-        background-color="#191a20"
-        text-color="#dadada"
+        :background-color="LAYOUT_CONFIG.sidebarColors.dark.bg"
+        :text-color="LAYOUT_CONFIG.sidebarColors.dark.text"
         active-text-color="#ffffff"
       >
-        <!-- 只有在这里写 submenu 才能触发 menu 三个点省略 -->
         <template v-for="subItem in menuList" :key="subItem.path">
           <el-sub-menu
             v-if="subItem.children?.length"
@@ -57,23 +56,14 @@
 import Main from "@/layouts/components/main/index.vue";
 import HeaderRight from "../components/header/HeaderRight.vue";
 import SubMenu from "@/layouts/components/menu/SubMenu.vue";
+import { useLayoutState } from "../composables/useLayoutState";
+import { useActiveMenu } from "../composables/useActiveMenu";
+import { useMenuClick } from "../composables/useMenuClick";
+import { LAYOUT_CONFIG } from "../config";
 
-import { useRoute, useRouter } from "vue-router";
-import { computed } from "vue";
-import { AuthStore } from "@/stores/modules/auth";
-
-const route = useRoute();
-const router = useRouter();
-const authStore = AuthStore();
-const menuList = computed(() => authStore.showMenuListGet);
-const activeMenu = computed(() =>
-  route.meta.activeMenu ? route.meta.activeMenu : route.path,
-);
-
-const handleClickMenu = (subItem: Menu.MenuOptions) => {
-  if (subItem.meta.isLink) return window.open(subItem.meta.isLink, "_blank");
-  router.push(subItem.path);
-};
+const { menuList } = useLayoutState();
+const activeMenu = useActiveMenu();
+const { handleClickMenu } = useMenuClick();
 </script>
 
 <style scoped lang="scss">
@@ -81,8 +71,9 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
 </style>
 
 <style lang="scss">
+@use "../styles/menu-active" as menu;
+
 .transverse {
-  // 横向菜单布局
   .el-menu--horizontal {
     .el-menu-item,
     .el-sub-menu {
@@ -98,27 +89,8 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
     }
   }
 
-  .el-menu,
-  .el-menu--popup {
-    .el-menu-item {
-      &.is-active {
-        background: #060708;
-        color: #fff;
+  @include menu.menu-active-indicator(#060708);
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          width: 4px;
-          background: var(--el-color-primary);
-        }
-      }
-    }
-  }
-
-  // guide
   #driver-highlighted-element-stage {
     background-color: #606266 !important;
   }

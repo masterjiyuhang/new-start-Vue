@@ -176,6 +176,7 @@ import { storeToRefs } from "pinia";
 import { useTheme } from "@/hooks/useTheme";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 import { LayoutType } from "@/stores/interface";
+import { LAYOUT_CONFIG } from "../../config";
 
 const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
 const drawer = ref(false);
@@ -215,8 +216,9 @@ onBeforeMount(() => {
 watch(
   () => ThemeConfig.value.layout,
   () => {
-    const body = document.body as HTMLElement;
-    body.setAttribute("class", ThemeConfig.value.layout);
+    const body = document.body;
+    LAYOUT_CONFIG.layoutTypes.forEach((type) => body.classList.remove(type));
+    body.classList.add(ThemeConfig.value.layout);
   },
   { immediate: true },
 );

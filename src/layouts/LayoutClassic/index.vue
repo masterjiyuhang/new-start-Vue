@@ -5,7 +5,7 @@
       <div class="header-lf">
         <div class="logo flex-c">
           <img src="@/assets/logo.png" alt="logo" />
-          <span>HHHHH Admin</span>
+          <span>{{ LAYOUT_CONFIG.appName }}</span>
         </div>
         <HeaderLeft />
       </div>
@@ -24,8 +24,8 @@
               :collapse="ThemeConfig.isCollapse"
               :collapse-transition="false"
               :unique-opened="true"
-              background-color="#ffffff"
-              text-color="#303133"
+              :background-color="LAYOUT_CONFIG.sidebarColors.light.bg"
+              :text-color="LAYOUT_CONFIG.sidebarColors.light.text"
             >
               <SubMenu :menuList="menuList" />
             </el-menu>
@@ -40,23 +40,16 @@
 </template>
 
 <script setup lang="ts">
-import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
-import { AuthStore } from "@/stores/modules/auth";
-import { storeToRefs } from "pinia";
-import { useRoute } from "vue-router";
-import { computed } from "vue";
 import SubMenu from "@/layouts/components/menu/SubMenu.vue";
 import HeaderLeft from "../components/header/HeaderLeft.vue";
 import HeaderRight from "../components/header/HeaderRight.vue";
 import Main from "@/layouts/components/main/index.vue";
+import { useLayoutState } from "../composables/useLayoutState";
+import { useActiveMenu } from "../composables/useActiveMenu";
+import { LAYOUT_CONFIG } from "../config";
 
-const route = useRoute();
-const authStore = AuthStore();
-const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
-const menuList = computed(() => authStore.showMenuListGet);
-const activeMenu = computed(() =>
-  route.meta.activeMenu ? route.meta.activeMenu : route.path,
-);
+const { ThemeConfig, menuList } = useLayoutState();
+const activeMenu = useActiveMenu();
 </script>
 
 <style scoped lang="scss">
@@ -64,35 +57,19 @@ const activeMenu = computed(() =>
 </style>
 
 <style lang="scss">
+@use "../styles/menu-active" as menu;
+
 .classic {
   .classic-content {
-    height: calc(100% - 55px); // 减去头部高度
+    height: calc(100% - 55px);
     .classic-main {
       display: flex;
       flex-direction: column;
     }
   }
 
-  .el-menu,
-  .el-menu--popup {
-    .el-menu-item {
-      &.is-active {
-        background: var(--el-color-primary-light-9);
+  @include menu.menu-active-indicator;
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          width: 4px;
-          background: var(--el-color-primary);
-        }
-      }
-    }
-  }
-
-  // guide
   #driver-highlighted-element-stage {
     background-color: #606266 !important;
   }

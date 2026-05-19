@@ -18,45 +18,41 @@
 <script setup lang="ts">
 import Tabs from "@/layouts/components/tabs/index.vue";
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
-import { onBeforeMount, onBeforeUnmount, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { emitter } from "@/utils/mitt";
 import Footer from "@/layouts/components/footer/index.vue";
 import { storeToRefs } from "pinia";
-
-defineProps<{ codeLocation?: string }>();
+import { LAYOUT_CONFIG } from "../../config";
 
 const { ThemeConfig, keepAliveName } = storeToRefs(useGlobalSettingStore());
-
 const { setThemeConfig } = useGlobalSettingStore();
 
-// 刷新当前页面
 const isRouterShow = ref<boolean>(true);
 
-// 监听窗口大小变化，折叠侧边栏
 const screenWidth = ref(0);
 const listeningWindow = useDebounceFn(() => {
   screenWidth.value = document.body.clientWidth;
-  if (!ThemeConfig.value.isCollapse && screenWidth.value < 1200) {
+  if (!ThemeConfig.value.isCollapse && screenWidth.value < LAYOUT_CONFIG.responsiveBreakpoint) {
     document.documentElement.style.setProperty("font-size", "12px");
     setThemeConfig({ ...ThemeConfig.value, isCollapse: true });
   }
-  if (ThemeConfig.value.isCollapse && screenWidth.value > 1200) {
+  if (ThemeConfig.value.isCollapse && screenWidth.value > LAYOUT_CONFIG.responsiveBreakpoint) {
     document.documentElement.style.setProperty("font-size", "16px");
     setThemeConfig({ ...ThemeConfig.value, isCollapse: false });
   }
 }, 100);
 
-window.addEventListener("resize", listeningWindow, false);
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", listeningWindow);
-});
-
-onBeforeMount(() => {
+onMounted(() => {
+  window.addEventListener("resize", listeningWindow, false);
   emitter.on("refreshCurrentPage", (flag) => {
     isRouterShow.value = flag;
   });
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", listeningWindow);
+  emitter.off("refreshCurrentPage");
 });
 </script>
 

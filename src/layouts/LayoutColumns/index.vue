@@ -34,7 +34,7 @@
     >
       <div class="logo flx-center">
         <span v-show="subMenu.length">
-          {{ ThemeConfig.isCollapse ? "C" : "Cch Admin" }}
+          {{ ThemeConfig.isCollapse ? LAYOUT_CONFIG.appName.charAt(0) : LAYOUT_CONFIG.appName }}
         </span>
       </div>
       <el-scrollbar>
@@ -44,7 +44,7 @@
           :collapse="ThemeConfig.isCollapse"
           :collapse-transition="false"
           :unique-opened="true"
-          background-color="#ffffff"
+          :background-color="LAYOUT_CONFIG.sidebarColors.light.bg"
         >
           <SubMenu :menuList="subMenu" />
         </el-menu>
@@ -61,35 +61,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
-import { AuthStore } from "@/stores/modules/auth";
-import { storeToRefs } from "pinia";
-
 import SubMenu from "@/layouts/components/menu/SubMenu.vue";
 import HeaderLeft from "../components/header/HeaderLeft.vue";
 import HeaderRight from "../components/header/HeaderRight.vue";
 import Main from "@/layouts/components/main/index.vue";
+import { useLayoutState } from "../composables/useLayoutState";
+import { useActiveMenu } from "../composables/useActiveMenu";
+import { LAYOUT_CONFIG } from "../config";
 
 const route = useRoute();
 const router = useRouter();
 
-const authStore = AuthStore();
-const { ThemeConfig } = storeToRefs(useGlobalSettingStore());
+const { ThemeConfig, menuList } = useLayoutState();
+const activeMenu = useActiveMenu();
 
-const menuList = computed(() => authStore.showMenuListGet);
-const activeMenu = computed(() =>
-  route.meta.activeMenu ? route.meta.activeMenu : route.path,
-);
 const splitActive = ref<string>("");
 const subMenu = ref<Menu.MenuOptions[]>([]);
 
 watch(
   () => [menuList, route],
   () => {
-    // 当前菜单没有数据直接 return
     if (!menuList.value.length) return;
     splitActive.value = route.path;
     const menuItem = menuList.value.filter(
@@ -107,7 +100,6 @@ watch(
   },
 );
 
-// 切换 SubMenu
 const changeSubMenu = (item: Menu.MenuOptions) => {
   splitActive.value = item.path;
   if (item.children?.length) return (subMenu.value = item.children);
@@ -121,24 +113,9 @@ const changeSubMenu = (item: Menu.MenuOptions) => {
 </style>
 
 <style lang="scss">
-.columns {
-  .el-menu,
-  .el-menu--popup {
-    .el-menu-item {
-      &.is-active {
-        background: var(--el-color-primary-light-9);
+@use "../styles/menu-active" as menu;
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          width: 4px;
-          background: var(--el-color-primary);
-        }
-      }
-    }
-  }
+.columns {
+  @include menu.menu-active-indicator($position: right);
 }
 </style>

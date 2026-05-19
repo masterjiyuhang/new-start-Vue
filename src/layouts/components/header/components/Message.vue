@@ -2,13 +2,13 @@
   <div class="message">
     <el-popover placement="bottom" :width="310" trigger="click">
       <template #reference>
-        <el-badge :value="5" class="item">
+        <el-badge :value="NOTIFICATION_COUNT" class="item">
           <IconRemind class="cursor-pointer toolBar-icon" />
         </el-badge>
       </template>
 
       <el-tabs v-model="activeName">
-        <el-tab-pane label="通知(5)" name="first">
+        <el-tab-pane :label="`通知(${NOTIFICATION_COUNT})`" name="first">
           <div class="message-list">
             <div class="message-item">
               <img
@@ -24,13 +24,13 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane label="消息(5)" name="second">
+        <el-tab-pane :label="`消息(${NOTIFICATION_COUNT})`" name="second">
           <div class="message-empty">
             <img src="@/assets/images/notData.png" alt="notData" />
             <div>暂无消息</div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="代办(5)" name="third">
+        <el-tab-pane :label="`代办(${NOTIFICATION_COUNT})`" name="third">
           <div class="message-empty">
             <img src="@/assets/images/notData.png" alt="notData" />
             <div>暂无代办</div>
@@ -44,6 +44,9 @@
 <script setup lang="ts">
 import IconRemind from "@/components/icons/IconRemind.vue";
 import { ref } from "vue";
+
+// TODO: 接入真实消息接口后替换
+const NOTIFICATION_COUNT = 5;
 
 const activeName = ref("first");
 </script>

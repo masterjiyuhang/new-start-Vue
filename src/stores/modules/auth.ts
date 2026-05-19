@@ -1,11 +1,10 @@
-import { getRouterListApi, getAuthButtonListApi } from "@/api/auth";
+import { getRouterListApi, getAuthButtonListApi, getPublicKey } from "@/api/auth";
 import { getAllBreadcrumbList, getShowMenuList } from "@/utils/system";
 import { getFlatArr } from "@/utils/arr";
 import { defineStore } from "pinia";
 import { AuthState } from "@/stores/interface";
 import { store } from "../index";
 import { moduleRouteList } from "@/router/basic";
-import { getPublicKey } from "@/api/auth";
 // import JSEncrypt from "jsencrypt";
 // import { piniaPersistConfig } from "./../storePlugin";
 
@@ -83,17 +82,11 @@ export const AuthStore = defineStore({
     // getAuthButtonList
     async getAuthButtonList() {
       const { data } = await getAuthButtonListApi();
-      console.log("🍉 ~ file: auth.ts:36 ~ getAuthButtonList ~ data:", data);
       this.authButtonList = data;
     },
     // getAuthMenuList
     async getAuthMenuList() {
       const { data } = await getRouterListApi();
-      console.log(
-        "🍉 ~ file: auth.ts:41 ~ getAuthMenuList ~ data:",
-        data,
-        moduleRouteList,
-      );
       this.authMenuList = data
         .concat(moduleRouteList)
         .sort((a: any, b: any) => {

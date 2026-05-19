@@ -33,9 +33,6 @@ import { ref } from "vue";
 import InfoDialog from "./components/InfoDialog.vue";
 import PasswordDialog from "./components/PasswordDialog.vue";
 
-// 代码定位hack方法
-defineProps<{ codeLocation?: string }>();
-
 const { setToken } = useGlobalSettingStore();
 const router = useRouter();
 

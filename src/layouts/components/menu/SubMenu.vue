@@ -28,13 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useMenuClick } from "../../composables/useMenuClick";
 
-defineProps<{ menuList: Menu.MenuOptions[]; codeLocation?: string }>();
+defineProps<{ menuList: Menu.MenuOptions[] }>();
 
-const router = useRouter();
-const handleClickMenu = (subItem: Menu.MenuOptions) => {
-  if (subItem.meta.isLink) return window.open(subItem.meta.isLink, "_blank");
-  router.push(subItem.path);
-};
+const { handleClickMenu } = useMenuClick();
 </script>

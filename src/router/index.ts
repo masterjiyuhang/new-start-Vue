@@ -116,7 +116,7 @@ router.onError((error) => {
 });
 
 router.isReady().then(() => {
-  console.log("路由准备好了 🤔");
+  // Router is ready
 });
 
 export default router;

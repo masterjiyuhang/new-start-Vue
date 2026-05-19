@@ -1,12 +1,14 @@
 <template>
   <div class="footer flex-c">
     <a href="https://github.com/masterjiyuhang" target="_blank">
-      2022 © Cch-Admin By ErHang Technology.
+      {{ LAYOUT_CONFIG.footerStartYear }}-{{ new Date().getFullYear() }} © Cch-Admin By ErHang Technology.
     </a>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { LAYOUT_CONFIG } from "../../config";
+</script>
 
 <style lang="scss" scoped>
 .footer {

@@ -1,0 +1,31 @@
+@use "@/style/variables" as vars;
+
+// Sidebar
+$sidebar-dark-bg: #191a20;
+$sidebar-dark-text: #bdbdc0;
+$sidebar-dark-active: #060708;
+$sidebar-dark-border: #282a35;
+
+$sidebar-light-bg: #ffffff;
+$sidebar-light-text: #303133;
+$sidebar-light-border: #f0eded;
+
+// Header
+$header-height: 55px;
+$header-light-bg: #fff;
+$header-light-border: #f1f1f1;
+$header-dark-bg: $sidebar-dark-bg;
+$header-dark-text: #dadada;
+$header-dark-subtext: #e5eaf3;
+
+// Menu
+$menu-width-expanded: 210px;
+$menu-width-collapsed: 65px;
+
+// Split layout
+$split-width: 70px;
+$split-item-height: 70px;
+$split-hover-bg: #292b35;
+
+// Main
+$main-bg: #f0f2f5;

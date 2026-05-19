@@ -1,0 +1,20 @@
+@mixin menu-active-indicator($bg-active: var(--el-color-primary-light-9), $position: left) {
+  .el-menu,
+  .el-menu--popup {
+    .el-menu-item {
+      &.is-active {
+        background: $bg-active;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          #{$position}: 0;
+          width: 4px;
+          background: var(--el-color-primary);
+        }
+      }
+    }
+  }
+}
