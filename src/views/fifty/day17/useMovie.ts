@@ -1,3 +1,12 @@
+interface Movie {
+  id: number;
+  title: string;
+  overview: string;
+  poster_path: string;
+  vote_average: number;
+  [key: string]: unknown;
+}
+
 export const useMovie = () => {
   const API_URL =
     "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1";
@@ -5,7 +14,7 @@ export const useMovie = () => {
   const SEARCH_API =
     'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="';
 
-  async function getMovies(url: string = API_URL) {
+  async function getMovies(url: string = API_URL): Promise<Movie[]> {
     const res = await fetch(url);
     const data = await res.json();
     return data.results;

@@ -9,7 +9,7 @@
         name="speed"
         id="speed"
         v-model="currentValue"
-        @input="currentValue = $event.target.value"
+        @input="currentValue = Number(($event.target as HTMLInputElement).value)"
         min="1"
         max="10"
         step="1"

@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-const bgRef = ref();
+const bgRef = ref<HTMLElement | null>(null);
 const blur = ref(20);
 const password = ref("");
 function handlePwdInput(input: string) {

@@ -59,7 +59,6 @@ function resetDOM ()
 }
 function runAnimation ()
 {
-  console.log( numList.value );
   numList.value.forEach( ( _, index ) =>
   {
     setTimeout( () =>

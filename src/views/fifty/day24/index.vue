@@ -53,7 +53,7 @@ const cardInfo = reactive({
   excerpt: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
           perferendis`,
   authorUrl:
-    "https://randomuser.me/api/portraits/men/45.jpghttps://randomuser.me/api/portraits/men/45.jpg",
+    "https://randomuser.me/api/portraits/men/45.jpg",
   authorName: "John Doe",
   date: "Oct 08, 2023",
 });

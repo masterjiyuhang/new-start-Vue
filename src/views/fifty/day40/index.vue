@@ -17,10 +17,16 @@
 </template>
 
 <script setup lang="ts">
-const boxRef = ref("");
-const itemList = ref([]);
+const boxRef = ref<HTMLElement | null>(null);
+
+interface BoxItem {
+  class: string;
+  backgroundPosition: string;
+}
+
+const itemList = ref<BoxItem[]>([]);
 function handleClick() {
-  boxRef.value.classList.toggle("big");
+  boxRef.value?.classList.toggle("big");
 }
 
 function createBoxes() {

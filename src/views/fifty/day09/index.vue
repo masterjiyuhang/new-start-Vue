@@ -35,7 +35,7 @@ const bgColor = ref(randomColor());
 const sounds = ["applause", "boo", "gasp", "tada", "victory", "wrong"];
 const audioRefs = ref<HTMLAudioElement[]>([]);
 
-const getMp3Url = (str) => {
+const getMp3Url = (str: string) => {
   return new URL(`./sounds/sound-board_sounds_${str}.mp3`, import.meta.url)
     .href;
 };

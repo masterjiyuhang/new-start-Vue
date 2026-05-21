@@ -10,7 +10,6 @@ export const FormWareLabel = defineComponent({
     },
   },
   setup(props) {
-    console.log(props);
     return () => (
       <label>
         {props.label.split("").map((item, idx) => {

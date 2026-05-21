@@ -147,9 +147,7 @@ export function executeTransition<T extends number | number[]>(
 
       const now = Date.now();
       const alpha = ease((now - startedAt) / duration);
-      console.log("🚀 ~ file: useCchTransition.ts:140 ~ tick ~ alpha:", alpha);
       const arr = toVec(source.value).map((_n, i) => lerp(v1[i], v2[i], alpha));
-      console.log("🚀 ~ file: useCchTransition.ts:141 ~ tick ~ arr:", arr);
 
       if (Array.isArray(source.value))
         (source.value as number[]) = arr.map((_n, i) =>
@@ -174,7 +172,6 @@ export function useCchTransition(
   source: MaybeRefOrGetter<number | number[]> | MaybeRefOrGetter<number>[],
   options: CchTransOptions = {},
 ): Ref<any> {
-  console.log("执行动画", source);
   let currentId = 0; // 用于标识当前动画的ID，用于在动画更新或取消时做判断。
 
   // 获取source的实际值，如果是数组则会转换每个元素为数值。
@@ -191,7 +188,6 @@ export function useCchTransition(
   watch(
     sourceVal,
     async (newVal) => {
-      console.log("🚀 ~ file: useCchTransition.ts:182 ~ newVal:", newVal);
       if (toValue(options.disabled)) {
         return;
       }

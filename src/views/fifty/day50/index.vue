@@ -14,11 +14,6 @@
 </template>
 
 <script setup lang="ts">
-const str = ref("seaways-routes");
-const reverseStr = computed(() => {
-  return str.value.split("").reverse().join("");
-});
-console.log("🍉 ~ index.vue:21 ~ reverseStr:", reverseStr);
 </script>
 
 <style scoped>

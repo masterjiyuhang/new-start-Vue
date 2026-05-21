@@ -26,8 +26,8 @@
       }"
     >
       <div
-        v-for="item in rightSlides"
-        :key="item.id"
+        v-for="(item, index) in rightSlides"
+        :key="index"
         :style="{
           backgroundImage: `url(${item})`,
         }"
@@ -113,7 +113,6 @@ const rightSlides = [
   "https://images.unsplash.com/photo-1510942201312-84e7962f6dbb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da4ca7a78004349f1b63f257e50e4360&auto=format&fit=crop&w=1050&q=80",
 ];
 function changeSlide(direction: string) {
-  console.log(slideContainerRef);
   const sliderHeight = slideContainerRef.value.clientHeight;
   if (direction === "top") {
     activeIndex.value--;

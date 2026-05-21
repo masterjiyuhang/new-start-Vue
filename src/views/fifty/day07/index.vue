@@ -26,7 +26,7 @@
 import { ref } from "vue";
 
 const current = ref("");
-function handleMouseEnter(e) {
+function handleMouseEnter(e: string) {
   current.value = e;
 }
 

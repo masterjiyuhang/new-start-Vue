@@ -48,10 +48,24 @@ const formInline = ref({
   user: "masterjiyuhang",
 });
 
-const currentUserInfo = ref(null);
-const currentUserRepoList = ref([]);
+interface GithubUser {
+  avatar_url: string;
+  login: string;
+  useId?: string;
+  bio: string;
+  followers: number;
+  following: number;
+  public_repos: number;
+}
+
+interface GithubRepo {
+  id: number;
+  name: string;
+}
+
+const currentUserInfo = ref<GithubUser | null>(null);
+const currentUserRepoList = ref<GithubRepo[]>([]);
 async function onSubmit() {
-  console.log("submit!");
   if (!formInline.value.user) {
     ElMessage({
       type: "error",
@@ -60,10 +74,8 @@ async function onSubmit() {
     return;
   }
   const res = await getGithubUserApi(formInline.value.user);
-  console.log("🚀 ~ file: index.vue:27 ~ onSubmit ~ res:", res);
   currentUserInfo.value = res;
   const res1 = await getGithubUserRepoApi(formInline.value.user);
-  console.log("🚀 ~ file: index.vue:40 ~ onSubmit ~ res1:", res1);
   currentUserRepoList.value = res1.slice(0, 5);
 }
 </script>

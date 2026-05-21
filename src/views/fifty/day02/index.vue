@@ -55,7 +55,7 @@ const handleNext = () => {
   resetProgress();
 };
 
-function handleSelect(index) {
+function handleSelect(index: number) {
   activeIndex.value = index;
   resetProgress();
 }

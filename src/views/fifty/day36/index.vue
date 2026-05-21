@@ -26,21 +26,33 @@ const imgList = ref([
   "https://images.unsplash.com/photo-1599561046251-bfb9465b4c44?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1492&q=80",
 ]);
 const activeIndex = ref(0);
-const imgContainerRef = ref();
+const imgContainerRef = ref<HTMLElement | null>(null);
 
-let timer = setInterval(run, 2000);
+let timer: ReturnType<typeof setInterval> | null = null;
 
-function resetInterval() {
-  clearInterval(timer);
+function startInterval() {
   timer = setInterval(run, 2000);
 }
+
+function resetInterval() {
+  if (timer) clearInterval(timer);
+  startInterval();
+}
+
+onMounted(() => {
+  startInterval();
+});
+
+onUnmounted(() => {
+  if (timer) clearInterval(timer);
+});
 
 function run() {
   activeIndex.value++;
   changeImage();
 }
 
-function handleClick(type) {
+function handleClick(type: string) {
   if (type === "prev") {
     activeIndex.value--;
   } else if (type === "next") {
@@ -58,7 +70,7 @@ function changeImage() {
     activeIndex.value = imgList.value.length - 1;
   }
 
-  imgContainerRef.value.style.transform = `translateX(${-activeIndex.value * 500}px)`;
+  imgContainerRef.value!.style.transform = `translateX(${-activeIndex.value * 500}px)`;
 }
 </script>
 

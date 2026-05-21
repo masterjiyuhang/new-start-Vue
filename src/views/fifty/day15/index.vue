@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, unref, watch, watchEffect } from "vue";
+import { computed, onMounted, ref, unref } from "vue";
 import { useCchTransition } from "./useCchTransition";
 
 function formatNumber(num: number | string) {
@@ -37,29 +37,15 @@ function formatNumber(num: number | string) {
 const startVal = 1;
 const endVal = 998;
 const source = ref(startVal);
-let outputValue = useCchTransition(source);
+const outputValue = useCchTransition(source, {
+  disabled: false,
+  duration: 1220,
+});
 const value = computed(() => formatNumber(unref(outputValue)));
 
-watchEffect(() => {
-  source.value = startVal;
-});
-
-watch([() => startVal, () => endVal], () => {
-  start();
-});
-
 const emit = defineEmits(["onStarted", "onFinished"]);
-function run() {
-  outputValue = useCchTransition(source, {
-    disabled: false,
-    duration: 1220,
-    onFinished: () => emit("onFinished"),
-    onStarted: () => emit("onStarted"),
-  });
-}
 
 function start() {
-  run();
   source.value = endVal;
 }
 

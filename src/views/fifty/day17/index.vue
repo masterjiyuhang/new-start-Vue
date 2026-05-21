@@ -43,16 +43,13 @@ const movies = ref<any>([]);
 
 function getMoviesList() {
   getMovies().then((res) => {
-    console.log(res);
     movies.value = res;
   });
 }
 function handleSubmit(e: Event) {
   e.preventDefault();
-  console.log(e, inputValue.value);
   if (inputValue.value && inputValue.value !== "") {
     getMovies(SEARCH_API + inputValue.value).then((res) => {
-      console.log("搜索结果", res);
       movies.value = res;
     });
   } else {

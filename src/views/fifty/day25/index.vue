@@ -21,7 +21,6 @@ const nav = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   if (el.value && nav.value) {
-    console.log(el.value);
     el.value.addEventListener(
       "scroll",
       (e) => {
@@ -29,7 +28,6 @@ onMounted(() => {
           (e.target as Document)?.documentElement ||
           (e.target as HTMLElement | SVGElement)) as Element;
 
-        console.log(el.scrollTop, nav.value!.offsetHeight);
         if (el.scrollTop > nav.value!.offsetHeight + 20) {
           nav.value?.classList.add("active");
         } else {

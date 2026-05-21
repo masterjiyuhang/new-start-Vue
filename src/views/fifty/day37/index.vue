@@ -41,8 +41,7 @@ const colors = {
   normal: "#F5F5F5",
 };
 
-const count = 50;
-let intervalId: number | null | any = null;
+let intervalId: ReturnType<typeof setInterval> | null = null;
 const pokeList = ref<any[]>([]);
 
 const randomColor = () =>

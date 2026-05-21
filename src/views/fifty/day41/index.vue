@@ -8,9 +8,9 @@
     </p>
     <div class="code-container">
       <input
-        v-for="(item, index) in 6"
+        v-for="(_, index) in 6"
         ref="codeRef"
-        :key="item"
+        :key="index"
         type="number"
         class="code"
         placeholder="0"
@@ -31,7 +31,7 @@ const codeRef = ref();
 onMounted(() => {
   codeRef.value.forEach((code, idx) => {
     code.addEventListener("keydown", (e) => {
-      if (e.key >= 0 && e.key <= 9) {
+      if (e.key >= "0" && e.key <= "9") {
         codeRef.value[idx].value = "";
         if (codeRef.value[idx + 1]) {
           setTimeout(() => codeRef.value[idx + 1].focus(), 10);

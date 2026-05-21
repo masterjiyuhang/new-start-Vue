@@ -15,8 +15,7 @@
           v-for="(item, index) in enterItems"
           :type="item.type"
           :key="item.value + index"
-          ref="tagListRef"
-        >
+          >
           {{ item.value }}
         </el-tag>
       </div>
@@ -36,20 +35,18 @@ import { ElMessage } from "element-plus";
 import { ref } from "vue";
 
 const text = ref("");
-const tagListRef = ref();
 
 type EnterItem = {
-  type: string;
+  type: "primary" | "success" | "info" | "warning" | "danger";
   value: string;
 };
 const enterItems = ref<EnterItem[]>([]);
 
-const tagTypeList = ref<string[]>(["primary", "info", "warning", "danger"]);
+const tagTypeList: EnterItem["type"][] = ["primary", "info", "warning", "danger"];
 
-// 定义一个方法来获取随机颜色
-function getRandomTagType() {
-  const randomIndex = Math.floor(Math.random() * tagTypeList.value.length);
-  return tagTypeList.value[randomIndex];
+function getRandomTagType(): EnterItem["type"] {
+  const randomIndex = Math.floor(Math.random() * tagTypeList.length);
+  return tagTypeList[randomIndex];
 }
 function handleEnter() {
   if (text.value.trim()) {
@@ -66,7 +63,7 @@ function handleReset() {
   enterItems.value = [];
 }
 
-let timeoutId;
+let timeoutId: ReturnType<typeof setTimeout> | null | undefined;
 // 初始化计数器
 let timeoutCount = 0;
 

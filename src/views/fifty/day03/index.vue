@@ -55,11 +55,11 @@
         <li :class="styles['tag-list-item']">
           <i class="fas fa-home"></i><a href="#" class="text-red-400"> Home</a>
         </li>
-        <li class="tag-list-item">
+        <li :class="styles['tag-list-item']">
           <i class="fas fa-user-alt"></i
           ><a href="#" class="text-red-400"> About</a>
         </li>
-        <li class="tag-list-item">
+        <li :class="styles['tag-list-item']">
           <i class="fas fa-envelope"></i
           ><a href="#" class="text-red-400"> Contact</a>
         </li>

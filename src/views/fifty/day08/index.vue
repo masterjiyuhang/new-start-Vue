@@ -31,7 +31,7 @@
 import { FormWareLabel, HasMore } from "./comp/index";
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .btn {
   display: inline-block;
   width: 100%;

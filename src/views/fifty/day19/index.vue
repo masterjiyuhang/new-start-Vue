@@ -69,28 +69,6 @@ const secondTransform = ref();
 const currentTime = ref("");
 const currentDate = ref("");
 
-// function animate() {
-//   const time = new Date();
-//   // 保持不变
-//   const month = time.getMonth();
-//   const day = time.getDay();
-//   const date = time.getDate();
-//   const hours = time.getHours();
-//   const hoursForClock = hours >= 13 ? hours % 12 : hours;
-//   const minutes = time.getMinutes();
-//   const seconds = time.getSeconds();
-//   const ampm = hours >= 12 ? "PM" : "AM";
-
-//   console.log(1);
-//   hourTransform.value = `translate(-50%, -100%) rotate(${scale(hoursForClock, 0, 12, 0, 360)}deg)`;
-//   minuteTransform.value = `translate(-50%, -100%) rotate(${scale(minutes, 0, 60, 0, 360)}deg)`;
-//   secondTransform.value = `translate(-50%, -100%) rotate(${scale(seconds, 0, 60, 0, 360)}deg)`;
-
-//   currentTime.value = `${hoursForClock}:${minutes < 10 ? `0${minutes}` : minutes} ${ampm}`;
-//   currentDate.value = `${days[day]}, ${months[month]} ${date}`;
-//   requestAnimationFrame(animate);
-// }
-
 function updateTimeOnce() {
   const now = new Date().getTime();
   if (now - updateTime >= 1000) {

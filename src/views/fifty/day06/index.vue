@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { useScroll } from "@vueuse/core";
-import { watchEffect, onUnmounted, onMounted, ref } from "vue";
+import { onUnmounted, onMounted, ref } from "vue";
 
 const arr = Array.from({ length: 11 }).map((_, index) => {
   return {
@@ -29,21 +29,19 @@ const arr = Array.from({ length: 11 }).map((_, index) => {
 
 const wrapperRef = ref<HTMLElement | null>(null);
 let boxes: HTMLElement[] = [];
-const { x, y } = useScroll(wrapperRef);
-watchEffect(() => {
-  console.log(x.value, y.value);
-});
+const { y } = useScroll(wrapperRef);
+function onScroll() {
+  checkBoxes();
+}
+
 onMounted(() => {
   boxes = Array.from(wrapperRef.value?.querySelectorAll(".box") ?? []);
   checkBoxes();
-  wrapperRef.value?.addEventListener("scroll", (_e) => {
-    console.log("wrapper scroll");
-    checkBoxes();
-  });
+  wrapperRef.value?.addEventListener("scroll", onScroll);
 });
 
 onUnmounted(() => {
-  wrapperRef.value?.removeEventListener("scroll", checkBoxes);
+  wrapperRef.value?.removeEventListener("scroll", onScroll);
 });
 
 function checkBoxes() {

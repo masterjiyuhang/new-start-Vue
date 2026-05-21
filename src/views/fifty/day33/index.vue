@@ -31,20 +31,20 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-  DocumentAdd,
-} from "@element-plus/icons-vue";
+import { DocumentAdd } from "@element-plus/icons-vue";
 
-const noteList = ref([]);
-const currentActiveId = ref(null);
+interface NoteItem {
+  id: number;
+  title: string;
+  content: string;
+  createTime: string;
+  updateTime: string;
+}
 
-function handleAdd(params: type) {
+const noteList = ref<NoteItem[]>([]);
+const currentActiveId = ref<number | null>(null);
+
+function handleAdd() {
   noteList.value.push({
     id: Math.random(),
     title: "title",
@@ -53,7 +53,7 @@ function handleAdd(params: type) {
     updateTime: "2022-01-01",
   });
 }
-function handleEdit(id: string) {
+function handleEdit(id: number) {
   currentActiveId.value = id;
 }
 

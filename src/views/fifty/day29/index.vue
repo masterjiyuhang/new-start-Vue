@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
-const loveMeRef = ref();
+const loveMeRef = ref<HTMLElement | null>(null);
 const timesClicked = ref(0);
 
 const createHeart = (e: MouseEvent) => {
@@ -34,20 +34,15 @@ const createHeart = (e: MouseEvent) => {
   heart.style.top = `${yInside}px`;
   heart.style.left = `${xInside}px`;
 
-  loveMeRef.value.appendChild(heart);
+  loveMeRef.value?.appendChild(heart);
 
   timesClicked.value += 1;
 
-  // setTimeout(() => heart.remove(), 1000);
+  setTimeout(() => heart.remove(), 1000);
 };
-
-onMounted(() => {
-  // Check if loveMeRef is correctly bound
-  console.log(loveMeRef.value);
-});
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @keyframes grow {
   to {
     transform: translate(-50%, -50%) scale(10);

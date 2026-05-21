@@ -20,7 +20,6 @@ function getRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
 const mouseOver = (e: any) => {
-  console.log("🚀 ~ file: index.vue:23 ~ mouseOver ~ e:", e.target.style);
   const color = getRandomColor();
   e.target.style.background = color;
   e.target.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`;
