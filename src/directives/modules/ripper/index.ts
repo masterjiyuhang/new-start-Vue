@@ -19,7 +19,7 @@ const options: RippleOptions = {
 };
 
 const RippleDirective: Directive & RippleProto = {
-  beforeMount: (el: HTMLElement, binding) => {
+  beforeMount: (el: HTMLElement & { __rippleHandler__?: (e: EventType) => void }, binding) => {
     if (binding.value === false) return;
 
     const bg = el.getAttribute("ripple-background");
@@ -28,14 +28,21 @@ const RippleDirective: Directive & RippleProto = {
     const background = bg || RippleDirective.background;
     const zIndex = RippleDirective.zIndex;
 
-    el.addEventListener(options.event, (event: EventType) => {
+    const handler = (event: EventType) => {
       rippler({
         event,
         el,
         background,
         zIndex,
       });
-    });
+    };
+    el.__rippleHandler__ = handler;
+    el.addEventListener(options.event, handler);
+  },
+  beforeUnmount: (el: HTMLElement & { __rippleHandler__?: (e: EventType) => void }) => {
+    if (el.__rippleHandler__) {
+      el.removeEventListener(options.event, el.__rippleHandler__);
+    }
   },
   updated(el, binding) {
     if (!binding.value) {

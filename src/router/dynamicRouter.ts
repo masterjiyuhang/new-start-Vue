@@ -27,15 +27,15 @@ export const initDynamicRouter = async (router: Router) => {
       return Promise.reject("No permission");
     }
 
-    useAuthStore.flatMenuListGet.forEach((item: any) => {
+    useAuthStore.flatMenuListGet.forEach((item: Menu.MenuOptions) => {
       item.children && delete item.children;
       if (item.component && isType(item.component) === "string") {
         item.component = modules["/src/views" + item.component + ".vue"];
       }
       if (item.meta.isFull) {
-        router.addRoute(item);
+        router.addRoute(item as any);
       } else {
-        router.addRoute("layout", item);
+        router.addRoute("layout", item as any);
       }
     });
   } catch (error) {

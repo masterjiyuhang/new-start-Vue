@@ -1,7 +1,10 @@
 <template>
   <div class="grid flex-col text-center wrapper-page place-items-center">
-    <div id="insert">
-      <div class="key">Press any key to get the keyCode</div>
+    <div>
+      <div v-for="(item, index) in keyHistory" :key="index" class="key">
+        {{ item.key }}-{{ item.code }}
+      </div>
+      <div v-if="!keyHistory.length" class="key">Press any key to get the keyCode</div>
     </div>
     <div class="flex">
       <div class="item">key:{{ key }}</div>
@@ -18,11 +21,11 @@ import { ref } from "vue";
 const key = ref("");
 const code = ref("");
 const keyCode = ref<number | null>(null);
+const keyHistory = ref<{ key: string; code: string }[]>([]);
+
 useEventListener(document, "keydown", (e) => {
-  const insert = document.getElementById("insert");
-  if (insert) {
-    insert.innerHTML = `<div class="key">${e.key}-${e.code}</div>`;
-  }
+  keyHistory.value.unshift({ key: e.key, code: e.code });
+  if (keyHistory.value.length > 16) keyHistory.value.pop();
 
   key.value = e.key;
   code.value = e.code;

@@ -27,19 +27,31 @@
 </template>
 
 <script setup lang="ts">
-const codeRef = ref();
+const codeRef = ref<HTMLInputElement[]>([]);
+const keydownHandlers: ((e: KeyboardEvent) => void)[] = [];
+
 onMounted(() => {
   codeRef.value.forEach((code, idx) => {
-    code.addEventListener("keydown", (e) => {
+    const handler = (e: KeyboardEvent) => {
       if (e.key >= "0" && e.key <= "9") {
         codeRef.value[idx].value = "";
         if (codeRef.value[idx + 1]) {
           setTimeout(() => codeRef.value[idx + 1].focus(), 10);
         }
       } else if (e.key === "Backspace") {
-        setTimeout(() => codeRef.value[idx - 1].focus(), 10);
+        if (codeRef.value[idx - 1]) {
+          setTimeout(() => codeRef.value[idx - 1].focus(), 10);
+        }
       }
-    });
+    };
+    keydownHandlers.push(handler);
+    code.addEventListener("keydown", handler);
+  });
+});
+
+onUnmounted(() => {
+  codeRef.value.forEach((code, idx) => {
+    code.removeEventListener("keydown", keydownHandlers[idx]);
   });
 });
 </script>

@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { ElMessage } from "element-plus";
-import { ref } from "vue";
+import { ref, onUnmounted } from "vue";
 
 const text = ref("");
 
@@ -70,6 +70,7 @@ let timeoutCount = 0;
 function handleRandomSelect() {
   // 清除计数器和定时器
   timeoutCount = 0;
+  if (timeoutId) clearTimeout(timeoutId);
   timeoutId = null;
   randomSelect();
 }
@@ -101,6 +102,10 @@ function randomSelect(changeCount = 20) {
     ElMessage.warning("请先输入内容");
   }
 }
+
+onUnmounted(() => {
+  if (timeoutId) clearTimeout(timeoutId);
+});
 </script>
 
 <style scoped></style>

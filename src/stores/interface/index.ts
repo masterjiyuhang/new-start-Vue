@@ -1,7 +1,7 @@
 /* GlobalState */
 export interface GlobalState {
   token: string;
-  userInfo: any;
+  userInfo: Record<string, unknown>;
   assemblySize: AssemblySizeType;
   language: string;
   themeConfig: ThemeConfigProps;

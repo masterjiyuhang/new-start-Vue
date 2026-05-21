@@ -24,6 +24,7 @@ const text = ref("Starting...");
 const currentValue = ref(1);
 
 let idx = 1;
+let timerId: ReturnType<typeof setTimeout> | null = null;
 
 const speed = computed(() => {
   return 300 / currentValue.value;
@@ -38,10 +39,13 @@ function writeText() {
     idx = 1;
   }
 
-  setTimeout(writeText, speed.value);
+  timerId = setTimeout(writeText, speed.value);
 }
 onMounted(() => {
   writeText();
+});
+onUnmounted(() => {
+  if (timerId) clearTimeout(timerId);
 });
 </script>
 

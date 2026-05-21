@@ -14,32 +14,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 const el = ref<HTMLElement | null>(null);
 const nav = ref<HTMLElement | null>(null);
 
+function onScroll(e: Event) {
+  const scrollEl: Element = ((e.target as Window)?.document?.documentElement ||
+    (e.target as Document)?.documentElement ||
+    (e.target as HTMLElement | SVGElement)) as Element;
+
+  if (scrollEl.scrollTop > nav.value!.offsetHeight + 20) {
+    nav.value?.classList.add("active");
+  } else {
+    nav.value?.classList.remove("active");
+  }
+}
+
 onMounted(() => {
   if (el.value && nav.value) {
-    el.value.addEventListener(
-      "scroll",
-      (e) => {
-        const el: Element = ((e.target as Window)?.document?.documentElement ||
-          (e.target as Document)?.documentElement ||
-          (e.target as HTMLElement | SVGElement)) as Element;
-
-        if (el.scrollTop > nav.value!.offsetHeight + 20) {
-          nav.value?.classList.add("active");
-        } else {
-          nav.value?.classList.remove("active");
-        }
-      },
-      {
-        capture: false,
-        passive: true,
-      },
-    );
+    el.value.addEventListener("scroll", onScroll, {
+      capture: false,
+      passive: true,
+    });
   }
+});
+
+onUnmounted(() => {
+  el.value?.removeEventListener("scroll", onScroll);
 });
 </script>
 

@@ -28,14 +28,14 @@ const defaultConfig: AxiosRequestConfig = {
 
 class HttpClient {
   private axiosInstance: AxiosInstance;
-  private defaultCache: LRU<string, CacheEntry<any>>;
+  private defaultCache: LRU<string, CacheEntry<unknown>>;
   private isRefreshing = false;
   private requests: ((token: string) => void)[] = [];
 
   constructor() {
     this.axiosInstance = axios.create(defaultConfig);
 
-    this.defaultCache = new LRU<string, CacheEntry<any>>({
+    this.defaultCache = new LRU<string, CacheEntry<unknown>>({
       ttl: 8000,
       max: 100,
     });
@@ -66,7 +66,7 @@ class HttpClient {
 
   private httpInterceptorsResponseHandler(): void {
     this.axiosInstance.interceptors.response.use(
-      async (response: any): Promise<any> => {
+      async (response): Promise<any> => {
         NProgress.done();
         return response;
       },
@@ -136,12 +136,12 @@ class HttpClient {
 
   private getFromCache<T>(cacheKey: string): T | null {
     const cacheEntry = this.defaultCache.get(cacheKey);
-    return cacheEntry ? cacheEntry.data : null;
+    return cacheEntry ? (cacheEntry.data as T) : null;
   }
 
-  private saveCache(flag: boolean, cacheKey: string, data: any) {
+  private saveCache(flag: boolean, cacheKey: string, data: unknown) {
     if (flag) {
-      const cacheEntry: CacheEntry<any> = {
+      const cacheEntry: CacheEntry<unknown> = {
         data,
         timestamp: Date.now(),
       };
@@ -149,12 +149,12 @@ class HttpClient {
     }
   }
 
-  public request<T>(
+  public request<T = any>(
     method: string,
     url: string,
     params?: AxiosRequestConfig,
     baseConfig?: RequestConfig,
-  ): Promise<T | any> {
+  ): Promise<T> {
     const { cacheEnabled = false } = baseConfig || {};
     const cacheKey = `${method}:${url}`;
 
@@ -167,7 +167,7 @@ class HttpClient {
       const config = { method, url, ...params };
       this.axiosInstance
         .request(config)
-        .then((response: any) => {
+        .then((response) => {
           this.saveCache(cacheEnabled, cacheKey, response.data);
           resolve(response.data);
         })
@@ -182,11 +182,11 @@ class HttpClient {
     });
   }
 
-  public post<T>(
+  public post<T = any>(
     url: string,
     data?: Record<string, any>,
     baseConfig?: RequestConfig,
-  ): Promise<T | any> {
+  ): Promise<T> {
     const { cacheEnabled = false } = baseConfig || {};
     const cacheKey = `post:${url}`;
 
@@ -198,7 +198,7 @@ class HttpClient {
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .post(url, data)
-        .then((response: any) => {
+        .then((response) => {
           this.saveCache(cacheEnabled, cacheKey, response.data);
           resolve(response.data);
         })
@@ -213,11 +213,11 @@ class HttpClient {
     });
   }
 
-  public get<T>(
+  public get<T = any>(
     url: string,
     params?: AxiosRequestConfig,
     baseConfig?: RequestConfig,
-  ): Promise<T | any> {
+  ): Promise<T> {
     const { cacheEnabled = false } = baseConfig || {};
     const cacheKey = `get:${url}`;
 
@@ -229,7 +229,7 @@ class HttpClient {
     return new Promise((resolve, reject) => {
       this.axiosInstance
         .get(url, params)
-        .then((response: any) => {
+        .then((response) => {
           this.saveCache(cacheEnabled, cacheKey, response.data);
           resolve(response.data);
         })

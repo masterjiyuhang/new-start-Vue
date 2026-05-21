@@ -2,32 +2,42 @@
   <div class="wrapper-page">
     <div class="container" id="container">
       <div
-        v-for="(item, index) in 500"
+        v-for="(_, index) in 500"
         :key="index"
         class="square"
-        @mouseover="mouseOver"
-        @mouseout="mouseOut"
+        :style="squareStyles[index] || {}"
+        @mouseover="mouseOver(index)"
+        @mouseout="mouseOut(index)"
       >
-        {{ item }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { reactive } from "vue";
+
 const colors = ["#e74c3c", "#8e44ad", "#3498db", "#e67e22", "#2ecc71"];
 function getRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
-const mouseOver = (e: any) => {
+
+const squareStyles = reactive<Record<number, { background?: string; boxShadow?: string }>>({});
+
+function mouseOver(index: number) {
   const color = getRandomColor();
-  e.target.style.background = color;
-  e.target.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`;
-};
-const mouseOut = (e: any) => {
-  e.target.style.background = "#1d1d1d";
-  e.target.style.boxShadow = "0 0 2px #000";
-};
+  squareStyles[index] = {
+    background: color,
+    boxShadow: `0 0 2px ${color}, 0 0 10px ${color}`,
+  };
+}
+
+function mouseOut(index: number) {
+  squareStyles[index] = {
+    background: "#1d1d1d",
+    boxShadow: "0 0 2px #000",
+  };
+}
 </script>
 
 <style scoped>

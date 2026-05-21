@@ -3,29 +3,15 @@ import { ElMessage } from "element-plus";
 
 interface ElType extends HTMLElement {
   copyData: string | number;
-  __handleClick__: any;
+  __handleClick__: (this: HTMLElement) => void;
 }
 
-const copy: Directive = {
-  mounted(el: ElType, binding: DirectiveBinding) {
-    el.copyData = binding.value;
-    el.addEventListener("click", handleClick);
-  },
-  updated(el: ElType, binding: DirectiveBinding) {
-    el.copyData = binding.value;
-  },
-  beforeUnmount(el: ElType) {
-    el.removeEventListener("click", el.__handleClick__);
-  },
-};
-
-function handleClick(this: any) {
-  const text = this.copyData.toLocaleString();
+function handleClick(this: HTMLElement) {
+  const text = (this as ElType).copyData.toLocaleString();
 
   navigator.clipboard
     .writeText(text)
     .then(() => {
-      console.log("Text copied to clipboard");
       ElMessage({
         type: "success",
         message: "复制成功",
@@ -38,22 +24,20 @@ function handleClick(this: any) {
         message: "复制失败",
       });
     });
-
-  // const input = document.createElement("input");
-  // input.value = text;
-
-  // document.body.appendChild(input);
-
-  // input.select();
-
-  // document.execCommand("Copy");
-
-  // document.body.removeChild(input);
-
-  // ElMessage({
-  //   type: "success",
-  //   message: "复制成功",
-  // });
 }
+
+const copy: Directive = {
+  mounted(el: ElType, binding: DirectiveBinding) {
+    el.copyData = binding.value;
+    el.__handleClick__ = handleClick.bind(el);
+    el.addEventListener("click", el.__handleClick__);
+  },
+  updated(el: ElType, binding: DirectiveBinding) {
+    el.copyData = binding.value;
+  },
+  beforeUnmount(el: ElType) {
+    el.removeEventListener("click", el.__handleClick__);
+  },
+};
 
 export default copy;

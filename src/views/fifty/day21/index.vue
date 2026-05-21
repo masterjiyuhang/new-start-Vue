@@ -2,15 +2,15 @@
   <div class="wrapper-page">
     <div>
       <div
-        class="empty"
+        :class="['empty', dropTargetId === 0 && 'hovered']"
         @dragover="handleDragOver"
-        @dragenter="handleDragEnter"
+        @dragenter="handleDragEnter(0)"
         @dragleave="handleDragLeave"
-        @drop="handleDrop"
+        @drop="handleDrop(0)"
       >
         <div
           class="fill"
-          ref="fillRef"
+          :class="{ hold: isDragging, invisible: isDragInvisible }"
           draggable="true"
           @dragstart="dragStart"
           @dragend="dragEnd"
@@ -18,56 +18,61 @@
       </div>
 
       <div
-        v-for="item in Array.from({ length: 4 }, (_v, k) => {
-          return {
-            id: k,
-            showFill: k === 0,
-            name: 'sa',
-            class: 'empty',
-          };
-        })"
+        v-for="item in emptySlots"
         :key="item.id"
-        :class="item.class"
-        class="text-teal-400"
+        :class="['empty', dropTargetId === item.id && 'hovered']"
         @dragover="handleDragOver"
-        @dragenter="handleDragEnter"
+        @dragenter="handleDragEnter(item.id)"
         @dragleave="handleDragLeave"
-        @drop="handleDrop"
-      ></div>
+        @drop="handleDrop(item.id)"
+      >
+        <div v-if="fillSlotId === item.id" class="fill"></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 
-// const fill = document.querySelector(".fill");
+const isDragging = ref(false);
+const isDragInvisible = ref(false);
+const dropTargetId = ref<number | null>(null);
+const fillSlotId = ref(0);
 
-const fillRef = ref();
-function handleDragOver(e) {
+const emptySlots = reactive(
+  Array.from({ length: 4 }, (_, k) => ({
+    id: k + 1,
+  })),
+);
+
+function handleDragOver(e: DragEvent) {
   e.preventDefault();
 }
 
-function handleDrop(e) {
-  e.target.className = "empty";
-  e.target.append(fillRef.value);
+function handleDrop(slotId: number) {
+  dropTargetId.value = null;
+  fillSlotId.value = slotId;
 }
 
-function handleDragEnter(e) {
-  e.preventDefault();
-  e.target.className += " hovered";
+function handleDragEnter(slotId: number) {
+  dropTargetId.value = slotId;
 }
 
-function handleDragLeave(e) {
-  e.target.className = "empty";
-}
-function dragStart(e) {
-  e.target.className += " hold";
-  setTimeout(() => (e.target.className = "invisible"), 0);
+function handleDragLeave() {
+  dropTargetId.value = null;
 }
 
-function dragEnd(e) {
-  e.target.className = "fill";
+function dragStart() {
+  isDragging.value = true;
+  setTimeout(() => {
+    isDragInvisible.value = true;
+  }, 0);
+}
+
+function dragEnd() {
+  isDragging.value = false;
+  isDragInvisible.value = false;
 }
 </script>
 
@@ -95,6 +100,10 @@ function dragEnd(e) {
   border-style: dashed;
   border-color: white;
   background-color: #333;
+}
+
+.invisible {
+  display: none;
 }
 
 @media (width <= 800px) {

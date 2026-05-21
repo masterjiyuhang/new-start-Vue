@@ -8,11 +8,11 @@ export const getPublicKey = () => {
   return get("/auth/publicKey");
 };
 
-export const getRouterListApi = (params?: any) => {
+export const getRouterListApi = (params?: Record<string, unknown>) => {
   return get("/system/getRouterList", { params });
 };
 
-export const getAuthButtonListApi = (params?: any) => {
+export const getAuthButtonListApi = (params?: Record<string, unknown>) => {
   return get("/system/authButtonList", { params });
 };
 
