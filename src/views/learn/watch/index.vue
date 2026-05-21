@@ -74,4 +74,3 @@ const handleAddCounter = () => {
 };
 </script>
 
-<style scoped></style>

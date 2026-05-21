@@ -66,13 +66,10 @@ const data = reactive<dataList[]>([
   },
 ]);
 
-const totalPrice = computed({
-  get() {
-    return data.reduce((item, next) => {
-      return item + next.num * next.price;
-    }, 0);
-  },
-  set() {},
+const totalPrice = computed(() => {
+  return data.reduce((item, next) => {
+    return item + next.num * next.price;
+  }, 0);
 });
 </script>
 

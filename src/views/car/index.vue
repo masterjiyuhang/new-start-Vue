@@ -6,7 +6,6 @@
     <el-button @click="handleCreate" type="success"
       >create car {{ createVisible }}</el-button
     >
-    <el-button @click="getList">get company list</el-button>
     <el-button @click="getCarList">get car list</el-button>
     <el-button @click="getCarByName">get car by name</el-button>
     <el-table :data="tableData" style="width: 100%" v-loading="pageLoading">
@@ -18,9 +17,9 @@
         <template #default="scope">
           <el-tag type="success" class="cursor-pointer">
             {{
-              scope.row.transmission == 1
+              scope.row.transmission === 1
                 ? "自动"
-                : scope.row.transmission == 2
+                : scope.row.transmission === 2
                   ? "手动"
                   : "未知"
             }}
@@ -31,7 +30,7 @@
         <template #default="scope">
           <el-tag type="primary" class="cursor-pointer">
             {{
-              fuelTypeOptions.find((item) => item.value == scope.row.fuel_type)
+              fuelTypeOptions.find((item) => item.value === scope.row.fuel_type)
                 ?.label
             }}
           </el-tag>
@@ -70,7 +69,6 @@
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
       :page-sizes="[100, 200, 300, 400]"
-      :size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
       @size-change="handleSizeChange"
@@ -91,7 +89,6 @@
         :size="formSize"
         status-icon
       >
-        {{ ruleForm }}
         <el-form-item label="车辆名称" prop="title">
           <el-input v-model="ruleForm.title" placeholder="车辆名称" />
         </el-form-item>
@@ -175,7 +172,17 @@ import {
   updateCarApi,
 } from "@/api/car";
 import type { ComponentSize, FormInstance, FormRules } from "element-plus";
-import { getCompanyListApi } from "@/api/dashboard";
+
+interface CarItem {
+  id: number | string;
+  title: string;
+  years: number;
+  registration_date: string;
+  vin: string;
+  transmission: number;
+  fuel_type: number | string;
+  color: string;
+}
 
 const createVisible = ref(false);
 const editType = ref<"edit" | "create">("edit");
@@ -185,7 +192,7 @@ const pageSize = ref(10);
 const total = ref(0);
 const pageLoading = ref(false);
 
-const tableData = ref([]);
+const tableData = ref<CarItem[]>([]);
 
 interface RuleForm {
   title: string;
@@ -200,7 +207,7 @@ interface RuleForm {
 
 const formSize = ref<ComponentSize>("default");
 const ruleFormRef = ref<FormInstance>();
-let ruleForm = reactive<RuleForm>({
+const ruleForm = reactive<RuleForm>({
   title: "小电动",
   city: "上海",
   years: 2,
@@ -294,15 +301,6 @@ const dialogTitle = computed(() => {
   return editType.value === "edit" ? "编辑车辆" : "创建车辆";
 });
 
-const rr = ref([]);
-const getList = async () => {
-  try {
-    const res = await getCompanyListApi();
-    rr.value = res;
-  } catch (error) {
-    console.log(error);
-  }
-};
 const handleSayHi = (duration: number) => {
   ElNotification({
     title: "Notification Title",
@@ -311,33 +309,27 @@ const handleSayHi = (duration: number) => {
   });
 };
 
-const handleDetail = (e) => {
-  console.log("🍉 ~ file: index.vue:314 handleDetail ~ e:", e);
-};
+const handleDetail = (_row: CarItem) => {};
 
-/**
- * 编辑车辆
- * @param e 车辆信息
- */
-const handleEdit = async (e) => {
+const handleEdit = async (row: CarItem) => {
   editType.value = "edit";
   try {
     // 根据id获取车辆详情
-    const res = await getCarDetailApi(e.id);
+    const res = await getCarDetailApi(String(row.id));
     Object.assign(ruleForm, res.data);
     createVisible.value = true;
-  } catch (error) {
-    console.log(error);
+  } catch {
+    // failed to get car detail
   }
 };
 
-const handleDel = async (e) => {
+const handleDel = async (row: CarItem) => {
   try {
     const res = await delCarApi({
-      vin: e.vin,
+      vin: row.vin,
     });
 
-    if (res.code == 200) {
+    if (res.code === 200) {
       ElNotification({
         title: "",
         message: "删除成功",
@@ -345,18 +337,16 @@ const handleDel = async (e) => {
       });
       getCarList();
     }
-  } catch (error) {
-    console.log(error);
+  } catch {
+    // failed to delete car
   }
 };
 
 const handleSizeChange = (val: number) => {
-  console.log(`${val} items per page`);
   pageSize.value = val;
   getCarList();
 };
 const handleCurrentChange = (val: number) => {
-  console.log(`current page: ${val}`);
   currentPage.value = val;
   getCarList();
 };
@@ -381,8 +371,7 @@ async function getCarList() {
 }
 
 async function getCarByName() {
-  const res = await getCarByNameApi({ name: "小电动" });
-  console.log("🍉 ~ file: index.vue:382 ~ getCarByName ~ res:", res);
+  await getCarByNameApi({ name: "小电动" });
 }
 
 const handleCreate = () => {
@@ -392,15 +381,9 @@ const handleCreate = () => {
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  await formEl.validate(async (valid, fields) => {
+  await formEl.validate(async (valid) => {
     if (valid) {
-      console.log("submit!", ruleForm);
-      const params = {
-        ...ruleForm,
-        vin: ruleForm.vin,
-        fuel_type: ruleForm.fuel_type,
-        registration_date: ruleForm.registration_date,
-      };
+      const params = { ...ruleForm };
       if (editType.value === "create") {
         try {
           const res = await createCarApi(params);
@@ -419,7 +402,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
               duration: 1000,
             });
           }
-        } catch (error) {}
+        } catch {
+            ElNotification({
+              title: "Notification Title",
+              message: "创建失败",
+              duration: 1000,
+            });
+          }
       } else {
         try {
           const res = await updateCarApi(params);
@@ -438,10 +427,14 @@ const submitForm = async (formEl: FormInstance | undefined) => {
               duration: 1000,
             });
           }
-        } catch (error) {}
+        } catch {
+            ElNotification({
+              title: "Notification Title",
+              message: "更新失败",
+              duration: 1000,
+            });
+          }
       }
-    } else {
-      console.log("error submit!", fields);
     }
   });
 };
@@ -459,5 +452,3 @@ onMounted(() => {
   getCarList();
 });
 </script>
-
-<style lang="scss" scoped></style>

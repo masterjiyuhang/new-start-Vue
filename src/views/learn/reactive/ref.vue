@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { shallowRef, triggerRef, watchEffect, customRef, ref } from "vue";
+import { shallowRef, triggerRef, watchEffect, customRef, ref, onUnmounted } from "vue";
 import type { Ref } from "vue";
 
 const child = ref<string | number>("二航");
@@ -94,7 +94,7 @@ function useDebouncedRef(value: any) {
 
 const reqFrame = ref<number | null>(null);
 
-let timer: any = null;
+let timer: ReturnType<typeof setInterval> | null = null;
 const testReqFrame = () => {
   reqFrame.value = requestAnimationFrame(() => {
     console.log(text.value);
@@ -107,6 +107,11 @@ const testReqFrame = () => {
 };
 
 const text = useDebouncedRef(1);
+
+onUnmounted(() => {
+  if (reqFrame.value) cancelAnimationFrame(reqFrame.value);
+  if (timer) clearInterval(timer);
+});
 </script>
 
 <style lang="scss" scoped>

@@ -48,8 +48,10 @@
 <script setup lang="ts">
 import { Decrypt } from "@/utils/decrypt";
 import { DecryptQueue } from "@/utils/decrypt/utils";
+import type { FileInfo } from "@/utils/decrypt/entity";
 import { storage } from "@/utils/storage";
 import { UploadFilled } from "@element-plus/icons-vue";
+import type { UploadFile } from "element-plus";
 
 const task_all = ref(0);
 const task_finished = ref(0);
@@ -63,10 +65,17 @@ const progressValue = computed(() =>
 const progressString = () => task_finished.value + "/" + task_all.value;
 
 const emit = defineEmits(["success", "error"]);
-async function addFile(file) {
+async function addFile(uploadFile: UploadFile) {
   task_all.value++;
+  const file: FileInfo = {
+    status: uploadFile.status,
+    name: uploadFile.name,
+    size: uploadFile.size ?? 0,
+    percentage: uploadFile.percentage ?? 0,
+    uid: uploadFile.uid,
+    raw: uploadFile.raw!,
+  };
   queue.value.queue(async (dec = Decrypt) => {
-    console.log(`start handling ${file.name}`, file);
     try {
       emit("success", await dec(file, await storage.getAll()));
     } catch (error) {
@@ -78,4 +87,3 @@ async function addFile(file) {
 }
 </script>
 
-<style scoped></style>

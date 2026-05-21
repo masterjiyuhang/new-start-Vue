@@ -44,4 +44,3 @@ const cellNumber = ref(20);
 const title = ref("我是标题");
 </script>
 
-<style lang="scss" scoped></style>

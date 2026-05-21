@@ -28,9 +28,9 @@ type PropsType = {
   cellNumber: number;
   title: string;
   titleModifiers?: {
-    capitalize: false;
+    capitalize?: boolean;
   };
-  modelModifiers?: { default: () => {} };
+  modelModifiers?: { default?: () => void };
 };
 
 const propsData = defineProps<PropsType>();
@@ -41,16 +41,12 @@ const emits = defineEmits([
   "update:title",
 ]);
 
-let items = ref(
-  Array.apply(null, { length: propsData.cellNumber } as number[]).map(
-    (_, index) => {
-      return {
-        id: index,
-        number: (index % 9) + 1,
-        clicked: false,
-      };
-    }
-  )
+const items = ref(
+  Array.from({ length: propsData.cellNumber }, (_, index) => ({
+    id: index,
+    number: (index % 9) + 1,
+    clicked: false,
+  }))
 );
 const shuffle = () => {
   let newTitle = "jiyuhang 我要改变 注意看 我的首字母大写了！！";
@@ -62,7 +58,7 @@ const shuffle = () => {
   // items.value = _.shuffle(items.value);
 };
 
-const clickItem = (item: any) => {
+const clickItem = (item: { clicked: boolean }) => {
   item.clicked = !item.clicked;
 };
 
@@ -84,17 +80,12 @@ onMounted(() => {
 watch(
   () => propsData.cellNumber,
   () => {
-    console.log(propsData.cellNumber, "监听cell数量的变化");
     items.value = _.shuffle(
-      Array.apply(null, {
-        length: propsData.cellNumber,
-      } as number[]).map((_, index) => {
-        return {
-          id: index,
-          number: (index % 9) + 1,
-          clicked: false,
-        };
-      })
+      Array.from({ length: propsData.cellNumber }, (_, index) => ({
+        id: index,
+        number: (index % 9) + 1,
+        clicked: false,
+      }))
     );
   },
   {

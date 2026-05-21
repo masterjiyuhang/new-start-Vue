@@ -26,10 +26,9 @@ import t2 from "./t2.vue";
 const router = useRouter();
 const activeName = ref("first");
 
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-  const { label, name } = tab.props;
+const handleClick = (tab: TabsPaneContext) => {
+  const { name } = tab.props;
 
-  console.log(label, event);
   switch (name) {
     case "third":
       router.push({
@@ -44,4 +43,3 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
 };
 </script>
 
-<style scoped></style>

@@ -47,4 +47,3 @@ const handleDebounce = () => {
 };
 </script>
 
-<style scoped></style>

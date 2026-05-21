@@ -219,4 +219,3 @@ isAnimal({
 });
 </script>
 
-<style scoped></style>

@@ -22,15 +22,17 @@
 
 <script setup lang="ts">
 import { DownloadBlobMusic } from "@/utils/decrypt/utils";
+import type { DecryptResult } from "@/utils/decrypt/entity";
 import FileSelector from "./src/components/FileSelector.vue";
-const tableData = ref<any[]>([]);
-function showSuccess(data) {
+
+const tableData = ref<DecryptResult[]>([]);
+function showSuccess(data: DecryptResult) {
   tableData.value.push(data);
   ElMessage.success("解锁成功");
 }
 function showFail() {}
 
-function handleDownload(data) {
+function handleDownload(data: DecryptResult) {
   DownloadBlobMusic(data);
 }
 
@@ -42,28 +44,22 @@ function handleDownloadAll() {
   }
 }
 
-function handleDel(e) {
+function handleDel(e: { $index: number }) {
   tableData.value.splice(e.$index, 1);
 }
 
 function downloadNextFile(index: number) {
   if (index < tableData.value.length) {
     const item = tableData.value[index];
-    // 实现下载逻辑
     DownloadBlobMusic(item)
       .then(() => {
-        // 下载成功后继续下载下一个文件
         downloadNextFile(index + 1);
       })
-      .catch((error) => {
-        // 处理下载失败的情况
-        console.error("下载失败:", error);
-        ElMessage.error(`下载文件 ${item.name} 失败`);
-        // 继续尝试下载下一个文件
+      .catch(() => {
+        ElMessage.error(`下载文件 ${item.title} 失败`);
         downloadNextFile(index + 1);
       });
   }
 }
 </script>
 
-<style scoped></style>

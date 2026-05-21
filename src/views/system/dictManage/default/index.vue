@@ -11,4 +11,3 @@
 import styles from "./index.module.scss";
 </script>
 
-<style scoped></style>

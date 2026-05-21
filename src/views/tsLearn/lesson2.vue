@@ -350,8 +350,5 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { InfoFilled } from "@element-plus/icons-vue";
-</script>
+<script setup lang="ts"></script>
 
-<style scoped></style>

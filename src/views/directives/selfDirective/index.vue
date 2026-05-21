@@ -15,10 +15,10 @@ import { ref } from "vue";
 
 const bindText = ref("哈哈 我是二航");
 
-const images: Record<string, { default: string }> = import.meta.glob(
+const images = import.meta.glob(
   "@/assets/shopping/*.png",
 );
-let arr = Object.keys(images).map((v) => v);
+const arr = Object.keys(images);
 
 setTimeout(() => {
   bindText.value = "二航跑路了";
@@ -44,61 +44,27 @@ setTimeout(() => {
 
 interface ElType extends HTMLElement {
   text: string | number;
-  __handleClick__?: any;
+  __handleClick__?: () => void;
 }
 
 // 在模板中启用 v-focus
-const vFocus = {
-  // 在绑定元素的 attribute 前
-  // 或事件监听器应用前调用
-  created(el, binding, vnode, prevVnode) {
-    // 下面会介绍各个参数的细节
-    console.log("created", el, binding, vnode, prevVnode);
-  },
+const vFocus: Directive<ElType> = {
+  created() {},
 
-  // 在元素被插入到 DOM 前调用
-  beforeMount(el, binding, vnode, prevVnode) {
-    console.log("beforeMount", el, binding, vnode, prevVnode);
-  },
+  beforeMount() {},
 
-  // 在绑定元素的父组件
-  // 及他自己的所有子节点都挂载完成后调用
   mounted: (el: ElType, binding: DirectiveBinding) => {
-    const bindingData = binding.value;
-    const { modifiers } = binding;
-    console.log("指令绑定的内容", bindingData);
-    console.log("指令绑定的修饰符", modifiers);
     el.focus();
-    el.innerText = bindingData.text;
+    el.innerText = binding.value.text;
   },
 
-  // 绑定元素的父组件更新前调用
-  beforeUpdate(el, binding: DirectiveBinding, vnode, prevVnode) {
-    console.log(
-      "before update 钩子中查看oldValue",
-      binding.oldValue,
-      binding.value,
-      el,
-      vnode,
-      prevVnode,
-    );
-  },
+  beforeUpdate() {},
 
-  // 在绑定元素的父组件
-  // 及他自己的所有子节点都更新后调用
-  updated(el, binding, vnode, prevVnode) {
-    console.log("updated", el, binding, vnode, prevVnode);
-  },
+  updated() {},
 
-  // 绑定元素的父组件卸载前调用
-  beforeUnmount(el, binding, vnode, prevVnode) {
-    console.log("beforeUnmount", el, binding, vnode, prevVnode);
-  },
+  beforeUnmount() {},
 
-  // 绑定元素的父组件卸载后调用
-  unmounted(el, binding, vnode, prevVnode) {
-    console.log("unmounted", el, binding, vnode, prevVnode);
-  },
+  unmounted() {},
 };
 
 /**
@@ -109,7 +75,7 @@ const vFocus = {
  * @param el
  * @param binding
  */
-let vLazy: Directive<HTMLImageElement, string> = async (el, binding) => {
+const vLazy: Directive<HTMLImageElement, string> = async (el, binding) => {
   let url = await import("@/assets/logo.png");
   el.src = url.default;
   let observer = new IntersectionObserver((entries) => {

@@ -17,4 +17,3 @@ const handleCloseCurrentPage = () => {
 };
 </script>
 
-<style scoped></style>

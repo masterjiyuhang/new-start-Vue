@@ -14,9 +14,8 @@
 import { tsxComp1, tsxComp2 } from "./components/tsxComp";
 import cch from "./components/testDefineComponent";
 
-const fooClick = (e) => {
+const fooClick = (e: Event) => {
   console.log("父组件收到了", e);
 };
 </script>
 
-<style scoped></style>

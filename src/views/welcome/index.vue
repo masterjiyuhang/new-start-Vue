@@ -68,7 +68,6 @@ import { getWeiboHotApi } from "@/api/external";
 import { ElNotification } from "element-plus";
 import { useGlobalSettingStore } from "@/stores/modules/globalSetting";
 import { useRoute } from "vue-router";
-import { WEIBO_HOT } from "./src/constant";
 
 const counterStore = useCounterStore();
 
@@ -81,7 +80,7 @@ function initTable() {
   // 表格加载中
   const loading = ref(false);
 
-  const tableData = ref([]);
+  const tableData = ref<{ hot: string; name: string; url: string }[]>([]);
 
   const dialogVisible = ref(false);
   const currentIframeSrc = ref("");
@@ -98,15 +97,13 @@ function initTable() {
     done();
   };
 
-  const editRow = (row) => {
+  const editRow = (row: { name: string; url: string }) => {
     ElNotification.success(row.name);
     currentIframeSrc.value = row.url;
     dialogVisible.value = true;
   };
 
-  onMounted(() => {
-    // testWeibo();
-  });
+  onMounted(() => {});
   return {
     loading,
     tableData,
@@ -119,14 +116,10 @@ function initTable() {
 }
 
 function initPage() {
-  console.log(WEIBO_HOT);
   const { fetchDataByScript } = useScript("basic-api/system/testJSONP");
 
   const init = async () => {
-    console.log("welcome page start initializing..");
-    fetchDataByScript()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    fetchDataByScript().catch(() => {});
   };
 
   onMounted(async () => {

@@ -33,4 +33,3 @@ const reloadPage = () => {
 };
 </script>
 
-<style scoped></style>

@@ -32,4 +32,3 @@ state.companyList = rr.data;
 const visible = ref(true);
 </script>
 
-<style scoped></style>

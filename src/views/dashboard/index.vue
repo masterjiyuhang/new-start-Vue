@@ -110,7 +110,23 @@ import Pie from "@/components/EchartsPie";
 import { TabPaneName } from "element-plus";
 import { formatNum } from "@/utils/number";
 
-const state = reactive({
+interface DashboardData {
+  todayVisits: number;
+  yesterdayVisits: number;
+  newUsers: number;
+  activeUsers: number;
+  totalNumbers: number;
+  pieData: { value: number; name: string }[];
+}
+
+interface AccountItem {
+  id: number;
+  account: string;
+}
+
+const state = reactive<{
+  dashboardData: DashboardData;
+}>({
   dashboardData: {
     todayVisits: 0,
     yesterdayVisits: 0,
@@ -120,7 +136,7 @@ const state = reactive({
     pieData: [],
   },
 });
-const accountList = ref<any[]>([]);
+const accountList = ref<AccountItem[]>([]);
 
 const tabActive1 = ref(1);
 const tabActive2 = ref(1);
@@ -134,20 +150,16 @@ const tabList = [
   { label: "近半年", name: 5 },
   { label: "近一年", name: 6 },
 ];
-// const pieData = [
-//   { value: 5000, name: "Gitee 访问量" },
-//   { value: 5000, name: "GitHub 访问量" },
-// ];
 
 const getAccountList = async () => {
   const { data } = await getAccountListApi();
   accountList.value = data.items;
 };
 
-const getDashboardList = async (params?: any) => {
+const getDashboardList = async (params?: Record<string, unknown>) => {
   const { data } = await getDashboardListApi(params);
   state.dashboardData = data;
-  pieRef.value.initChart(state.dashboardData.pieData);
+  pieRef.value?.initChart(state.dashboardData.pieData);
 };
 
 // 修改tab

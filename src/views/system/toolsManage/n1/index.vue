@@ -78,7 +78,6 @@ import { ref, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import type { UploadUserFile, UploadProps } from "element-plus";
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
-// import { toBlobURL, fetchFile } from "@ffmpeg/util";
 
 interface Task {
   uid: string;
@@ -94,7 +93,7 @@ const tasks = reactive<Task[]>([]);
 const converting = ref(false);
 
 // 上传回调
-const handleRemove: UploadProps["onRemove"] = (file, uploadFiles) => {
+const handleRemove: UploadProps["onRemove"] = (file) => {
   // 同步任务列表
   const idx = tasks.findIndex((t) => t.uid + "" === file.uid + "");
   if (idx !== -1) tasks.splice(idx, 1);
@@ -109,7 +108,7 @@ const handleExceed: UploadProps["onExceed"] = (files, uploadFiles) => {
     `限制 5 个文件，本次共选了 ${files.length} 个，已有 ${uploadFiles.length} 个`,
   );
 };
-const handleChangeFile: UploadProps["onChange"] = (file, uploadFiles) => {
+const handleChangeFile: UploadProps["onChange"] = (file) => {
   // 新增 task
   tasks.push({
     uid: file.uid + "",
@@ -121,9 +120,7 @@ const handleChangeFile: UploadProps["onChange"] = (file, uploadFiles) => {
 
 const message = ref("Click to Start ");
 
-// 在script部分添加工具函数 (在startConvert函数前)
 const sanitizeFilename = (name: string) => {
-  // 替换所有非安全字符为下划线，保留扩展名
   return name.replace(/[^\w.-]/g, "_");
 };
 
@@ -162,45 +159,34 @@ async function startConvert() {
     try {
       // 1. 清理文件名
       const cleanInputName = sanitizeFilename(file.name);
-      console.log(
-        "🍉 ~ index.vue:170 ~ startConvert ~ cleanInputName:",
-        cleanInputName,
-      );
-      const outputName = file.name.replace(/\.flac$/i, ".mp3");
-      console.log(
-        "🍉 ~ index.vue:171 ~ startConvert ~ outputName:",
-        outputName,
-      );
+      const outputName = cleanInputName.replace(/\.flac$/i, ".mp3");
 
       // 2. 写入清理后的文件名
       const data = await fetchFile(file.raw as Blob);
-      await ffmpeg.FS("writeFile", outputName, data);
+      await ffmpeg.FS("writeFile", cleanInputName, data);
 
       // 3. 修正FFmpeg命令（使用数组参数更可靠）
       await ffmpeg.run("-i", cleanInputName, "-b:a", "192k", outputName);
 
       // 4. 确认文件存在再读取
       const files = ffmpeg.FS("readdir", "/");
-      console.log("🍉 ~ index.vue:186 ~ startConvert ~ files:", files);
       if (!files.some((item) => item === outputName)) {
         throw new Error(`输出文件未生成: ${outputName}`);
       }
 
       // 5. 使用正确的输出名读取
       const output = ffmpeg.FS("readFile", outputName);
-      console.log("🍉 ~ index.vue:193 ~ startConvert ~ output:", output);
-      const blob = new Blob([output], { type: "audio/mpeg" });
+      const blob = new Blob([output.buffer as ArrayBuffer], { type: "audio/mpeg" });
       task.blobUrl = URL.createObjectURL(blob);
       task.status = "done";
       task.progress = 100;
-    } catch (e: any) {
-      console.error("转换错误详情:", e);
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "转换失败";
       task.status = "error";
-      task.error = e.message || "转换失败";
-      // 添加具体错误分类
-      if (e.message.includes("Permission denied")) {
+      task.error = message;
+      if (message.includes("Permission denied")) {
         task.error = "文件权限错误";
-      } else if (e.message.includes("No such file")) {
+      } else if (message.includes("No such file")) {
         task.error = "文件未找到";
       }
     }

@@ -59,4 +59,3 @@ onRenderTriggered((e) => {
 });
 </script>
 
-<style scoped></style>

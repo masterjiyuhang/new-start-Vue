@@ -23,4 +23,3 @@ setTimeout(() => {
 }, 1000);
 </script>
 
-<style scoped></style>

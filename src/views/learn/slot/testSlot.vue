@@ -30,4 +30,3 @@ const userData = reactive<user>({
 });
 </script>
 
-<style scoped></style>

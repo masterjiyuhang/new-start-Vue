@@ -1,7 +1,6 @@
 <template>
   <div class="cch-login-page">
     <div class="login-box flex-ac w-[96%] h-[94%]">
-      <!-- <SwitchDark class="dark" /> -->
       <div class="dark flex-c">
         <!-- 切换模式 -->
         <el-switch
@@ -56,7 +55,6 @@
               :placeholder="$t('login.enterCode')"
               :prefix-icon="renderIcon_v2('Star')"
             >
-              <!-- <template #prepend>Http://</template> -->
               <template #append>
                 <GenerateImageCode
                   v-model:code="imgCode"
@@ -107,7 +105,6 @@
                 :key="index"
                 :title="$t(item.title)"
               >
-                <renderIcon :name="item.icon" />
                 <el-icon>
                   <component :is="getIconComp(item.icon)" />
                 </el-icon>
@@ -143,7 +140,6 @@ import type { DefineComponent } from "vue";
 import GenerateImageCode from "@/components/GenerateImageCode";
 import { useI18n } from "vue-i18n";
 
-import renderIcon from "./components/renderIcon.vue";
 import ChangeLanguage from "@/layouts/components/header/components/ChangeLanguage.vue";
 import { useEventListener } from "@vueuse/core";
 import { isDev } from "@/utils";
@@ -231,7 +227,6 @@ const loginFormRules = reactive<FormRules>({
         if (value === "") {
           callback(new Error(i18n.t("login.enterCode")));
         } else if (loginState.verifyCode !== value) {
-          console.log(GenerateImageCodeRef.value.re);
           GenerateImageCodeRef.value.re();
           callback(new Error(i18n.t("login.verifyCode")));
         } else {
@@ -252,7 +247,7 @@ const imgCode = ref<string>("");
 // 登录事件
 const handleLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  await formEl.validate(async (valid, fields) => {
+  await formEl.validate(async (valid) => {
     if (valid) {
       try {
         if (!isDev()) {
@@ -298,8 +293,6 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
         type: "success",
         duration: 3000,
       });
-    } else {
-      console.log("error submit!", fields);
     }
   });
 };
@@ -339,7 +332,6 @@ initHandlePress();
   min-height: 550px;
   background-color: #eee;
   background-image: url("@/assets/images/login_bg.svg");
-  background-size: 100% 100%;
   background-size: cover;
 
   .login-box {
@@ -432,10 +424,6 @@ initHandlePress();
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-
-      // .login-btn-box {
-      //   background-color: #f80;
-      // }
     }
 
     .login-form:hover {

@@ -38,10 +38,8 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 async function getWeeklyData() {
-  const res: any = await getBilibiliHotApi();
-  console.log(res, "获取结果");
+  const res = await getBilibiliHotApi();
   baseData.weeklyData = shuffleArray(res?.data);
 }
 </script>
 
-<style scoped></style>

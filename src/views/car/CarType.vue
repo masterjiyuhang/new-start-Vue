@@ -6,9 +6,7 @@
 import { getCarTypeListApi } from "@/api/car";
 
 function getList() {
-  getCarTypeListApi().then((res) => {
-    console.log(res);
-  });
+  getCarTypeListApi();
 }
 
 onMounted(() => {
@@ -16,4 +14,3 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>

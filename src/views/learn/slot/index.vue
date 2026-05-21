@@ -23,4 +23,3 @@ import testSlot from "./testSlot.vue";
 const slotName = ref<string>("footer");
 </script>
 
-<style scoped></style>

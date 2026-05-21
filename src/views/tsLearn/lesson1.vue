@@ -237,4 +237,3 @@ const trashCans = reactive([
 console.log("这是一个当前页面的垃圾桶~", trashCans);
 </script>
 
-<style scoped></style>
