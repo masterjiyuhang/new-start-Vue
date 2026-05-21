@@ -26,7 +26,6 @@ export default {
         isKeepAlive: true,
       },
     },
-
     {
       path: "/user/detail/:id",
       name: "userDetail",
@@ -43,4 +42,4 @@ export default {
       },
     },
   ],
-};
+} satisfies Menu.MenuOptions;

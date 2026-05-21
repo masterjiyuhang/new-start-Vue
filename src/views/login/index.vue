@@ -284,7 +284,7 @@ const handleLogin = async (formEl: FormInstance | undefined) => {
       }
 
       // 3.添加动态路由
-      await initDynamicRouter();
+      await initDynamicRouter(router);
 
       // 4.清空 tabs、keepAlive 保留的数据
       closeMultipleTab();

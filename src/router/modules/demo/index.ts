@@ -30,7 +30,6 @@ export default {
       path: "/demo/seamlessScroll",
       name: "seamlessScroll",
       component: "/demo/seamlessScroll/index",
-      // component: () => import("@/views/car/index.vue"),
       meta: {
         title: "无缝滚动",
         icon: "Apple",
@@ -45,7 +44,6 @@ export default {
       path: "/demo/currentLocationInfo",
       name: "currentLocationInfo",
       component: "/demo/locationInfo/index",
-      // component: () => import("@/views/car/index.vue"),
       meta: {
         title: "获取位置信息",
         icon: "Aim",
@@ -60,7 +58,6 @@ export default {
       path: "/demo/countTo",
       name: "countTo",
       component: "/demo/countTo/index",
-      // component: () => import("@/views/car/index.vue"),
       meta: {
         title: "数字动画",
         icon: "Apple",
@@ -114,7 +111,7 @@ export default {
       },
     },
     {
-      path: "/demo/floatingVue ",
+      path: "/demo/floatingVue",
       name: "floating-vue",
       component: "/demo/floatingVue/index",
       meta: {
@@ -128,4 +125,4 @@ export default {
       },
     },
   ],
-};
+} satisfies Menu.MenuOptions;

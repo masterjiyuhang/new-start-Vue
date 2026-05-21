@@ -1,7 +1,7 @@
-const iconList = ["Sunrise", "Sunny", "Cloudy", "Ship", "Moon"];
+const iconList = ["Sunrise", "Sunny", "Cloudy", "Ship", "Moon"] as const;
 
-const form = Array.from({ length: 50 }).map((_item, index) => {
-  const iconIndex = Math.floor(Math.random() * iconList.length);
+const form: Menu.MenuOptions[] = Array.from({ length: 50 }).map((_item, index) => {
+  const iconIndex = index % iconList.length;
   const groupNumber = Math.ceil((index + 1) / 10);
   const group = `group${groupNumber}`;
   return {
@@ -42,12 +42,11 @@ const mapLL = form.reduce((map, item, index) => {
     });
   }
 
-  map.get(group).children.push(item);
+  map.get(group)!.children!.push(item);
 
   return map;
-}, new Map());
+}, new Map<string, Menu.MenuOptions>());
 
-// 将 Map 转换为数组形式
 const groupedRoutes = Array.from(mapLL.values());
 
 export default {
@@ -64,63 +63,4 @@ export default {
     isKeepAlive: true,
   },
   children: groupedRoutes,
-  // children: form,
-  // children: [
-  //   {
-  //     path: "/fifty/day01",
-  //     name: "FiftyDay01",
-  //     component: "/fifty/day01/index",
-  //     meta: {
-  //       icon: "Stamp",
-  //       title: "第一天 卡片展开",
-  //       isLink: "",
-  //       isHide: false,
-  //       isFull: false,
-  //       isAffix: false,
-  //       isKeepAlive: true,
-  //     },
-  //   },
-  //   {
-  //     path: "/fifty/day02",
-  //     name: "FiftyDay02",
-  //     component: "/fifty/day02/index",
-  //     meta: {
-  //       icon: "Pear",
-  //       title: "第二天 进度展示",
-  //       isLink: "",
-  //       isHide: false,
-  //       isFull: false,
-  //       isAffix: false,
-  //       isKeepAlive: true,
-  //     },
-  //   },
-  //   {
-  //     path: "/fifty/day03",
-  //     name: "FiftyDay03",
-  //     component: "/fifty/day03/index",
-  //     meta: {
-  //       icon: "Mug",
-  //       title: "第三天 滑动展示",
-  //       isLink: "",
-  //       isHide: false,
-  //       isFull: false,
-  //       isAffix: false,
-  //       isKeepAlive: true,
-  //     },
-  //   },
-  //   {
-  //     path: "/fifty/day04",
-  //     name: "FiftyDay04",
-  //     component: "/fifty/day04/index",
-  //     meta: {
-  //       icon: "Mug",
-  //       title: "第四天 搜索展示",
-  //       isLink: "",
-  //       isHide: false,
-  //       isFull: false,
-  //       isAffix: false,
-  //       isKeepAlive: true,
-  //     },
-  //   },
-  // ],
-};
+} satisfies Menu.MenuOptions;

@@ -7,5 +7,5 @@ export const LOGIN_URL = "/login";
 // * 默认主题颜色
 export const DEFAULT_PRIMARY = "#fd521d";
 
-// * 路由白名单地址（必须是本地存在的路由 staticRouter.ts）
-export const ROUTER_WHITE_LIST: string[] = ["/500"];
+// * 路由白名单地址（必须是本地存在的路由）
+export const ROUTER_WHITE_LIST: string[] = [];

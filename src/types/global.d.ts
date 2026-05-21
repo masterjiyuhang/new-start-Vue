@@ -27,18 +27,19 @@ declare namespace Menu {
     redirect?: string;
     meta: MetaProps;
     children?: MenuOptions[];
+    weight?: number;
   }
   interface MetaProps {
     icon: string;
-    title: string | function;
+    title: string | Function;
     activeMenu?: string;
     isLink?: string;
     isHide: boolean;
     isFull: boolean;
     isAffix: boolean;
     isKeepAlive: boolean;
-    isDetail: boolean;
-    selfTitle?: function;
+    isDetail?: boolean;
+    selfTitle?: Function;
   }
 }
 

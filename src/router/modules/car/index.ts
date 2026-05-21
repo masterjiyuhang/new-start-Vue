@@ -16,7 +16,6 @@ export default {
       path: "/car/list",
       name: "carList",
       component: "/car/index",
-      // component: () => import("@/views/car/index.vue"),
       meta: {
         title: "车辆列表",
         icon: "Apple",
@@ -59,7 +58,6 @@ export default {
       path: "/car/detail/:id",
       name: "carDetail",
       component: "/car/CarDetail",
-      // component: () => import("@/views/car/CarDetail.vue"),
       meta: {
         title: "车辆管理-详情",
         icon: "Apple",
@@ -72,4 +70,4 @@ export default {
       },
     },
   ],
-};
+} satisfies Menu.MenuOptions;

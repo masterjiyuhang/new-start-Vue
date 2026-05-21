@@ -16,7 +16,6 @@ export default {
       path: "/cssDemo/ripple",
       name: "ripple",
       component: "/demo/ripple/index",
-      // component: () => import("@/views/car/index.vue"),
       meta: {
         title: "水波纹",
         icon: "Apple",
@@ -31,7 +30,6 @@ export default {
       path: "/cssDemo/loading",
       name: "loading",
       component: "/demo/loading/index",
-      // component: () => import("@/views/car/index.vue"),
       meta: {
         title: "加载中",
         icon: "Apple",
@@ -99,4 +97,4 @@ export default {
       },
     },
   ],
-};
+} satisfies Menu.MenuOptions;

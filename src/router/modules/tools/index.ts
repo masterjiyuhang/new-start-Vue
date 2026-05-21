@@ -41,4 +41,4 @@ export default {
       },
     },
   ],
-};
+} satisfies Menu.MenuOptions;

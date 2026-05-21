@@ -1,8 +1,6 @@
 export default {
   path: "/directives",
   name: "directives",
-  // component: () => import("@/views/welcome/index.vue"),
-  // component: "/directives/index",
   redirect: "/directives/index",
   meta: {
     icon: "Stamp",
@@ -43,4 +41,4 @@ export default {
       },
     },
   ],
-};
+} satisfies Menu.MenuOptions;
