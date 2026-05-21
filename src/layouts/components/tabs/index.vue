@@ -79,10 +79,10 @@ const initTabs = () => {
   authStore.flatMenuListGet.forEach((item) => {
     if (item.meta.isAffix && !item.meta.isHide && !item.meta.isFull) {
       const tabParams = {
-        icon: item.meta.icon,
-        title: item.meta.title,
+        icon: item.meta.icon as string,
+        title: item.meta.title as string,
         path: item.path,
-        name: item.name,
+        name: item.name as string,
         close: !item.meta.isAffix,
       };
 

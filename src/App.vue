@@ -11,7 +11,7 @@ initTheme();
 </script>
 
 <template>
-  <el-config-provider :size="globalSetting.assemblySize">
+  <el-config-provider :size="globalSetting.assemblySize as any">
     <RouterView />
   </el-config-provider>
 </template>

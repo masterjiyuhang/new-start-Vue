@@ -247,7 +247,7 @@ class NcmDecrypt {
     if (!this.audio || !this.newMeta)
       throw Error("invalid sequence: audio/newMeta 未就绪");
     // 如果还未生成 blob，则先创建
-    if (!this.blob) this.blob = new Blob([this.audio], { type: this.mime });
+    if (!this.blob) this.blob = new Blob([this.audio as BlobPart], { type: this.mime });
     // 解析原始 Blob 中已有的标签
     const ori = await metaParseBlob(this.blob);
     // 判断是否需要写入新标签：当 album、artists、title 都不存在时
@@ -259,21 +259,21 @@ class NcmDecrypt {
       if (this.format === "mp3") {
         // 写入 MP3 ID3 标签
         this.audio = new Uint8Array(
-          WriteMetaToMp3(Buffer.from(this.audio), this.newMeta, ori),
+          WriteMetaToMp3(Buffer.from(this.audio), this.newMeta, ori as any),
         );
       } else if (this.format === "flac") {
         // 写入 Flac 标签
         this.audio = WriteMetaToFlac(
           Buffer.from(this.audio),
           this.newMeta,
-          ori,
+          ori as any,
         );
       } else {
         console.info(`暂不支持 ${this.format} 格式的标签写入`);
         return;
       }
       // 重新生成带标签的 Blob
-      this.blob = new Blob([this.audio], { type: this.mime });
+      this.blob = new Blob([this.audio as unknown as BlobPart], { type: this.mime });
     }
   }
 

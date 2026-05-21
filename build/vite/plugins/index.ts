@@ -19,7 +19,7 @@ import { insertScriptPlugin } from "./viteInsertScript";
 import vercel from "vite-plugin-vercel";
 import { nodePolyfills } from "vite-plugin-node-polyfills"; // 引入插件
 
-export function setupVitePlugins({ isBuild, VITE_CDN, compress }) {
+export function setupVitePlugins({ isBuild, VITE_CDN: _VITE_CDN, compress }) {
   return [
     insertScriptPlugin(),
     {

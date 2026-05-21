@@ -4,7 +4,7 @@
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item
-          :disabled="language && language === 'zh-CN'"
+          :disabled="!!language && language === 'zh-CN'"
           command="zh-CN"
         >
           简体中文

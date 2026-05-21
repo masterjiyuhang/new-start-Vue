@@ -57,7 +57,7 @@ export async function Decrypt(
   );
   return {
     album: musicMeta.common.album,
-    picture: GetCoverFromFile(musicMeta),
+    picture: GetCoverFromFile(musicMeta as any),
     file: URL.createObjectURL(musicBlob),
     blob: musicBlob,
     mime,

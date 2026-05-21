@@ -151,7 +151,7 @@ export function WriteMetaToMp3(
   info: IMusicMeta,
   original: IAudioMetadata,
 ) {
-  const writer = new ID3Writer(audioData);
+  const writer = new ID3Writer(audioData as unknown as ArrayBuffer);
 
   // reserve original data
   const frames =
@@ -344,7 +344,7 @@ export function DownloadBlobMusic(
 export function GetCoverFromFile(metadata: IAudioMetadata): string {
   if (metadata.common?.picture && metadata.common.picture.length > 0) {
     return URL.createObjectURL(
-      new Blob([metadata.common.picture[0].data], {
+      new Blob([metadata.common.picture[0].data as BlobPart], {
         type: metadata.common.picture[0].format,
       }),
     );

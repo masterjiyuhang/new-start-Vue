@@ -15,17 +15,17 @@ export const MobiusBand = defineComponent({
       <div class={styles["mobius-container"]}>
         <div class={styles.content}>
           <div class={styles.circle}>
-            {props.list.map((item: number, index: number) => {
+            {props.list.map((_item: number, index: number) => {
               return <span key={index} class={styles[`span${index}`]}></span>;
             })}
           </div>
           <div class={styles.circle}>
-            {list.value.map((item: number, index: number) => {
+            {list.value.map((_item: number, index: number) => {
               return <span key={index} class={styles[`span${index}`]}></span>;
             })}
           </div>
           <div class={styles.circle}>
-            {list.value.map((item: number, index: number) => {
+            {list.value.map((_item: number, index: number) => {
               return <span key={index} class={styles[`span${index}`]}></span>;
             })}
           </div>

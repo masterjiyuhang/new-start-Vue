@@ -35,7 +35,7 @@ export async function Decrypt(
     artist,
     ext,
     album: tag.common.album,
-    picture: GetCoverFromFile(tag),
+    picture: GetCoverFromFile(tag as any),
     file: URL.createObjectURL(file),
     blob: file,
     mime: AudioMimeType[ext],
