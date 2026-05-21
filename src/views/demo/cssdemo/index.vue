@@ -25,5 +25,3 @@ import ShadowDemo2 from "./src/BoxShadowDemo/ShadowDemo2.vue";
 import ShadowDemo3 from "./src/BoxShadowDemo/ShadowDemo3.vue";
 import FlowerShadow from "@/components/FlowerShadow";
 </script>
-
-<style scoped></style>

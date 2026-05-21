@@ -84,5 +84,3 @@ const handleDownloadByOnlineUrl = () => {
   );
 };
 </script>
-
-<style scoped></style>

@@ -22,6 +22,8 @@
   </div>
 </template>
 
+<script setup lang="ts"></script>
+
 <style lang="scss" scoped>
 .my-dropdown {
   @apply ring ring-green-500;

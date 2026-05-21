@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper-page">
-    <!-- <SeamlessScroll /> -->
     <el-space wrap>
       <el-card class="box-card" shadow="never">
         <template #header>
@@ -68,7 +67,6 @@
           :data="listData"
           :class-option="classOption"
           class="warp"
-          v-if="true"
         >
           <ul class="item">
             <li v-for="(item, index) in listData" :key="index">
@@ -78,11 +76,11 @@
         </TestScroll>
       </el-card>
 
-      <el-card v-if="true">
+      <el-card>
         <CchScroll
           ref="scroll2"
           :data="listData"
-          :class-option="classOption"
+          :class-option="{ ...classOption, key: 1 }"
           class="warp"
         >
           <ul class="item">
@@ -129,14 +127,16 @@ import TestScroll from "./src/TestScroll.vue";
 import CchScroll from "./src/CchScroll.vue";
 import ContinuousScroll from "./src/ContinuousScroll.vue";
 
-const classOption = reactive({
+const classOption = reactive<{
+  direction: "top" | "bottom" | "left" | "right";
+}>({
   direction: "right",
 });
 
 const scroll = ref();
 const scroll2 = ref();
 
-const changeDirection = (val) => {
+const changeDirection = (val: "top" | "bottom" | "left" | "right") => {
   (unref(scroll) as any).reset();
   (unref(scroll2) as any).reset();
   unref(classOption).direction = val;

@@ -1,7 +1,6 @@
 <template>
   <WrapperPage :title="'cropper'">
-    <img ref="imgRef" src="" alt="" />
-    <!-- <div class="test-img"></div> -->
+    <img ref="imgRef" :src="imgSrc" alt="cropper image" />
   </WrapperPage>
 </template>
 
@@ -10,12 +9,24 @@ import { WrapperPage } from "@/components/WrapperPage";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
 import { debounce } from "lodash";
-import { Nullable } from "vitest";
-import { CSSProperties, PropType, onMounted, ref, unref } from "vue";
+import { onMounted, ref, unref } from "vue";
+
+const props = defineProps<{
+  src?: string;
+  alt?: string;
+  circled?: boolean;
+  height?: string | number;
+  crossorigin?: "" | "anonymous" | "use-credentials";
+  realTimePreview?: boolean;
+  options?: Cropper.Options;
+}>();
+
+const imgSrc = props.src || new URL("@/assets/images/login_left1.png", import.meta.url).href;
 
 const imgRef = ref();
 const isReady = ref(false);
-const cropper = ref<Nullable<Cropper>>();
+const cropper = ref<Cropper | null>(null);
+
 const defaultOptions: Cropper.Options = {
   aspectRatio: 1,
   zoomable: true,
@@ -39,37 +50,18 @@ const defaultOptions: Cropper.Options = {
   rotatable: true,
 };
 
-const emits = defineEmits(["ready", "cropend", "cropendError"]);
+const emits = defineEmits<{
+  ready: [cropper: Cropper | null];
+  cropend: [data: { imgBase64: string; imgInfo: Cropper.Data }];
+  cropendError: [];
+}>();
 
-// Real-time display preview
 function realTimeCroppered() {
   props.realTimePreview && croppered();
 }
 
 const debounceRealTimeCroppered = debounce(realTimeCroppered, 80);
 
-const props = {
-  src: {
-    type: String,
-    required: true,
-  },
-  alt: { type: String },
-  circled: { type: Boolean, default: false },
-  height: { type: [String, Number], default: "360px" },
-  crossorigin: {
-    type: String as PropType<"" | "anonymous" | "use-credentials" | undefined>,
-    default: undefined,
-  },
-  imageStyle: { type: Object as PropType<CSSProperties>, default: () => ({}) },
-  options: {
-    type: Object,
-    default: () => {},
-  },
-  realTimePreview: {
-    type: Boolean,
-    default: true,
-  },
-};
 onMounted(() => {
   initPage();
 });
@@ -91,17 +83,15 @@ const initPage = () => {
     cropmove() {
       debounceRealTimeCroppered();
     },
-
     ...props.options,
   });
 };
 
-// event: return base64 and width and height information after cropping
 function croppered() {
   if (!cropper.value) {
     return;
   }
-  let imgInfo = cropper.value.getData();
+  const imgInfo = cropper.value.getData();
   const canvas = props.circled
     ? getRoundedCanvas()
     : cropper.value.getCroppedCanvas();
@@ -109,11 +99,11 @@ function croppered() {
     if (!blob) {
       return;
     }
-    let fileReader: FileReader = new FileReader();
+    const fileReader = new FileReader();
     fileReader.readAsDataURL(blob);
     fileReader.onloadend = (e) => {
       emits("cropend", {
-        imgBase64: e.target?.result ?? "",
+        imgBase64: typeof e.target?.result === "string" ? e.target.result : "",
         imgInfo,
       });
     };
@@ -123,7 +113,6 @@ function croppered() {
   }, "image/png");
 }
 
-// Get a circular picture canvas
 function getRoundedCanvas() {
   const sourceCanvas = cropper.value!.getCroppedCanvas();
   const canvas = document.createElement("canvas");
@@ -142,22 +131,9 @@ function getRoundedCanvas() {
     Math.min(width, height) / 2,
     0,
     2 * Math.PI,
-    true
+    true,
   );
   context.fill();
   return canvas;
 }
 </script>
-
-<style scoped lang="scss">
-.test-img {
-  width: 100px;
-  height: 130px;
-  padding: 10px;
-  background-clip: content-box;
-  background-image: url("@/assets/images/login_left1.png");
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: cover;
-}
-</style>

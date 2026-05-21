@@ -35,11 +35,7 @@
   color: pink;
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #e91e63,
     0 0 35px #f30, 0 0 40px #333, 0 0 50px #eee, 0 0 75px #444;
-  filter: brightness(
-    110%
-  ); /* 是CSS中用于调整图像亮度的属性。这个属性可以用来改变元素（通常是图片）的亮度级别。在这种情况下，brightness 是一个滤镜函数，它的参数是一个百分比值，可以大于100%来增加亮度，小于100%来减少亮度。 */
-
-  filter: grayscale(0%); /* 100% 表示完全灰度，0% 表示原始颜色 */
+  filter: brightness(110%) grayscale(0%);
 }
 
 .orange {

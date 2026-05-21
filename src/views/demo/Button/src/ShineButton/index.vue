@@ -4,7 +4,9 @@
   </div>
 </template>
 
-<script setup lang="ts" name="ShineButton"></script>
+<script setup lang="ts">
+defineOptions({ name: "ShineButton" });
+</script>
 
 <style scoped lang="scss">
 .shine-btn {

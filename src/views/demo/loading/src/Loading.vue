@@ -15,16 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import { SizeEnum } from "./constant";
-
 defineOptions({
   name: "Loading",
 });
 
 interface LoadingProps {
   tips?: string;
-
-  size?: SizeEnum;
 
   absolute?: boolean;
 
@@ -36,8 +32,6 @@ interface LoadingProps {
 }
 
 withDefaults(defineProps<LoadingProps>(), {
-  size: SizeEnum.DEFAULT,
-
   loading: false,
 
   theme: "dark",

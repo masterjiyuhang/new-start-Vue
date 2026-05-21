@@ -38,11 +38,6 @@
           />
         </svg>
         {{ minutesRef.toString().padStart(2, "00") }}
-        <!-- <div
-          class="absolute left-0 right-0 mx-auto my-0 text-xs text-center bottom-3"
-        >
-          minutes
-        </div> -->
       </div>
       <div class="circle text-emerald-300">
         <svg>
@@ -72,7 +67,7 @@
 import { onBeforeUnmount, ref } from "vue";
 
 const circleRadius = 75;
-const strokeDasharray = 471;
+const strokeDasharray = 2 * Math.PI * circleRadius;
 
 enum AP {
   AM = "AM",
@@ -85,7 +80,6 @@ const getCurrentTime = () => {
   const h = _24h % 12;
   const m = date.getMinutes();
   const s = date.getSeconds();
-  console.log(AP.PM, AP.AM);
   const ap = _24h >= 12 ? AP.PM : AP.AM;
   return { h, m, s, ap };
 };

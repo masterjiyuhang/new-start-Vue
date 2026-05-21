@@ -28,7 +28,7 @@ import Loading from "./src/Loading.vue";
 const isLoading = ref(false);
 const isAbsolute = ref(false);
 
-const handleShowLoading = (flag) => {
+const handleShowLoading = (flag: boolean) => {
   isAbsolute.value = flag;
   isLoading.value = true;
   setTimeout(() => {

@@ -9,7 +9,7 @@
           <li v-for="(item, index) in turntableList" :key="index">
             <img
               class="img"
-              :src="item.type == turntableFail ? turntableFailImg : item.icon"
+              :src="item.type === turntableFail ? turntableFailImg : item.icon"
             />
           </li>
         </ul>
@@ -20,129 +20,102 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { lists } from "./constant";
+import { lists, type TurntableItem } from "./constant";
 import turntableFailImg from "@/assets/images/404.png";
 
-const transformCss = "transform";
-const transformJs = "transform";
-const transition = "transition";
-const transitionend = "transitionend";
-
-const turntableRef = ref();
-const turntableSuccess = ref(1);
-const turntableFail = ref(2);
+const turntableRef = ref<HTMLElement>();
+const turntableSuccess = 1;
+const turntableFail = 2;
 
 const isRunning = ref(false);
+const currentAngle = ref(0);
 
-const turntableList = reactive([...lists]);
-const gameStart = () => {
-  if (turntableRef.value && !turntableList.length) return;
+const turntableList = reactive<TurntableItem[]>([...lists]);
 
-  if (isRunning.value) return;
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
-  setTimeout(() => {
-    startRun();
-  }, 200);
-};
-
-const startRun = () => {
-  console.log("start running");
-  isRunning.value = true;
-
-  let transformDeg = turntableRef.value.style[transformJs];
-  let deg = transformDeg.match(/([-]?\d*)deg/)
-    ? transformDeg.match(/([-]?\d*)deg/)[1]
-    : 0;
-  deg = parseInt(deg);
-  console.log(deg, "turntableRef...");
-  let interval = setInterval(() => {
-    deg += 2;
-    deg = deg % 360;
-    console.log(deg, "deg");
-    turntableRef.value.style[transformJs] = `rotate(${deg}deg)`;
-  }, 1);
-
-  // 2.随机生成中奖结果
-  let randNum: any = parseInt(Math.random() * 100 + "") + 1;
-
-  console.log(randNum, "随机中奖结果");
+function pickResult(): TurntableItem {
+  const randNum = Math.floor(Math.random() * 100) + 1;
   let count = 0;
-  turntableList.map((item: any) => {
+  for (const item of turntableList) {
     item.min = count;
-    count += Number(item.rate);
+    count += item.rate;
     item.max = count;
-  });
-
-  console.log(turntableList);
-  let randomRes = turntableList.filter((item: any) => {
-    return randNum > item.min && randNum <= item.max;
-  })[0];
-
-  console.log(
-    randomRes,
-    "randomRes",
-    randomRes.type === turntableSuccess.value && !randomRes.result_img
-  );
-
-  // 若中奖没有中奖图片，则为未中奖
-  if (randomRes.type === turntableSuccess.value && !randomRes.result_img) {
-    randomRes = turntableList.filter(
-      (item) => Number(item.type) === turntableFail.value
-    )[0];
   }
 
-  console.log(randomRes, "sadasda");
-  clearInterval(interval);
+  let result = turntableList.find(
+    (item) => randNum > item.min! && randNum <= item.max!,
+  )!;
 
-  // 3.计算转动角度
-  transformDeg = turntableRef.value.style[transformJs];
-  let lastDeg = transformDeg.match(/([-]?\d*)deg/)
-    ? transformDeg.match(/([-]?\d*)deg/)[1]
-    : 0;
-  lastDeg = parseInt(lastDeg);
+  if (result.type === turntableSuccess && !result.result_img) {
+    result = turntableList.find((item) => item.type === turntableFail)!;
+  }
 
-  let finallyDeg = randomRes.location * -60 + 360 * 4 + 60;
-  turntableRef.value.style[transformJs] = `rotate(${finallyDeg}deg)`;
+  return result;
+}
 
-  let transTime = parseFloat((finallyDeg - lastDeg) / 360 + "").toFixed(1);
+function animateTo(
+  from: number,
+  to: number,
+  duration: number,
+  onUpdate: (angle: number) => void,
+  onDone: () => void,
+) {
+  const startTime = performance.now();
 
-  console.log(finallyDeg, transTime, "有人操纵的");
-  turntableRef.value.style[
-    transition
-  ] = `${transformCss} ${transTime}s ease-out`;
+  function tick(now: number) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeOutCubic(progress);
+    const angle = from + (to - from) * eased;
 
-  // 4. 转动结束后执行
-  let runEnd = () => {
-    turntableRef.value.style[transition] = `${transformCss} 0s`;
-    let transformDeg = turntableRef.value.style[transformJs];
-    let deg = transformDeg.match(/([-]?\d*)deg/)
-      ? transformDeg.match(/([-]?\d*)deg/)[1]
-      : 0;
-    deg = parseInt(deg);
-    deg = deg % 360;
+    onUpdate(angle);
 
-    console.log("最后转动的角度", deg);
-    turntableRef.value.style[transformJs] = `rotate(${deg}deg)`;
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      onDone();
+    }
+  }
 
-    // // 5. 显示中奖结果
-    // if (Number(randomRes.type) === turntableSuccess.value) {
-    //   dialogConfig.title = "中奖啦";
-    //   dialogConfig.resultText = "请扫码领取";
-    //   dialogConfig.destoryTime = 15;
-    // } else {
-    //   dialogConfig.title = "没抽中";
-    //   dialogConfig.resultText = "真不巧，没抽中！";
-    //   dialogConfig.destoryTime = 3;
-    // }
-    // dialogConfig.show = true;
-    // dialogConfig.resultImg = randomRes.result_img;
-    // dialogRef.countDown() // 倒计时
-    setTimeout(() => {
-      isRunning.value = false;
-      turntableRef.value.removeEventListener(transitionend, runEnd);
-    }, 3 * 1000);
-  };
-  turntableRef.value.addEventListener(transitionend, runEnd);
+  requestAnimationFrame(tick);
+}
+
+const gameStart = () => {
+  if (!turntableList.length) return;
+  if (isRunning.value) return;
+
+  isRunning.value = true;
+
+  const result = pickResult();
+
+  // 6 positions, each 60 degrees. Offset by 60 so the pointer lands in the middle of the sector.
+  const targetOffset = result.location * -60 + 60;
+  const baseRotations = 360 * 5;
+  const targetAngle = currentAngle.value + baseRotations + (targetOffset - (currentAngle.value % 360));
+
+  const duration = 4000;
+
+  animateTo(
+    currentAngle.value,
+    targetAngle,
+    duration,
+    (angle) => {
+      if (turntableRef.value) {
+        turntableRef.value.style.transform = `rotate(${angle}deg)`;
+      }
+    },
+    () => {
+      currentAngle.value = targetAngle % 360;
+      if (turntableRef.value) {
+        turntableRef.value.style.transform = `rotate(${currentAngle.value}deg)`;
+      }
+
+      setTimeout(() => {
+        isRunning.value = false;
+      }, 1000);
+    },
+  );
 };
 </script>
 
@@ -183,7 +156,7 @@ const startRun = () => {
         100%;
       background-size: contain;
       cursor: pointer;
-      -webkit-tap-highlight-color: transparent; // 点击无阴影
+      -webkit-tap-highlight-color: transparent;
     }
 
     .turntable {

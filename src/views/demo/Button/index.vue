@@ -9,5 +9,3 @@
 import ShakeButton from "./src/ShakeButton";
 import ShineButton from "./src/ShineButton/index.vue";
 </script>
-
-<style scoped></style>

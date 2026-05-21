@@ -37,17 +37,12 @@ export const TestSpinner = defineComponent({
     const handleAfterLeave = () => {
       if (!afterLeave.value) return;
 
-      const target = document.body;
-
       afterLeave.value = false;
-
-      console.log(target);
     };
     return () => {
       const spinner = h("svg", {
         class: "circular",
         viewBox: "0 0 50 50",
-        ...{},
       });
 
       const spinnerText = h("p", { class: "text" }, "巴啦啦啦～");

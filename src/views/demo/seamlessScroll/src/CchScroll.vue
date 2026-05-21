@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div :ref="`wrap${classOption['key']}`">
+  <div :ref="(el) => setRef('wrap' + classOption['key'], el as HTMLElement)">
     <div
-      :ref="'realBox' + classOption['key']"
+      :ref="(el) => setRef('realBox' + classOption['key'], el as HTMLElement)"
       :style="pos"
       @mouseenter="enter"
       @mouseleave="leave"
@@ -12,7 +12,7 @@
       @mousewheel.passive="wheel"
     >
       <div
-        :ref="'slotList' + classOption['key']"
+        :ref="(el) => setRef('slotList' + classOption['key'], el as HTMLElement)"
         :style="float"
         class="slot-list"
       >
@@ -23,474 +23,376 @@
   </div>
 </template>
 
-<script>
-import { debounce } from "lodash";
-import * as utilsMethods from "./utils";
-const { animationFrame, copyObj } = utilsMethods;
-
-export default {
-  name: "CchScroll",
-  props: {
-    data: {
-      type: Array,
-      default: () => [],
-    },
-    classOption: {
-      type: Object,
-      default: () => {},
-    },
-  },
-  emits: ["scrollEnd"],
-  expose: ["reset"],
-
-  data() {
-    return {
-      xPos: 0,
-      yPos: 0,
-      delay: 0,
-      height: 0,
-      width: 0,
-
-      realBoxWidth: 0,
-      realBoxHeight: 0,
-
-      copyHtml: "",
-
-      singleWaitTime: null,
-
-      reqFrame: null,
-      startPos: null,
-      startPosX: null,
-      startPosY: null,
-      isHover: false,
-
-      ease: "ease-in",
-    };
-  },
-  computed: {
-    defaultOption() {
-      return {
-        //步长
-        step: 1.3,
-        //启动无缝滚动最小数据数
-        limitMoveNum: 5,
-        //是否启用鼠标hover控制
-        hoverStop: true,
-        // bottom 往下 top 往上(默认) left 向左 right 向右
-        direction: "top",
-        //开启移动端touch
-        openTouch: true,
-        //单条数据高度有值hoverStop关闭
-        singleHeight: 0,
-        //单条数据宽度有值hoverStop关闭
-        singleWidth: 0,
-        //单步停止等待时间
-        waitTime: 1000,
-        switchOffset: 30,
-        autoPlay: true,
-        navigation: false,
-        switchSingleStep: 134,
-        switchDelay: 400,
-        switchDisabledClass: "disabled",
-        // singleWidth/singleHeight 是否开启rem度量
-        isSingleRemUnit: false,
-      };
-    },
-    options() {
-      return copyObj({}, this.defaultOption, this.classOption);
-    },
-
-    leftSwitchState() {
-      return this.xPos < 0;
-    },
-
-    rightSwitchState() {
-      return Math.abs(this.xPos) < this.realBoxWidth - this.width;
-    },
-
-    leftSwitchClass() {
-      return this.leftSwitchState ? "" : this.options.switchDisabledClass;
-    },
-
-    rightSwitchClass() {
-      return this.rightSwitchState ? "" : this.options.switchDisabledClass;
-    },
-
-    leftSwitch() {
-      return {
-        position: "absolute",
-        margin: `${this.height / 2}px 0 0 -${this.options.switchOffset}px`,
-        transform: "translate(-100%,-50%)",
-      };
-    },
-
-    rightSwitch() {
-      return {
-        position: "absolute",
-        margin: `${this.height / 2}px 0 0 ${
-          this.width + this.options.switchOffset
-        }px`,
-        transform: "translateY(-50%)",
-      };
-    },
-
-    hoverStopSwitch() {
-      return this.options.hoverStop && this.autoPlay && this.scrollSwitch;
-    },
-
-    canTouchScroll() {
-      return this.options.openTouch;
-    },
-    isHorizontal() {
-      return (
-        this.options.direction !== "bottom" && this.options.direction !== "top"
-      );
-    },
-
-    float() {
-      return this.isHorizontal
-        ? { float: "left", overflow: "hidden" }
-        : { overflow: "hidden" };
-    },
-
-    pos() {
-      return {
-        transform: `translate(${this.xPos}px,${this.yPos}px)`,
-        transition: `all ${this.ease} ${this.delay}ms`,
-        overflow: "hidden",
-      };
-    },
-
-    navigation() {
-      return this.options.navigation;
-    },
-
-    autoPlay() {
-      if (this.navigation) {
-        return false;
-      } else {
-        return this.options.autoPlay;
-      }
-    },
-
-    scrollSwitch() {
-      return this.data.length > this.options.limitMoveNum;
-    },
-
-    baseFontSize() {
-      return this.options.isSingleRemUnit
-        ? parseInt(
-            window.getComputedStyle(document.documentElement, null).fontSize
-          )
-        : 1;
-    },
-
-    realSingleStopWidth() {
-      return this.options.singleWidth * this.baseFontSize;
-    },
-
-    realSingleStopHeight() {
-      return this.options.singleHeight * this.baseFontSize;
-    },
-
-    step() {
-      let singleStep;
-      const step = this.options.step;
-      if (this.isHorizontal) {
-        singleStep = this.realSingleStopWidth;
-      } else {
-        singleStep = this.realSingleStopHeight;
-      }
-      if (singleStep > 0 && singleStep % step > 0) {
-        throw "如果设置了单步滚动，step需是单步大小的约数，否则无法保证单步滚动结束的位置是否准确";
-      }
-      return step;
-    },
-  },
-
-  created() {
-    animationFrame();
-  },
-
-  mounted() {
-    this.scrollInitMove();
-  },
-  unmounted() {
-    this.scrollCancle();
-    clearTimeout(this.singleWaitTime);
-  },
-
-  methods: {
-    // 鼠标滚轮事件
-    wheel(e) {
-      const { direction } = this.options;
-      if (direction === "left" || direction === "right") {
-        return;
-      }
-      console.log("鼠标滚动事件");
-
-      debounce(() => {
-        e.deltaY > 0 ? (this.yPos -= this.step) : (this.yPos += this.step);
-      }, 50)();
-    },
-
-    leftSwitchClick() {
-      if (!this.leftSwitchState) return;
-
-      // 小于单步距离
-      if (Math.abs(this.xPos) < this.options.switchSingleStep) {
-        this.xPos = 0;
-        return;
-      }
-      this.xPos += this.options.switchSingleStep;
-    },
-
-    rightSwitchClick() {
-      if (!this.rightSwitchState) return;
-      // 小于单步距离
-
-      if (
-        this.realBoxWidth - this.width + this.xPos <
-        this.options.switchSingleStep
-      ) {
-        this.xPos = this.width - this.realBoxWidth;
-        return;
-      }
-      this.xPos -= this.options.switchSingleStep;
-    },
-
-    touchStart(e) {
-      if (!this.canTouchScroll) return;
-
-      let timer;
-
-      const touch = e.targetTouches[0];
-      const { waitTime, singleHeight, singleWidth } = this.options;
-
-      this.startPos = {
-        x: touch.pageX,
-        y: touch.pageY,
-      };
-
-      this.startPosY = this.yPos;
-      this.startPosX = this.xPos;
-
-      if (!!singleHeight && !!singleWidth) {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => {
-          this.scrollCancle();
-        }, waitTime + 20);
-      } else {
-        this.scrollCancle();
-      }
-    },
-
-    touchMove(e) {
-      // 当屏幕有多个touch或者页面被缩放过，就不执行move操作
-      if (
-        !this.canTouchScroll ||
-        e.targetTouches.length > 1 ||
-        (e.scale && e.scale !== 1)
-      ) {
-        return;
-      }
-
-      const touch = e.targetTouches[0];
-      const { direction } = this.options;
-      const endPos = {
-        x: touch.pageX - this.startPos.x,
-        y: touch.pageY - this.startPos.y,
-      };
-      // 阻止触摸事件的默认行为，即阻止滚屏
-      e.preventDefault();
-
-      // dir，1表示纵向滑动，0为横向滑动
-      const dir = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0;
-
-      if (
-        (dir === 1 && direction === "bottom") ||
-        (dir === 1 && direction === "top")
-      ) {
-        // 表示纵向滑动 && 运动方向为上下
-        this.yPos = this.startPosY + endPos.y;
-      } else if (
-        (dir === 0 && direction === "left") ||
-        (dir === 0 && direction === "right")
-      ) {
-        // 为横向滑动 && 运动方向为左右
-        this.xPos = this.startPosX + endPos.x;
-      }
-    },
-
-    touchEnd() {
-      if (!this.canTouchScroll) return;
-      let timer;
-      const { direction } = this.options;
-      this.delay = 50;
-
-      if (direction === "top") {
-        if (this.yPos > 0) this.yPos = 0;
-      } else if (direction === "bottom") {
-        const h = (this.realBoxHeight / 2) * -1;
-        if (this.yPos < h) this.yPos = h;
-      } else if (direction === "left") {
-        if (this.xPos > 0) this.xPos = 0;
-      } else if (direction === "right") {
-        const w = this.realBoxWidth * -1;
-        if (this.xPos < w) this.xPos = w;
-      }
-
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        this.delay = 0;
-        this.scrollMove();
-      }, this.delay);
-    },
-
-    enter() {
-      if (this.hoverStopSwitch) this.scrollStopMove();
-    },
-
-    leave() {
-      if (this.hoverStopSwitch) this.scrollStartMove();
-    },
-
-    scrollStartMove() {
-      this.isHover = false;
-      this.scrollMove();
-    },
-
-    scrollStopMove() {
-      this.isHover = true;
-      // 防止频频hover进出单步滚动,导致定时器乱掉
-      if (this.singleWaitTime) clearTimeout(this.singleWaitTime);
-      this.scrollCancle();
-    },
-
-    scrollCancle() {
-      cancelAnimationFrame(this.reqFrame);
-    },
-
-    reset() {
-      this.xPos = 0;
-      this.yPos = 0;
-      this.scrollCancle();
-      this.scrollInitMove();
-    },
-
-    scrollMove() {
-      // 鼠标移入时拦截scrollMove()
-      if (this.isHover) return;
-
-      this.reqFrame = requestAnimationFrame(() => {
-        const h = this.realBoxHeight / 2;
-        const w = this.realBoxWidth / 2;
-
-        const { direction, waitTime } = this.options;
-
-        if (direction === "top") {
-          if (Math.abs(this.yPos) >= h) {
-            this.$emit("scrollEnd");
-            this.yPos = 0;
-          }
-          this.yPos -= this.step;
-        } else if (direction === "bottom") {
-          if (this.yPos >= 0) {
-            this.$emit("scrollEnd");
-            this.yPos = h * -1;
-          }
-          this.yPos += this.step;
-        } else if (direction === "left") {
-          if (Math.abs(this.xPos) >= w) {
-            this.$emit("scrollEnd");
-            this.xPos = 0;
-          }
-          this.xPos -= this.step;
-        } else if (direction === "right") {
-          if (this.xPos > 0) {
-            this.$emit("scrollEnd");
-            this.xPos = w * -1;
-          }
-          this.xPos += this.step;
-        }
-
-        if (this.singleWaitTime) clearTimeout(this.singleWaitTime);
-
-        if (this.realSingleStopHeight) {
-          // 是否启动了单行暂停配置
-          if (Math.abs(this.yPos) % this.realSingleStopHeight < this.step) {
-            this.singleWaitTime = setTimeout(() => {
-              this.scrollMove();
-            }, waitTime);
-          } else {
-            this.scrollMove();
-          }
-        } else if (this.realSingleStopWidth) {
-          if (Math.abs(this.xPos) % this.realSingleStopWidth < this.step) {
-            this.singleWaitTime = setTimeout(() => {
-              this.scrollMove();
-            }, waitTime);
-          } else {
-            this.scrollMove();
-          }
-        } else {
-          this.scrollMove();
-        }
-      });
-    },
-
-    scrollInitMove() {
-      this.$nextTick(() => {
-        const { switchDelay } = this.options;
-        this.copyHtml = "";
-        const wrap = this.$refs[`wrap${this.classOption["key"]}`];
-        const slotList = this.$refs[`slotList${this.classOption["key"]}`];
-        const realBox = this.$refs[`realBox${this.classOption["key"]}`];
-
-        // console.log(wrap, slotList, realBox);
-        if (this.isHorizontal) {
-          this.height = wrap.offsetHeight;
-          this.width = wrap.offsetWidth;
-          let slotListWidth = slotList.offsetWidth;
-
-          // 水平滚动设置warp width
-          if (this.autoPlay) {
-            slotListWidth = slotListWidth * 2 + 1;
-          }
-
-          realBox.style.width = slotListWidth + "px";
-
-          this.realBoxWidth = slotListWidth;
-        }
-
-        if (this.autoPlay) {
-          this.ease = "ease-in";
-          this.delay = 0;
-        } else {
-          this.ease = "linear";
-          this.delay = switchDelay;
-          return;
-        }
-        // 是否可以滚动判断
-        if (this.scrollSwitch) {
-          let timer;
-          if (timer) clearTimeout(timer);
-
-          this.copyHtml = slotList.innerHTML;
-
-          setTimeout(() => {
-            this.realBoxHeight = realBox?.offsetHeight;
-            this.scrollMove();
-          }, 0);
-        } else {
-          this.scrollCancle();
-          this.yPos = 0;
-          this.xPos = 0;
-        }
-      });
-    },
-  },
+<script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+import { useDebounceFn } from "@vueuse/core";
+import { copyObj } from "./utils";
+
+interface ClassOption {
+  key?: number;
+  step?: number;
+  limitMoveNum?: number;
+  hoverStop?: boolean;
+  direction?: "top" | "bottom" | "left" | "right";
+  openTouch?: boolean;
+  singleHeight?: number;
+  singleWidth?: number;
+  waitTime?: number;
+  switchOffset?: number;
+  autoPlay?: boolean;
+  navigation?: boolean;
+  switchSingleStep?: number;
+  switchDelay?: number;
+  switchDisabledClass?: string;
+  isSingleRemUnit?: boolean;
+  [key: string]: unknown;
+}
+
+const props = defineProps<{
+  data: unknown[];
+  classOption: ClassOption;
+}>();
+
+const emit = defineEmits<{
+  scrollEnd: [];
+}>();
+
+defineExpose({ reset });
+
+// ref map for template refs
+const refMap = new Map<string, HTMLElement>();
+const setRef = (name: string, el: HTMLElement | null) => {
+  if (el) refMap.set(name, el);
 };
+
+// reactive state
+const xPos = ref(0);
+const yPos = ref(0);
+const delay = ref(0);
+const height = ref(0);
+const width = ref(0);
+const realBoxWidth = ref(0);
+const realBoxHeight = ref(0);
+const copyHtml = ref("");
+const singleWaitTime = ref<ReturnType<typeof setTimeout> | null>(null);
+const reqFrame = ref<number | null>(null);
+const startPos = ref<{ x: number; y: number } | null>(null);
+const startPosX = ref<number | null>(null);
+const startPosY = ref<number | null>(null);
+const isHover = ref(false);
+const ease = ref("ease-in");
+
+// computed
+const defaultOption = computed(() => ({
+  step: 1.3,
+  limitMoveNum: 5,
+  hoverStop: true,
+  direction: "top" as const,
+  openTouch: true,
+  singleHeight: 0,
+  singleWidth: 0,
+  waitTime: 1000,
+  switchOffset: 30,
+  autoPlay: true,
+  navigation: false,
+  switchSingleStep: 134,
+  switchDelay: 400,
+  switchDisabledClass: "disabled",
+  isSingleRemUnit: false,
+}));
+
+const options = computed(() =>
+  copyObj({}, defaultOption.value, props.classOption) as Record<string, unknown>
+);
+
+const autoPlay = computed(() => {
+  if (navigation.value) return false;
+  return options.value.autoPlay;
+});
+
+const scrollSwitch = computed(
+  () => props.data.length > (options.value.limitMoveNum as number)
+);
+
+const hoverStopSwitch = computed(
+  () => options.value.hoverStop && autoPlay.value && scrollSwitch.value
+);
+
+const canTouchScroll = computed(() => options.value.openTouch);
+
+const isHorizontal = computed(
+  () =>
+    options.value.direction !== "bottom" && options.value.direction !== "top"
+);
+
+const float = computed(() =>
+  isHorizontal.value
+    ? { float: "left" as const, overflow: "hidden" as const }
+    : { overflow: "hidden" as const }
+);
+
+const pos = computed(() => ({
+  transform: `translate(${xPos.value}px,${yPos.value}px)`,
+  transition: `all ${ease.value} ${delay.value}ms`,
+  overflow: "hidden",
+}));
+
+const navigation = computed(() => options.value.navigation);
+
+const baseFontSize = computed(() =>
+  (options.value.isSingleRemUnit as boolean)
+    ? parseInt(
+        window.getComputedStyle(document.documentElement, null).fontSize
+      )
+    : 1
+);
+
+const realSingleStopWidth = computed(
+  () => (options.value.singleWidth as number) * baseFontSize.value
+);
+
+const realSingleStopHeight = computed(
+  () => (options.value.singleHeight as number) * baseFontSize.value
+);
+
+const step = computed(() => {
+  let singleStep: number;
+  const stepVal = options.value.step as number;
+  if (isHorizontal.value) {
+    singleStep = realSingleStopWidth.value;
+  } else {
+    singleStep = realSingleStopHeight.value;
+  }
+  if (singleStep > 0 && singleStep % stepVal > 0) {
+    console.error(
+      "如果设置了单步滚动，step需是单步大小的约数，否则无法保证单步滚动结束的位置是否准确"
+    );
+  }
+  return stepVal;
+});
+
+// debounced wheel handler (created once)
+const debouncedWheelMove = useDebounceFn((deltaY: number) => {
+  if (deltaY > 0) {
+    yPos.value -= step.value;
+  } else {
+    yPos.value += step.value;
+  }
+}, 50);
+
+// methods
+function wheel(e: WheelEvent) {
+  const { direction } = options.value;
+  if (direction === "left" || direction === "right") return;
+  debouncedWheelMove(e.deltaY);
+}
+
+function touchStart(e: TouchEvent) {
+  if (!canTouchScroll.value) return;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const touch = e.targetTouches[0];
+  const { waitTime, singleHeight, singleWidth } = options.value;
+  startPos.value = {
+    x: touch.pageX,
+    y: touch.pageY,
+  };
+  startPosY.value = yPos.value;
+  startPosX.value = xPos.value;
+  if (!!singleHeight && !!singleWidth) {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      scrollCancle();
+    }, (waitTime as number) + 20);
+  } else {
+    scrollCancle();
+  }
+}
+
+function touchMove(e: TouchEvent) {
+  if (
+    !canTouchScroll.value ||
+    e.targetTouches.length > 1
+  ) {
+    return;
+  }
+  const touch = e.targetTouches[0];
+  const { direction } = options.value;
+  const endPos = {
+    x: touch.pageX - (startPos.value?.x ?? 0),
+    y: touch.pageY - (startPos.value?.y ?? 0),
+  };
+  e.preventDefault();
+  const dir = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1 : 0;
+  if (
+    (dir === 1 && direction === "bottom") ||
+    (dir === 1 && direction === "top")
+  ) {
+    yPos.value = (startPosY.value ?? 0) + endPos.y;
+  } else if (
+    (dir === 0 && direction === "left") ||
+    (dir === 0 && direction === "right")
+  ) {
+    xPos.value = (startPosX.value ?? 0) + endPos.x;
+  }
+}
+
+function touchEnd() {
+  if (!canTouchScroll.value) return;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const { direction } = options.value;
+  delay.value = 50;
+  if (direction === "top") {
+    if (yPos.value > 0) yPos.value = 0;
+  } else if (direction === "bottom") {
+    const h = (realBoxHeight.value / 2) * -1;
+    if (yPos.value < h) yPos.value = h;
+  } else if (direction === "left") {
+    if (xPos.value > 0) xPos.value = 0;
+  } else if (direction === "right") {
+    const w = realBoxWidth.value * -1;
+    if (xPos.value < w) xPos.value = w;
+  }
+  if (timer) clearTimeout(timer);
+  timer = setTimeout(() => {
+    delay.value = 0;
+    scrollMove();
+  }, delay.value);
+}
+
+function enter() {
+  if (hoverStopSwitch.value) scrollStopMove();
+}
+
+function leave() {
+  if (hoverStopSwitch.value) scrollStartMove();
+}
+
+function scrollStartMove() {
+  isHover.value = false;
+  scrollMove();
+}
+
+function scrollStopMove() {
+  isHover.value = true;
+  if (singleWaitTime.value) clearTimeout(singleWaitTime.value);
+  scrollCancle();
+}
+
+function scrollCancle() {
+  cancelAnimationFrame(reqFrame.value!);
+}
+
+function reset() {
+  xPos.value = 0;
+  yPos.value = 0;
+  scrollCancle();
+  scrollInitMove();
+}
+
+function scrollMove() {
+  if (isHover.value) return;
+  reqFrame.value = requestAnimationFrame(() => {
+    const h = realBoxHeight.value / 2;
+    const w = realBoxWidth.value / 2;
+    const { direction, waitTime } = options.value;
+    if (direction === "top") {
+      if (Math.abs(yPos.value) >= h) {
+        emit("scrollEnd");
+        yPos.value = 0;
+      }
+      yPos.value -= step.value;
+    } else if (direction === "bottom") {
+      if (yPos.value >= 0) {
+        emit("scrollEnd");
+        yPos.value = h * -1;
+      }
+      yPos.value += step.value;
+    } else if (direction === "left") {
+      if (Math.abs(xPos.value) >= w) {
+        emit("scrollEnd");
+        xPos.value = 0;
+      }
+      xPos.value -= step.value;
+    } else if (direction === "right") {
+      if (xPos.value > 0) {
+        emit("scrollEnd");
+        xPos.value = w * -1;
+      }
+      xPos.value += step.value;
+    }
+    if (singleWaitTime.value) clearTimeout(singleWaitTime.value);
+    if (realSingleStopHeight.value) {
+      if (Math.abs(yPos.value) % realSingleStopHeight.value < step.value) {
+        singleWaitTime.value = setTimeout(() => {
+          scrollMove();
+        }, waitTime as number);
+      } else {
+        scrollMove();
+      }
+    } else if (realSingleStopWidth.value) {
+      if (Math.abs(xPos.value) % realSingleStopWidth.value < step.value) {
+        singleWaitTime.value = setTimeout(() => {
+          scrollMove();
+        }, waitTime as number);
+      } else {
+        scrollMove();
+      }
+    } else {
+      scrollMove();
+    }
+  });
+}
+
+function scrollInitMove() {
+  nextTick(() => {
+    const { switchDelay } = options.value;
+    copyHtml.value = "";
+    const wrap = refMap.get(`wrap${props.classOption["key"]}`);
+    const slotList = refMap.get(`slotList${props.classOption["key"]}`);
+    const realBox = refMap.get(`realBox${props.classOption["key"]}`);
+    if (isHorizontal.value) {
+      height.value = wrap!.offsetHeight;
+      width.value = wrap!.offsetWidth;
+      let slotListWidth = slotList!.offsetWidth;
+      if (autoPlay.value) {
+        slotListWidth = slotListWidth * 2 + 1;
+      }
+      realBox!.style.width = slotListWidth + "px";
+      realBoxWidth.value = slotListWidth;
+    }
+    if (autoPlay.value) {
+      ease.value = "ease-in";
+      delay.value = 0;
+    } else {
+      ease.value = "linear";
+      delay.value = switchDelay as number;
+      return;
+    }
+    if (scrollSwitch.value) {
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      if (timer) clearTimeout(timer);
+      copyHtml.value = slotList!.innerHTML;
+      setTimeout(() => {
+        realBoxHeight.value = realBox?.offsetHeight ?? 0;
+        scrollMove();
+      }, 0);
+    } else {
+      scrollCancle();
+      yPos.value = 0;
+      xPos.value = 0;
+    }
+  });
+}
+
+// lifecycle
+onMounted(() => {
+  scrollInitMove();
+});
+
+onUnmounted(() => {
+  scrollCancle();
+  if (singleWaitTime.value) clearTimeout(singleWaitTime.value);
+});
 </script>
 
 <style lang="scss" scoped></style>
